@@ -216,25 +216,19 @@ export default function Navbar() {
                       <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-product-1.png" alt="Mobile App" width={28} height={28} />
                       </div>
-                      <span className="font-medium">Vultisig Mobile App</span>
-                    </a>
-                    <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-product-2.png" alt="macOS" width={28} height={28} />
-                      </div>
-                      <span className="font-medium">Vultisig macOS</span>
-                    </a>
-                    <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-product-3.png" alt="Windows" width={28} height={28} />
-                      </div>
-                      <span className="font-medium">Vultisig Windows</span>
+                      <span className="font-medium">Vultisig App</span>
                     </a>
                     <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
                       <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-product-4.png" alt="Extension" width={28} height={28} />
                       </div>
                       <span className="font-medium">Vultisig Extension</span>
+                    </a>
+                    <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                        <Image src="/images/navbar-product-3.png" alt="Web" width={28} height={28} />
+                      </div>
+                      <span className="font-medium">Vultisig Web</span>
                     </a>
                   </div>
                 )}
