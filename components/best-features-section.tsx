@@ -1,81 +1,25 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Circle } from "lucide-react"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 
 export default function BestFeaturesSection() {
-  const [expandedFeature, setExpandedFeature] = useState<string>("0") // Accordion expects string value, never null
-  const [displayedImageIndex, setDisplayedImageIndex] = useState(0)
-  const [imageVisible, setImageVisible] = useState(true)
-  const fadeDuration = 250 // ms
-  const [isMobile, setIsMobile] = useState(false)
-
   const features = [
     {
+      tag: "Multi-chain",
       title: "Vultisig: Asset Management Hub",
-      description:
-        "Vultisig is chain agnostic - Bitcoin, Ethereum, Solana, THORChain and many more. The first multi-chain, multi-asset, multi-signature wallet in the world for everyone. You can deposit, send, swap and more inside Vultisig.",
+      description: "Vultisig is chain agnostic - Bitcoin, Ethereum, Solana, THORChain and many more. The first multi-chain, multi-asset, multi-signature wallet in the world for everyone. You can deposit, send, swap and more inside Vultisig."
     },
     {
-      title: "AI Agents",
-      description:
-        "Advanced AI agents help you manage your portfolio, analyze market trends, and make informed decisions about your crypto investments with intelligent automation.",
+      tag: "Extension",
+      title: "Portal to Web3",
+      description: "The Vultisig Chrome extension allows you to connect to all Web3 without ever leaving the secure vault environment until you interact with blockchains."
     },
     {
-      title: "Expand your wallet's power",
-      description:
-        "Unlock advanced features and integrations that extend your wallet's capabilities beyond basic transactions, including DeFi protocols, NFT management, and more.",
-    },
+      tag: "Plugins",
+      title: "Expand your wallet's power (coming soon)",
+      description: "Unlock new possibilities with Vultisig Apps. From automated investments (DCA) to salary management, customize your wallet with features tailored to your needs. Simplify your crypto experience with tools that work seamlessly together."
+    }
   ]
-
-  const featureImages = [
-    "/images/home-4.1.png",
-    "/images/home-4.2.png",
-    "/images/home-4.3.png",
-  ]
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024) // lg breakpoint
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  // On desktop, expand on hover, collapse on mouse leave
-  const handleFeatureHover = (index: number) => {
-    if (isMobile || expandedFeature === String(index)) return
-    setExpandedFeature(String(index))
-  }
-  const handleFeatureClick = (index: number) => {
-    if (!isMobile || expandedFeature === String(index)) return
-    setExpandedFeature(String(index))
-  }
-  const handleFeaturesMouseLeave = () => {
-    if (!isMobile) {
-      // Do nothing: keep the last expanded feature open (do not collapse all)
-      // If nothing was ever expanded, fallback to first
-      if (!expandedFeature || expandedFeature === "") {
-        setExpandedFeature("0")
-      }
-    }
-  }
-
-  // Fade image on feature change
-  useEffect(() => {
-    const newIndex = Number(expandedFeature || 0)
-    if (displayedImageIndex !== newIndex) {
-      setImageVisible(false)
-      const timeout = setTimeout(() => {
-        setDisplayedImageIndex(newIndex)
-        setImageVisible(true)
-      }, fadeDuration)
-      return () => clearTimeout(timeout)
-    }
-  }, [expandedFeature])
 
   return (
     <section className="py-10 px-4">
@@ -88,50 +32,117 @@ export default function BestFeaturesSection() {
             Download Vultisig
           </Button>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          <Accordion
-            type="single"
-            collapsible
-            value={expandedFeature || "0"}
-            onValueChange={val => setExpandedFeature(val || "0")}
-            className="space-y-4 min-h-[410px]"
-            onMouseLeave={handleFeaturesMouseLeave}
-          >
-            {features.map((feature, index) => (
-              <AccordionItem
-                key={index}
-                value={String(index)}
-                className={`bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl transition-all ${
-                  expandedFeature === String(index)
-                    ? "shadow-[0_0_8px_1px_rgba(var(--border-color-rgb),0.5)]"
-                    : "hover:border-[var(--border-color)]"
-                } p-0`}
-              >
-                <AccordionTrigger
-                  hideChevron={true}
-                  className="p-4 sm:p-6 cursor-pointer flex items-center mb-0 bg-transparent rounded-2xl border-none shadow-none no-underline hover:no-underline focus:no-underline"
-                  onMouseEnter={() => handleFeatureHover(index)}
-                  onClick={() => handleFeatureClick(index)}
-                >
-                  <Circle className="w-3 h-3 text-blue-400 fill-current mr-3" />
-                  <h3 className="text-lg sm:text-xl font-bold text-white text-left flex-1 no-underline hover:no-underline">{feature.title}</h3>
-                </AccordionTrigger>
-                <AccordionContent className="px-4 sm:px-6 pb-4 pt-2 text-white text-base bg-transparent border-none">
-                  {feature.description}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-          <div className="flex justify-center relative">
-            <div className="relative w-full overflow-hidden flex items-center justify-center">
-              <img
-                src={featureImages[displayedImageIndex]}
-                className={`w-full h-full object-cover transition-transform duration-300 ease-in-out transition-opacity ${imageVisible ? "opacity-100" : "opacity-0"}`}
-                style={{ transform: "scale(1.2)", transitionProperty: "opacity, transform" }}
-                alt="Feature visual"
-              />
+        
+        <div className="relative">
+          {features.map((feature, index) => (
+            <div 
+              key={index}
+                className="
+                  bg-[var(--background)]
+                  border border-[#133182] rounded-2xl
+                  px-6 pt-12 pb-0 lg:px-8 lg:py-16
+                  min-h-[701px]
+                  lg:min-h-[400px]
+                  hover:shadow-[0_0_15px_-3px_rgba(var(--border-color-rgb),0.5)]
+                  shadow-[0_0_10px_-3px_rgba(var(--border-color-rgb),0.5)]
+                  sticky
+                  overflow-hidden
+                "
+              style={{ 
+                top: `${((index) * 40) + 100}px`,
+                zIndex: 10 + index,
+                marginTop: `${index === 0 ? '5rem' : '100vh'}`
+              }}
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="space-y-4">
+                  <div className="inline-block bg-[#33E6BF]/[0.13] border border-[#33E6BF]/[0.5] text-[#33E6BF] px-3 py-1 rounded-full text-sm font-medium">
+                    {feature.tag}
+                  </div>
+                  <h3 className="text-2xl lg:text-5xl font-bold text-white">
+                    {index === 2 ? (
+                      <>
+                        Expand your wallet's power{" "}
+                        <span className="text-lg lg:text-2xl">(coming soon)</span>
+                      </>
+                    ) : (
+                      feature.title
+                    )}
+                  </h3>
+                  <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+                <div className="relative flex justify-center h-full w-full">
+                  {/* Light blob 1 */}
+                  <div 
+                    className="absolute w-96 h-96 rounded-full opacity-60 blur-2xl"
+                    style={{
+                      background: 'radial-gradient(circle, #0439C7FF 0%, #02122B00 70%)',
+                      top: '20%',
+                      left: '20%',
+                      transform: 'translate(-50%, -50%)',
+                      zIndex: -1
+                    }}
+                  ></div>
+                  
+                  {/* Light blob 2 */}
+                  <div 
+                    className="absolute w-80 h-80 rounded-full opacity-60 blur-xl"
+                    style={{
+                      background: 'radial-gradient(circle, #33E6BFD9 0%, #02122B00 70%)',
+                      bottom: '10%',
+                      left: '30%',
+                      transform: 'translate(-50%, 50%)',
+                      zIndex: -2
+                    }}
+                  ></div>
+
+                  <div 
+                    className="absolute w-96 h-96 rounded-full opacity-60 blur-2xl"
+                    style={{
+                      background: 'radial-gradient(circle, #0439C7FF 0%, #02122B00 70%)',
+                      bottom: '10%',
+                      left: '80%',
+                      transform: 'translate(-50%, 50%)',
+                      zIndex: -1
+                    }}
+                  ></div>
+                  
+                  <div className="
+                    relative
+                    lg:absolute
+                    flex items-center justify-center
+                    p-2 pb-0
+                    border border-[#2155DF] rounded-t-2xl
+                  " style={{
+                    bottom: index < 2 ? `${(index+1) * -80}px` : '-90px'
+                  }}>
+                     <img
+                       src={`/images/features-${index + 1}.svg`}
+                       alt={feature.title}
+                       className="h-full"
+                     />
+                     {index === 1 && (
+                        <div>
+                          <img
+                            src="/images/padlock-1.svg"
+                            className="absolute top-[25%] -left-[10%]"
+                          />
+                          <img
+                            src="/images/padlock-2.svg"
+                            className="absolute top-0 right-[-50%] blur-[2px]"
+                            style={{ transform: "scaleX(-2) scaleY(2)" }}
+                          />
+                        </div>
+                     )}
+                   </div>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
+          {/* Spacer to allow cards to scroll past viewport */}
+          <div className="h-screen"></div>
         </div>
       </div>
     </section>
