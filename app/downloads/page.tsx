@@ -9,17 +9,17 @@ const hashes = [
   {
     os: "ios",
     icon: "/images/apple.svg",
-    hash: "fe9a2e119c24a994138f4938ab51a8e8cdb13736ffb9c5874dc83fced3624eca",
+    hash: "sha256:d656950f531ad80a201cfe61d6505bca8d14430be9b6527144becefc86422ad7",
   },
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "ead4a59c337da535cff06f2cff78b5549c40457906e7e73787896c27501ce7d2",
+    hash: "sha256:12cfe1aad21b50a819b582ffd2ac07647139bfc972c04e6ddaf1a8c23db99a28",
   },
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "9137f0bf7db8121d99ee423e5886df46ced39ecb7886ed1bf129aee79d866071",
+    hash: "sha256:6513561d87f8494dfd77b13174c6e41bc20fb7de74b617096868b103d9d00ca7",
   },
 ]
 
@@ -181,16 +181,16 @@ export default function DownloadsPage() {
                   <a href="https://apps.apple.com/app/vultisig/id6503023896" target="_blank" rel="noopener noreferrer">
                     <img src="/images/appstore.svg" alt="Download on the App Store" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-ios/releases/download/v1.21.2/VultisigApp.v1.21.2.signed.pkg" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/vultisig/vultisig-ios/releases/download/v1.22.3/VultisigApp.v1.22.3.signed.pkg" target="_blank" rel="noopener noreferrer">
                     <img src="/images/macstore.svg" alt="Download for MacOS" className="h-10 sm:h-12" />
                   </a>
                   <a href="https://play.google.com/store/apps/details?id=com.vultisig.wallet" target="_blank" rel="noopener noreferrer">
                     <img src="images/playstore.svg" alt="Get it on Google Play" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.30/Vultisig-amd64-installer-v1.0.30.exe" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.34/Vultisig-amd64-installer-v1.0.34.exe" target="_blank" rel="noopener noreferrer">
                     <img src="/images/winstore.svg" alt="Download for Windows" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.30/vultisig_1.0.30_amd64.deb" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.34/vultisig_1.0.34_amd64.deb" target="_blank" rel="noopener noreferrer">
                     <img src="/images/linuxstore.svg" alt="Download for Linux" className="h-10 sm:h-12" />
                   </a>
                 </div>
