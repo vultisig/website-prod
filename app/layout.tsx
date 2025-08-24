@@ -228,7 +228,6 @@ export default function RootLayout({
                 "@type": "Organization",
                 "name": "Vultisig",
                 "url": "https://vultisig.com",
-                },
                 "contactPoint": {
                   "@type": "ContactPoint",
                   "contactType": "customer service",
