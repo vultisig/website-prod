@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import Head from '@/app/head'
 
 export const metadata: Metadata = {
   title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
@@ -145,7 +144,6 @@ export const metadata: Metadata = {
     "msapplication-TileColor": "#000000",
     "msapplication-tap-highlight": "no",
     "theme-color": "#000000",
-    "apple-touch-fullscreen": "yes",
     "apple-mobile-web-app-orientations": "portrait",
     "msapplication-TileImage": "/logo.svg",
     "msapplication-square70x70logo": "/logo.svg",
@@ -206,7 +204,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head />
       <body style={{ background: 'var(--background)' }}>
         <script
           type="application/ld+json"
