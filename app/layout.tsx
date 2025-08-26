@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import Head from '@/app/head'
+import GoogleAnalyticsWrapper from "@/components/ga-wrapper"
+import Script from "next/script"
 
 export const metadata: Metadata = {
   title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
@@ -89,11 +90,6 @@ export const metadata: Metadata = {
   category: 'Cryptocurrency & Blockchain',
   classification: 'Financial Technology',
   referrer: 'origin-when-cross-origin',
-  colorScheme: 'dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#000000' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
   openGraph: {
     siteName: "Vultisig",
     title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
@@ -145,7 +141,6 @@ export const metadata: Metadata = {
     "msapplication-TileColor": "#000000",
     "msapplication-tap-highlight": "no",
     "theme-color": "#000000",
-    "apple-touch-fullscreen": "yes",
     "apple-mobile-web-app-orientations": "portrait",
     "msapplication-TileImage": "/logo.svg",
     "msapplication-square70x70logo": "/logo.svg",
@@ -206,8 +201,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head />
       <body style={{ background: 'var(--background)' }}>
+        <GoogleAnalyticsWrapper />
+        {/* Twitter conversion script */}
+        <Script id="twitter-uwt" strategy="afterInteractive">
+          {`
+            !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+            },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+            a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+            twq('config','ooes4');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
