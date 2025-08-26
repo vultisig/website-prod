@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from "@/components/navbar"
-import GoogleAnalytics from "@/components/ga"
-import Script from "next/script"
 import Footer from "@/components/footer"
+import GoogleAnalyticsWrapper from "@/components/ga-wrapper"
+import Script from "next/script"
 
 export const metadata: Metadata = {
   title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
@@ -90,11 +90,6 @@ export const metadata: Metadata = {
   category: 'Cryptocurrency & Blockchain',
   classification: 'Financial Technology',
   referrer: 'origin-when-cross-origin',
-  colorScheme: 'dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#000000' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
   openGraph: {
     siteName: "Vultisig",
     title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
@@ -207,7 +202,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ background: 'var(--background)' }}>
-        <GoogleAnalytics />
+        <GoogleAnalyticsWrapper />
         {/* Twitter conversion script */}
         <Script id="twitter-uwt" strategy="afterInteractive">
           {`
