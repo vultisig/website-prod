@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import GoogleAnalyticsWrapper from "@/components/ga-wrapper"
 import Script from "next/script"
+import CookieAnalytics from "@/components/cookie-analytics"
 
 export const metadata: Metadata = {
   title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
@@ -203,6 +204,7 @@ export default function RootLayout({
     <html lang="en">
       <body style={{ background: 'var(--background)' }}>
         <GoogleAnalyticsWrapper />
+        <CookieAnalytics />
         {/* Twitter conversion script */}
         <Script id="twitter-uwt" strategy="afterInteractive">
           {`
