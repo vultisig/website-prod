@@ -37,22 +37,24 @@ export default function BestFeaturesSection() {
           {features.map((feature, index) => (
             <div 
               key={index}
-                className="
-                  bg-[var(--background)]
-                  border border-[#133182] rounded-2xl
-                  px-6 pt-12 pb-0 lg:px-8 lg:py-16
-                  min-h-[701px]
-                  lg:min-h-[400px]
-                  hover:shadow-[0_0_15px_-3px_rgba(var(--border-color-rgb),0.5)]
-                  shadow-[0_0_10px_-3px_rgba(var(--border-color-rgb),0.5)]
-                  sticky
-                  overflow-hidden
-                "
               style={{ 
                 top: `${((index) * 40) + 100}px`,
                 zIndex: 10 + index,
-                marginTop: `${index === 0 ? '5rem' : '100vh'}`
+                marginTop: `${index === 0 ? '5rem' : undefined}`
               }}
+              className="
+                bg-[var(--background)]
+                border border-[#133182] rounded-2xl
+                px-6 pt-12 pb-0 lg:px-8 lg:py-16
+                min-h-[701px]
+                lg:min-h-[400px]
+                hover:shadow-[0_0_15px_-3px_rgba(var(--border-color-rgb),0.5)]
+                shadow-[0_0_10px_-3px_rgba(var(--border-color-rgb),0.5)]
+                mt-[30vh]
+                sm:mt-[50vh]
+                sticky
+                overflow-hidden
+              "
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="space-y-4">
@@ -142,7 +144,7 @@ export default function BestFeaturesSection() {
             </div>
           ))}
           {/* Spacer to allow cards to scroll past viewport */}
-          <div className="h-screen"></div>
+          <div className="h-[50vh]"></div>
         </div>
       </div>
     </section>
