@@ -37,7 +37,7 @@ export async function GET() {
       })
     ])
 
-    let allReviews: Review[] = []
+    const allReviews: Review[] = []
 
     // Process Google Play reviews
     if (googleReviews.status === 'fulfilled') {
