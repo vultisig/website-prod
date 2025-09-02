@@ -73,7 +73,7 @@ export default function MediumSection() {
         // Fallback to static articles if API fails
         setArticles([
           {
-            title: "Biweekly News Recap, May 7 — May 21",
+            title: "Biweekly News Recap, May 7 - May 21",
             description: "Welcome to the first installment of Vultisig's Biweekly News Recap Series, where we run through the most important events...",
             date: "May 23, 2025",
             image: "/images/home-5.svg",
@@ -110,7 +110,7 @@ export default function MediumSection() {
             Explore More on <span className="text-cyan-400">Medium</span>
           </h2>
           <p className="text-gray-300 text-lg sm:text-xl">
-            Behind the vault: Insights, partnerships, and product updates
+            Behind the vault: Insights, partnerships, and product updates{' '}
             <br className="hidden sm:block" />
             from the team building Vultisig.
           </p>

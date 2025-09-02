@@ -113,7 +113,7 @@ export default function HowItWorks() {
               ">
               <img src="/images/hiw-3.svg" className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" />
               <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Private key creation</h3>
-              <p className="text-gray-300 mb-4 relative z-10">Generating keys on a single device is a ticking time bomb. One breach, one compromise — and it's game over.</p>
+              <p className="text-gray-300 mb-4 relative z-10">Generating keys on a single device is a ticking time bomb. One breach, one compromise - and it's game over.</p>
               <p className="text-gray-300 relative z-10">Self-custody shouldn't mean playing defense with your entire net worth.</p>
             </Card>
           </div>
@@ -125,7 +125,7 @@ export default function HowItWorks() {
               <img src="/images/hiw-4.svg" className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" />
               <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Storage of private keys</h3>
               <p className="text-gray-300 mb-4 relative z-10">Keeping keys in one place? That's a single point of failure begging to be exploited.</p>
-              <p className="text-gray-300 relative z-10">Whether it's a hack, misstep, or hardware loss — your access is only as strong as its weakest link.</p>
+              <p className="text-gray-300 relative z-10">Whether it's a hack, misstep, or hardware loss - your access is only as strong as its weakest link.</p>
             </Card>
           </div>
         </div>

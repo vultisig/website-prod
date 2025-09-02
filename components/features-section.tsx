@@ -9,7 +9,7 @@ export default function FeaturesSection() {
             Vultisig is <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">different</span>
           </h2>
           <p className="text-gray-300 text-lg sm:text-xl">
-            No tradeoffs. Just seamless, secure crypto
+            No tradeoffs. Just seamless, secure crypto{' '}
             <br className="hidden sm:block" />
             management.
           </p>
@@ -24,7 +24,7 @@ export default function FeaturesSection() {
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3">Phishing Proof Architecture</h3>
                 <p className="text-gray-300 text-sm sm:text-md leading-relaxed">
-                  Vultisig's built in MFA architecture protects users against attacks used
+                  Vultisig's built in MFA architecture protects users against attacks used{' '}
                   <br className="hidden sm:block" />
                   to drain traditional single point of failure wallets.
                 </p>
@@ -38,11 +38,11 @@ export default function FeaturesSection() {
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3">Private Key Free Design</h3>
                 <p className="text-gray-300 text-sm sm:text-md leading-relaxed">
-                  With Vultisig, you will never need to write down your private key or seed
+                  With Vultisig, you will never need to write down your private key or seed{' '}
                   <br className="hidden sm:block" />
-                  phrase again. Vultisig provides simple-to-use vault shares that can be
+                  phrase again. Vultisig provides simple-to-use vault shares that can be{' '}
                   <br className="hidden sm:block" />
-                  stored anywhere for accessibility and convenience without compromising
+                  stored anywhere for accessibility and convenience without compromising{' '}
                   <br className="hidden sm:block" />
                   security.
                 </p>
@@ -58,11 +58,11 @@ export default function FeaturesSection() {
                   Omni-Chain
                 </h3>
                 <p className="text-gray-300 text-sm sm:text-md leading-relaxed">
-                  <b>Beyond traditional multi-sig.</b>
+                  <b>Beyond traditional multi-sig.</b>{' '}
                   <br className="hidden sm:block" />
-                  Our Vault system works across over 30 chains already, while staying
+                  Our Vault system works across over 30 chains already, while staying{' '}
                   <br className="hidden sm:block" />
-                  flexible and dynamic — enabling a truly seamless user experience.
+                  flexible and dynamic - enabling a truly seamless user experience.
                 </p>
               </div>
             </div>
