@@ -95,9 +95,11 @@ export default function VultPage() {
             </div>
             {/* Center button on xs/sm, left on md+ */}
             <div className="flex justify-center md:justify-start w-full">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 xs:px-8 sm:px-12 py-4 xs:py-6 sm:py-8 text-base xs:text-lg rounded-lg mt-2 w-full xs:w-auto max-w-xs md:max-w-none">
-                Join the AirDrop
-              </Button>
+              <a href="https://airdrop.vultisig.com" target="_blank" rel="noopener noreferrer">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 xs:px-8 sm:px-12 py-4 xs:py-6 sm:py-8 text-base xs:text-lg rounded-lg mt-2 w-full xs:w-auto max-w-xs md:max-w-none">
+                  Join the AirDrop
+                </Button>
+              </a>
             </div>
           </div>
         </div>
@@ -246,9 +248,11 @@ export default function VultPage() {
           </div>
         </div>
         <div className="flex justify-center mt-10 xs:mt-12 sm:mt-16">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 xs:px-8 sm:px-12 py-3 xs:py-4 text-base xs:text-lg rounded-lg w-full xs:w-auto">
-            Join the AirDrop
-          </Button>
+          <a href="https://airdrop.vultisig.com" target="_blank" rel="noopener noreferrer">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 xs:px-8 sm:px-12 py-3 xs:py-4 text-base xs:text-lg rounded-lg w-full xs:w-auto">
+              Join the AirDrop
+            </Button>
+          </a>
         </div>
       </section>
       
