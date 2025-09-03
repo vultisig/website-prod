@@ -11,7 +11,7 @@ export default function FAQPage() {
           SUPPORT
         </h2>
         <p className="text-white text-center text-base xs:text-lg mb-8 xs:mb-12 max-w-3xl mx-auto">
-          Need Help? We're Here for You. If you're experiencing issues, have questions, or need help with your multi-sig wallet, our team is ready to assist.
+          Need Help? We're Here for You. If you're experiencing issues, have questions, or need help with your Vultisig Producs, our team is ready to assist.
         </p>
         
         {/* Desktop Grid */}
