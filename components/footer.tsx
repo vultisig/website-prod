@@ -75,7 +75,7 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-4">SUPPORT</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/faq" className="text-gray-400 hover:text-white">
+                  <a href="/support" className="text-gray-400 hover:text-white">
                     FAQs
                   </a>
                 </li>
@@ -85,7 +85,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="/faq" className="text-gray-400 hover:text-white">
+                  <a href="/support" className="text-gray-400 hover:text-white">
                     Contact Us
                   </a>
                 </li>
