@@ -164,7 +164,7 @@ export default function DownloadsPage() {
           <TabsContent value="vultisig">
             <div className="flex flex-col items-center justify-center text-center mb-8 sm:mb-12">
               <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2 leading-tight px-4">
-                Download Vultisig: Secure Crypto Vault
+                Download Vultisig: Seedless Wallet
               </h1>
               <p className="text-gray-300 text-sm max-w-lg mx-auto mb-0 px-4">
                 The Flagship app of Vultisig. Your seedless multi-chain, multi-factor wallet. Use Vault Shares instead of Seed Phrases.
@@ -178,7 +178,7 @@ export default function DownloadsPage() {
                   <div className="w-full h-full bowl-glow"></div>
                 </div>
                 <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-8 z-20 relative px-4">
-                  <a href="https://apps.apple.com/app/vultisig/id6503023896" target="_blank" rel="noopener noreferrer">
+                  <a href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8" target="_blank" rel="noopener noreferrer">
                     <img src="/images/appstore.svg" alt="Download on the App Store" className="h-10 sm:h-12" />
                   </a>
                   <a href="https://github.com/vultisig/vultisig-ios/releases/download/v1.24.3/VultisigApp.v1.24.3.signed.pkg" target="_blank" rel="noopener noreferrer">
