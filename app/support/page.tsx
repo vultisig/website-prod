@@ -120,7 +120,7 @@ export default function FAQPage() {
       </section>
 
       {/* FAQ Section */}
-      <section>
+      <section id="faq">
         <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-8 xs:mb-10 sm:mb-12">
           FAQ
         </h2>
@@ -205,7 +205,7 @@ export default function FAQPage() {
       </section>
 
       {/* Discord section */}
-      <section className="py-12 px-4">
+      <section id="discord" className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center mt-8">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
