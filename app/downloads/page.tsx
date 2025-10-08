@@ -9,7 +9,7 @@ const hashes = [
   {
     os: "ios",
     icon: "/images/apple.svg",
-    hash: "sha256:8ff09ce7f2d66917983e82768b78eede8bd249d2b68204582ae6f8f95b129777",
+    hash: "sha256:70f324db4e96428cda7e552167c29a78e89d69058c13d786e5ab6c23301c6bac",
   },
   {
     os: "windows",
@@ -181,7 +181,7 @@ export default function DownloadsPage() {
                   <a href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8" target="_blank" rel="noopener noreferrer">
                     <img src="/images/appstore.svg" alt="Download on the App Store" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-ios/releases/download/v1.25.8/VultisigApp.v1.25.8.signed.pkg" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/vultisig/vultisig-ios/releases/download/v1.26.15/VultisigApp.v1.26.15.signed.pkg" target="_blank" rel="noopener noreferrer">
                     <img src="/images/macstore.svg" alt="Download for MacOS" className="h-10 sm:h-12" />
                   </a>
                   <a href="https://play.google.com/store/apps/details?id=com.vultisig.wallet" target="_blank" rel="noopener noreferrer">
