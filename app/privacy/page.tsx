@@ -7,10 +7,10 @@ export default function PrivacyPolicy() {
       <h1 className="heading text-center font-extrabold text-4xl pb-4 pt-0 xs:pt-8">PRIVACY POLICY</h1>
       <ol type="1">
         <li><strong><u>OVERVIEW</u></strong><br /> <br />
-        This privacy policy (“Privacy Policy”) outlines the data privacy practices and processes of Cortina Ventures Pty Ltd, 46 Singlefin Crescent Bokarina QLD 4575 (“Vultisig”, “we”, “our”, or “us”). Protection and security of the personal data of our users is very important to Vultisig, as is your trust in us and the services we provide. Vultisig is committed to handling your personal data responsibly and in compliance with all applicable Australian legal requirements. We strive to minimize the collection and storage of personal data, only doing so when voluntarily provided by you or required by law. This Privacy Policy describes how we may collect, process, use, transfer, and secure your personal data when you access and use Vultisig.org (the “Website”) or any of our mobile applications (the “App”) which allow access to various blockchains from a mobile device (the Website and the App collectively the “Services”).
+        This privacy policy (“Privacy Policy”) outlines the data privacy practices and processes of Vulti Holdings Limited, Intershore Chambers, Road Town, Tortola, British Virgin Islands (“Vultisig”, “we”, “our”, or “us”). Protection and security of the personal data of our users is very important to Vultisig, as is your trust in us and the services we provide. Vultisig is committed to handling your personal data responsibly and in compliance with all applicable Australian legal requirements. We strive to minimize the collection and storage of personal data, only doing so when voluntarily provided by you or required by law. This Privacy Policy describes how we may collect, process, use, transfer, and secure your personal data when you access and use Vultisig.org (the “Website”) or any of our mobile applications (the “App”) which allow access to various blockchains from a mobile device (the Website and the App collectively the “Services”).
         </li> <br />
         <li><strong><u>WHO IS THE CONTROLLER FOR PROCESSING YOUR PERSONAL DATA?</u></strong><br /> <br />
-        Cortina Ventures Pty Ltd, 46 Singlefin Crescent Bokarina QLD 4575 is the controller for Vultisig’s processing of your personal data under this Privacy Policy, unless we tell you otherwise in an individual case.
+        Vulti Holdings Limited, Intershore Chambers, Road Town, Tortola, British Virgin Islands is the controller for Vultisig’s processing of your personal data under this Privacy Policy, unless we tell you otherwise in an individual case.
         </li> <br />
         <li><strong><u>FOR WHOM AND FOR WHAT PURPOSE IS THE PRIVACY POLICY INTENDED?</u></strong><br /> <br />
         This Privacy Policy applies to all persons whose personal data we may process (hereinafter referred to as “you”) when you use our Services, regardless of which channel you use to contact us (e.g., on a website, in an app, via a social network, at an event, etc.). It applies to the processing of personal data that may be collected in the future.
@@ -95,8 +95,8 @@ export default function PrivacyPolicy() {
         </li> <br />
         <li><strong><u>HOW CAN YOU CONTACT US?</u></strong><br /> <br />
         If you have any questions or concerns relating to this Privacy Policy or the processing of your personal data, please contact us as follows:<br />
-        Cortina Ventures Pty Ltd<br />
-        46 Singlefin Crescent Bokarina QLD 4575<br />
+        Vulti Holdings Limited<br />
+        Intershore Chambers, Road Town, Tortola, British Virgin Islands<br />
         info@vultisig.com
         </li> <br />
         <li><strong><u>HOW WE MAY CHANGE THIS PRIVACY POLICY?</u></strong><br /> <br /> 
