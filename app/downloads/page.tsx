@@ -105,6 +105,16 @@ function HashCard({ icon, hash, os }: { icon: string; hash: string; os: string }
 }
 
 export default function DownloadsPage() {
+  const trackDownload = (platform: string) => {
+    if (typeof window === 'undefined' || !(window as any).gtag) return
+    ;(window as any).gtag('event', 'download_click', {
+      platform,
+      item_id: 'vultisig',
+      item_name: 'Vultisig',
+      item_category: 'download',
+      transport_type: 'beacon',
+    })
+  }
   return (
     <main className="min-h-screen pt-20 sm:pt-32 pb-20 px-4">
       <section className="max-w-7xl mx-auto mb-16 sm:mb-32">
@@ -178,19 +188,19 @@ export default function DownloadsPage() {
                   <div className="w-full h-full bowl-glow"></div>
                 </div>
                 <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-8 z-20 relative px-4">
-                  <a href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8" target="_blank" rel="noopener noreferrer">
+                  <a href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('ios app store')}>
                     <img src="/images/appstore.svg" alt="Download on the App Store" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-ios/releases/download/v1.26.15/VultisigApp.v1.26.15.signed.pkg" target="_blank" rel="noopener noreferrer">
+                  <a href="https://apps.apple.com/pa/app/vultisig-seedless-wallet/id6503023896" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('macos app store')}>
                     <img src="/images/macstore.svg" alt="Download for MacOS" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://play.google.com/store/apps/details?id=com.vultisig.wallet" target="_blank" rel="noopener noreferrer">
+                  <a href="https://play.google.com/store/apps/details?id=com.vultisig.wallet" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('android play store')}>
                     <img src="images/playstore.svg" alt="Get it on Google Play" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.39/Vultisig-amd64-installer-v1.0.39.exe" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.39/Vultisig-amd64-installer-v1.0.39.exe" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('windows')}>
                     <img src="/images/winstore.svg" alt="Download for Windows" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.39/vultisig_1.0.39_amd64.deb" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.39/vultisig_1.0.39_amd64.deb" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('linux')}>
                     <img src="/images/linuxstore.svg" alt="Download for Linux" className="h-10 sm:h-12" />
                   </a>
                 </div>
@@ -222,7 +232,7 @@ export default function DownloadsPage() {
                 <div className="w-full h-full bowl-glow"></div>
               </div>
               <div className="flex flex-wrap justify-center gap-4 mt-8 z-20 relative px-4">
-                <a href="https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb?authuser=0&hl=en-GB&pli=1" target="_blank" rel="noopener noreferrer">
+                <a href="https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb?authuser=0&hl=en-GB&pli=1" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('chrome extension')}>
                   <img src="/images/chrome-download.svg" alt="Download for Chrome" className="h-10 sm:h-12" />
                 </a>
               </div>
