@@ -100,12 +100,13 @@ export default function Navbar() {
               {/* <a href="#" className="text-gray-300 hover:text-white ml-8">
                 Backed By
               </a> */}
-              <a href="/docs" className="text-gray-300 hover:text-white ml-8">
-                Docs
-              </a>
               <a href="/vult" className="text-gray-300 hover:text-white ml-8">
                 $VULT
               </a>
+              <a href="https://docs.vultisig.com" className="text-gray-300 hover:text-white ml-8">
+                Docs
+              </a>
+
               {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div className="flex items-center text-gray-300 hover:text-white cursor-pointer ml-8">
