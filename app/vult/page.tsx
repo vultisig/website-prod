@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import React from "react"
 import { Users, ArrowUpDown, DollarSign } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import Image from "next/image"
 
 function GradientText({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
@@ -110,6 +111,173 @@ export default function VultPage() {
             src="/images/vult-1.svg"
             className="w-[30vw] lg:w-[50vw] h-auto object-contain max-w-[680px] min-w-[650px]"
           />
+        </div>
+      </section>
+
+      {/* VULT DISCOUNT TIERS SECTION */}
+      <section className="max-w-7xl mx-auto mb-24 xs:mb-16 sm:mb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
+            $VULT Discount Tiers
+          </h2>
+          <p className="text-gray-300 text-sm xs:text-base mb-8">Hold $VULT to unlock lower trading fees.</p>
+          <div className="w-full flex justify-center items-center relative">
+            <div className="w-full max-w-[1000px] h-1 bg-gradient-to-r from-transparent via-blue-500/70 to-transparent z-10 relative"></div>
+            <div className="w-full max-w-[1000px] h-16 overflow-hidden absolute left-1/2 -translate-x-1/2 top-1 z-0 pointer-events-none">
+              <div className="w-full h-full bowl-glow"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {/* Bronze Tier */}
+          <Card className="bg-[var(--background)] border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+            {/* base solid colored shadow (for sides/bottom) */}
+            <div className="absolute inset-0 rounded-2xl z-10" style={{ boxShadow: "0 0 42px 8px rgba(205,127,50,0.35)" }}></div>
+            {/* shadows behind blur */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#CD7F32] shadow-[0_2px_1px_rgba(205,127,50,1)] z-10"></div>
+            <div className="absolute top-0 left-0 bottom-0 w-[1px] bg-[#CD7F32] shadow-[1px_0_1px_rgba(205,127,50,1)] z-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#CD7F32] shadow-[0_1px_1px_rgba(205,127,50,1)] z-10"></div>
+            <div className="absolute top-0 right-0 bottom-0 w-[1px] bg-[#CD7F32] shadow-[1px_0_1px_rgba(205,127,50,1)] z-10"></div>
+            {/* blur overlay */}
+            <div className="absolute left-[-2px] right-[-2px] bottom-[-2px] top-[2px] rounded-2xl backdrop-blur-md bg-black/10 z-20 pointer-events-none"></div>
+
+            <div className="text-center relative z-40">
+              {/* Icon placeholder - will be replaced with actual icon */}
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#DB5727] p-4 bg-[#DB5727]/[0.12] shadow-[0_0_12px_2px_rgba(219,87,39,0.12)]">
+                <img src="/images/bronze.svg" alt="Bronze" className="w-full h-full object-contain" />
+              </div>
+              
+              <h3 className="text-xl font-bold text-white mb-4">Bronze</h3>
+              
+              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+                <span className="text-white">Discount: 10bps</span>
+              </div>
+              
+              <div className="mb-4">
+                <div className="text-white font-bold text-lg">1,000 $VULT</div>
+                <div className="text-gray-400 text-sm">(~$1,000)</div>
+              </div>
+              
+              <div className="border-t border-white/10 pt-4 mt-6">
+                <p className="text-gray-400 text-xs uppercase tracking-wide">Fees</p>
+                <p className="text-gray-400 text-sm mt-2">Base: 50 bps</p>
+                <p className="text-gray-400 text-sm">Referral + discount: 35 bps</p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Silver Tier */}
+          <Card className="bg-[var(--background)] border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+            {/* base solid colored shadow (for sides/bottom) */}
+            <div className="absolute inset-0 rounded-2xl z-10" style={{ boxShadow: "0 0 42px 8px rgba(192,192,192,0.35)" }}></div>
+            {/* shadows behind blur */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#C0C0C0] shadow-[0_2px_1px_rgba(192,192,192,0.35)] z-10"></div>
+            <div className="absolute top-0 left-0 bottom-0 w-[1px] bg-[#C0C0C0] shadow-[1px_0_1px_rgba(192,192,192,0.35)] z-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C0C0C0] shadow-[0_1px_1px_rgba(192,192,192,0.35)] z-10"></div>
+            <div className="absolute top-0 right-0 bottom-0 w-[1px] bg-[#C0C0C0] shadow-[1px_0_1px_rgba(192,192,192,0.35)] z-10"></div>
+            {/* blur overlay */}
+            <div className="absolute left-[-2px] right-[-2px] bottom-[-2px] top-[2px] rounded-2xl backdrop-blur-md bg-black/10 z-20 pointer-events-none"></div>
+
+
+            <div className="text-center relative z-40">
+              {/* Icon placeholder - will be replaced with actual icon */}
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#C9D6E8] p-4 bg-[#C9D6E8]/[0.12] shadow-[0_0_12px_2px_rgba(192,192,192,0.12)]">
+                <img src="/images/silver.svg" alt="Silver" className="w-full h-full object-contain" />
+              </div>
+              
+              <h3 className="text-xl font-bold text-white mb-4">Silver</h3>
+              
+              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+                <span className="text-white">Discount: 20bps</span>
+              </div>
+              
+              <div className="mb-4">
+                <div className="text-white font-bold text-lg">2,500 $VULT</div>
+                <div className="text-gray-400 text-sm">(~$2,500)</div>
+              </div>
+              
+              <div className="border-t border-white/10 pt-4 mt-6">
+                <p className="text-gray-400 text-xs uppercase tracking-wide">Fees</p>
+                <p className="text-gray-400 text-sm mt-2">Base: 50 bps</p>
+                <p className="text-gray-400 text-sm">Referral + discount: 25 bps</p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Gold Tier */}
+          <Card className="bg-[var(--background)] border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+            {/* base solid colored shadow (for sides/bottom) */}
+            <div className="absolute inset-0 rounded-2xl z-10" style={{ boxShadow: "0 0 42px 8px rgba(255,215,0,0.35)" }}></div>
+            {/* shadows behind blur */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#FFD700] shadow-[0_2px_1px_rgba(255,215,0,0.35)] z-10"></div>
+            <div className="absolute top-0 left-0 bottom-0 w-[1px] bg-[#FFD700] shadow-[1px_0_1px_rgba(255,215,0,0.35)] z-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FFD700] shadow-[0_1px_1px_rgba(255,215,0,0.35)] z-10"></div>
+            <div className="absolute top-0 right-0 bottom-0 w-[1px] bg-[#FFD700] shadow-[1px_0_1px_rgba(255,215,0,0.35)] z-10"></div>
+            {/* blur overlay */}
+            <div className="absolute left-[-2px] right-[-2px] bottom-[-2px] top-[2px] rounded-2xl backdrop-blur-md bg-black/10 z-20 pointer-events-none"></div>
+
+            <div className="text-center relative z-40">
+              {/* Icon placeholder - will be replaced with actual icon */}
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#FFC25C] p-4 bg-[#FFC25C]/[0.12] shadow-[0_0_12px_2px_rgba(255,194,92,0.12)]">
+                <img src="/images/gold.svg" alt="Gold" className="w-full h-full object-contain" />
+              </div>
+              
+              <h3 className="text-xl font-bold text-white mb-4">Gold</h3>
+              
+              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+                <span className="text-white">Discount: 30bps</span>
+              </div>
+              
+              <div className="mb-4">
+                <div className="text-white font-bold text-lg">5,000 $VULT</div>
+                <div className="text-gray-400 text-sm">(~$5,000)</div>
+              </div>
+              
+              <div className="border-t border-white/10 pt-4 mt-6">
+                <p className="text-gray-400 text-xs uppercase tracking-wide">Fees</p>
+                <p className="text-gray-400 text-sm mt-2">Base: 50 bps</p>
+                <p className="text-gray-400 text-sm">Referral + discount: 15 bps</p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Platinum Tier */}
+          <Card className="bg-[var(--background)] border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+            {/* base solid colored shadow (for sides/bottom) */}
+            <div className="absolute inset-0 rounded-2xl z-10" style={{ boxShadow: "0 0 42px 8px rgba(45,224,197,0.35)" }}></div>
+            {/* shadows behind blur */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#2DE0C5] shadow-[0_2px_1px_rgba(45,224,197,0.35)] z-10"></div>
+            <div className="absolute top-0 left-0 bottom-0 w-[1px] bg-[#2DE0C5] shadow-[1px_0_1px_rgba(45,224,197,0.35)] z-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#2DE0C5] shadow-[0_1px_1px_rgba(45,224,197,0.35)] z-10"></div>
+            <div className="absolute top-0 right-0 bottom-0 w-[1px] bg-[#2DE0C5] shadow-[1px_0_1px_rgba(45,224,197,0.35)] z-10"></div>
+            {/* blur overlay */}
+            <div className="absolute left-[-2px] right-[-2px] bottom-[-2px] top-[2px] rounded-2xl backdrop-blur-md bg-black/10 z-20 pointer-events-none"></div>
+
+            <div className="text-center relative z-40">
+              {/* Icon placeholder - will be replaced with actual icon */}
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#33E6BF] p-4 bg-[#33E6BF]/[0.12] shadow-[0_0_12px_2px_rgba(51,230,191,0.12)]">
+                <img src="/images/platinum.svg" alt="Platinum" className="w-full h-full object-contain" />
+              </div>
+              
+              <h3 className="text-xl font-bold text-white mb-4">Platinum</h3>
+              
+              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+                <span className="text-white">Discount: 35bps</span>
+              </div>
+              
+              <div className="mb-4">
+                <div className="text-white font-bold text-lg">10,000 $VULT</div>
+                <div className="text-gray-400 text-sm">(~$10,000)</div>
+              </div>
+              
+              <div className="border-t border-white/10 pt-4 mt-6">
+                <p className="text-gray-400 text-xs uppercase tracking-wide">Fees</p>
+                <p className="text-gray-400 text-sm mt-2">Base: 50 bps</p>
+                <p className="text-gray-400 text-sm">Referral + discount: 10 bps</p>
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
 
