@@ -9,17 +9,17 @@ const hashes = [
   {
     os: "ios",
     icon: "/images/apple.svg",
-    hash: "sha256:70f324db4e96428cda7e552167c29a78e89d69058c13d786e5ab6c23301c6bac",
+    hash: "sha256:a08f10106261f8b721de2c2aecac6589d30ba809f550406f2271082ed0a18e73",
   },
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:08e59ec76af42562f2a443e5f6ed7699e42dfb6323fdb39e8975564c7d88fe40",
+    hash: "sha256:daaaf6236c9136c2c35cd3792bfcb28bb64bea3e75a5519c36ab66d3d56b8424",
   },
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "sha256:fa83802a6336c7a2ac722237ce387d30cfe3ba9ab3d03eaea2e8a4f2227b0050",
+    hash: "sha256:68af84faf1a8a92ca9c8f33ade4020d915dcc98ca1075a3f52e140e697dc9f0a",
   },
 ]
 
@@ -197,10 +197,10 @@ export default function DownloadsPage() {
                   <a href="https://play.google.com/store/apps/details?id=com.vultisig.wallet" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('android play store')}>
                     <img src="images/playstore.svg" alt="Get it on Google Play" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.39/Vultisig-amd64-installer-v1.0.39.exe" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('windows')}>
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.42/Vultisig-amd64-installer-v1.0.42.exe" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('windows')}>
                     <img src="/images/winstore.svg" alt="Download for Windows" className="h-10 sm:h-12" />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.39/vultisig_1.0.39_amd64.deb" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('linux')}>
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.42/vultisig_1.0.42_amd64.deb" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('linux')}>
                     <img src="/images/linuxstore.svg" alt="Download for Linux" className="h-10 sm:h-12" />
                   </a>
                 </div>
