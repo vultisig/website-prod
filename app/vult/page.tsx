@@ -3,9 +3,11 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import React from "react"
-import { Users, ArrowUpDown, DollarSign } from "lucide-react"
+import { Users, ArrowUpDown, DollarSign, Copy } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import Image from "next/image"
+import { useVultPrice } from "@/hooks/use-vult-price"
+import { useVultSupply } from "@/hooks/use-vult-supply"
 
 function GradientText({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
@@ -14,6 +16,44 @@ function GradientText({ children, className = "" }: { children: React.ReactNode;
 }
 
 export default function VultPage() {
+  const { price: vultPrice, loading: priceLoading, error: priceError } = useVultPrice()
+  const { circulatingSupply, loading: supplyLoading, error: supplyError } = useVultSupply()
+
+  // Helper function to format price
+  const formatPrice = (price: number) => {
+    if (price < 0.01) return `$${price.toFixed(4)}`
+    if (price < 1) return `$${price.toFixed(3)}`
+    return `$${price.toFixed(2)}`
+  }
+
+  // Helper function to calculate USD value for VULT amounts
+  const calculateUSDValue = (vultAmount: number) => {
+    return (vultAmount * vultPrice).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    })
+  }
+
+  // Helper function to format circulating supply
+  const formatSupply = (supply: number) => {
+    if (supply >= 1000000000) {
+      return `${(supply / 1000000000).toFixed(1)}B`
+    } else if (supply >= 1000000) {
+      return `${(supply / 1000000).toFixed(1)}M`
+    } else if (supply >= 1000) {
+      return `${(supply / 1000).toFixed(1)}K`
+    } else {
+      return supply.toLocaleString('en-US', { maximumFractionDigits: 0 })
+    }
+  }
+
+  // Helper function to copy token address
+  const copyTokenAddress = () => {
+    navigator.clipboard.writeText('0xb788144DF611029C60b859DF47e79B7726C4DEBa')
+  }
+
   return (
     <main className="min-h-screen pt-24 xs:pt-32 pb-20 px-2 xs:px-3 sm:px-4 bg-[var(--background)]">
       {/* HERO SECTION */}
@@ -41,15 +81,22 @@ export default function VultPage() {
                   <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                     <ArrowUpDown className="w-5 h-5 text-[#4879FD]" />
                   </div>
-                  <span className="text-white text-lg xs:text-xl font-bold">0</span>
+                  <span className="text-white text-lg xs:text-xl font-bold">
+                    {supplyLoading ? '...' : (supplyError ? '100,000,000' : formatSupply(circulatingSupply))}
+                  </span>
                   <span className="text-gray-400 text-xs mt-1">CIRCULATING SUPPLY</span>
                 </Card>
                 <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center">
                   <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                     <DollarSign className="w-5 h-5 text-[#4879FD]" />
                   </div>
-                  <span className="text-white text-lg xs:text-xl font-bold">$1</span>
+                  <span className="text-white text-lg xs:text-xl font-bold">
+                    {priceLoading ? '...' : formatPrice(vultPrice)}
+                  </span>
                   <span className="text-gray-400 text-xs mt-1">CURRENT PRICE</span>
+                  {priceError && (
+                    <span className="text-red-400 text-xs mt-1">Price unavailable</span>
+                  )}
                 </Card>
               </div>
               {/* Row for md+ screens */}
@@ -77,7 +124,9 @@ export default function VultPage() {
                   <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                     <ArrowUpDown className="w-5 h-5 text-[#4879FD]" />
                   </div>
-                  <span className="text-white text-lg xs:text-xl font-bold">0</span>
+                  <span className="text-white text-lg xs:text-xl font-bold">
+                    {supplyLoading ? '...' : (supplyError ? '100,000,000' : formatSupply(circulatingSupply))}
+                  </span>
                   <span className="text-gray-400 text-xs mt-1">CIRCULATING SUPPLY</span>
                 </Card>
                 <Card className="
@@ -90,10 +139,27 @@ export default function VultPage() {
                   <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                     <DollarSign className="w-5 h-5 text-[#4879FD]" />
                   </div>
-                  <span className="text-white text-lg xs:text-xl font-bold">$1</span>
+                  <span className="text-white text-lg xs:text-xl font-bold">
+                    {priceLoading ? '...' : formatPrice(vultPrice)}
+                  </span>
                   <span className="text-gray-400 text-xs mt-1">CURRENT PRICE</span>
+                  {priceError && (
+                    <span className="text-red-400 text-xs mt-1">Price unavailable</span>
+                  )}
                 </Card>
               </div>
+            </div>
+            {/* Token Address Card - width matches text with 24px padding */}
+            <div className="w-fit mb-4">
+              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-6 py-4 xs:py-5 flex flex-col items-start w-fit hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                  <Copy className="w-5 h-5 text-[#4879FD]" />
+                </div>
+                <span className="text-white text-lg xs:text-xl font-bold">
+                  0xb788144DF611029C60b859DF47e79B7726C4DEBa
+                </span>
+                <span className="text-gray-400 text-xs mt-1">TOKEN ADDRESS</span>
+              </Card>
             </div>
             {/* Center button on xs/sm, left on md+ */}
             <div className="flex justify-center md:justify-start w-full">
@@ -156,7 +222,9 @@ export default function VultPage() {
               
               <div className="mb-4">
                 <div className="text-white font-bold text-lg">1,000 $VULT</div>
-                <div className="text-gray-400 text-sm">(~$1,000)</div>
+                <div className="text-gray-400 text-sm">
+                  {priceLoading ? '(~...)' : `(~${calculateUSDValue(1000)})`}
+                </div>
               </div>
               
               <div className="border-t border-white/10 pt-4 mt-6">
@@ -194,7 +262,9 @@ export default function VultPage() {
               
               <div className="mb-4">
                 <div className="text-white font-bold text-lg">2,500 $VULT</div>
-                <div className="text-gray-400 text-sm">(~$2,500)</div>
+                <div className="text-gray-400 text-sm">
+                  {priceLoading ? '(~...)' : `(~${calculateUSDValue(2500)})`}
+                </div>
               </div>
               
               <div className="border-t border-white/10 pt-4 mt-6">
@@ -231,7 +301,9 @@ export default function VultPage() {
               
               <div className="mb-4">
                 <div className="text-white font-bold text-lg">5,000 $VULT</div>
-                <div className="text-gray-400 text-sm">(~$5,000)</div>
+                <div className="text-gray-400 text-sm">
+                  {priceLoading ? '(~...)' : `(~${calculateUSDValue(5000)})`}
+                </div>
               </div>
               
               <div className="border-t border-white/10 pt-4 mt-6">
@@ -268,7 +340,9 @@ export default function VultPage() {
               
               <div className="mb-4">
                 <div className="text-white font-bold text-lg">10,000 $VULT</div>
-                <div className="text-gray-400 text-sm">(~$10,000)</div>
+                <div className="text-gray-400 text-sm">
+                  {priceLoading ? '(~...)' : `(~${calculateUSDValue(10000)})`}
+                </div>
               </div>
               
               <div className="border-t border-white/10 pt-4 mt-6">
