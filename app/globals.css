@@ -5,8 +5,10 @@
 /* Brockmann Font Face Declarations */
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff') format('woff'),
-       url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf') format('truetype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
+      format('woff'),
+    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
+      format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -14,7 +16,8 @@
 
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf') format('opentype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
+    format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -22,8 +25,10 @@
 
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff') format('woff'),
-       url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf') format('truetype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
+      format('woff'),
+    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
+      format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -31,7 +36,8 @@
 
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf') format('opentype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
+    format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -39,8 +45,10 @@
 
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff') format('woff'),
-       url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf') format('truetype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
+      format('woff'),
+    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
+      format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -48,7 +56,8 @@
 
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf') format('opentype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
+    format('opentype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -56,8 +65,10 @@
 
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff') format('woff'),
-       url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf') format('truetype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
+      format('woff'),
+    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
+      format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -65,7 +76,8 @@
 
 @font-face {
   font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf') format('opentype');
+  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
+    format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -73,6 +85,15 @@
 
 body {
   font-family: 'Brockmann', Arial, Helvetica, sans-serif;
+  -ms-overflow-style: none;
+}
+
+html {
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 @layer utilities {
@@ -84,9 +105,9 @@ body {
 @layer base {
   :root {
     /* --background: 0 0% 100%; */
-    --background: #02122B;
-    --background-secondary: #061B3A;
-    --light-blob: #001F73;
+    --background: #02122b;
+    --background-secondary: #061b3a;
+    --light-blob: #001f73;
     --foreground: 0 0% 100%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 100%;
@@ -119,11 +140,11 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --primary-accent: #4879FD;
+    --primary-accent: #4879fd;
     --primary-accent-rgb: 72, 121, 253;
-    --border-color: #2155DF;
+    --border-color: #2155df;
     --border-color-rgb: 33, 85, 223;
-    --border-light: #11284A;
+    --border-light: #11284a;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -158,10 +179,11 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --primary-accent: #4879FD;
+    --primary-accent: #4879fd;
     --primary-accent-rgb: 72, 121, 253;
   }
-  .terms-content ol, .terms-content ul {
+  .terms-content ol,
+  .terms-content ul {
     list-style-position: inside;
     margin-left: 2rem;
     padding-left: 1.5rem;
@@ -169,7 +191,10 @@ body {
   .terms-content li {
     list-style-position: outside;
   }
-  .terms-content ol ol, .terms-content ul ul, .terms-content ol ul, .terms-content ul ol {
+  .terms-content ol ol,
+  .terms-content ul ul,
+  .terms-content ol ul,
+  .terms-content ul ol {
     margin-left: 2rem;
     padding-left: 1.5rem;
   }
@@ -203,7 +228,12 @@ body {
 }
 .bowl-glow {
   /* background: radial-gradient(ellipse 50% 120% at 50% 0%, rgba(59,130,246,0.4) 0%, rgba(59,130,246,0.1) 60%, transparent 100%); */
-  background: radial-gradient(ellipse 50% 120% at 50% 0%, var(--light-blob) 0%, rgba(59,130,246,0.1) 60%, transparent 100%);
+  background: radial-gradient(
+    ellipse 50% 120% at 50% 0%,
+    var(--light-blob) 0%,
+    rgba(59, 130, 246, 0.1) 60%,
+    transparent 100%
+  );
   /* filter: blur(8px); */
 }
 .glow-blob {
@@ -219,8 +249,7 @@ body {
   background: radial-gradient(
     circle,
     var(--light-blob) 0%,
-    /* rgba(var(--primary-accent-rgb), 0.7) 0%, */
-    transparent 70%
+    /* rgba(var(--primary-accent-rgb), 0.7) 0%, */ transparent 70%
   );
   opacity: 0.5;
   filter: blur(24px);
@@ -230,14 +259,15 @@ body {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s cubic-bezier(0.4,0,0.2,1);
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .feature-description-wrapper.expanded {
   max-height: 200px; /* adjust as needed */
   opacity: 1;
 }
 .feature-description {
-  transition: opacity 0.25s cubic-bezier(0.4,0,0.2,1);
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
 }
 .feature-description.visible {
