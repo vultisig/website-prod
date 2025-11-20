@@ -48,7 +48,10 @@ export default function CtaSection() {
               <div className="relative h-80">
                 <img
                   src="/images/cta-1.png"
-                  className="w-full lg:min-w-[600px] -mt-[130px]"
+                  alt="Vultisig secure crypto vault wallet"
+                  width="600"
+                  height="320"
+                  className="w-full max-w-[600px] h-auto -mt-[130px] object-contain"
                 />
               </div>
             </div>

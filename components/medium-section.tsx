@@ -163,7 +163,9 @@ export default function MediumSection() {
                   <img
                     src={article.image || "/images/placeholder-article.svg"}
                     alt={article.title}
-                    className="w-full h-full object-cover"
+                    width="800"
+                    height="450"
+                    className="w-full h-full max-w-full object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement
                       target.src = "/images/placeholder-article.svg"

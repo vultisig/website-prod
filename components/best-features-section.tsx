@@ -26,7 +26,7 @@ export default function BestFeaturesSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8">
-            Best <span className="text-cyan-400">features</span> in one place
+            Secure Multi-Signature <span className="text-cyan-400">Vault Wallet</span> Features
           </h2>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-12 py-6 sm:py-8 text-base sm:text-lg rounded-lg mb-16">
             Download Vultisig
@@ -123,17 +123,25 @@ export default function BestFeaturesSection() {
                      <img
                        src={`/images/features-${index + 1}.svg`}
                        alt={feature.title}
-                       className="h-full"
+                       width="600"
+                       height="400"
+                       className="h-full w-auto max-w-full object-contain"
                      />
                      {index === 1 && (
                         <div>
                           <img
                             src="/images/padlock-1.svg"
-                            className="absolute top-[25%] -left-[10%]"
+                            alt="Security padlock icon"
+                            width="100"
+                            height="100"
+                            className="absolute top-[25%] -left-[10%] w-auto max-w-[100px]"
                           />
                           <img
                             src="/images/padlock-2.svg"
-                            className="absolute top-0 right-[-50%] blur-[2px]"
+                            alt="Security padlock decoration"
+                            width="100"
+                            height="100"
+                            className="absolute top-0 right-[-50%] blur-[2px] w-auto max-w-[100px]"
                             style={{ transform: "scaleX(-2) scaleY(2)" }}
                           />
                         </div>

@@ -181,7 +181,13 @@ export default function DownloadsPage() {
               </p>
             </div>
             <div className="flex flex-col items-center justify-center relative">
-              <img src="/images/vultisig-app-mobile.svg" alt="Vultisig Mobile App" className="w-64 sm:w-80 h-auto rounded-xl shadow-lg z-10" />
+              <img 
+                src="/images/vultisig-app-mobile.svg" 
+                alt="Vultisig Mobile App" 
+                width="320"
+                height="640"
+                className="w-64 sm:w-80 h-auto max-w-[320px] rounded-xl shadow-lg z-10" 
+              />
               <div className="w-full flex flex-col items-center relative">
                 <div className="w-full max-w-[1000px] h-1 bg-gradient-to-r from-transparent via-blue-500/70 to-transparent z-10 relative"></div>
                 <div className="w-full max-w-[1000px] h-16 overflow-hidden absolute left-1/2 -translate-x-1/2 top-1 z-0 pointer-events-none">
@@ -189,19 +195,49 @@ export default function DownloadsPage() {
                 </div>
                 <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-8 z-20 relative px-4">
                   <a href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('ios app store')}>
-                    <img src="/images/appstore.svg" alt="Download on the App Store" className="h-10 sm:h-12" />
+                    <img 
+                      src="/images/appstore.svg" 
+                      alt="Download on the App Store" 
+                      width="120"
+                      height="40"
+                      className="h-10 sm:h-12 w-auto" 
+                    />
                   </a>
                   <a href="https://apps.apple.com/pa/app/vultisig-seedless-wallet/id6503023896" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('macos app store')}>
-                    <img src="/images/macstore.svg" alt="Download for MacOS" className="h-10 sm:h-12" />
+                    <img 
+                      src="/images/macstore.svg" 
+                      alt="Download for MacOS" 
+                      width="120"
+                      height="40"
+                      className="h-10 sm:h-12 w-auto" 
+                    />
                   </a>
                   <a href="https://play.google.com/store/apps/details?id=com.vultisig.wallet" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('android play store')}>
-                    <img src="images/playstore.svg" alt="Get it on Google Play" className="h-10 sm:h-12" />
+                    <img 
+                      src="images/playstore.svg" 
+                      alt="Get it on Google Play" 
+                      width="120"
+                      height="40"
+                      className="h-10 sm:h-12 w-auto" 
+                    />
                   </a>
                   <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.42/Vultisig-amd64-installer-v1.0.42.exe" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('windows')}>
-                    <img src="/images/winstore.svg" alt="Download for Windows" className="h-10 sm:h-12" />
+                    <img 
+                      src="/images/winstore.svg" 
+                      alt="Download for Windows" 
+                      width="120"
+                      height="40"
+                      className="h-10 sm:h-12 w-auto" 
+                    />
                   </a>
                   <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.42/vultisig_1.0.42_amd64.deb" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('linux')}>
-                    <img src="/images/linuxstore.svg" alt="Download for Linux" className="h-10 sm:h-12" />
+                    <img 
+                      src="/images/linuxstore.svg" 
+                      alt="Download for Linux" 
+                      width="120"
+                      height="40"
+                      className="h-10 sm:h-12 w-auto" 
+                    />
                   </a>
                 </div>
               </div>
@@ -224,7 +260,13 @@ export default function DownloadsPage() {
               </div>
               {/* <div className="absolute w-96 h-96 rounded-full bg-gradient-radial from-[var(--primary-accent)] to-transparent z-0"></div> */}
               <div className="glow-blob hidden sm:block" style={{top: '70%'}}></div>
-              <img src="/images/vultisig-app-browser.svg" alt="Vultisig Browser App" className="w-64 sm:w-80 h-auto rounded-xl shadow-lg z-10" />
+              <img 
+                src="/images/vultisig-app-browser.svg" 
+                alt="Vultisig Browser App" 
+                width="320"
+                height="400"
+                className="w-64 sm:w-80 h-auto max-w-[320px] rounded-xl shadow-lg z-10" 
+              />
             </div>
             <div className="w-full flex flex-col items-center relative">
               <div className="w-full max-w-[1000px] h-1 bg-gradient-to-r from-transparent via-blue-500/70 to-transparent z-10 relative"></div>
@@ -233,7 +275,13 @@ export default function DownloadsPage() {
               </div>
               <div className="flex flex-wrap justify-center gap-4 mt-8 z-20 relative px-4">
                 <a href="https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb?authuser=0&hl=en-GB&pli=1" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('chrome extension')}>
-                  <img src="/images/chrome-download.svg" alt="Download for Chrome" className="h-10 sm:h-12" />
+                  <img 
+                    src="/images/chrome-download.svg" 
+                    alt="Download for Chrome" 
+                    width="120"
+                    height="40"
+                    className="h-10 sm:h-12 w-auto" 
+                  />
                 </a>
               </div>
             </div>
@@ -250,7 +298,13 @@ export default function DownloadsPage() {
               </div>
               {/* <div className="absolute w-96 h-96 rounded-full bg-gradient-radial from-[var(--primary-accent)] to-transparent z-0"></div> */}
               <div className="glow-blob hidden sm:block" style={{top: '70%', height: '30rem', width: '30rem'}}></div>
-              <img src="/images/vultiweb-logo.svg" alt="VultiWeb" className="w-64 sm:w-80 h-auto rounded-xl z-10" />
+              <img 
+                src="/images/vultiweb-logo.svg" 
+                alt="VultiWeb" 
+                width="320"
+                height="320"
+                className="w-64 sm:w-80 h-auto max-w-[320px] rounded-xl z-10" 
+              />
             </div>
             <div className="w-full flex flex-col items-center relative">
               <div className="w-full max-w-[1000px] h-1 bg-gradient-to-r from-transparent via-blue-500/70 to-transparent z-10 relative"></div>
@@ -259,7 +313,13 @@ export default function DownloadsPage() {
               </div>
               <div className="flex flex-wrap justify-center gap-4 mt-8 z-20 relative px-4">
                 <a href="https://airdrop.vultisig.com/" target="_blank" rel="noopener noreferrer">
-                  <img src="/images/vultiweb.svg" alt="View it on VultiWeb" className="h-10 sm:h-12" />
+                  <img 
+                    src="/images/vultiweb.svg" 
+                    alt="View it on VultiWeb" 
+                    width="120"
+                    height="40"
+                    className="h-10 sm:h-12 w-auto" 
+                  />
                 </a>
               </div>
             </div>
