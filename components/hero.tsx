@@ -97,7 +97,7 @@ export default function Hero() {
             AGAIN
           </h1>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300 mb-8 text-center md:text-left">
-            Secure Multi-Signature Vault Protection
+            Secure Cross-Chain Multi-Signature Vaults
           </h2>
 
           <a href="/downloads">

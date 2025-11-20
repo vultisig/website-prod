@@ -26,7 +26,7 @@ export default function BestFeaturesSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8">
-            Secure Multi-Signature <span className="text-cyan-400">Vault Wallet</span> Features
+            Secure Multi-Signature <span className="text-cyan-400">Vaults</span> Features
           </h2>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-12 py-6 sm:py-8 text-base sm:text-lg rounded-lg mb-16">
             Download Vultisig
