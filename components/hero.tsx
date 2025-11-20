@@ -96,6 +96,9 @@ export default function Hero() {
             <br />
             AGAIN
           </h1>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300 mb-8 text-center md:text-left">
+            Secure Multi-Signature Vault Protection
+          </h2>
 
           <a href="/downloads">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-12 py-6 sm:py-8 text-base sm:text-lg rounded-lg mb-16 pointer-events-auto">

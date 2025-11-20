@@ -8,25 +8,25 @@ export default function Footer() {
           {/* Left side - Logo and socials */}
           <div className="flex-shrink-0">
             <div className="flex items-center mb-6">
-              <img src={'/images/vultisig-logo.svg'} width={'35px'} height={'35px'}></img>
+              <img src={'/images/vultisig-logo.svg'} alt="Vultisig logo" width={'35px'} height={'35px'}></img>
               <span className="text-white text-2xl sm:text-3xl font-bold pl-1">Vultisig</span>
             </div>
 
             <div className="flex space-x-4 mb-6">
               <a href="https://github.com/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/github-logo.svg'} width={'25px'} height={'25px'}></img>
+                <img src={'/images/github-logo.svg'} alt="GitHub" width={'25px'} height={'25px'}></img>
               </a>
               <a href="https://discord.com/invite/54wEtGYxuv" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/discord-logo.svg'} width={'25px'} height={'25px'}></img>
+                <img src={'/images/discord-logo.svg'} alt="Discord" width={'25px'} height={'25px'}></img>
               </a>
               <a href="https://x.com/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/x-logo.svg'} width={'25px'} height={'25px'}></img>
+                <img src={'/images/x-logo.svg'} alt="X (Twitter)" width={'25px'} height={'25px'}></img>
               </a>
               <a href="https://t.me/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/tg-logo.svg'} width={'25px'} height={'25px'}></img>
+                <img src={'/images/tg-logo.svg'} alt="Telegram" width={'25px'} height={'25px'}></img>
               </a>
               <a href="https://www.instagram.com/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/instagram-logo.svg'} width={'25px'} height={'25px'}></img>
+                <img src={'/images/instagram-logo.svg'} alt="Instagram" width={'25px'} height={'25px'}></img>
               </a>
               {/* <Github className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
               <MessageCircle className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />

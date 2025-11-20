@@ -7,9 +7,9 @@ import Script from "next/script"
 import CookieAnalytics from "@/components/cookie-analytics"
 
 export const metadata: Metadata = {
-  title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
+  title: "Vultisig: Free Secure Multi-Chain Multi-Sig Crypto Vault",
   description:
-    "Revolutionary multi-factor crypto wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+    "Vultisig: The most secure multi-signature crypto vault wallet with TSS technology. Create secure vaults for Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
   metadataBase: new URL("https://vultisig.com"),
   keywords: [
     "Vultisig",
@@ -58,6 +58,40 @@ export const metadata: Metadata = {
     "TSS crypto wallet",
     "Multisignature",
     "Multi-Sig",
+    "secure crypto vault",
+    "multi-signature vault",
+    "hardware wallet alternative",
+    "cold storage wallet",
+    "encrypted wallet",
+    "non-custodial wallet",
+    "crypto security vault",
+    "enterprise crypto wallet",
+    "institutional wallet",
+    "crypto asset vault",
+    "blockchain vault",
+    "digital asset vault",
+    "secure storage wallet",
+    "crypto protection",
+    "asset security",
+    "key management",
+    "crypto backup",
+    "recovery wallet",
+    "cold storage solution",
+    "non-custodial",
+    "enterprise-grade security",
+    "key management system",
+    "multi-party computation",
+    "MPC",
+    "threshold cryptography",
+    "distributed key generation",
+    "zero-knowledge security",
+    "air-gapped security",
+    "offline wallet",
+    "backup and recovery",
+    "asset protection",
+    "crypto insurance ready",
+    "compliance wallet",
+    "regulated wallet solution",
   ],
   authors: [
     { name: "Vultisig" }, 
@@ -93,7 +127,7 @@ export const metadata: Metadata = {
   referrer: 'origin-when-cross-origin',
   openGraph: {
     siteName: "Vultisig",
-    title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
+    title: "Vultisig: Free Secure Multi-Sig Crypto Vault",
     description:
       "Revolutionary multi-factor crypto wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
     url: "https://vultisig.com",
@@ -121,7 +155,7 @@ export const metadata: Metadata = {
     site: "@vultisig",
     creator: "@vultisig",
     card: "summary_large_image",
-    title: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
+    title: "Vultisig: Free Secure Multi-Sig Crypto Vault",
     description:
       "Revolutionary multi-factor crypto wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
     images: [
@@ -172,17 +206,17 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
       { url: "/logo.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/icon.svg",
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/icon.svg", sizes: "180x180", type: "image/svg+xml" },
     ],
     other: [
       {
         rel: "mask-icon",
-        url: "/safari-pinned-tab.svg",
+        url: "/icon.svg",
         color: "#000000",
       },
     ],

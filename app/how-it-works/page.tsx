@@ -35,7 +35,10 @@ export default function HowItWorks() {
             )}
             <img 
               src="/images/hiw-1.svg" 
-              className={`w-[80%] h-auto object-contain rounded-xl ${imageLoading ? 'hidden' : ''}`}
+              alt="Wallet recovery re-imagined illustration"
+              width="490"
+              height="520"
+              className={`w-full max-w-[490px] h-auto object-contain rounded-xl ${imageLoading ? 'hidden' : ''}`}
               onLoad={() => setImageLoading(false)}
               onError={() => setImageLoading(false)}
             />
@@ -122,7 +125,13 @@ export default function HowItWorks() {
             <Card className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-10 flex flex-col items-start min-h-[340px] overflow-hidden relative
               hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
               ">
-              <img src="/images/hiw-4.svg" className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" />
+              <img 
+                src="/images/hiw-4.svg" 
+                alt="Storage of private keys illustration" 
+                width="500"
+                height="400"
+                className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" 
+              />
               <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Storage of private keys</h3>
               <p className="text-gray-300 mb-4 relative z-10">Keeping keys in one place? That's a single point of failure begging to be exploited.</p>
               <p className="text-gray-300 relative z-10">Whether it's a hack, misstep, or hardware loss - your access is only as strong as its weakest link.</p>
@@ -134,7 +143,13 @@ export default function HowItWorks() {
           <Card className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-10 flex flex-col items-start min-h-[340px] overflow-hidden relative
             hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
             ">
-            <img src="/images/hiw-5.svg" className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" />
+            <img 
+              src="/images/hiw-5.svg" 
+              alt="Human error illustration" 
+              width="500"
+              height="400"
+              className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" 
+            />
             <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Human error</h3>
             <p className="text-gray-300 mb-2 relative z-10">Let's face it: people click bad links. Scams get smarter. Social engineering wins.</p>
             <p className="text-gray-300 relative z-10">Most drains happen not through code, but through trust. One mistake, and it's rekt.</p>

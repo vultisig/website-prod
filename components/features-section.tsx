@@ -6,10 +6,10 @@ export default function FeaturesSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center lg:mb-0 xs:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Vultisig is <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">different</span>
+            Vultisig: Secure Multi-Signature <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Vault Wallet</span>
           </h2>
           <p className="text-gray-300 text-lg sm:text-xl">
-            No tradeoffs. Just seamless, secure crypto{' '}
+            No tradeoffs. Just seamless, secure crypto vault{' '}
             <br className="hidden sm:block" />
             management.
           </p>
@@ -19,7 +19,7 @@ export default function FeaturesSection() {
           <div className="space-y-8 lg:space-y-12">
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-[rgba(var(--primary-accent-rgb),0.1)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <img src="/images/brain.svg" className="w-6 h-6" />
+                <img src="/images/brain.svg" alt="Phishing Proof Architecture icon" className="w-6 h-6" />
               </div>
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3">Phishing Proof Architecture</h3>
@@ -33,7 +33,7 @@ export default function FeaturesSection() {
 
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-[rgba(var(--primary-accent-rgb),0.1)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <img src="/images/pen-tool.svg" className="w-6 h-6" />
+                <img src="/images/pen-tool.svg" alt="Private Key Free Design icon" className="w-6 h-6" />
               </div>
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3">Private Key Free Design</h3>
@@ -51,7 +51,7 @@ export default function FeaturesSection() {
 
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-[rgba(var(--primary-accent-rgb),0.1)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <img src="/images/chain.svg" className="w-6 h-6" />
+                <img src="/images/chain.svg" alt="Omni-Chain icon" className="w-6 h-6" />
               </div>
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3">
@@ -71,7 +71,10 @@ export default function FeaturesSection() {
           <div className="flex justify-center hidden md:hidden lg:flex" style={{ overflow: 'hidden' }}>
             <img
               src="/images/home-1.svg"
-              className="w-full max-w-full lg:min-w-[800px]"
+              alt="Vultisig secure multi-signature vault wallet features illustration"
+              width="800"
+              height="600"
+              className="w-full max-w-[800px] h-auto object-contain"
             />
           </div>
         </div>

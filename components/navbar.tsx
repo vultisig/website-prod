@@ -55,7 +55,7 @@ export default function Navbar() {
         `}>
           <div className="flex justify-between items-center">
             <a href="/" className="flex items-center">
-              <img src={'/images/vultisig-logo.svg'} width={'25px'} height={'25px'}></img>
+              <img src={'/images/vultisig-logo.svg'} alt="Vultisig logo" width={'25px'} height={'25px'}></img>
               <span className="text-white text-xl font-semibold pl-3">Vultisig</span>
             </a>
 

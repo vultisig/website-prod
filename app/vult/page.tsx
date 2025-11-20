@@ -175,7 +175,10 @@ export default function VultPage() {
         <div className="hidden md:flex flex-1 justify-center items-center absolute top-[100px] right-[50px] z-0">
           <img
             src="/images/vult-1.svg"
-            className="w-[30vw] lg:w-[50vw] h-auto object-contain max-w-[680px] min-w-[650px]"
+            alt="VULT token hero illustration"
+            width="680"
+            height="680"
+            className="w-[30vw] lg:w-[50vw] h-auto object-contain max-w-[680px]"
           />
         </div>
       </section>
@@ -457,7 +460,13 @@ export default function VultPage() {
             </div>
             {/* Center phone image, spanning two rows */}
             <div className="row-start-1 row-end-3 col-start-2 flex justify-center items-center">
-              <img src="/images/vult-2.svg" className="min-w-[400px] min-h-[450px] object-contain" />
+              <img 
+                src="/images/vult-2.svg" 
+                alt="VULT airdrop participation illustration" 
+                width="400"
+                height="450"
+                className="w-full max-w-[400px] h-auto object-contain" 
+              />
             </div>
             {/* 4: Bottom right */}
             <div className="row-start-2 col-start-3 flex justify-center items-center">

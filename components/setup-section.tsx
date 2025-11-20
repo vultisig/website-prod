@@ -7,7 +7,7 @@ export default function SetupSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            The <span className="text-cyan-400">setup</span> for your needs
+            Multi-Signature <span className="text-cyan-400">Vault</span> Setup for Your Needs
           </h2>
         </div>
 
@@ -57,7 +57,13 @@ export default function SetupSection() {
             </a>
             </div>
             <div className="absolute bottom-0 right-0 z-0">
-              <img src="/images/home-2.svg" className="opacity-80" />
+              <img 
+                src="/images/home-2.svg" 
+                alt="Fast Vault setup illustration" 
+                width="400"
+                height="300"
+                className="opacity-80 w-auto max-w-[400px] h-auto object-contain" 
+              />
             </div>
           </div>
 
@@ -106,7 +112,13 @@ export default function SetupSection() {
             </a>
             </div>
             <div className="absolute bottom-0 right-0 z-0">
-              <img src="/images/home-3.svg" className="opacity-80" />
+              <img 
+                src="/images/home-3.svg" 
+                alt="Secure Vault setup illustration" 
+                width="400"
+                height="300"
+                className="opacity-80 w-auto max-w-[400px] h-auto object-contain" 
+              />
             </div>
           </div>
         </div>
