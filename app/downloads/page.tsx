@@ -14,12 +14,12 @@ const hashes = [
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:daaaf6236c9136c2c35cd3792bfcb28bb64bea3e75a5519c36ab66d3d56b8424",
+    hash: "sha256:70c7c83d8cde285e989fa568e2ef07233025cec51e1242ea1690cb545f25881b",
   },
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "sha256:68af84faf1a8a92ca9c8f33ade4020d915dcc98ca1075a3f52e140e697dc9f0a",
+    hash: "sha256:98716c1541ee5c0acccc9cfcc6f868692a4219f2c3d2f39d50c3882527d52777",
   },
 ]
 
@@ -221,7 +221,7 @@ export default function DownloadsPage() {
                       className="h-10 sm:h-12 w-auto" 
                     />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.42/Vultisig-amd64-installer-v1.0.42.exe" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('windows')}>
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.44/Vultisig-amd64-installer-v1.0.44.exe" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('windows')}>
                     <img 
                       src="/images/winstore.svg" 
                       alt="Download for Windows" 
@@ -230,7 +230,7 @@ export default function DownloadsPage() {
                       className="h-10 sm:h-12 w-auto" 
                     />
                   </a>
-                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.42/vultisig_1.0.42_amd64.deb" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('linux')}>
+                  <a href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.44/vultisig_1.0.44_amd64.deb" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('linux')}>
                     <img 
                       src="/images/linuxstore.svg" 
                       alt="Download for Linux" 
