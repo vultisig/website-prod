@@ -203,7 +203,7 @@ export default function DownloadsPage() {
                       className="h-10 sm:h-12 w-auto" 
                     />
                   </a>
-                  <a href="https://apps.apple.com/pa/app/vultisig-seedless-wallet/id6503023896" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('macos app store')}>
+                  <a href="https://apps.apple.com/app/vultisig-seedless-wallet/id6503023896" target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('macos app store')}>
                     <img 
                       src="/images/macstore.svg" 
                       alt="Download for MacOS" 
