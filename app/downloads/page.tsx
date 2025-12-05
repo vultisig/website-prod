@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useState } from "react"
+import { motion } from "motion/react"
 
 const hashes = [
   {
@@ -160,8 +161,7 @@ export default function DownloadsPage() {
                 <TabsTrigger
                   value="mobile"
                   className="
-                    px-4 sm:px-6 py-2 font-medium transition-all duration-1000 rounded-full text-sm
-                    data-[state=active]:bg-blue-600
+                    relative px-4 sm:px-6 py-2 font-medium transition-all duration-500 rounded-full text-sm
                     data-[state=active]:text-white
                     data-[state=active]:font-bold
                     data-[state=inactive]:bg-transparent
@@ -170,13 +170,19 @@ export default function DownloadsPage() {
                     h-full
                   "
                 >
-                  Mobile App
+                  <span className="relative z-10">Mobile App</span>
+                  {activeTab === "mobile" && (
+                    <motion.div
+                      layoutId="active-tab"
+                      className="absolute inset-0 bg-blue-600 rounded-full"
+                      transition={{ duration: 0.5 }}
+                    />
+                  )}
                 </TabsTrigger>
                 <TabsTrigger
                   value="browser"
                   className="
-                    px-4 sm:px-6 py-2 font-medium transition-all duration-1000 rounded-full text-sm
-                    data-[state=active]:bg-blue-600
+                    relative px-4 sm:px-6 py-2 font-medium transition-all duration-500 rounded-full text-sm
                     data-[state=active]:text-white
                     data-[state=active]:font-bold
                     data-[state=inactive]:bg-transparent
@@ -184,12 +190,20 @@ export default function DownloadsPage() {
                     focus-visible:outline-none
                     h-full
                   "
-                >Browser Extension</TabsTrigger>
+                >
+                  <span className="relative z-10">Browser Extension</span>
+                  {activeTab === "browser" && (
+                    <motion.div
+                      layoutId="active-tab"
+                      className="absolute inset-0 bg-blue-600 rounded-full"
+                      transition={{ duration: 0.5 }}
+                    />
+                  )}
+                </TabsTrigger>
                 <TabsTrigger
                   value="web"
                   className="
-                    px-4 sm:px-6 py-2 font-medium transition-all duration-1000 rounded-full text-sm
-                    data-[state=active]:bg-blue-600
+                    relative px-4 sm:px-6 py-2 font-medium transition-all duration-500 rounded-full text-sm
                     data-[state=active]:text-white
                     data-[state=active]:font-bold
                     data-[state=inactive]:bg-transparent
@@ -197,13 +211,22 @@ export default function DownloadsPage() {
                     focus-visible:outline-none
                     h-full
                   "
-                >Web</TabsTrigger>
+                >
+                  <span className="relative z-10">Web</span>
+                  {activeTab === "web" && (
+                    <motion.div
+                      layoutId="active-tab"
+                      className="absolute inset-0 bg-blue-600 rounded-full"
+                      transition={{ duration: 0.5 }}
+                    />
+                  )}
+                </TabsTrigger>
               </TabsList>
             </div>
 
             <TabsContent 
               value="mobile" 
-              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-1000 ${animationClass}`}
+              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-500 ${animationClass}`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
                 {/* Left Column - Content */}
@@ -300,7 +323,7 @@ export default function DownloadsPage() {
             
             <TabsContent 
               value="browser" 
-              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-1000 ${animationClass}`}
+              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-500 ${animationClass}`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
                 {/* Left Column - Content */}
@@ -346,7 +369,7 @@ export default function DownloadsPage() {
             
             <TabsContent 
               value="web" 
-              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-1000 ${animationClass}`}
+              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-500 ${animationClass}`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
                 {/* Left Column - Content */}
