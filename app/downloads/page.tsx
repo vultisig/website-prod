@@ -15,17 +15,17 @@ const hashes = [
   {
     os: "android",
     icon: "/images/Android.svg",
-    hash: "sha256:a08f10106261f8b721de2c2aecac6589d30ba809f550406f2271082ed0a18e73",
+    hash: "sha256:a41f4e1abc63c71f4d7ef0b430772268a01be5604f3aa82117662e1d64d89d48",
   },
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "sha256:98716c1541ee5c0acccc9cfcc6f868692a4219f2c3d2f39d50c3882527d52777",
+    hash: "sha256:159741a1a952bb555c06ed48a47aa0a6329810b2ca2d77755257359448078df7",
   },
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:70c7c83d8cde285e989fa568e2ef07233025cec51e1242ea1690cb545f25881b",
+    hash: "sha256:f4d3bc34f081e2ae7621410174b14b05fac39f7ae7a98d52ce0ea595831eec81",
   },
 ]
 
@@ -274,7 +274,7 @@ export default function DownloadsPage() {
                     </a>
                     
                     <a 
-                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.44/Vultisig-amd64-installer-v1.0.44.exe" 
+                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.46/Vultisig-amd64-installer-v1.0.46.exe" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       onClick={() => trackDownload('windows')}
@@ -285,7 +285,7 @@ export default function DownloadsPage() {
                     </a>
                     
                     <a 
-                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.44/vultisig_1.0.44_amd64.deb" 
+                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.46/vultisig_1.0.46_amd64.deb" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       onClick={() => trackDownload('linux')}
@@ -296,7 +296,7 @@ export default function DownloadsPage() {
                     </a>
                     
                     <a 
-                      href="https://github.com/vultisig/vultisig-android/releases/tag/v1.0.87" 
+                      href="https://github.com/vultisig/vultisig-android/releases/tag/v1.0.89" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       onClick={() => trackDownload('android github')}
