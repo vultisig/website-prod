@@ -329,7 +329,7 @@ export default function DownloadsPage() {
                 {/* Left Column - Content */}
                 <div className="flex flex-col justify-center">
                   <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-                    Install Vulticonnect
+                    Install Vultig Extension
                   </h1>
                   <p className="text-gray-300 text-sm sm:text-base mb-8 max-w-lg">
                     Your gateway to web3 and DeFi. Connect your Vultisig to your favourite interface without moving your funds.
