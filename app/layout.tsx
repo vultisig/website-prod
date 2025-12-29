@@ -7,9 +7,9 @@ import Script from "next/script"
 import CookieAnalytics from "@/components/cookie-analytics"
 
 export const metadata: Metadata = {
-  title: "Vultisig: Free Secure Multi-Chain Multi-Sig Crypto Vault",
+  title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
   description:
-    "Vultisig: The most secure multi-signature crypto vault wallet with TSS technology. Create secure vaults for Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+    "Vultisig: The leading MPC wallet with multi-signature security and TSS technology. Create secure vaults for Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
   metadataBase: new URL("https://vultisig.com"),
   keywords: [
     "Vultisig",
@@ -82,6 +82,14 @@ export const metadata: Metadata = {
     "key management system",
     "multi-party computation",
     "MPC",
+    "MPC wallet",
+    "best MPC wallet",
+    "MPC crypto wallet",
+    "MPC wallet app",
+    "multi-party computation wallet",
+    "MPC self-custody",
+    "MPC wallet iOS",
+    "MPC wallet Android",
     "threshold cryptography",
     "distributed key generation",
     "zero-knowledge security",
@@ -127,9 +135,9 @@ export const metadata: Metadata = {
   referrer: 'origin-when-cross-origin',
   openGraph: {
     siteName: "Vultisig",
-    title: "Vultisig: Free Secure Multi-Sig Crypto Vault",
+    title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
     description:
-      "Revolutionary multi-factor crypto wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+      "The leading MPC wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
     url: "https://vultisig.com",
     type: "website",
     locale: "en_US",
@@ -155,9 +163,9 @@ export const metadata: Metadata = {
     site: "@vultisig",
     creator: "@vultisig",
     card: "summary_large_image",
-    title: "Vultisig: Free Secure Multi-Sig Crypto Vault",
+    title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
     description:
-      "Revolutionary multi-factor crypto wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+      "The leading MPC wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
     images: [
       {
         url: "https://vultisig.com/thumbnails/home.png",
@@ -255,10 +263,11 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
               "name": "Vultisig",
-              "description": "Revolutionary multi-factor crypto wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+              "description": "The leading MPC wallet with multi-signature security and TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
               "url": "https://vultisig.com",
               "applicationCategory": "FinanceApplication",
               "operatingSystem": "Android, iOS, Windows, Web",
+              "keywords": "MPC wallet, multi-party computation, TSS wallet, multisig wallet, crypto vault",
               "offers": {
                 "@type": "Offer",
                 "price": "0",
@@ -268,6 +277,11 @@ export default function RootLayout({
                 "@type": "Organization",
                 "name": "Vultisig",
                 "url": "https://vultisig.com",
+                "sameAs": [
+                  "https://x.com/vultisig",
+                  "https://discord.gg/vultisig",
+                  "https://github.com/vultisig"
+                ],
                 "contactPoint": {
                   "@type": "ContactPoint",
                   "contactType": "customer service",
@@ -280,6 +294,7 @@ export default function RootLayout({
                 "ratingCount": "1250"
               },
               "featureList": [
+                "MPC (Multi-Party Computation) security",
                 "Multi-signature wallet",
                 "TSS technology",
                 "30+ blockchain support",

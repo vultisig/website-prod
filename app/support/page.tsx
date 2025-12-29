@@ -1,6 +1,16 @@
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Vultisig Support - MPC Wallet Help & FAQ',
+  description: 'Get help with Vultisig MPC wallet. FAQs, troubleshooting, and support for multi-device signing, vault creation, and crypto transactions.',
+  openGraph: {
+    title: 'Vultisig MPC Wallet Support',
+    description: 'Help center for the leading MPC wallet. FAQs, guides, and troubleshooting.',
+  },
+}
 
 export default function FAQPage() {
   return (

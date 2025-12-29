@@ -1,5 +1,15 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Vultisig Documentation - MPC Wallet Guides & API',
+  description: 'Official Vultisig documentation. Guides for MPC wallet setup, multi-device signing, vault management, and developer API.',
+  openGraph: {
+    title: 'Vultisig MPC Wallet Documentation',
+    description: 'Complete documentation for the leading MPC wallet. Setup guides, API reference, and developer resources.',
+  },
+}
 
 export default function DocsPage() {
   return (

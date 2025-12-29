@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy - Vultisig MPC Wallet',
+  description: 'Vultisig privacy policy. Learn how the MPC wallet protects your data and maintains self-custody security.',
+}
 
 export default function PrivacyPolicy() {
   return (
