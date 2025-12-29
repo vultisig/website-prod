@@ -15,7 +15,7 @@ export default function CtaSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="flex flex-col items-center lg:items-start w-full">
               <div className="flex items-center mb-6 lg:mb-8 w-full lg:w-auto justify-center lg:justify-start">
-                <img src={'/images/vultisig-logo.svg'} width={'40px'} height={'40px'} className="sm:w-[60px] sm:h-[60px]"></img>
+                <img src={'/images/vultisig-logo.svg'} alt="Vultisig logo" width={'40px'} height={'40px'} className="sm:w-[60px] sm:h-[60px]"></img>
                 <h2 className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold pl-3 text-center lg:text-left">Vultisig</h2>
               </div>
 

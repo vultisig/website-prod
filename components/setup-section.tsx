@@ -52,7 +52,7 @@ export default function SetupSection() {
               rel="noopener noreferrer"
             >
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
-                Learn More <ArrowUpRight className="ml-2 h-4 w-4" />
+                Create a Fast Vault <ArrowUpRight className="ml-2 h-4 w-4" />
               </Button>
             </a>
             </div>
@@ -107,7 +107,7 @@ export default function SetupSection() {
               rel="noopener noreferrer"
             >
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
-                Learn More <ArrowUpRight className="ml-2 h-4 w-4" />
+                Create a Secure Vault <ArrowUpRight className="ml-2 h-4 w-4" />
               </Button>
             </a>
             </div>
