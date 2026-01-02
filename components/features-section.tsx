@@ -1,84 +1,73 @@
-import { Shield, Key, Link } from "lucide-react"
-
 export default function FeaturesSection() {
+  const features = [
+    {
+      icon: "/images/brain.svg",
+      title: "Phishing Proof Architecture",
+      description:
+        "Vultisig's built in MFA architecture protects users against attacks used to drain traditional single point of failure wallets.",
+    },
+    {
+      icon: "/images/pen-tool.svg",
+      title: "Private Key Free Design",
+      description:
+        "You will never need to write down your seed phrase again. Vultisig provides simple-to-use vault shares that can be stored anywhere without compromising security.",
+    },
+    {
+      icon: "/images/chain.svg",
+      title: "Omni-Chain",
+      description:
+        "Our Vault system works across over 30 chains already, while staying flexible and dynamic - enabling a truly seamless user experience.",
+    },
+  ]
+
   return (
-    <section className="pt-16 px-4">
+    <section className="py-16 md:py-24 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center lg:mb-0 xs:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Vultisig: Secure Multi-Signature <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Vault Wallet</span>
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white mb-5 tracking-tight">
+            Vultisig is{" "}
+            <span className="bg-gradient-to-r from-[#33E6BF] to-[#0439C7] bg-clip-text text-transparent">
+              different
+            </span>
           </h2>
-          <p className="text-gray-300 text-lg sm:text-xl">
-            No tradeoffs. Just seamless, secure crypto vault{' '}
-            <br className="hidden sm:block" />
-            management.
+          <p className="text-[#c9d6e8] text-lg md:text-xl tracking-tight">
+            No tradeoffs. Just seamless, secure crypto management.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          <div className="space-y-8 lg:space-y-12">
-            <div className="flex items-start space-x-4">
-              <div className="w-12 h-12 bg-[rgba(var(--primary-accent-rgb),0.1)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <img src="/images/brain.svg" alt="Phishing Proof Architecture icon" className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3">Phishing Proof Architecture</h3>
-                <p className="text-gray-300 text-sm sm:text-md leading-relaxed">
-                  Vultisig's built in MFA architecture protects users against attacks used{' '}
-                  <br className="hidden sm:block" />
-                  to drain traditional single point of failure wallets.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="w-12 h-12 bg-[rgba(var(--primary-accent-rgb),0.1)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <img src="/images/pen-tool.svg" alt="Private Key Free Design icon" className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3">Private Key Free Design</h3>
-                <p className="text-gray-300 text-sm sm:text-md leading-relaxed">
-                  With Vultisig, you will never need to write down your private key or seed{' '}
-                  <br className="hidden sm:block" />
-                  phrase again. Vultisig provides simple-to-use vault shares that can be{' '}
-                  <br className="hidden sm:block" />
-                  stored anywhere for accessibility and convenience without compromising{' '}
-                  <br className="hidden sm:block" />
-                  security.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="w-12 h-12 bg-[rgba(var(--primary-accent-rgb),0.1)] rounded-lg flex items-center justify-center flex-shrink-0">
-                <img src="/images/chain.svg" alt="Omni-Chain icon" className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3">
-                  Omni-Chain
+        {/* Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="rounded-[20px] border border-[#11284a] p-[30px] flex flex-col gap-3 transition-all duration-300 hover:border-[#4879fd] hover:shadow-[0_0_20px_rgba(72,121,253,0.3)]"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(2, 18, 43, 1) 0%, rgba(6, 27, 58, 1) 100%)",
+              }}
+            >
+              {/* Icon and Title */}
+              <div className="flex flex-col gap-3">
+                <div className="w-9 h-9 bg-[rgba(72,121,253,0.1)] rounded-lg flex items-center justify-center">
+                  <img
+                    src={feature.icon}
+                    alt={`${feature.title} icon`}
+                    className="w-6 h-6"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold text-[#eff2f6] tracking-tight">
+                  {feature.title}
                 </h3>
-                <p className="text-gray-300 text-sm sm:text-md leading-relaxed">
-                  <b>Beyond traditional multi-sig.</b>{' '}
-                  <br className="hidden sm:block" />
-                  Our Vault system works across over 30 chains already, while staying{' '}
-                  <br className="hidden sm:block" />
-                  flexible and dynamic - enabling a truly seamless user experience.
-                </p>
               </div>
+
+              {/* Description */}
+              <p className="text-base text-[#c9d6e8] leading-[1.5] tracking-tight">
+                {feature.description}
+              </p>
             </div>
-          </div>
-
-          <div className="flex justify-center hidden md:hidden lg:flex" style={{ overflow: 'hidden' }}>
-            <img
-              src="/images/home-1.svg"
-              alt="Vultisig secure multi-signature vault wallet features illustration"
-              width="800"
-              height="600"
-              className="w-full max-w-[800px] h-auto object-contain"
-            />
-          </div>
+          ))}
         </div>
-
       </div>
     </section>
   )

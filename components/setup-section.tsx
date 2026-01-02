@@ -6,8 +6,12 @@ export default function SetupSection() {
     <section className="py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Multi-Signature <span className="text-cyan-400">Vault</span> Setup for Your Needs
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white mb-4 tracking-tight">
+            The{" "}
+            <span className="bg-gradient-to-r from-[#33E6BF] to-[#0439C7] bg-clip-text text-transparent">
+              setup
+            </span>{" "}
+            for your needs
           </h2>
         </div>
 

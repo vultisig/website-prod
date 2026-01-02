@@ -52,7 +52,7 @@ export default function ClientsSection() {
   ));
 
   return (
-    <section className="py-16 px-4 border-b border-t border-[var(--border-color)]"> {/* bg-[#020e22] */}
+    <section className="py-12 px-4">
       <div className="max-w-7xl mx-auto text-center mb-12">
         <p className="text-gray-300 text-base sm:text-lg">
           Vultisig Vaults are battle-tested and trusted by thousands of users,

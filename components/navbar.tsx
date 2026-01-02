@@ -29,20 +29,7 @@ export default function Navbar() {
 
   return (
     <>
-      {isAtTop && pathname === '/' && (
-        <a href="/vult"
-          className="
-            fixed top-0 left-0 w-full z-[60] h-8 flex items-center justify-center text-sm font-normal
-            bg-gradient-to-r from-[var(--border-color)] to-[#33e6bf]
-            border-b border-blue-500
-            text-white
-            font-extrabold
-          "
-        >
-          Join $VULT airdrop today
-        </a>
-      )}
-      <nav className={`fixed ${isAtTop && pathname === '/' ? 'top-8' : 'top-0'} left-0 right-0 z-50 transition-all duration-300 ${isAtTop
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isAtTop
         ? 'w-full max-w-[100vw] bg-transparent rounded-none px-0 pt-4'
         : 'top-6 inset-x-0 px-4 lg:px-2'
       } `}>

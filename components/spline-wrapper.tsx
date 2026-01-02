@@ -36,8 +36,8 @@ export default function SplineWrapper() {
           </div>
         </div>
       )} */}
-      <Spline 
-        scene={`https://prod.spline.design/O9LTDt2mjcjTQoF2/scene.splinecode?id=2`}
+      <Spline
+        scene="https://prod.spline.design/TMNN6wJ0bfvnVGnB/scene.splinecode"
         className="w-full h-full"
         onLoad={handleLoad}
       />

@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { DotPattern } from "@/components/magicui/dot-pattern"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 
@@ -64,23 +63,20 @@ export default function Hero() {
 
   return (
     <section
-      className="pt-32 pb-0 px-4 relative overflow-hidden min-h-screen flex flex-col justify-center items-center md:block bg-black"
-      style={{ pointerEvents: "none", userSelect: "none" }}
+      className="pt-32 pb-0 px-4 relative overflow-hidden min-h-screen flex flex-col justify-center items-center md:block"
+      style={{
+        pointerEvents: "none",
+        userSelect: "none",
+        background: "linear-gradient(180deg, #02122b 0%, #061b3a 50%, #02122b 100%)",
+      }}
     >
-      {/* Dot Pattern Background - Shows before Spline loads */}
-      <DotPattern
-        width={64}
-        height={64}
-        cr={3}
-        className="absolute inset-0 z-0 pointer-events-none"
-      />
-
       {/* Spline 3D Background - Only on desktop */}
       {!isMobile && (
         <div className="absolute inset-0 z-10 pointer-events-none">
           <Spline />
         </div>
       )}
+
       <div className="relative max-w-7xl mx-auto w-full flex flex-col items-center justify-center md:block z-20">
         <div className="w-full flex flex-col items-center justify-center md:block md:max-w-4xl">
           <div className="inline-flex items-center bg-[#092e3e] border border-[#33e6bf] rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
@@ -107,18 +103,15 @@ export default function Hero() {
           </a>
         </div>
       </div>
-      {/* Light effect at the bottom - hemisphere */}
+
+      {/* Subtle glow at the bottom */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[100vw] h-[50vw] pointer-events-none"
+        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[100vw] h-[40vh] pointer-events-none"
         style={{
-          background: "radial-gradient(at center bottom, rgba(0, 66, 170, 0.48) 0%, rgba(22, 94, 177, 0.07) 60%, rgba(0, 0, 0, 0) 100%)",
-          filter: "blur(48px)",
-          transform: "translate(-50%, 200px)",
+          background: "radial-gradient(ellipse at center bottom, rgba(72, 121, 253, 0.15) 0%, transparent 70%)",
           zIndex: 1,
         }}
-      >
-        <div className="w-full h-full backdrop-blur-md" style={{background: "rgba(255,255,255,0.06)"}} />
-      </div>
+      />
     </section>
   )
 }
