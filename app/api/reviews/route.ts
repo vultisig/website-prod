@@ -10,7 +10,37 @@ interface Review {
   url?: string
 }
 
+interface CachedData {
+  testimonials: Array<{
+    name: string
+    text: string
+    label: string
+    store: 'google' | 'apple'
+    date: string
+    score: number
+  }>
+  timestamp: number
+}
+
+// In-memory cache with 1-hour TTL
+let cachedReviews: CachedData | null = null
+const CACHE_TTL_MS = 60 * 60 * 1000 // 1 hour
+
+// Next.js route segment config for edge caching
+export const revalidate = 3600 // Revalidate every hour
+
 export async function GET() {
+  // Check if we have valid cached data
+  if (cachedReviews && Date.now() - cachedReviews.timestamp < CACHE_TTL_MS) {
+    return NextResponse.json(
+      { testimonials: cachedReviews.testimonials, cached: true },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+        },
+      }
+    )
+  }
   try {
     // You'll need to replace these with your actual app IDs
     const GOOGLE_PLAY_APP_ID = 'com.vultisig.wallet'
@@ -43,7 +73,7 @@ export async function GET() {
     if (googleReviews.status === 'fulfilled') {
       const googleReviewsData = googleReviews.value.data
       const fiveStarGoogleReviews = googleReviewsData
-        .filter((review: any) => review.score === 5)
+        .filter((review: any) => review.score >= 4)
         .map((review: any) => ({
           id: review.id || `google-${Date.now()}-${Math.random()}`,
           text: review.text,
@@ -60,7 +90,7 @@ export async function GET() {
     if (appleReviews.status === 'fulfilled') {
       const appleReviewsData = appleReviews.value
       const fiveStarAppleReviews = appleReviewsData
-        .filter((review: any) => review.score === 5)
+        .filter((review: any) => review.score >= 4)
         .map((review: any) => ({
           id: review.id || `apple-${Date.now()}-${Math.random()}`,
           text: review.text,
@@ -87,7 +117,20 @@ export async function GET() {
       score: review.score
     }))
 
-    return NextResponse.json({ testimonials })
+    // Cache the results
+    cachedReviews = {
+      testimonials,
+      timestamp: Date.now(),
+    }
+
+    return NextResponse.json(
+      { testimonials, cached: false },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+        },
+      }
+    )
   } catch (error) {
     console.error('Error fetching reviews:', error)
     

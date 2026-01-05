@@ -1,10 +1,10 @@
 "use client"
 
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useState } from "react"
-import { motion } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
 
 const hashes = [
   {
@@ -49,7 +49,7 @@ function HashCard({ icon, hash, os }: { icon: string; hash: string; os: string }
 
   return (
     <div className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl p-5 flex flex-col w-full h-full items-start gap-4
-      hover:border-[var(--border-color)]
+      hover:border-[#1B3F73]
       hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
       transition-all
       ">
@@ -120,7 +120,15 @@ function HashCard({ icon, hash, os }: { icon: string; hash: string; os: string }
 
 export default function DownloadsPage() {
   const [activeTab, setActiveTab] = useState("mobile")
-  const [direction, setDirection] = useState("right")
+  const [direction, setDirection] = useState(0)
+  const tabOrder = ["mobile", "browser", "web"]
+
+  const handleTabChange = (newTab: string) => {
+    const currentIndex = tabOrder.indexOf(activeTab)
+    const newIndex = tabOrder.indexOf(newTab)
+    setDirection(newIndex > currentIndex ? 1 : -1)
+    setActiveTab(newTab)
+  }
 
   const trackDownload = (platform: string) => {
     if (typeof window === 'undefined' || !(window as any).gtag) return
@@ -133,23 +141,20 @@ export default function DownloadsPage() {
     })
   }
 
-  const tabOrder = ["mobile", "browser", "web"]
-
-  const handleTabChange = (value: string) => {
-    const currentIndex = tabOrder.indexOf(activeTab)
-    const newIndex = tabOrder.indexOf(value)
-    
-    if (newIndex < currentIndex) {
-      setDirection("left")
-    } else {
-      setDirection("right")
-    }
-    setActiveTab(value)
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -300 : 300,
+      opacity: 0,
+    }),
   }
-
-  const animationClass = direction === "right"
-    ? "data-[state=active]:slide-in-from-right data-[state=inactive]:slide-out-to-left"
-    : "data-[state=active]:slide-in-from-left data-[state=inactive]:slide-out-to-right"
 
   return (
     <main className="min-h-screen pt-20 sm:pt-32 pb-20 px-4">
@@ -157,260 +162,299 @@ export default function DownloadsPage() {
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <div className="relative overflow-hidden bg-[var(--background-secondary)] border border-[var(--border-light)] rounded-2xl p-6 sm:p-8 lg:p-12 h-auto lg:h-[580px] mb-8">
             <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-20">
-              <TabsList className="flex bg-[#020817]/50 border border-[var(--border-light)] rounded-full p-0 w-full sm:w-fit backdrop-blur-sm">
+              <TabsList className="flex p-0 w-full sm:w-fit bg-transparent gap-0">
                 <TabsTrigger
                   value="mobile"
                   className="
-                    relative px-4 sm:px-6 py-2 font-medium transition-all duration-500 rounded-full text-sm
-                    data-[state=active]:text-white
-                    data-[state=active]:font-bold
-                    data-[state=inactive]:bg-transparent
-                    data-[state=inactive]:text-white/80
+                    relative px-6 sm:px-8 py-3 font-normal transition-all duration-300 text-base
+                    border border-white/10
+                    rounded-l-[20px] rounded-r-none
+                    data-[state=active]:bg-[#2155df] data-[state=active]:text-white
+                    data-[state=inactive]:bg-transparent data-[state=inactive]:text-white
                     focus-visible:outline-none
-                    h-full
+                    h-[54px]
                   "
                 >
-                  <span className="relative z-10">Mobile App</span>
-                  {activeTab === "mobile" && (
-                    <motion.div
-                      layoutId="active-tab"
-                      className="absolute inset-0 bg-blue-600 rounded-full"
-                      transition={{ duration: 0.5 }}
-                    />
-                  )}
+                  Mobile App
                 </TabsTrigger>
                 <TabsTrigger
                   value="browser"
                   className="
-                    relative px-4 sm:px-6 py-2 font-medium transition-all duration-500 rounded-full text-sm
-                    data-[state=active]:text-white
-                    data-[state=active]:font-bold
-                    data-[state=inactive]:bg-transparent
-                    data-[state=inactive]:text-white/80
+                    relative px-6 sm:px-8 py-3 font-normal transition-all duration-300 text-base
+                    border border-white/10 border-l-0
+                    rounded-none
+                    data-[state=active]:bg-[#2155df] data-[state=active]:text-white
+                    data-[state=inactive]:bg-transparent data-[state=inactive]:text-white
                     focus-visible:outline-none
-                    h-full
+                    h-[54px]
                   "
                 >
-                  <span className="relative z-10">Browser Extension</span>
-                  {activeTab === "browser" && (
-                    <motion.div
-                      layoutId="active-tab"
-                      className="absolute inset-0 bg-blue-600 rounded-full"
-                      transition={{ duration: 0.5 }}
-                    />
-                  )}
+                  Browser Extension
                 </TabsTrigger>
                 <TabsTrigger
                   value="web"
                   className="
-                    relative px-4 sm:px-6 py-2 font-medium transition-all duration-500 rounded-full text-sm
-                    data-[state=active]:text-white
-                    data-[state=active]:font-bold
-                    data-[state=inactive]:bg-transparent
-                    data-[state=inactive]:text-white/80
+                    relative px-6 sm:px-8 py-3 font-normal transition-all duration-300 text-base
+                    border border-white/10 border-l-0
+                    rounded-r-[20px] rounded-l-none
+                    data-[state=active]:bg-[#2155df] data-[state=active]:text-white
+                    data-[state=inactive]:bg-transparent data-[state=inactive]:text-white
                     focus-visible:outline-none
-                    h-full
+                    h-[54px]
                   "
                 >
-                  <span className="relative z-10">Web</span>
-                  {activeTab === "web" && (
-                    <motion.div
-                      layoutId="active-tab"
-                      className="absolute inset-0 bg-blue-600 rounded-full"
-                      transition={{ duration: 0.5 }}
-                    />
-                  )}
+                  Web
                 </TabsTrigger>
               </TabsList>
             </div>
 
-            <TabsContent 
-              value="mobile" 
-              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-500 ${animationClass}`}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
+            <div className="relative h-full">
+              <AnimatePresence mode="wait" custom={direction}>
+                {activeTab === "mobile" && (
+                  <motion.div
+                    key="mobile"
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="h-full"
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
                 {/* Left Column - Content */}
-                <div className="flex flex-col justify-center">
-                  <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                <div className="flex flex-col justify-start">
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[60px] font-medium text-[#eff2f6] mb-6 leading-tight lg:leading-[72px] tracking-[-1.5px] min-h-[72px]">
                     Download Vultisig
                   </h1>
-                  <p className="text-gray-300 text-sm sm:text-base mb-8 max-w-lg">
-                    The Flagship app of Vultisig. Your seedless multi-chain multi-factor wallet. Use Vault Shares instead of Seed Phrases.
+                  <p className="text-[#c9d6e8] text-base sm:text-lg mb-8 max-w-[590px] leading-7 tracking-[-0.09px] min-h-[56px]">
+                    The Flagship app of Vultisig. Your seedless multi-chain, multi-factor wallet. Use Vault Shares instead of Seed Phrases.
                   </p>
-                  
-                  {/* Download Buttons Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-                    <a 
-                      href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+
+                  {/* Download Buttons Grid - 4x2 layout matching Figma */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 w-fit">
+                    {/* Row 1 */}
+                    <a
+                      href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => trackDownload('ios app store')}
-                      className="bg-[var(--background)] border border-[var(--border-light)] rounded-xl p-4 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square"
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img src="/images/appstore.svg" alt="App Store" className="h-8 w-auto mb-2" />
+                      <img src="/images/apple.svg" alt="App Store" className="h-7 w-auto" />
                       <span className="text-white text-xs font-medium text-center">App Store</span>
                     </a>
-                    
-                    <a 
-                      href="https://github.com/vultisig/vultisig-ios/releases/tag/v1.31.30" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      onClick={() => trackDownload('macos github')}
-                      className="bg-[var(--background)] border border-[var(--border-light)] rounded-xl p-4 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square"
+
+                    <a
+                      href="https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackDownload('macos app store')}
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img src="/images/macstore.svg" alt="MacOS Github" className="h-8 w-auto mb-2" />
-                      <span className="text-white text-xs font-medium text-center">MacOS from Github</span>
+                      <img src="/images/macOS.svg" alt="MacOS" className="h-8 w-auto" />
+                      <span className="text-white text-xs font-medium text-center">MacOS</span>
                     </a>
-                    
-                    <a 
-                      href="https://play.google.com/store/apps/details?id=com.vultisig.wallet" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      onClick={() => trackDownload('android play store')}
-                      className="bg-[var(--background)] border border-[var(--border-light)] rounded-xl p-4 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square"
+
+                    <a
+                      href="https://github.com/vultisig/vultisig-ios/releases/tag/v1.31.30"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackDownload('macos github')}
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img src="/images/playstore.svg" alt="Google Play" className="h-8 w-auto mb-2" />
+                      <img src="/images/macOS.svg" alt="MacOS Github" className="h-8 w-auto" />
+                      <span className="text-white text-[11px] font-medium text-center leading-tight">MacOS from Github</span>
+                    </a>
+
+                    <a
+                      href="https://play.google.com/store/apps/details?id=com.vultisig.wallet"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackDownload('android play store')}
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
+                    >
+                      <img src="/images/googleplay-icon.svg" alt="Google Play" className="h-7 w-auto" />
                       <span className="text-white text-xs font-medium text-center">Google Play</span>
                     </a>
-                    
-                    <a 
-                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.46/Vultisig-amd64-installer-v1.0.46.exe" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+
+                    {/* Row 2 */}
+                    <a
+                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.46/Vultisig-amd64-installer-v1.0.46.exe"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => trackDownload('windows')}
-                      className="bg-[var(--background)] border border-[var(--border-light)] rounded-xl p-4 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square"
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img src="/images/winstore.svg" alt="Windows" className="h-8 w-auto mb-2" />
+                      <img src="/images/windows.svg" alt="Windows" className="h-8 w-auto" />
                       <span className="text-white text-xs font-medium text-center">Windows</span>
                     </a>
-                    
-                    <a 
-                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.46/vultisig_1.0.46_amd64.deb" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+
+                    <a
+                      href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.46/vultisig_1.0.46_amd64.deb"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => trackDownload('linux')}
-                      className="bg-[var(--background)] border border-[var(--border-light)] rounded-xl p-4 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square"
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img src="/images/linuxstore.svg" alt="Linux" className="h-8 w-auto mb-2" />
+                      <img src="/images/linux.svg" alt="Linux" className="h-7 w-auto" />
                       <span className="text-white text-xs font-medium text-center">Linux</span>
                     </a>
-                    
-                    <a 
-                      href="https://github.com/vultisig/vultisig-android/releases/tag/v1.0.89" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+
+                    <a
+                      href="https://github.com/vultisig/vultisig-android/releases/tag/v1.0.89"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => trackDownload('android github')}
-                      className="bg-[var(--background)] border border-[var(--border-light)] rounded-xl p-4 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square"
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img src="/images/Android.svg" alt="Android" className="h-8 w-auto mb-2" />
+                      <img src="/images/Android.svg" alt="Android" className="h-6 w-auto" />
                       <span className="text-white text-xs font-medium text-center">Android</span>
                     </a>
                   </div>
                 </div>
                 
-                {/* Right Column - Preview */}
-                <div className="flex items-start justify-center lg:justify-end relative overflow-hidden">
-                  <div className="relative w-full max-w-[400px] h-full flex items-start">
-                    <img 
-                      src="/images/Download Vultisig mockup.svg" 
-                      alt="Vultisig Mobile App Preview" 
-                      className="w-full h-auto object-contain" 
-                    />
+                {/* Right Column - Preview with decorative background */}
+                <div className="hidden lg:flex items-center justify-end relative h-full">
+                  {/* Phone mockup container - 138px from right */}
+                  <div className="relative mr-[138px]">
+                    {/* Blur effect centered behind mockup */}
+                    <div
+                      className="absolute pointer-events-none"
+                      style={{
+                        width: '669px',
+                        height: '532px',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -60%)',
+                      }}
+                    >
+                      <img
+                        src="/images/phone-blur.svg"
+                        alt=""
+                        className="w-full h-full"
+                      />
+                    </div>
+                    {/* Phone mockup */}
+                    <div className="relative z-10 bg-[rgba(4,15,33,0.3)] border border-white/30 rounded-[23px] p-4">
+                      <img
+                        src="/images/phone-mockup-swap.png"
+                        alt="Vultisig Mobile App Preview"
+                        className="w-[270px] h-auto rounded-xl"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent 
-              value="browser" 
-              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-500 ${animationClass}`}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "browser" && (
+                  <motion.div
+                    key="browser"
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="h-full"
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
                 {/* Left Column - Content */}
-                <div className="flex flex-col justify-center">
-                  <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-                    Install Vultig Extension
+                <div className="flex flex-col justify-start">
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[60px] font-medium text-[#eff2f6] mb-6 leading-tight lg:leading-[72px] tracking-[-1.5px] min-h-[72px]">
+                    Install Vulticonnect
                   </h1>
-                  <p className="text-gray-300 text-sm sm:text-base mb-8 max-w-lg">
-                    Your gateway to web3 and DeFi. Connect your Vultisig to your favourite interface without moving your funds.
+                  <p className="text-[#c9d6e8] text-base sm:text-lg mb-8 max-w-[590px] leading-7 tracking-[-0.09px] min-h-[56px]">
+                    Your gateway to web3 and DeFi. Connect your Vultisig to your favourite Interface without moving your funds.
                   </p>
-                  
+
                   {/* Chrome Download Button */}
                   <div className="flex justify-start">
-                    <a 
-                      href="https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb?authuser=0&hl=en-GB&pli=1" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href="https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb?authuser=0&hl=en-GB&pli=1"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => trackDownload('chrome extension')}
-                      className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl p-6 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square w-32 h-32"
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img 
-                        src="/images/chrome-download.svg" 
-                        alt="Chrome" 
-                        className="h-10 w-auto mb-2" 
+                      <img
+                        src="/images/chrome-download.svg"
+                        alt="Chrome"
+                        className="h-8 w-auto"
                       />
-                      <span className="text-white text-sm font-medium">Chrome</span>
+                      <span className="text-white text-xs font-medium">Chrome</span>
                     </a>
                   </div>
                 </div>
-                
-                {/* Right Column - Preview */}
-                <div className="flex items-end justify-center lg:justify-end relative overflow-hidden">
+
+                {/* Right Column - Browser Mockup */}
+                <div className="hidden lg:flex items-center justify-center lg:justify-end relative">
                   <div className="relative w-full h-full flex items-center justify-end">
-                    <img 
-                      src="/images/Mac.png" 
-                      alt="Vulticonnect Browser Extension Preview" 
-                      className="w-auto h-auto max-h-[400px] object-contain translate-x-10" 
+                    <img
+                      src="/images/mac-extension.svg"
+                      alt="Vulticonnect Browser Extension Preview"
+                      className="w-auto h-auto max-h-[500px] lg:max-h-[550px] object-contain"
                     />
                   </div>
                 </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent 
-              value="web" 
-              className={`mt-0 h-full data-[state=active]:animate-in data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 duration-500 ${animationClass}`}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "web" && (
+                  <motion.div
+                    key="web"
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="h-full"
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full pt-16 sm:pt-20">
                 {/* Left Column - Content */}
-                <div className="flex flex-col justify-center">
-                  <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                <div className="flex flex-col justify-start">
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[60px] font-medium text-[#eff2f6] mb-6 leading-tight lg:leading-[72px] tracking-[-1.5px] min-h-[72px]">
                     Vultisig Web
                   </h1>
-                  <p className="text-gray-300 text-sm sm:text-base mb-8 max-w-lg">
-                    A view only access to your vault and register your Vaults for the airdrop
+                  <p className="text-[#c9d6e8] text-base sm:text-lg mb-8 max-w-[590px] leading-7 tracking-[-0.09px] min-h-[56px]">
+                    A view only access to your vault and register your Vaults for the airdrop.
                   </p>
-                  
+
                   {/* Web App Button */}
                   <div className="flex justify-start">
-                    <a 
-                      href="https://airdrop.vultisig.com/" 
-                      target="_blank" 
+                    <a
+                      href="https://airdrop.vultisig.com/"
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl p-6 flex flex-col items-center justify-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all aspect-square w-32 h-32"
+                      className="bg-[var(--background)] border-[1.5px] border-[#1B3F73] rounded-3xl p-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all w-[99px] h-[99px]"
                     >
-                      <img 
-                        src="/images/vultiweb-logo.svg" 
-                        alt="Web App" 
-                        className="h-10 w-auto mb-2" 
+                      <img
+                        src="/images/vultiweb-logo.svg"
+                        alt="Web App"
+                        className="h-10 w-auto"
                       />
-                      <span className="text-white text-sm font-medium">Web App</span>
+                      <span className="text-white text-xs font-medium">Web App</span>
                     </a>
                   </div>
                 </div>
-                
-                {/* Right Column - Preview */}
-                <div className="flex items-end justify-center lg:justify-end relative overflow-hidden">
-                  <div className="relative w-full h-full flex items-center justify-end">
-                    <img 
-                      src="/images/vultiweb-logo.svg" 
-                      alt="Vultisig Web Preview" 
-                      className="w-auto h-auto max-h-[400px] object-contain translate-x-10" 
-                    />
-                  </div>
+
+                {/* Right Column - Browser Mockup */}
+                <div className="hidden lg:flex items-center justify-end relative">
+                  <img
+                    src="/images/mac-web.svg"
+                    alt="Vultisig Web Preview"
+                    className="w-auto h-auto max-h-[550px] object-contain absolute right-[-48px]"
+                  />
                 </div>
-              </div>
-            </TabsContent>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
           
           {/* SHA256 Checksums - Outside the box */}
