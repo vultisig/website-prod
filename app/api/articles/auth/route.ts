@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAuthToken, verifyAuthToken } from '@/lib/auth'
 
-// Get password from environment variable
-// REQUIRED: Set this in your .env.local file: ADMIN_PASSWORD=your-secret-password
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
 
 if (!ADMIN_PASSWORD) {
