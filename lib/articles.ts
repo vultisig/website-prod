@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-// For file system access checks
 const { constants } = fs
 
 export interface Article {
@@ -18,302 +17,132 @@ export interface Article {
   featured?: boolean
 }
 
-const articlesDirectory = path.join(process.cwd(), 'content/articles')
+const articlesDir = path.join(process.cwd(), 'content/articles')
+
+function validateSlug(slug: string): { valid: boolean; error?: string } {
+  if (!slug?.trim()) return { valid: false, error: 'Slug cannot be empty' }
+  if (!/^[a-z0-9-]+$/.test(slug)) {
+    return { valid: false, error: 'Slug can only contain lowercase letters, numbers, and hyphens' }
+  }
+  return { valid: true }
+}
+
+function resolvePath(slug: string): string | null {
+  const filePath = path.join(articlesDir, `${slug}.md`)
+  const resolved = path.resolve(filePath)
+  return resolved.startsWith(path.resolve(articlesDir)) ? filePath : null
+}
+
+function parseFile(contents: string, slug: string): Article {
+  const { data, content } = matter(contents)
+  return {
+    slug,
+    title: data.title || '',
+    description: data.description || '',
+    content,
+    author: data.author || 'Vultisig',
+    publishedAt: data.publishedAt || data.date || new Date().toISOString(),
+    updatedAt: data.updatedAt,
+    image: data.image,
+    tags: data.tags || [],
+    featured: data.featured || false,
+  }
+}
+
+function buildFrontmatter(article: Omit<Article, 'slug'>, setUpdatedAt = false): Record<string, any> {
+  const fm: Record<string, any> = {
+    title: article.title,
+    description: article.description,
+    author: article.author,
+    publishedAt: article.publishedAt,
+  }
+  if (setUpdatedAt) fm.updatedAt = new Date().toISOString()
+  else if (article.updatedAt) fm.updatedAt = article.updatedAt
+  if (article.image) fm.image = article.image
+  if (article.tags?.length) fm.tags = article.tags
+  if (article.featured) fm.featured = article.featured
+  return fm
+}
+
+function ensureDir() {
+  if (!fs.existsSync(articlesDir)) {
+    fs.mkdirSync(articlesDir, { recursive: true })
+  }
+}
 
 export function getAllArticles(): Article[] {
-  if (!fs.existsSync(articlesDirectory)) {
-    return []
-  }
+  if (!fs.existsSync(articlesDir)) return []
 
-  const fileNames = fs.readdirSync(articlesDirectory)
-  const articles = fileNames
-    .filter((name) => name.endsWith('.md'))
-    .map((fileName) => {
+  return fs.readdirSync(articlesDir)
+    .filter(name => name.endsWith('.md'))
+    .map(fileName => {
       const slug = fileName.replace(/\.md$/, '')
-      const fullPath = path.join(articlesDirectory, fileName)
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const { data, content } = matter(fileContents) as { data: any; content: string }
-
-      return {
-        slug,
-        title: data.title || '',
-        description: data.description || '',
-        content,
-        author: data.author || 'Vultisig',
-        publishedAt: data.publishedAt || data.date || new Date().toISOString(),
-        updatedAt: data.updatedAt,
-        image: data.image,
-        tags: data.tags || [],
-        featured: data.featured || false,
-      } as Article
+      const contents = fs.readFileSync(path.join(articlesDir, fileName), 'utf8')
+      return parseFile(contents, slug)
     })
-    .sort((a, b) => {
-      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    })
-
-  return articles
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 }
 
 export function getArticleBySlug(slug: string): Article | null {
-  try {
-    // Security: Prevent path traversal attacks
-    if (!/^[a-z0-9-]+$/.test(slug)) {
-      console.error(`Error: Invalid slug format: ${slug}`)
-      return null
-    }
+  const validation = validateSlug(slug)
+  if (!validation.valid) return null
 
-    // Security: Ensure path stays within articles directory
-    const normalizedSlug = path.normalize(slug)
-    if (normalizedSlug.includes('..') || normalizedSlug.includes('/') || normalizedSlug.includes('\\')) {
-      console.error(`Error: Path traversal attempt detected: ${slug}`)
-      return null
-    }
+  const filePath = resolvePath(slug)
+  if (!filePath || !fs.existsSync(filePath)) return null
 
-    const fullPath = path.join(articlesDirectory, `${slug}.md`)
-    
-    // Security: Double-check the resolved path is within articles directory
-    const resolvedPath = path.resolve(fullPath)
-    const resolvedArticlesDir = path.resolve(articlesDirectory)
-    if (!resolvedPath.startsWith(resolvedArticlesDir)) {
-      console.error(`Error: Path traversal detected: ${resolvedPath} not in ${resolvedArticlesDir}`)
-      return null
-    }
-
-    if (!fs.existsSync(fullPath)) {
-      return null
-    }
-
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data, content } = matter(fileContents) as { data: any; content: string }
-
-    return {
-      slug,
-      title: data.title || '',
-      description: data.description || '',
-      content,
-      author: data.author || 'Vultisig',
-      publishedAt: data.publishedAt || data.date || new Date().toISOString(),
-      updatedAt: data.updatedAt,
-      image: data.image,
-      tags: data.tags || [],
-      featured: data.featured || false,
-    } as Article
-  } catch (error) {
-    console.error('Error reading article:', error)
-    return null
-  }
+  return parseFile(fs.readFileSync(filePath, 'utf8'), slug)
 }
 
 export function createArticle(article: Omit<Article, 'slug'>, slug: string): boolean {
+  const validation = validateSlug(slug)
+  if (!validation.valid) throw new Error(validation.error)
+
+  ensureDir()
+
   try {
-    // Validate slug is not empty
-    if (!slug || slug.trim() === '') {
-      console.error('Error: Slug is empty')
-      throw new Error('Slug cannot be empty')
-    }
-
-    // Security: Prevent path traversal attacks
-    // Only allow alphanumeric, hyphens, and underscores in slug
-    if (!/^[a-z0-9-]+$/.test(slug)) {
-      console.error(`Error: Invalid slug format: ${slug}`)
-      throw new Error('Slug contains invalid characters. Only lowercase letters, numbers, and hyphens are allowed.')
-    }
-
-    // Security: Prevent directory traversal
-    const normalizedSlug = path.normalize(slug)
-    if (normalizedSlug.includes('..') || normalizedSlug.includes('/') || normalizedSlug.includes('\\')) {
-      console.error(`Error: Path traversal attempt detected: ${slug}`)
-      throw new Error('Invalid slug: path traversal not allowed')
-    }
-
-    // Ensure directory exists
-    if (!fs.existsSync(articlesDirectory)) {
-      console.log(`Creating articles directory: ${articlesDirectory}`)
-      fs.mkdirSync(articlesDirectory, { recursive: true })
-    }
-
-    // Validate directory is writable
-    try {
-      fs.accessSync(articlesDirectory, constants.W_OK)
-    } catch (accessError) {
-      console.error(`Error: Articles directory is not writable: ${articlesDirectory}`)
-      throw new Error(`Articles directory is not writable: ${articlesDirectory}`)
-    }
-
-    // Build frontMatter, filtering out undefined values
-    const frontMatter: Record<string, any> = {
-      title: article.title,
-      description: article.description,
-      author: article.author,
-      publishedAt: article.publishedAt,
-    }
-
-    // Only add optional fields if they have values
-    if (article.updatedAt) {
-      frontMatter.updatedAt = article.updatedAt
-    }
-    if (article.image) {
-      frontMatter.image = article.image
-    }
-    if (article.tags && article.tags.length > 0) {
-      frontMatter.tags = article.tags
-    }
-    if (article.featured) {
-      frontMatter.featured = article.featured
-    }
-
-    const content = matter.stringify(article.content, frontMatter)
-    const filePath = path.join(articlesDirectory, `${slug}.md`)
-    
-    // Security: Double-check the resolved path is within articles directory
-    const resolvedPath = path.resolve(filePath)
-    const resolvedArticlesDir = path.resolve(articlesDirectory)
-    if (!resolvedPath.startsWith(resolvedArticlesDir)) {
-      console.error(`Error: Path traversal detected: ${resolvedPath} not in ${resolvedArticlesDir}`)
-      throw new Error('Invalid file path: security check failed')
-    }
-    
-    // Check if file already exists
-    if (fs.existsSync(filePath)) {
-      console.error(`Error: Article with slug "${slug}" already exists`)
-      throw new Error(`Article with slug "${slug}" already exists`)
-    }
-
-    // Write the file
-    try {
-      fs.writeFileSync(filePath, content, 'utf8')
-      console.log(`Article created successfully: ${filePath}`)
-      return true
-    } catch (writeError) {
-      console.error('Error writing file:', writeError)
-      if (writeError instanceof Error) {
-        throw new Error(`Failed to write article file: ${writeError.message}`)
-      }
-      throw new Error('Failed to write article file: Unknown error')
-    }
-  } catch (error) {
-    console.error('Error creating article:', error)
-    if (error instanceof Error) {
-      console.error('Error details:', error.message)
-      console.error('Stack trace:', error.stack)
-      // Re-throw to get better error messages
-      throw error
-    }
-    throw new Error('Unknown error occurred while creating article')
+    fs.accessSync(articlesDir, constants.W_OK)
+  } catch {
+    throw new Error('Articles directory is not writable')
   }
+
+  const filePath = resolvePath(slug)
+  if (!filePath) throw new Error('Invalid slug')
+  if (fs.existsSync(filePath)) throw new Error(`Article "${slug}" already exists`)
+
+  fs.writeFileSync(filePath, matter.stringify(article.content, buildFrontmatter(article)), 'utf8')
+  return true
 }
 
 export function updateArticle(article: Omit<Article, 'slug'>, slug: string, oldSlug?: string): boolean {
-  try {
-    // Security: Validate slug format
-    if (!/^[a-z0-9-]+$/.test(slug)) {
-      console.error(`Error: Invalid slug format: ${slug}`)
-      throw new Error('Slug contains invalid characters. Only lowercase letters, numbers, and hyphens are allowed.')
-    }
+  const validation = validateSlug(slug)
+  if (!validation.valid) throw new Error(validation.error)
 
-    // Security: Validate oldSlug if provided
-    if (oldSlug && !/^[a-z0-9-]+$/.test(oldSlug)) {
-      console.error(`Error: Invalid oldSlug format: ${oldSlug}`)
-      throw new Error('Invalid old slug format')
-    }
-
-    if (!fs.existsSync(articlesDirectory)) {
-      fs.mkdirSync(articlesDirectory, { recursive: true })
-    }
-
-    // If slug changed, delete old file
-    if (oldSlug && oldSlug !== slug) {
-      // Security: Prevent path traversal
-      const normalizedOldSlug = path.normalize(oldSlug)
-      if (normalizedOldSlug.includes('..') || normalizedOldSlug.includes('/') || normalizedOldSlug.includes('\\')) {
-        throw new Error('Invalid old slug: path traversal not allowed')
-      }
-
-      const oldFilePath = path.join(articlesDirectory, `${oldSlug}.md`)
-      const resolvedOldPath = path.resolve(oldFilePath)
-      const resolvedArticlesDir = path.resolve(articlesDirectory)
-      if (!resolvedOldPath.startsWith(resolvedArticlesDir)) {
-        throw new Error('Invalid old file path: security check failed')
-      }
-
-      if (fs.existsSync(oldFilePath)) {
-        fs.unlinkSync(oldFilePath)
-      }
-    }
-
-    // Build frontMatter, filtering out undefined values
-    const frontMatter: Record<string, any> = {
-      title: article.title,
-      description: article.description,
-      author: article.author,
-      publishedAt: article.publishedAt,
-      updatedAt: new Date().toISOString(),
-    }
-
-    // Only add optional fields if they have values
-    if (article.image) {
-      frontMatter.image = article.image
-    }
-    if (article.tags && article.tags.length > 0) {
-      frontMatter.tags = article.tags
-    }
-    if (article.featured) {
-      frontMatter.featured = article.featured
-    }
-
-    const content = matter.stringify(article.content, frontMatter)
-    const filePath = path.join(articlesDirectory, `${slug}.md`)
-    
-    // Security: Double-check the resolved path is within articles directory
-    const resolvedPath = path.resolve(filePath)
-    const resolvedArticlesDir = path.resolve(articlesDirectory)
-    if (!resolvedPath.startsWith(resolvedArticlesDir)) {
-      console.error(`Error: Path traversal detected: ${resolvedPath} not in ${resolvedArticlesDir}`)
-      throw new Error('Invalid file path: security check failed')
-    }
-    
-    fs.writeFileSync(filePath, content, 'utf8')
-
-    return true
-  } catch (error) {
-    console.error('Error updating article:', error)
-    return false
+  if (oldSlug) {
+    const oldValidation = validateSlug(oldSlug)
+    if (!oldValidation.valid) throw new Error('Invalid old slug')
   }
+
+  ensureDir()
+
+  if (oldSlug && oldSlug !== slug) {
+    const oldPath = resolvePath(oldSlug)
+    if (oldPath && fs.existsSync(oldPath)) fs.unlinkSync(oldPath)
+  }
+
+  const filePath = resolvePath(slug)
+  if (!filePath) throw new Error('Invalid slug')
+
+  fs.writeFileSync(filePath, matter.stringify(article.content, buildFrontmatter(article, true)), 'utf8')
+  return true
 }
 
 export function deleteArticle(slug: string): boolean {
-  try {
-    // Security: Prevent path traversal attacks
-    if (!/^[a-z0-9-]+$/.test(slug)) {
-      console.error(`Error: Invalid slug format: ${slug}`)
-      return false
-    }
+  const validation = validateSlug(slug)
+  if (!validation.valid) return false
 
-    // Security: Ensure path stays within articles directory
-    const normalizedSlug = path.normalize(slug)
-    if (normalizedSlug.includes('..') || normalizedSlug.includes('/') || normalizedSlug.includes('\\')) {
-      console.error(`Error: Path traversal attempt detected: ${slug}`)
-      return false
-    }
+  const filePath = resolvePath(slug)
+  if (!filePath || !fs.existsSync(filePath)) return false
 
-    const filePath = path.join(articlesDirectory, `${slug}.md`)
-    
-    // Security: Double-check the resolved path is within articles directory
-    const resolvedPath = path.resolve(filePath)
-    const resolvedArticlesDir = path.resolve(articlesDirectory)
-    if (!resolvedPath.startsWith(resolvedArticlesDir)) {
-      console.error(`Error: Path traversal detected: ${resolvedPath} not in ${resolvedArticlesDir}`)
-      return false
-    }
-
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath)
-      return true
-    }
-    return false
-  } catch (error) {
-    console.error('Error deleting article:', error)
-    return false
-  }
+  fs.unlinkSync(filePath)
+  return true
 }
-
