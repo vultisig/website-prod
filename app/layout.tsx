@@ -5,6 +5,7 @@ import Footer from "@/components/footer"
 import GoogleAnalyticsWrapper from "@/components/ga-wrapper"
 import Script from "next/script"
 import CookieAnalytics from "@/components/cookie-analytics"
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
@@ -308,6 +309,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   )

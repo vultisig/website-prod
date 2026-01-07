@@ -65,7 +65,7 @@ function HashCard({ icon, hash, os }: { icon: string; hash: string; os: string }
         
         {/* Hash + Copy Button */}
         <div className="flex items-center justify-between w-full gap-2">
-          <span className="font-mono text-xs text-gray-400 truncate select-all" title={hash}>
+          <span className="text-xs text-gray-400 truncate select-all" title={hash}>
             {displayHash}
           </span>
           

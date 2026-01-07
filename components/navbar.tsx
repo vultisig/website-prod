@@ -90,6 +90,9 @@ export default function Navbar() {
               <a href="/vult" className="text-gray-300 hover:text-white ml-8">
                 $VULT
               </a>
+              <a href="/articles" className="text-gray-300 hover:text-white ml-8">
+                Articles
+              </a>
               <a href="https://docs.vultisig.com" className="text-gray-300 hover:text-white ml-8">
                 Docs
               </a>
@@ -314,6 +317,9 @@ export default function Navbar() {
                 </a>
                 <a href="/vult" className="text-gray-300 hover:text-white py-2">
                   $VULT
+                </a>
+                <a href="/articles" className="text-gray-300 hover:text-white py-2">
+                  Articles
                 </a>
               </div>
               <div className="pt-2">
