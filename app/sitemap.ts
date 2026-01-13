@@ -1,15 +1,22 @@
 import { MetadataRoute } from 'next'
+import { getAllArticles } from '@/lib/articles'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://vultisig.com'
   const currentDate = new Date().toISOString()
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/articles`,
+      lastModified: currentDate,
+      changeFrequency: 'daily',
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/docs`,
@@ -54,5 +61,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
   ]
-}
 
+  const articles = getAllArticles()
+  const articlePages: MetadataRoute.Sitemap = articles.map(article => ({
+    url: `${baseUrl}/articles/${article.slug}`,
+    lastModified: article.updatedAt || article.publishedAt,
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...articlePages]
+}

@@ -263,38 +263,30 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label htmlFor="image" className="block text-white font-medium mb-2">Featured Image</label>
-                <div className="space-y-3">
-                  <Input id="image" type="url" value={formData.image} onChange={(e) => updateField('image', e.target.value)} className="bg-slate-900 border-slate-700 text-white" placeholder="Enter image URL" />
-                  <div className="flex items-center gap-2">
-                    <label htmlFor="image-upload" className="cursor-pointer">
-                      <span className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors">
-                        <Plus className="w-4 h-4 mr-2" /> Upload Image
-                      </span>
-                      <input
-                        id="image-upload"
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0]
-                          if (file) {
-                            const reader = new FileReader()
-                            reader.onload = (ev) => updateField('image', ev.target?.result as string)
-                            reader.readAsDataURL(file)
-                          }
-                        }}
-                      />
-                    </label>
-                    {formData.image && (
-                      <Button type="button" variant="outline" size="sm" onClick={() => updateField('image', '')} className="border-slate-700 text-white hover:bg-slate-800">
-                        Clear
-                      </Button>
-                    )}
-                  </div>
+                <label htmlFor="image" className="block text-white font-medium mb-2">Featured Image URL</label>
+                <p className="text-gray-500 text-sm mb-2">Use an external image URL (e.g., from Cloudflare R2, Imgur, or your CDN)</p>
+                <div className="flex items-center gap-2">
+                  <Input id="image" type="url" value={formData.image} onChange={(e) => updateField('image', e.target.value)} className="bg-slate-900 border-slate-700 text-white flex-1" placeholder="https://example.com/image.jpg" />
+                  {formData.image && (
+                    <Button type="button" variant="outline" size="sm" onClick={() => updateField('image', '')} className="border-slate-700 text-white hover:bg-slate-800">
+                      Clear
+                    </Button>
+                  )}
                 </div>
                 {formData.image && (
-                  <img src={formData.image} alt="Preview" className="mt-4 max-w-full h-48 object-cover rounded-lg border border-slate-700" onError={(e) => (e.target as HTMLImageElement).style.display = 'none'} />
+                  <div className="mt-4">
+                    <img
+                      src={formData.image}
+                      alt="Preview"
+                      className="max-w-full h-48 object-cover rounded-lg border border-slate-700"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                        target.style.display = 'none'
+                        target.nextElementSibling?.classList.remove('hidden')
+                      }}
+                    />
+                    <p className="text-red-400 text-sm hidden">Failed to load image. Check the URL is accessible.</p>
+                  </div>
                 )}
               </div>
 
