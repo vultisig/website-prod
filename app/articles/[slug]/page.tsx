@@ -6,7 +6,7 @@ import type { Metadata } from 'next'
 import MarkdownRenderer from '@/components/markdown-renderer'
 
 interface ArticlePageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -14,76 +14,173 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  const article = getArticleBySlug(params.slug)
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   if (!article) return { title: 'Article Not Found' }
+
+  const url = `https://vultisig.com/articles/${slug}`
 
   return {
     title: `${article.title} - Vultisig`,
     description: article.description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: article.title,
       description: article.description,
+      url,
       images: article.image ? [article.image] : [],
       type: 'article',
       publishedTime: article.publishedAt,
+      modifiedTime: article.updatedAt,
       authors: [article.author],
       tags: article.tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.description,
+      images: article.image ? [article.image] : [],
     },
   }
 }
 
-export default function ArticlePage({ params }: ArticlePageProps) {
-  const article = getArticleBySlug(params.slug)
+function ArticleJsonLd({ article, slug }: { article: NonNullable<ReturnType<typeof getArticleBySlug>>; slug: string }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    image: article.image || 'https://vultisig.com/og-image.png',
+    datePublished: article.publishedAt,
+    dateModified: article.updatedAt || article.publishedAt,
+    author: {
+      '@type': 'Organization',
+      name: article.author,
+      url: 'https://vultisig.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Vultisig',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://vultisig.com/vultisig-logo.svg',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://vultisig.com/articles/${slug}`,
+    },
+    keywords: article.tags?.join(', '),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
+}
+
+function BreadcrumbJsonLd({ article, slug }: { article: NonNullable<ReturnType<typeof getArticleBySlug>>; slug: string }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://vultisig.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Articles',
+        item: 'https://vultisig.com/articles',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: article.title,
+        item: `https://vultisig.com/articles/${slug}`,
+      },
+    ],
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
+}
+
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   if (!article) notFound()
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
   return (
-    <main className="min-h-screen py-16 px-4">
-      <div className="max-w-4xl mx-auto">
-        <Link href="/articles" className="inline-flex items-center text-gray-400 hover:text-white mb-8 transition-colors">
-          ← Back to Articles
-        </Link>
+    <>
+      <ArticleJsonLd article={article} slug={slug} />
+      <BreadcrumbJsonLd article={article} slug={slug} />
 
-        <article className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-6 sm:p-8 md:p-12">
-          {article.image && (
-            <div className="aspect-video bg-slate-700 rounded-xl mb-8 overflow-hidden relative">
-              <Image src={article.image} alt={article.title} fill className="object-cover" priority />
-            </div>
-          )}
+      <main className="min-h-screen py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <nav aria-label="Breadcrumb" className="mb-8">
+            <ol className="flex items-center gap-2 text-sm text-gray-400">
+              <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li>/</li>
+              <li><Link href="/articles" className="hover:text-white transition-colors">Articles</Link></li>
+              <li>/</li>
+              <li className="text-white truncate max-w-[200px]">{article.title}</li>
+            </ol>
+          </nav>
 
-          {article.tags?.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              {article.tags.map((tag, idx) => (
-                <span key={idx} className="text-sm px-3 py-1 bg-blue-900/40 text-blue-300 rounded-md">{tag}</span>
-              ))}
-            </div>
-          )}
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">{article.title}</h1>
-
-          <div className="flex items-center gap-4 text-gray-400 text-sm mb-8 pb-8 border-b border-slate-700">
-            <span>By {article.author}</span>
-            <span>•</span>
-            <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
-            {article.updatedAt && (
-              <>
-                <span>•</span>
-                <span>Updated {formatDate(article.updatedAt)}</span>
-              </>
+          <article className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-6 sm:p-8 md:p-12">
+            {article.image && (
+              <div className="aspect-video bg-slate-700 rounded-xl mb-8 overflow-hidden relative">
+                <Image src={article.image} alt={article.title} fill className="object-cover" priority />
+              </div>
             )}
+
+            {article.tags?.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {article.tags.map((tag, idx) => (
+                  <span key={idx} className="text-sm px-3 py-1 bg-blue-900/40 text-blue-300 rounded-md">{tag}</span>
+                ))}
+              </div>
+            )}
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">{article.title}</h1>
+
+            <div className="flex items-center gap-4 text-gray-400 text-sm mb-8 pb-8 border-b border-slate-700">
+              <span>By {article.author}</span>
+              <span>•</span>
+              <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+              {article.updatedAt && (
+                <>
+                  <span>•</span>
+                  <span>Updated {formatDate(article.updatedAt)}</span>
+                </>
+              )}
+            </div>
+
+            <MarkdownRenderer content={article.content} />
+          </article>
+
+          <div className="mt-8 text-center">
+            <Link href="/articles" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors">
+              ← Back to Articles
+            </Link>
           </div>
-
-          <MarkdownRenderer content={article.content} />
-        </article>
-
-        <div className="mt-8 text-center">
-          <Link href="/articles" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors">
-            ← Back to Articles
-          </Link>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
