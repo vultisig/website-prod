@@ -50,6 +50,7 @@ export default function AdminPage() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [forceShowForm, setForceShowForm] = useState(false)
   const [formData, setFormData] = useState(DEFAULT_FORM)
+  const [uploadingImage, setUploadingImage] = useState(false)
 
   useEffect(() => {
     fetch('/api/articles/auth')
@@ -123,6 +124,37 @@ export default function AdminPage() {
       featured: article.featured || false,
     })
     setEditingSlug(article.slug)
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadingImage(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const res = await fetch('/api/articles/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.message || 'Failed to upload image')
+      }
+
+      const data = await res.json()
+      updateField('image', data.imageUrl)
+      toast.success('Image uploaded successfully!')
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to upload image')
+    } finally {
+      setUploadingImage(false)
+      // Reset file input
+      e.target.value = ''
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -263,16 +295,66 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label htmlFor="image" className="block text-white font-medium mb-2">Featured Image URL</label>
-                <p className="text-gray-500 text-sm mb-2">Use an external image URL (e.g., from Cloudflare R2, Imgur, or your CDN)</p>
-                <div className="flex items-center gap-2">
-                  <Input id="image" type="url" value={formData.image} onChange={(e) => updateField('image', e.target.value)} className="bg-slate-900 border-slate-700 text-white flex-1" placeholder="https://example.com/image.jpg" />
-                  {formData.image && (
-                    <Button type="button" variant="outline" size="sm" onClick={() => updateField('image', '')} className="border-slate-700 text-white hover:bg-slate-800">
-                      Clear
-                    </Button>
-                  )}
+                <label htmlFor="image" className="block text-white font-medium mb-2">Featured Image</label>
+                <p className="text-gray-500 text-sm mb-3">Upload an image or use an external URL</p>
+                
+                {/* Upload Section */}
+                <div className="mb-4">
+                  <label htmlFor="image-upload" className="block text-sm text-gray-400 mb-2">Upload Image</label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      id="image-upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={uploadingImage}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="flex-1 cursor-pointer"
+                    >
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={uploadingImage}
+                        className="w-full border-slate-700 text-white hover:bg-slate-800"
+                        onClick={() => document.getElementById('image-upload')?.click()}
+                      >
+                        {uploadingImage ? 'Uploading...' : 'Choose File to Upload'}
+                      </Button>
+                    </label>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">Max 10MB (will be compressed to under 1MB). Formats: JPG, PNG, GIF, WebP</p>
                 </div>
+
+                {/* URL Input Section */}
+                <div className="mb-4">
+                  <label htmlFor="image-url" className="block text-sm text-gray-400 mb-2">Or Enter Image URL</label>
+                  <div className="flex items-center gap-2">
+                    <Input 
+                      id="image-url" 
+                      type="text" 
+                      value={formData.image} 
+                      onChange={(e) => updateField('image', e.target.value)} 
+                      className="bg-slate-900 border-slate-700 text-white flex-1" 
+                      placeholder="https://example.com/image.jpg or /api/articles/image/..." 
+                    />
+                    {formData.image && (
+                      <Button 
+                        type="button" 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => updateField('image', '')} 
+                        className="border-slate-700 text-white hover:bg-slate-800"
+                      >
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Preview */}
                 {formData.image && (
                   <div className="mt-4">
                     <img
@@ -282,7 +364,8 @@ export default function AdminPage() {
                       onError={(e) => {
                         const target = e.target as HTMLImageElement
                         target.style.display = 'none'
-                        target.nextElementSibling?.classList.remove('hidden')
+                        const errorMsg = target.nextElementSibling as HTMLElement
+                        if (errorMsg) errorMsg.classList.remove('hidden')
                       }}
                     />
                     <p className="text-red-400 text-sm hidden">Failed to load image. Check the URL is accessible.</p>

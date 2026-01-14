@@ -10,15 +10,22 @@ interface ArticlePageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllArticles().map(article => ({ slug: article.slug }))
+  const articles = await getAllArticles()
+  return articles.map(article => ({ slug: article.slug }))
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params
-  const article = getArticleBySlug(slug)
+  const article = await getArticleBySlug(slug)
   if (!article) return { title: 'Article Not Found' }
 
   const url = `https://vultisig.com/articles/${slug}`
+  // Ensure image URLs are absolute for OpenGraph
+  const imageUrl = article.image 
+    ? article.image.startsWith('http') 
+      ? article.image 
+      : `https://vultisig.com${article.image}`
+    : undefined
 
   return {
     title: `${article.title} - Vultisig`,
@@ -30,7 +37,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       title: article.title,
       description: article.description,
       url,
-      images: article.image ? [article.image] : [],
+      images: imageUrl ? [imageUrl] : [],
       type: 'article',
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt,
@@ -41,18 +48,22 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       card: 'summary_large_image',
       title: article.title,
       description: article.description,
-      images: article.image ? [article.image] : [],
+      images: imageUrl ? [imageUrl] : [],
     },
   }
 }
 
-function ArticleJsonLd({ article, slug }: { article: NonNullable<ReturnType<typeof getArticleBySlug>>; slug: string }) {
+function ArticleJsonLd({ article, slug }: { article: NonNullable<Awaited<ReturnType<typeof getArticleBySlug>>>; slug: string }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: article.title,
     description: article.description,
-    image: article.image || 'https://vultisig.com/og-image.png',
+    image: article.image 
+      ? article.image.startsWith('http') 
+        ? article.image 
+        : `https://vultisig.com${article.image}`
+      : 'https://vultisig.com/og-image.png',
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
     author: {
@@ -83,7 +94,7 @@ function ArticleJsonLd({ article, slug }: { article: NonNullable<ReturnType<type
   )
 }
 
-function BreadcrumbJsonLd({ article, slug }: { article: NonNullable<ReturnType<typeof getArticleBySlug>>; slug: string }) {
+function BreadcrumbJsonLd({ article, slug }: { article: NonNullable<Awaited<ReturnType<typeof getArticleBySlug>>>; slug: string }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -119,7 +130,7 @@ function BreadcrumbJsonLd({ article, slug }: { article: NonNullable<ReturnType<t
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params
-  const article = getArticleBySlug(slug)
+  const article = await getArticleBySlug(slug)
   if (!article) notFound()
 
   const formatDate = (date: string) =>
@@ -149,7 +160,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
             )}
 
-            {article.tags?.length > 0 && (
+            {article.tags && article.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
                 {article.tags.map((tag, idx) => (
                   <span key={idx} className="text-sm px-3 py-1 bg-blue-900/40 text-blue-300 rounded-md">{tag}</span>

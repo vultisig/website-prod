@@ -1,7 +1,7 @@
 import { getAllArticles } from '@/lib/articles'
 
 export async function GET() {
-  const articles = getAllArticles()
+  const articles = await getAllArticles()
   const siteUrl = 'https://vultisig.com'
 
   const rssItems = articles

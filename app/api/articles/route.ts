@@ -11,7 +11,8 @@ async function isAuthed(req: NextRequest): Promise<boolean> {
 }
 
 export async function GET() {
-  return json({ articles: getAllArticles() })
+  const articles = await getAllArticles()
+  return json({ articles })
 }
 
 export async function POST(req: NextRequest) {
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    createArticle({
+    await createArticle({
       title,
       description,
       content,
@@ -54,7 +55,7 @@ export async function PUT(req: NextRequest) {
   }
 
   try {
-    updateArticle({
+    await updateArticle({
       title,
       description,
       content,
@@ -66,8 +67,9 @@ export async function PUT(req: NextRequest) {
     }, slug, oldSlug)
 
     return json({ message: 'Article updated', slug })
-  } catch {
-    return error('Failed to update article')
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Failed to update article'
+    return error(msg, 500)
   }
 }
 
@@ -77,7 +79,8 @@ export async function DELETE(req: NextRequest) {
   const slug = new URL(req.url).searchParams.get('slug')
   if (!slug) return error('Slug is required', 400)
 
-  return deleteArticle(slug)
+  const deleted = await deleteArticle(slug)
+  return deleted
     ? json({ message: 'Article deleted' })
     : error('Article not found', 404)
 }
