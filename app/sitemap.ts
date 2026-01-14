@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getAllArticles } from '@/lib/articles'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://vultisig.com'
   const currentDate = new Date().toISOString()
 
@@ -62,7 +62,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  const articles = getAllArticles()
+  const articles = await getAllArticles()
   const articlePages: MetadataRoute.Sitemap = articles.map(article => ({
     url: `${baseUrl}/articles/${article.slug}`,
     lastModified: article.updatedAt || article.publishedAt,

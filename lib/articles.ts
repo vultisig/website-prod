@@ -1,8 +1,5 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-
-const { constants } = fs
+import connectDB from './mongodb'
+import Article, { IArticle } from './models/Article'
 
 export interface Article {
   slug: string
@@ -17,8 +14,6 @@ export interface Article {
   featured?: boolean
 }
 
-const articlesDir = path.join(process.cwd(), 'content/articles')
-
 function validateSlug(slug: string): { valid: boolean; error?: string } {
   if (!slug?.trim()) return { valid: false, error: 'Slug cannot be empty' }
   if (!/^[a-z0-9-]+$/.test(slug)) {
@@ -27,122 +22,191 @@ function validateSlug(slug: string): { valid: boolean; error?: string } {
   return { valid: true }
 }
 
-function resolvePath(slug: string): string | null {
-  const filePath = path.join(articlesDir, `${slug}.md`)
-  const resolved = path.resolve(filePath)
-  return resolved.startsWith(path.resolve(articlesDir)) ? filePath : null
-}
-
-function parseFile(contents: string, slug: string): Article {
-  const { data, content } = matter(contents)
+function toArticleInterface(doc: IArticle): Article {
   return {
-    slug,
-    title: data.title || '',
-    description: data.description || '',
-    content,
-    author: data.author || 'Vultisig',
-    publishedAt: data.publishedAt || data.date || new Date().toISOString(),
-    updatedAt: data.updatedAt,
-    image: data.image,
-    tags: data.tags || [],
-    featured: data.featured || false,
+    slug: doc.slug,
+    title: doc.title,
+    description: doc.description,
+    content: doc.content,
+    author: doc.author,
+    publishedAt: doc.publishedAt.toISOString(),
+    updatedAt: doc.updatedAt?.toISOString(),
+    image: doc.image,
+    tags: doc.tags,
+    featured: doc.featured || false,
   }
 }
 
-function buildFrontmatter(article: Omit<Article, 'slug'>, setUpdatedAt = false): Record<string, any> {
-  const fm: Record<string, any> = {
-    title: article.title,
-    description: article.description,
-    author: article.author,
-    publishedAt: article.publishedAt,
-  }
-  if (setUpdatedAt) fm.updatedAt = new Date().toISOString()
-  else if (article.updatedAt) fm.updatedAt = article.updatedAt
-  if (article.image) fm.image = article.image
-  if (article.tags?.length) fm.tags = article.tags
-  if (article.featured) fm.featured = article.featured
-  return fm
-}
-
-function ensureDir() {
-  if (!fs.existsSync(articlesDir)) {
-    fs.mkdirSync(articlesDir, { recursive: true })
-  }
-}
-
-export function getAllArticles(): Article[] {
-  if (!fs.existsSync(articlesDir)) return []
-
-  return fs.readdirSync(articlesDir)
-    .filter(name => name.endsWith('.md'))
-    .map(fileName => {
-      const slug = fileName.replace(/\.md$/, '')
-      const contents = fs.readFileSync(path.join(articlesDir, fileName), 'utf8')
-      return parseFile(contents, slug)
-    })
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-}
-
-export function getArticleBySlug(slug: string): Article | null {
-  const validation = validateSlug(slug)
-  if (!validation.valid) return null
-
-  const filePath = resolvePath(slug)
-  if (!filePath || !fs.existsSync(filePath)) return null
-
-  return parseFile(fs.readFileSync(filePath, 'utf8'), slug)
-}
-
-export function createArticle(article: Omit<Article, 'slug'>, slug: string): boolean {
-  const validation = validateSlug(slug)
-  if (!validation.valid) throw new Error(validation.error)
-
-  ensureDir()
-
+export async function getAllArticles(): Promise<Article[]> {
   try {
-    fs.accessSync(articlesDir, constants.W_OK)
-  } catch {
-    throw new Error('Articles directory is not writable')
+    await connectDB()
+    const articles = await Article.find({})
+      .sort({ publishedAt: -1 })
+      .lean()
+    
+    return articles.map((doc: any) => ({
+      slug: doc.slug,
+      title: doc.title,
+      description: doc.description,
+      content: doc.content,
+      author: doc.author,
+      publishedAt: doc.publishedAt.toISOString(),
+      updatedAt: doc.updatedAt?.toISOString(),
+      image: doc.image,
+      tags: doc.tags || [],
+      featured: doc.featured || false,
+    }))
+  } catch (error) {
+    console.error('Error fetching articles:', error)
+    return []
   }
-
-  const filePath = resolvePath(slug)
-  if (!filePath) throw new Error('Invalid slug')
-  if (fs.existsSync(filePath)) throw new Error(`Article "${slug}" already exists`)
-
-  fs.writeFileSync(filePath, matter.stringify(article.content, buildFrontmatter(article)), 'utf8')
-  return true
 }
 
-export function updateArticle(article: Omit<Article, 'slug'>, slug: string, oldSlug?: string): boolean {
-  const validation = validateSlug(slug)
-  if (!validation.valid) throw new Error(validation.error)
+export async function getArticleBySlug(slug: string): Promise<Article | null> {
+  try {
+    const validation = validateSlug(slug)
+    if (!validation.valid) return null
 
-  if (oldSlug) {
-    const oldValidation = validateSlug(oldSlug)
-    if (!oldValidation.valid) throw new Error('Invalid old slug')
+    await connectDB()
+    const article = await Article.findOne({ slug }).lean()
+    
+    if (!article) return null
+
+    return {
+      slug: article.slug,
+      title: article.title,
+      description: article.description,
+      content: article.content,
+      author: article.author,
+      publishedAt: article.publishedAt.toISOString(),
+      updatedAt: article.updatedAt?.toISOString(),
+      image: article.image,
+      tags: article.tags || [],
+      featured: article.featured || false,
+    }
+  } catch (error) {
+    console.error('Error fetching article:', error)
+    return null
   }
-
-  ensureDir()
-
-  if (oldSlug && oldSlug !== slug) {
-    const oldPath = resolvePath(oldSlug)
-    if (oldPath && fs.existsSync(oldPath)) fs.unlinkSync(oldPath)
-  }
-
-  const filePath = resolvePath(slug)
-  if (!filePath) throw new Error('Invalid slug')
-
-  fs.writeFileSync(filePath, matter.stringify(article.content, buildFrontmatter(article, true)), 'utf8')
-  return true
 }
 
-export function deleteArticle(slug: string): boolean {
-  const validation = validateSlug(slug)
-  if (!validation.valid) return false
+export async function createArticle(article: Omit<Article, 'slug'>, slug: string): Promise<boolean> {
+  try {
+    const validation = validateSlug(slug)
+    if (!validation.valid) throw new Error(validation.error)
 
-  const filePath = resolvePath(slug)
-  if (!filePath || !fs.existsSync(filePath)) return false
+    await connectDB()
 
-  fs.unlinkSync(filePath)
-  return true
+    // Check if article already exists
+    const existing = await Article.findOne({ slug })
+    if (existing) {
+      throw new Error(`Article with slug "${slug}" already exists`)
+    }
+
+    await Article.create({
+      slug,
+      title: article.title,
+      description: article.description,
+      content: article.content,
+      author: article.author || 'Vultisig',
+      publishedAt: article.publishedAt ? new Date(article.publishedAt) : new Date(),
+      updatedAt: article.updatedAt ? new Date(article.updatedAt) : undefined,
+      image: article.image,
+      tags: article.tags || [],
+      featured: article.featured || false,
+    })
+
+    return true
+  } catch (error) {
+    console.error('Error creating article:', error)
+    if (error instanceof Error) {
+      throw error
+    }
+    throw new Error('Failed to create article')
+  }
+}
+
+export async function updateArticle(
+  article: Omit<Article, 'slug'>,
+  slug: string,
+  oldSlug?: string
+): Promise<boolean> {
+  try {
+    const validation = validateSlug(slug)
+    if (!validation.valid) throw new Error(validation.error)
+
+    if (oldSlug) {
+      const oldValidation = validateSlug(oldSlug)
+      if (!oldValidation.valid) throw new Error('Invalid old slug')
+    }
+
+    await connectDB()
+
+    // If slug changed, update the slug
+    if (oldSlug && oldSlug !== slug) {
+      // Check if new slug already exists
+      const existing = await Article.findOne({ slug })
+      if (existing) {
+        throw new Error(`Article with slug "${slug}" already exists`)
+      }
+
+      // Update the article with new slug
+      await Article.findOneAndUpdate(
+        { slug: oldSlug },
+        {
+          slug,
+          title: article.title,
+          description: article.description,
+          content: article.content,
+          author: article.author || 'Vultisig',
+          publishedAt: article.publishedAt ? new Date(article.publishedAt) : undefined,
+          updatedAt: new Date(),
+          image: article.image,
+          tags: article.tags || [],
+          featured: article.featured || false,
+        },
+        { new: true }
+      )
+    } else {
+      // Update existing article
+      await Article.findOneAndUpdate(
+        { slug },
+        {
+          title: article.title,
+          description: article.description,
+          content: article.content,
+          author: article.author || 'Vultisig',
+          publishedAt: article.publishedAt ? new Date(article.publishedAt) : undefined,
+          updatedAt: new Date(),
+          image: article.image,
+          tags: article.tags || [],
+          featured: article.featured || false,
+        },
+        { new: true }
+      )
+    }
+
+    return true
+  } catch (error) {
+    console.error('Error updating article:', error)
+    if (error instanceof Error) {
+      throw error
+    }
+    throw new Error('Failed to update article')
+  }
+}
+
+export async function deleteArticle(slug: string): Promise<boolean> {
+  try {
+    const validation = validateSlug(slug)
+    if (!validation.valid) return false
+
+    await connectDB()
+    const result = await Article.deleteOne({ slug })
+    
+    return result.deletedCount > 0
+  } catch (error) {
+    console.error('Error deleting article:', error)
+    return false
+  }
 }
