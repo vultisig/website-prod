@@ -10,7 +10,7 @@ const hashes = [
   {
     os: "ios",
     icon: "/images/apple.svg",
-    hash: "sha256:a08f10106261f8b721de2c2aecac6589d30ba809f550406f2271082ed0a18e73",
+    hash: "sha256:b0c42dea4c23d7aa4278fb9e73f7beddf961f5c923b7cf675b179573feb0389b",
   },
   {
     os: "android",
@@ -257,7 +257,7 @@ export default function DownloadsPage() {
                     </a>
 
                     <a
-                      href="https://github.com/vultisig/vultisig-ios/releases/tag/v1.31.30"
+                      href="https://github.com/vultisig/vultisig-ios/releases/tag/v1.32.38"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackDownload('macos github')}
