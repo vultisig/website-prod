@@ -39,12 +39,6 @@ function toArticleInterface(doc: IArticle): Article {
 
 export async function getAllArticles(): Promise<Article[]> {
   try {
-    // Check if MongoDB URI is set
-    if (!process.env.MONGODB_URI) {
-      console.error('MONGODB_URI environment variable is not set')
-      return []
-    }
-
     await connectDB()
     const articles = await Article.find({})
       .sort({ publishedAt: -1 })
