@@ -2,9 +2,8 @@ import mongoose from 'mongoose'
 
 const MONGODB_URI = process.env.MONGODB_URI
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local')
-}
+// Don't throw error at module load - check at runtime instead
+// This allows the app to build even if env var is missing
 
 interface MongooseCache {
   conn: typeof mongoose | null
@@ -23,6 +22,10 @@ if (!global.mongoose) {
 }
 
 async function connectDB() {
+  if (!MONGODB_URI) {
+    throw new Error('MONGODB_URI environment variable is not set. Please configure it in your deployment environment.')
+  }
+
   if (cached.conn) {
     return cached.conn
   }
@@ -32,7 +35,7 @@ async function connectDB() {
       bufferCommands: false,
     }
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose
     })
   }
@@ -41,6 +44,7 @@ async function connectDB() {
     cached.conn = await cached.promise
   } catch (e) {
     cached.promise = null
+    console.error('MongoDB connection error:', e)
     throw e
   }
 

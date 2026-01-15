@@ -3,6 +3,10 @@ import Link from 'next/link'
 import ArticleCard from '@/components/article-card'
 import type { Metadata } from 'next'
 
+// Make articles page dynamic - articles change frequently
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: 'Articles - Vultisig Blog',
   description: 'Read the latest articles, insights, and updates from Vultisig.',
@@ -86,6 +90,11 @@ function BreadcrumbJsonLd() {
 
 export default async function ArticlesPage() {
   const articles = await getAllArticles()
+  
+  // Debug: Log article count (remove in production if needed)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[ArticlesPage] Rendering with ${articles.length} articles`)
+  }
 
   return (
     <>

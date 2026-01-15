@@ -39,10 +39,18 @@ function toArticleInterface(doc: IArticle): Article {
 
 export async function getAllArticles(): Promise<Article[]> {
   try {
+    // Check if MongoDB URI is set
+    if (!process.env.MONGODB_URI) {
+      console.error('MONGODB_URI environment variable is not set')
+      return []
+    }
+
     await connectDB()
     const articles = await Article.find({})
       .sort({ publishedAt: -1 })
       .lean()
+    
+    console.log(`[getAllArticles] Found ${articles.length} articles`)
     
     return articles.map((doc: any) => ({
       slug: doc.slug,
@@ -58,6 +66,11 @@ export async function getAllArticles(): Promise<Article[]> {
     }))
   } catch (error) {
     console.error('Error fetching articles:', error)
+    // Log more details in production
+    if (error instanceof Error) {
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+    }
     return []
   }
 }

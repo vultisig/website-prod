@@ -9,9 +9,14 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>
 }
 
+// Disable static generation - articles are dynamic and change frequently
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function generateStaticParams() {
-  const articles = await getAllArticles()
-  return articles.map(article => ({ slug: article.slug }))
+  // Return empty array to disable static generation
+  // Articles will be fetched dynamically at request time
+  return []
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
