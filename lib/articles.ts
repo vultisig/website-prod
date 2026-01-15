@@ -44,7 +44,9 @@ export async function getAllArticles(): Promise<Article[]> {
       .sort({ publishedAt: -1 })
       .lean()
     
-    console.log(`[getAllArticles] Found ${articles.length} articles`)
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[getAllArticles] Found ${articles.length} articles`)
+    }
     
     return articles.map((doc: any) => ({
       slug: doc.slug,
