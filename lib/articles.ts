@@ -44,6 +44,10 @@ export async function getAllArticles(): Promise<Article[]> {
       .sort({ publishedAt: -1 })
       .lean()
     
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[getAllArticles] Found ${articles.length} articles`)
+    }
+    
     return articles.map((doc: any) => ({
       slug: doc.slug,
       title: doc.title,
@@ -58,6 +62,11 @@ export async function getAllArticles(): Promise<Article[]> {
     }))
   } catch (error) {
     console.error('Error fetching articles:', error)
+    // Log more details in production
+    if (error instanceof Error) {
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+    }
     return []
   }
 }
