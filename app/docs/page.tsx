@@ -5,9 +5,13 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Vultisig Documentation - MPC Wallet Guides & API',
   description: 'Official Vultisig documentation. Guides for MPC wallet setup, multi-device signing, vault management, and developer API.',
+  alternates: {
+    canonical: 'https://vultisig.com/docs',
+  },
   openGraph: {
     title: 'Vultisig MPC Wallet Documentation',
     description: 'Complete documentation for the leading MPC wallet. Setup guides, API reference, and developer resources.',
+    url: 'https://vultisig.com/docs',
   },
 }
 
