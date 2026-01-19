@@ -5,6 +5,9 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Terms of Service - Vultisig MPC Wallet',
   description: 'Vultisig terms of service and user agreement for the MPC wallet application.',
+  alternates: {
+    canonical: 'https://vultisig.com/termofservice',
+  },
 }
 
 export default function TermsOfService() {
