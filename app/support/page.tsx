@@ -114,7 +114,7 @@ export default function FAQPage() {
               <h3 className="text-white font-bold text-lg xs:text-xl mb-2">User Support</h3>
               <p className="text-gray-400 text-xs mb-3">Join our Discord and chat with the team to get direct help.</p>
             </div>
-            <a href="https://discord.com/invite/54wEtGYxuv" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 text-sm mt-auto">Join Discord</a>
+            <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 text-sm mt-auto">Join Discord</a>
           </Card>
 
           {/* Card 3: Read the docs */}
@@ -166,7 +166,7 @@ export default function FAQPage() {
                 <h3 className="text-white font-bold text-lg xs:text-xl mb-2">User Support</h3>
                 <p className="text-gray-400 text-xs mb-3">Join our Discord and chat with the team to get direct help.</p>
               </div>
-              <a href="https://discord.com/invite/54wEtGYxuv" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 text-sm mt-auto">Join Discord</a>
+              <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 text-sm mt-auto">Join Discord</a>
             </Card>
 
             {/* Card 3: Read the docs */}
@@ -287,7 +287,7 @@ export default function FAQPage() {
           <div className="flex justify-center items-center mt-8">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
               <h3 className="text-xl sm:text-2xl font-bold text-white text-center">JOIN THE DISCORD TO REQUEST NEW FEATURES!</h3>
-              <a href="https://discord.com/invite/54wEtGYxuv" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto">
+              <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg w-full md:w-auto">
                   DISCORD
                 </Button>

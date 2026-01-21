@@ -16,7 +16,7 @@ export default function Footer() {
               <a href="https://github.com/vultisig" target="_blank" rel="noopener noreferrer">
                 <img src={'/images/github-logo.svg'} alt="GitHub" width={'25px'} height={'25px'}></img>
               </a>
-              <a href="https://discord.com/invite/54wEtGYxuv" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer">
                 <img src={'/images/discord-logo.svg'} alt="Discord" width={'25px'} height={'25px'}></img>
               </a>
               <a href="https://x.com/vultisig" target="_blank" rel="noopener noreferrer">
