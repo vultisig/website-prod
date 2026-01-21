@@ -257,52 +257,140 @@ export default function RootLayout({
             twq('config','ooes4');
           `}
         </Script>
+        {/* Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": "https://vultisig.com/#organization",
+              "name": "Vultisig",
+              "legalName": "Vulti Holdings Limited",
+              "url": "https://vultisig.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://vultisig.com/vultisig-logo.svg",
+                "width": 512,
+                "height": 512
+              },
+              "description": "Vultisig is a seedless, multi-chain MPC wallet built for secure self-custody. Founded by the creators of THORChain.",
+              "foundingDate": "2024",
+              "founders": [
+                {
+                  "@type": "Person",
+                  "name": "THORChain Founders"
+                }
+              ],
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Intershore Chambers",
+                "addressLocality": "Road Town",
+                "addressRegion": "Tortola",
+                "addressCountry": "VG"
+              },
+              "contactPoint": [
+                {
+                  "@type": "ContactPoint",
+                  "contactType": "customer service",
+                  "email": "support@vultisig.com",
+                  "availableLanguage": "English"
+                },
+                {
+                  "@type": "ContactPoint",
+                  "contactType": "sales",
+                  "email": "contact@vultisig.com",
+                  "availableLanguage": "English"
+                }
+              ],
+              "sameAs": [
+                "https://x.com/vultisig",
+                "https://twitter.com/vultisig",
+                "https://discord.gg/thq64eaYVN",
+                "https://github.com/vultisig",
+                "https://t.me/vultisig",
+                "https://www.youtube.com/@Vultisig"
+              ]
+            })
+          }}
+        />
+        {/* WebSite Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://vultisig.com/#website",
+              "name": "Vultisig",
+              "url": "https://vultisig.com",
+              "description": "The leading MPC wallet with multi-signature security and TSS technology.",
+              "publisher": {
+                "@id": "https://vultisig.com/#organization"
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://docs.vultisig.com/search?ask={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              },
+              "inLanguage": "en-US"
+            })
+          }}
+        />
+        {/* SoftwareApplication Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
+              "@id": "https://vultisig.com/#app",
               "name": "Vultisig",
               "description": "The leading MPC wallet with multi-signature security and TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
               "url": "https://vultisig.com",
               "applicationCategory": "FinanceApplication",
-              "operatingSystem": "Android, iOS, Windows, Web",
-              "keywords": "MPC wallet, multi-party computation, TSS wallet, multisig wallet, crypto vault",
+              "applicationSubCategory": "Cryptocurrency Wallet",
+              "operatingSystem": "Android, iOS, Windows, macOS, Linux, Web",
+              "keywords": "MPC wallet, multi-party computation, TSS wallet, multisig wallet, crypto vault, seedless wallet, self-custody",
               "offers": {
                 "@type": "Offer",
                 "price": "0",
-                "priceCurrency": "USD"
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock"
               },
               "author": {
-                "@type": "Organization",
-                "name": "Vultisig",
-                "url": "https://vultisig.com",
-                "sameAs": [
-                  "https://x.com/vultisig",
-                  "https://discord.gg/thq64eaYVN",
-                  "https://github.com/vultisig"
-                ],
-                "contactPoint": {
-                  "@type": "ContactPoint",
-                  "contactType": "customer service",
-                  "email": "support@vultisig.com"
-                }
+                "@id": "https://vultisig.com/#organization"
+              },
+              "publisher": {
+                "@id": "https://vultisig.com/#organization"
               },
               "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "4.8",
-                "ratingCount": "1250"
+                "ratingCount": "1250",
+                "bestRating": "5",
+                "worstRating": "1"
               },
               "featureList": [
                 "MPC (Multi-Party Computation) security",
+                "Threshold Signature Scheme (TSS) technology",
                 "Multi-signature wallet",
-                "TSS technology",
                 "30+ blockchain support",
-                "No seed phrases",
-                "Self-custodial",
-                "Multi-factor authentication"
-              ]
+                "No seed phrases required",
+                "Self-custodial - you control your keys",
+                "Multi-device signing",
+                "Cross-chain swaps via THORChain",
+                "AI agent integration ready",
+                "Open source and audited"
+              ],
+              "downloadUrl": "https://vultisig.com/downloads",
+              "installUrl": "https://vultisig.com/downloads",
+              "screenshot": "https://vultisig.com/thumbnails/home.png",
+              "softwareVersion": "1.0",
+              "releaseNotes": "https://github.com/vultisig/vultisig-ios/releases"
             })
           }}
         />
