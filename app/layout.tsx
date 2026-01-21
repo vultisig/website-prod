@@ -280,7 +280,7 @@ export default function RootLayout({
                 "url": "https://vultisig.com",
                 "sameAs": [
                   "https://x.com/vultisig",
-                  "https://discord.gg/vultisig",
+                  "https://discord.gg/thq64eaYVN",
                   "https://github.com/vultisig"
                 ],
                 "contactPoint": {

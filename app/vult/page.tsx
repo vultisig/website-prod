@@ -646,7 +646,7 @@ export default function VultPage() {
           <div className="flex justify-center items-center mt-8">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
               <h3 className="text-xl sm:text-2xl font-bold text-white text-center">JOIN THE DISCORD TO REQUEST NEW FEATURES!</h3>
-              <a href="https://discord.com/invite/54wEtGYxuv" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto">
+              <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg w-full md:w-auto">
                   DISCORD
                 </Button>
