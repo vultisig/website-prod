@@ -50,12 +50,10 @@ export default function BestFeaturesSection() {
               }}
               className="
                 bg-[var(--background)]
-                border border-[#133182] rounded-2xl
+                border border-borderLight rounded-2xl
                 px-6 pt-12 pb-0 lg:px-8 lg:py-16
                 min-h-[701px]
                 lg:min-h-[400px]
-                hover:shadow-[0_0_15px_-3px_rgba(var(--border-color-rgb),0.5)]
-                shadow-[0_0_10px_-3px_rgba(var(--border-color-rgb),0.5)]
                 mt-[30vh]
                 sm:mt-[50vh]
                 sticky
@@ -121,8 +119,8 @@ export default function BestFeaturesSection() {
                     relative
                     lg:absolute
                     flex items-center justify-center
-                    p-2 pb-0
-                    border border-[#2155DF] rounded-t-2xl
+                    p-2.5 pb-0
+                    border-[0.5px] border-white rounded-t-[18px]
                   " style={{
                     bottom: index < 2 ? `${(index+1) * -80}px` : '-90px'
                   }}>
@@ -131,7 +129,7 @@ export default function BestFeaturesSection() {
                        alt={feature.title}
                        width="600"
                        height="400"
-                       className="h-full w-auto max-w-full object-contain"
+                       className="h-full w-auto max-w-full object-contain border-[0.5px] border-white rounded-t-xl"
                      />
                      {index === 1 && (
                         <div>

@@ -6,8 +6,8 @@ export default function TestimonialCard({ text, author, tag, initial }: { text: 
       {/* Main testimonial card */}
       <div
         className="
-            relative w-full max-w-sm bg-white rounded-2xl border-2 border-[var(--border-color)] overflow-hidden
-            shadow-[0_0_10px_rgba(var(--border-color-rgb),0.5)]
+            relative w-full max-w-sm bg-white rounded-2xl border-2 border-borderLight overflow-hidden
+            shadow-[0px_4px_20.100000381469727px_0px_rgba(33,85,223,0.28)] 
         "
         style={{ background: 'linear-gradient(180deg, #061B3A 0%, rgba(6, 27, 58, 0) 100%)' }}
       >

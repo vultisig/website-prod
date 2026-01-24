@@ -23,8 +23,8 @@ export default function Hero() {
       setIsMobile(mobile)
     }
     checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
   useEffect(() => {
@@ -67,7 +67,8 @@ export default function Hero() {
       style={{
         pointerEvents: "none",
         userSelect: "none",
-        background: "linear-gradient(180deg, #02122b 0%, #061b3a 50%, #02122b 100%)",
+        background:
+          "linear-gradient(180deg, #02122b 0%, #061b3a 50%, #02122b 100%)",
       }}
     >
       {/* Spline 3D Background - Only on desktop */}
@@ -80,7 +81,9 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto w-full flex flex-col items-center justify-center md:block z-20">
         <div className="w-full flex flex-col items-center justify-center md:block md:max-w-4xl">
           <div className="inline-flex items-center bg-[#092e3e] border border-[#33e6bf] rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
-            <span className="font-medium text-base md:text-xs md:sm:text-sm text-[#33e6bf]">Open-Source Audited</span>
+            <span className="font-medium text-base md:text-xs md:sm:text-sm text-[#33e6bf]">
+              Open-Source Audited
+            </span>
           </div>
 
           <h1 className="font-bold text-white mb-8 leading-tight text-center md:text-left text-5xl sm:text-6xl md:text-9xl">
@@ -92,9 +95,9 @@ export default function Hero() {
             <br />
             AGAIN
           </h1>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300 mb-8 text-center md:text-left">
+          {/* <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300 mb-8 text-center md:text-left">
             Secure Cross-Chain Multi-Signature Vaults
-          </h2>
+          </h2> */}
 
           <a href="/downloads">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-12 py-6 sm:py-8 text-base sm:text-lg rounded-lg mb-16 pointer-events-auto">
@@ -108,7 +111,8 @@ export default function Hero() {
       <div
         className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[100vw] h-[40vh] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at center bottom, rgba(72, 121, 253, 0.15) 0%, transparent 70%)",
+          background:
+            "radial-gradient(ellipse at center bottom, rgba(72, 121, 253, 0.15) 0%, transparent 70%)",
           zIndex: 1,
         }}
       />

@@ -19,23 +19,23 @@ const config: Config = {
       },
     },
     screens: {
-      'xs': '350px',
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
+      xs: "350px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
     },
     extend: {
       fontFamily: {
-        sans: ['Brockmann', 'Arial', 'Helvetica', 'sans-serif'],
-        default: ['Brockmann', 'Arial', 'Helvetica', 'sans-serif'],
+        sans: ["Brockmann", "Arial", "Helvetica", "sans-serif"],
+        default: ["Brockmann", "Arial", "Helvetica", "sans-serif"],
       },
       fontWeight: {
-        normal: '400',
-        medium: '500',
-        semibold: '600',
-        bold: '700',
+        normal: "400",
+        medium: "500",
+        semibold: "600",
+        bold: "700",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -84,6 +84,7 @@ const config: Config = {
           600: "#2563eb",
           700: "#1d4ed8",
         },
+        borderLight: "#11284a",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -105,7 +106,7 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
     },
   },

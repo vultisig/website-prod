@@ -18,8 +18,7 @@ export default function SetupSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div
             className="
-              border border-[var(--border-color)]
-              hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
+              border border-borderLight
               rounded-2xl
               p-6 sm:p-8
               relative
@@ -73,8 +72,7 @@ export default function SetupSection() {
 
           <div
             className="
-              border border-[var(--border-color)]
-              hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
+              border border-borderLight
               rounded-2xl
               p-6 sm:p-8
               relative

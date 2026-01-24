@@ -104,13 +104,19 @@ export default function CtaSection() {
 
         {/* Discord section */}
         <div className="flex justify-center items-center mt-8">
-          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-            <h3 className="text-xl sm:text-2xl font-bold text-white text-center">JOIN THE DISCORD TO REQUEST NEW FEATURES!</h3>
-            <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg w-full md:w-auto">
-                DISCORD
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-white text-center sm:text-left">JOIN THE DISCORD TO REQUEST NEW FEATURES!</h3>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg" asChild>
+                <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer">
+                    DISCORD
+                </a>
               </Button>
-            </a>
+            <h3 className="text-base sm:text-xl text-white text-center sm:text-left">Speak to a member of our team to see if Vultisig is the right option for you.</h3>
+              <Button variant={'outline'} className='border-blue-600 hover:bg-blue-600/40 hover:text-white' asChild>
+                <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer">
+                    Book a Call
+                </a>
+              </Button>
           </div>
         </div>
       </div>
