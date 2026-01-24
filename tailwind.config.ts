@@ -85,6 +85,7 @@ const config: Config = {
           700: "#1d4ed8",
         },
         borderLight: "#11284a",
+        textSecondary: "#c9d6e8",
       },
       borderRadius: {
         lg: "var(--radius)",

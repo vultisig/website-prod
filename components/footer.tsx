@@ -1,4 +1,5 @@
-import { Github, MessageCircle, Twitter, Instagram, Youtube } from "lucide-react"
+import { FaGithub, FaTelegramPlane } from "react-icons/fa"
+import { FaDiscord, FaInstagram, FaXTwitter } from "react-icons/fa6"
 
 export default function Footer() {
   return (
@@ -8,31 +9,38 @@ export default function Footer() {
           {/* Left side - Logo and socials */}
           <div className="flex-shrink-0">
             <div className="flex items-center mb-6">
-              <img src={'/images/vultisig-logo.svg'} alt="Vultisig logo" width={'35px'} height={'35px'}></img>
-              <span className="text-white text-2xl sm:text-3xl font-bold pl-1">Vultisig</span>
+              <img
+                src={"/images/vultisig-logo.svg"}
+                alt="Vultisig logo"
+                width={"35px"}
+                height={"35px"}
+              ></img>
+              <span className="text-white text-2xl sm:text-3xl font-bold pl-1">
+                Vultisig
+              </span>
             </div>
 
-            <div className="flex space-x-4 mb-6">
-              <a href="https://github.com/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/github-logo.svg'} alt="GitHub" width={'25px'} height={'25px'}></img>
-              </a>
-              <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/discord-logo.svg'} alt="Discord" width={'25px'} height={'25px'}></img>
-              </a>
-              <a href="https://x.com/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/x-logo.svg'} alt="X (Twitter)" width={'25px'} height={'25px'}></img>
-              </a>
-              <a href="https://t.me/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/tg-logo.svg'} alt="Telegram" width={'25px'} height={'25px'}></img>
-              </a>
-              <a href="https://www.instagram.com/vultisig" target="_blank" rel="noopener noreferrer">
-                <img src={'/images/instagram-logo.svg'} alt="Instagram" width={'25px'} height={'25px'}></img>
-              </a>
-              {/* <Github className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-              <MessageCircle className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-              <Twitter className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-              <Instagram className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
-              <Youtube className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" /> */}
+            <div className="flex divide-x divide-foreground/20 mb-6">
+              {[
+                { href: "https://github.com/vultisig", icon: <FaGithub /> },
+                { href: "https://discord.gg/thq64eaYVN", icon: <FaDiscord /> },
+                { href: "https://x.com/vultisig", icon: <FaXTwitter /> },
+                { href: "https://t.me/vultisig", icon: <FaTelegramPlane /> },
+                {
+                  href: "https://www.instagram.com/vultisig",
+                  icon: <FaInstagram />,
+                },
+              ].map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mr-2 pl-2 text-textSecondary hover:text-foreground"
+                >
+                  {item.icon}
+                </a>
+              ))}
             </div>
 
             <p className="text-gray-400 text-sm">© Copyright 2025 - Vultisig</p>
@@ -44,7 +52,10 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-4">VULTISIG</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/how-it-works" className="text-gray-400 hover:text-white">
+                  <a
+                    href="/how-it-works"
+                    className="text-gray-400 hover:text-white"
+                  >
                     How It Works
                   </a>
                 </li>
@@ -80,7 +91,12 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://docs.vultisig.com/other/security" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+                  <a
+                    href="https://docs.vultisig.com/other/security"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white"
+                  >
                     Audits
                   </a>
                 </li>
@@ -96,7 +112,10 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-4">LEGAL</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/termofservice" className="text-gray-400 hover:text-white">
+                  <a
+                    href="/termofservice"
+                    className="text-gray-400 hover:text-white"
+                  >
                     Terms of Service
                   </a>
                 </li>
