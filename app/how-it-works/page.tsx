@@ -174,7 +174,7 @@ export default function HowItWorks() {
                 },
                 {
                   q: "Is Vultisig safe if I lose a device?",
-                  a: "Yes. Vultisig uses a threshold scheme (2-of-2 for Fast Vaults, 2-of-3 for Secure Vaults). You can recover your vault using the remaining devices and your encrypted Vault Share backups.",
+                  a: "Yes. Vultisig uses a threshold scheme (2-of-2 for Fast Vaults, 2-of-3 for Secure Vaults). You can recover your vault using the remaining devices or your Vault Share backups.",
                   id: "faq-2"
                 },
                 {
