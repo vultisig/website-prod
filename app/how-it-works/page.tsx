@@ -157,6 +157,49 @@ export default function HowItWorks() {
         </div>
       </section>
 
+      {/* FAQ SECTION */}
+      <section className="max-w-7xl mx-auto mb-32">
+        <h2 className="text-5xl font-bold text-white mb-12 text-center">
+          Frequently Asked <GradientText>Questions</GradientText>
+        </h2>
+        <div className="grid gap-6 max-w-4xl mx-auto">
+          {[
+            {
+              q: "What is an MPC wallet?",
+              a: "An MPC (Multi-Party Computation) wallet splits your private key across multiple devices using threshold signatures. No single device ever holds the complete key, eliminating single points of failure."
+            },
+            {
+              q: "Is Vultisig safe if I lose a device?",
+              a: "Yes. Vultisig uses a threshold scheme (2-of-2 for Fast Vaults, 2-of-3 for Secure Vaults). You can recover your vault using the remaining devices and your encrypted Vault Share backups."
+            },
+            {
+              q: "What is a Vault Share?",
+              a: "A Vault Share is a secure digital backup unique to each device. Unlike seed phrases, Vault Shares never contain your complete private key and can be safely stored anywhere."
+            },
+            {
+              q: "Do I need special hardware?",
+              a: "No. Vultisig works with your existing devices - phones, tablets, laptops, and desktops. No special hardware wallets required."
+            },
+            {
+              q: "What's the difference between Fast Vault and Secure Vault?",
+              a: "Fast Vault is a 2-of-2 setup with instant server-assisted signing for everyday use. Secure Vault is a 2-of-3+ multi-device setup where you control all signing devices for maximum security."
+            },
+            {
+              q: "Can Vultisig access my funds?",
+              a: "No. Vultisig is fully self-custodial. Even with Fast Vaults, we only hold one share that cannot access funds alone. Your vault, your keys, your crypto."
+            }
+          ].map((faq, i) => (
+            <Card 
+              key={i}
+              className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-6 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-shadow"
+            >
+              <h3 className="text-xl font-bold text-white mb-3">{faq.q}</h3>
+              <p className="text-gray-300 text-base leading-relaxed">{faq.a}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
       {/* CTA SECTION (REUSED) */}
       <CtaSection />
     </main>
