@@ -5,6 +5,7 @@ import CtaSection from "@/components/cta-section"
 import { Lock, Key, Grid } from "lucide-react"
 import { useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 function GradientText({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
@@ -33,8 +34,8 @@ export default function HowItWorks() {
                 <Skeleton className="w-full h-full rounded-lg bg-slate-700/50 border border-[var(--border-color)] shadow-sm shadow-[var(--border-color)]" />
               </div>
             )}
-            <img 
-              src="/images/hiw-1.svg" 
+            <img
+              src="/images/hiw-1.svg"
               alt="Wallet recovery re-imagined illustration"
               width="490"
               height="520"
@@ -64,7 +65,7 @@ export default function HowItWorks() {
           How do <GradientText>traditional wallets</GradientText> work?
         </h2>
         <div className="flex justify-center mb-2">
-          <img src="/images/hiw-2.svg" className="w-[600px] h-auto object-contain" style={{transform: 'scaleX(1.5) scaleY(1.5)'}}/>
+          <img src="/images/hiw-2.svg" className="w-[600px] h-auto object-contain" style={{ transform: 'scaleX(1.5) scaleY(1.5)' }} />
         </div>
         <div className="grid md:grid-cols-3 gap-10">
           <Card className="
@@ -125,12 +126,12 @@ export default function HowItWorks() {
             <Card className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-10 flex flex-col items-start min-h-[340px] overflow-hidden relative
               hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
               ">
-              <img 
-                src="/images/hiw-4.svg" 
-                alt="Storage of private keys illustration" 
+              <img
+                src="/images/hiw-4.svg"
+                alt="Storage of private keys illustration"
                 width="500"
                 height="400"
-                className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" 
+                className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none"
               />
               <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Storage of private keys</h3>
               <p className="text-gray-300 mb-4 relative z-10">Keeping keys in one place? That's a single point of failure begging to be exploited.</p>
@@ -143,17 +144,74 @@ export default function HowItWorks() {
           <Card className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-10 flex flex-col items-start min-h-[340px] overflow-hidden relative
             hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
             ">
-            <img 
-              src="/images/hiw-5.svg" 
-              alt="Human error illustration" 
+            <img
+              src="/images/hiw-5.svg"
+              alt="Human error illustration"
               width="500"
               height="400"
-              className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none" 
+              className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none"
             />
             <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Human error</h3>
             <p className="text-gray-300 mb-2 relative z-10">Let's face it: people click bad links. Scams get smarter. Social engineering wins.</p>
             <p className="text-gray-300 relative z-10">Most drains happen not through code, but through trust. One mistake, and it's rekt.</p>
           </Card>
+        </div>
+      </section>
+
+      {/* FAQ SECTION */}
+      <section className="max-w-7xl mx-auto mb-32">
+        <h2 className="text-5xl font-bold text-white mb-12 text-center">
+          Frequently Asked <GradientText>Questions</GradientText>
+        </h2>
+        <div className="w-full flex justify-center items-center">
+          <div className="w-full">
+            <Accordion type="single" collapsible className="space-y-4">
+              {[
+                {
+                  q: "What is an MPC wallet?",
+                  a: "An MPC (Multi-Party Computation) wallet splits your private key across multiple devices using threshold signatures. No single device ever holds the complete key, eliminating single points of failure.",
+                  id: "faq-1"
+                },
+                {
+                  q: "Is Vultisig safe if I lose a device?",
+                  a: "Yes. Vultisig uses a threshold scheme (2-of-2 for Fast Vaults, 2-of-3 for Secure Vaults). You can recover your vault using the remaining devices or your Vault Share backups.",
+                  id: "faq-2"
+                },
+                {
+                  q: "What is a Vault Share?",
+                  a: "A Vault Share is a secure digital backup unique to each device. Unlike seed phrases, Vault Shares never contain your complete private key and can be safely stored anywhere.",
+                  id: "faq-3"
+                },
+                {
+                  q: "Do I need special hardware?",
+                  a: "No. Vultisig works with your existing devices - phones, tablets, laptops, and desktops. No special hardware wallets required.",
+                  id: "faq-4"
+                },
+                {
+                  q: "What's the difference between Fast Vault and Secure Vault?",
+                  a: "Fast Vault is a 2-of-2 setup with instant server-assisted signing for everyday use. Secure Vault is a 2-of-3+ multi-device setup where you control all signing devices for maximum security.",
+                  id: "faq-5"
+                },
+                {
+                  q: "Can Vultisig access my funds?",
+                  a: "No. Vultisig is fully self-custodial. Even with Fast Vaults, we only hold one share that cannot access funds alone. Your vault, your keys, your crypto.",
+                  id: "faq-6"
+                }
+              ].map((faq) => (
+                <AccordionItem key={faq.id} value={faq.id} className="bg-[var(--background-secondary)] rounded-xl border-none
+                  hover:border-[var(--border-color)]
+                  hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
+                  ">
+                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
+                    {faq.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                    {faq.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 
