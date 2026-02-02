@@ -1,21 +1,48 @@
 "use client"
 import Spline from "@splinetool/react-spline"
-import { useState, useEffect, useRef } from "react"
+import type { Application } from "@splinetool/runtime"
+import { useState, useEffect, useRef, useCallback } from "react"
 
 export default function SplineWrapper() {
-  const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const splineRef = useRef<Application | null>(null)
+
+  // Pause/resume rendering based on visibility
   useEffect(() => {
-    // console.log("SplineWrapper mounted")
-  })
+    const container = containerRef.current
+    if (!container) return
 
-  const handleLoad = () => {
-    // console.log("Spline scene loaded successfully")
-    setIsLoading(false)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting)
+
+        // Stop/start the Spline runtime when visibility changes
+        if (splineRef.current) {
+          if (entry.isIntersecting) {
+            splineRef.current.play()
+          } else {
+            splineRef.current.stop()
+          }
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
+
+  const handleLoad = useCallback((spline: Application) => {
+    splineRef.current = spline
     setHasError(false)
-  }
 
-
+    // If not visible on load, stop immediately
+    if (!isVisible) {
+      spline.stop()
+    }
+  }, [isVisible])
 
   if (hasError) {
     return (
@@ -28,18 +55,16 @@ export default function SplineWrapper() {
   }
 
   return (
-    <div className="w-full h-full relative">
-      {/* {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center text-white z-10">
-          <div className="text-center">
-            <div className="mb-2">Loading 3D Scene...</div>
-          </div>
-        </div>
-      )} */}
+    <div
+      ref={containerRef}
+      className="w-full h-full relative"
+      style={{ willChange: 'transform', contain: 'layout paint' }}
+    >
       <Spline
         scene="https://prod.spline.design/TMNN6wJ0bfvnVGnB/scene.splinecode"
         className="w-full h-full"
         onLoad={handleLoad}
+        renderOnDemand
       />
     </div>
   )
