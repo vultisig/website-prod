@@ -1,0 +1,60 @@
+# Vultisig
+
+> Seedless, multi-chain crypto vault using Threshold Signature Schemes (TSS). No seed phrases. MPC key shares distributed across devices. Built by THORChain founders. 36+ blockchains, single vault. iOS, Android, desktop, browser extension, TypeScript SDK.
+
+## For AI Agents
+
+- [Vultisig SDK](https://www.npmjs.com/package/@vultisig/sdk): TypeScript SDK for vault creation, signing, swaps, balances — `npm install @vultisig/sdk`
+- [SDK Source](https://github.com/vultisig/vultisig-sdk): Monorepo with SDK, CLI, core libraries, and examples
+- [Agent Integration Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/agent.md): Comprehensive guide for AI agent integration
+- [SDK Users Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/SDK-USERS-GUIDE.md): Full API walkthrough — vault types, operations, events, caching
+- [CLI Tool](https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli): Command-line vault management — `vsig vault create`, `vsig send`, `vsig swap`
+
+## Fast Vault (Agent Wallets)
+
+- [How Fast Vaults Work](https://docs.vultisig.com/infrastructure/what-is-vultisigner/how-does-vultisigner-work): 2-of-2 keygen with VultiServer, auto-co-signing for agents
+- [Security Model](https://docs.vultisig.com/infrastructure/what-is-vultisigner/why-is-it-safe): Why compromised server share cannot steal funds
+
+## Supported Chains
+
+Source: [`packages/core/chain/Chain.ts`](https://github.com/vultisig/vultisig-sdk/blob/main/packages/core/chain/Chain.ts)
+
+- **UTXO:** Bitcoin, Litecoin, Dogecoin, Bitcoin Cash, Dash, Zcash
+- **EVM:** Ethereum, BSC, Polygon, Avalanche, Arbitrum, Optimism, Base, Blast, Cronos, zkSync, Hyperliquid, Mantle, Sei
+- **Cosmos/IBC:** THORChain, MayaChain, Cosmos Hub, Osmosis, Dydx, Kujira, Noble, Terra, Terra Classic, Akash
+- **Other:** Solana, Sui, Polkadot, TON, Ripple, Tron, Cardano
+
+## $VULT Token
+
+Contract: [`0xb788144DF611029C60b859DF47e79B7726C4DEBa`](https://etherscan.io/token/0xb788144DF611029C60b859DF47e79B7726C4DEBa) (Ethereum)
+Listed on: [Kraken](https://www.kraken.com), [Uniswap](https://app.uniswap.org)
+Utility: Trading fee discounts (up to 50%), marketplace fees, governance voting
+
+## Marketplace & Plugins
+
+- [Marketplace Overview](https://docs.vultisig.com/ecosystem/marketplace): Self-custodial automation — DCA, recurring payments, trading plugins
+- [Plugin Quick Start](https://docs.vultisig.com/developer-docs/marketplace/basics-quick-start): Build your first plugin
+- [Build a Plugin](https://docs.vultisig.com/developer-docs/marketplace/build-your-plugin): Full plugin development guide
+- [Policy Rules](https://docs.vultisig.com/developer-docs/marketplace/metarules): Transaction policy configuration
+
+## Core Technology
+
+- [TSS Explained](https://docs.vultisig.com/security-and-technology/security-technology): Threshold Signature Schemes in Vultisig
+- [DKLS23 Protocol](https://docs.vultisig.com/security-and-technology/security-technology/how-dkls23-works): Fewer rounds, faster signing, co-developed with Silence Laboratories
+- [TSS vs MultiSig](https://docs.vultisig.com/security-and-technology/security-technology/difference-to-multi-sig): Why TSS beats traditional multi-signature
+
+## Documentation
+
+- [Full Docs](https://docs.vultisig.com): Complete documentation
+- [Getting Started](https://docs.vultisig.com/getting-started/getting-started): Download, create vault, first transaction
+- [Swaps](https://docs.vultisig.com/app-guide/wallet/swapping): Cross-chain via THORChain, MayaChain, 1inch, LiFi, KyberSwap
+- [DeFi](https://docs.vultisig.com/app-guide/defi): Staking, bonding, liquidity provision
+- [Browser Extension](https://docs.vultisig.com/ecosystem/vultisig-extension): Vultisig Extension — Web3 dApp connections with MPC security
+
+## Links
+
+- [Website](https://vultisig.com)
+- [GitHub](https://github.com/vultisig)
+- [Discord](https://discord.gg/thq64eaYVN)
+- [X / Twitter](https://x.com/vultisig)
+- [Telegram](https://t.me/vultisig)

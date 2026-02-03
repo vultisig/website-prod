@@ -1,0 +1,324 @@
+# Vultisig
+
+> Seedless, multi-chain crypto vault using Threshold Signature Schemes (TSS). No seed phrases. MPC key shares distributed across devices. Built by THORChain founders. 36+ blockchains, single vault. iOS, Android, desktop, browser extension, TypeScript SDK.
+
+Vultisig uses MPC (Multi-Party Computation) so no single device ever holds a complete private key. Vault "shares" are distributed across devices — a threshold of shares must cooperate to sign any transaction.
+
+Two vault types:
+
+- **Fast Vault (2-of-2):** Agent holds one share, VultiServer holds the other. VultiServer auto-co-signs based on configurable policy rules. No human approval needed. This is what agents should use.
+- **Secure Vault (m-of-n):** Multi-device, human co-signers. Configurations: 2-of-2 (fastest, no backup), 2-of-3 (recommended, backed up), 3-of-4 (highest security).
+
+## For AI Agents
+
+- [Vultisig SDK](https://www.npmjs.com/package/@vultisig/sdk): TypeScript SDK — `npm install @vultisig/sdk`
+- [SDK Source](https://github.com/vultisig/vultisig-sdk): Monorepo with SDK, CLI, core libraries, and examples
+- [Agent Integration Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/agent.md): Comprehensive guide written for AI agent integration
+- [SDK Users Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/SDK-USERS-GUIDE.md): Full API walkthrough — vault types, operations, events, caching
+- [Architecture](https://github.com/vultisig/vultisig-sdk/blob/main/docs/architecture/ARCHITECTURE.md): SDK internals, data flow, design patterns
+- [CLI Tool](https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli): `vsig vault create`, `vsig send`, `vsig swap`
+
+## Agent Quick Start
+
+> Source: [`packages/sdk/src/Vultisig.ts`](https://github.com/vultisig/vultisig-sdk/blob/main/packages/sdk/src/Vultisig.ts), [`packages/sdk/src/vault/VaultBase.ts`](https://github.com/vultisig/vultisig-sdk/blob/main/packages/sdk/src/vault/VaultBase.ts)
+
+### Install
+```bash
+npm install @vultisig/sdk
+```
+
+### Create a Fast Vault
+```typescript
+// Source: Vultisig.createFastVault() → Vultisig.verifyVault()
+import { Vultisig, MemoryStorage } from '@vultisig/sdk';
+
+const sdk = new Vultisig({ storage: new MemoryStorage() });
+await sdk.initialize();
+
+// Step 1: Create vault (sends verification email)
+const vaultId = await sdk.createFastVault({
+  name: 'my-agent-vault',
+  email: 'agent@example.com',
+  password: 'secure-password',
+});
+
+// Step 2: Verify with email code — returns FastVault instance
+const vault = await sdk.verifyVault(vaultId, '123456');
+```
+
+### Get Addresses & Balances
+```typescript
+// Source: VaultBase.address(), VaultBase.balance()
+// Chain params use string identifiers matching Chain enum values
+
+const ethAddress = await vault.address('Ethereum');
+const btcAddress = await vault.address('Bitcoin');
+const solAddress = await vault.address('Solana');
+
+// Get all addresses at once
+const allAddresses = await vault.addresses();
+// Returns Record<string, string> — { "Ethereum": "0x...", "Bitcoin": "bc1...", ... }
+
+// Check balances
+const ethBalance = await vault.balance('Ethereum');
+// Returns Balance: { amount: string, decimals: number, symbol: string, chainId: string, fiatValue?: number }
+
+// Multiple chains
+const allBalances = await vault.balances();
+// Returns Record<string, Balance>
+```
+
+### Send a Transaction
+```typescript
+// Source: VaultBase.prepareSendTx() → FastVault.sign() → VaultBase.broadcastTx()
+// 3-step flow: prepare → sign → broadcast
+
+// Step 1: Prepare the keysign payload
+const payload = await vault.prepareSendTx({
+  coin: { chain: 'Ethereum', address: ethAddress, decimals: 18, ticker: 'ETH' },
+  receiver: '0x...',
+  amount: BigInt('100000000000000000'), // 0.1 ETH in wei
+  memo: '',
+});
+
+// Step 2: Sign (FastVault co-signs with VultiServer automatically)
+const signature = await vault.sign(payload);
+
+// Step 3: Broadcast signed transaction
+const txHash = await vault.broadcastTx({
+  chain: 'Ethereum',
+  keysignPayload: payload,
+  signature: signature,
+});
+
+// Get explorer URL
+const explorerUrl = Vultisig.getTxExplorerUrl('Ethereum', txHash);
+```
+
+### Swap Tokens
+```typescript
+// Source: VaultBase.getSwapQuote() → VaultBase.prepareSwapTx() → sign → broadcastTx
+
+// Step 1: Get a quote (routes through THORChain, MayaChain, 1inch, LiFi, KyberSwap)
+const quote = await vault.getSwapQuote({
+  fromCoin: { chain: 'Ethereum', address: ethAddress, decimals: 18, ticker: 'ETH' },
+  toCoin: { chain: 'Ethereum', address: usdcAddress, decimals: 6, ticker: 'USDC', id: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' },
+  amount: 0.1, // Human-readable amount
+});
+
+// Step 2: Prepare swap transaction
+const swapResult = await vault.prepareSwapTx({
+  fromCoin: quote.fromCoin,
+  toCoin: quote.toCoin,
+  amount: 0.1,
+  swapQuote: quote,
+});
+
+// Step 3: Sign and broadcast
+const swapSig = await vault.sign(swapResult.keysignPayload);
+const swapTxHash = await vault.broadcastTx({
+  chain: 'Ethereum',
+  keysignPayload: swapResult.keysignPayload,
+  signature: swapSig,
+});
+```
+
+### Gas Estimation
+```typescript
+// Source: VaultBase.gas() — returns chain-specific gas info
+// EVM returns: { gasPrice, maxFeePerGas, maxPriorityFeePerGas, gasLimit, ... }
+// UTXO returns: { gasPrice, byteFee, ... }
+// Cosmos returns: { gasPrice, gas, ... }
+
+const evmGas = await vault.gas('Ethereum');
+// EvmGasInfo: { chainId, gasPrice, gasPriceGwei, maxFeePerGas, maxPriorityFeePerGas, gasLimit, estimatedCostUSD }
+
+const utxoGas = await vault.gas('Bitcoin');
+// UtxoGasInfo: { chainId, gasPrice, byteFee, estimatedCostUSD }
+```
+
+### Vault Import/Export
+```typescript
+// Source: VaultBase.export(), Vultisig.importVault()
+
+// Export vault to encrypted .vult file
+const { filename, data } = await vault.export('backup-password');
+// filename: string, data: Base64-encoded .vult file
+
+// Import vault from .vult file
+const importedVault = await sdk.importVault(data, 'backup-password');
+```
+
+### Seedphrase-Based Vault Creation
+```typescript
+// Source: Vultisig.validateSeedphrase(), Vultisig.discoverChainsFromSeedphrase(), Vultisig.createFastVaultFromSeedphrase()
+
+// Validate a BIP39 seedphrase
+const validation = await sdk.validateSeedphrase('word1 word2 ...');
+// Returns: { valid: boolean, wordCount: number, error?: string }
+
+// Discover chains with existing balances
+const discovery = await sdk.discoverChainsFromSeedphrase('word1 word2 ...');
+// Returns ChainDiscoveryAggregate — which chains have balances
+
+// Create vault from existing seedphrase
+const vaultId = await sdk.createFastVaultFromSeedphrase({
+  name: 'imported-vault',
+  email: 'agent@example.com',
+  password: 'secure-password',
+  mnemonic: 'word1 word2 ...',
+});
+// Returns vaultId — still needs sdk.verifyVault(vaultId, code)
+```
+
+### CLI Usage
+```bash
+# Source: clients/cli/ — https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli
+
+# Install CLI globally
+npm install -g @vultisig/sdk
+
+# Create vault
+vsig vault create --name agent-vault --type fast
+
+# Check balance
+vsig balance --chain Ethereum
+
+# Send transaction
+vsig send --chain Ethereum --to 0x... --amount 0.1
+
+# Swap
+vsig swap --from ETH --to USDC --amount 0.1
+```
+
+## Key Concepts
+
+### Threshold Signature Scheme (TSS)
+Instead of one private key, Vultisig splits signing capability across multiple "shares." A threshold (e.g., 2-of-3) must cooperate to sign. No share alone can sign. No share alone reveals the key. This is fundamentally different from multi-sig (which requires on-chain coordination and registration).
+
+### Fast Vault for Agents
+Fast Vault is 2-of-2: your agent holds one share, VultiServer holds the other. When your agent initiates a transaction, VultiServer co-signs automatically based on configurable policies (spending limits, whitelisted addresses, time delays). No human in the loop.
+
+Ideal for:
+- Autonomous trading bots
+- DCA (Dollar Cost Averaging) strategies
+- Automated treasury management
+- Agent-to-agent payments
+- Portfolio rebalancing
+- Any programmatic crypto operation
+
+### SDK Architecture
+
+> Source: [`docs/architecture/ARCHITECTURE.md`](https://github.com/vultisig/vultisig-sdk/blob/main/docs/architecture/ARCHITECTURE.md)
+
+The SDK is a TypeScript monorepo with layered architecture:
+- **@vultisig/sdk** — Public API (Vultisig, VaultManager, FastVault, SecureVault)
+- **@core/chain** — Chain-specific logic (address derivation, TX building, balance queries)
+- **@core/mpc** — Multi-Party Computation (DKLS keygen, threshold signing, relay)
+- **@core/config** — Chain configurations, fiat currencies
+- **@lib/dkls** — DKLS TSS protocol (WASM)
+- **@lib/schnorr** — Schnorr signatures (WASM)
+
+Platform support: Node.js, Browser (IndexedDB), Electron, React Native.
+
+Storage is pluggable: `MemoryStorage` is the default export. Implement the `Storage` interface for custom backends (file system, IndexedDB, etc.).
+
+### Events
+
+> Source: [`packages/sdk/src/events/`](https://github.com/vultisig/vultisig-sdk/tree/main/packages/sdk/src/events)
+
+**SDK-level events** (`Vultisig` instance):
+```typescript
+sdk.on('vaultCreationProgress', (data) => ...);  // Vault keygen progress
+sdk.on('vaultCreationComplete', (data) => ...);   // Vault ready
+sdk.on('vaultChanged', (data) => ...);             // Active vault switched
+sdk.on('error', (error) => ...);
+```
+
+**Vault-level events** (`FastVault` / `SecureVault` instance):
+```typescript
+vault.on('balanceUpdated', (data) => ...);
+vault.on('transactionSigned', (data) => ...);
+vault.on('transactionBroadcast', (data) => ...);
+vault.on('signingProgress', (data) => ...);
+vault.on('swapQuoteReceived', (data) => ...);
+vault.on('swapPrepared', (data) => ...);
+vault.on('error', (error) => ...);
+
+// SecureVault only — multi-device coordination:
+vault.on('qrCodeReady', (data) => ...);
+vault.on('deviceJoined', (data) => ...);
+vault.on('allDevicesReady', (data) => ...);
+```
+
+### Supported Chains (36+)
+
+> Source: [`packages/core/chain/Chain.ts`](https://github.com/vultisig/vultisig-sdk/blob/main/packages/core/chain/Chain.ts)
+
+**UTXO:** Bitcoin, Litecoin, Dogecoin, Bitcoin Cash, Dash, Zcash
+**EVM:** Ethereum, BSC, Polygon, Avalanche, Arbitrum, Optimism, Base, Blast, Cronos, zkSync, Hyperliquid, Mantle, Sei
+**Cosmos/IBC:** THORChain, MayaChain, Cosmos Hub, Osmosis, Dydx, Kujira, Noble, Terra, Terra Classic, Akash
+**Other:** Solana, Sui, Polkadot, TON, Ripple, Tron, Cardano
+
+Both ECDSA and EdDSA signature schemes supported.
+
+### Swap Providers
+Vultisig routes swaps through the best available provider:
+- **THORChain** — Native cross-chain swaps (BTC <> ETH, etc.)
+- **MayaChain** — Additional cross-chain pairs
+- **1inch** — EVM DEX aggregation
+- **LiFi** — Cross-chain + cross-DEX aggregation
+- **KyberSwap** — EVM DEX aggregation
+
+### Security Model
+- No seed phrases — vault shares replace 12/24 word seeds
+- Shares don't store funds — losing a single share doesn't risk funds
+- No on-chain key registration — unlike multi-sig
+- DKLS23 protocol — state-of-the-art TSS, co-developed with Silence Laboratories
+- Open source and audited
+
+## Fast Vault (Agent Wallets)
+
+- [How Fast Vaults Work](https://docs.vultisig.com/infrastructure/what-is-vultisigner/how-does-vultisigner-work): 2-of-2 keygen with VultiServer, auto-co-signing
+- [Security Model](https://docs.vultisig.com/infrastructure/what-is-vultisigner/why-is-it-safe): Why compromised server share cannot steal funds
+
+## Marketplace & Plugins
+
+Vultisig has a self-custodial automation marketplace where developers build and publish plugins. Plugins execute transactions through the user's vault — fully self-custodial.
+
+Available plugin types: DCA, recurring payments, trading strategies, custom automation.
+
+- [Marketplace Overview](https://docs.vultisig.com/ecosystem/marketplace): Browse and install plugins
+- [Plugin Quick Start](https://docs.vultisig.com/developer-docs/marketplace/basics-quick-start): Build your first plugin
+- [Build a Plugin](https://docs.vultisig.com/developer-docs/marketplace/build-your-plugin): Full development guide
+- [Policy Rules](https://docs.vultisig.com/developer-docs/marketplace/metarules): Transaction policy configuration
+
+## $VULT Token
+
+Contract: [`0xb788144DF611029C60b859DF47e79B7726C4DEBa`](https://etherscan.io/token/0xb788144DF611029C60b859DF47e79B7726C4DEBa) (Ethereum)
+Listed on: [Kraken](https://www.kraken.com), [Uniswap](https://app.uniswap.org)
+Utility: Trading fee discounts (up to 50%), marketplace fees, governance voting
+
+## Core Technology
+
+- [TSS Explained](https://docs.vultisig.com/security-and-technology/security-technology): Threshold Signature Schemes
+- [DKLS23 Protocol](https://docs.vultisig.com/security-and-technology/security-technology/how-dkls23-works): Fewer rounds, faster signing
+- [TSS vs MultiSig](https://docs.vultisig.com/security-and-technology/security-technology/difference-to-multi-sig): Why TSS beats multi-signature
+
+## Documentation
+
+- [Full Docs](https://docs.vultisig.com): Complete documentation
+- [Getting Started](https://docs.vultisig.com/getting-started/getting-started): Download, vault creation, first transaction
+- [Swaps](https://docs.vultisig.com/app-guide/wallet/swapping): Cross-chain swaps
+- [DeFi](https://docs.vultisig.com/app-guide/defi): Staking, bonding, liquidity
+- [Browser Extension](https://docs.vultisig.com/ecosystem/vultisig-extension): Vultisig Extension for Web3 dApps
+
+## Links
+
+- [Website](https://vultisig.com)
+- [GitHub](https://github.com/vultisig)
+- [SDK](https://github.com/vultisig/vultisig-sdk)
+- [npm](https://www.npmjs.com/package/@vultisig/sdk)
+- [Discord](https://discord.gg/thq64eaYVN)
+- [X / Twitter](https://x.com/vultisig)
+- [Telegram](https://t.me/vultisig)
