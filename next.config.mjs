@@ -13,6 +13,16 @@ const nextConfig = {
         destination: '/downloads',
         permanent: true,
       },
+      {
+        source: '/SKILL.md',
+        destination: '/skills.md',
+        permanent: true,
+      },
+      {
+        source: '/skill.md',
+        destination: '/skills.md',
+        permanent: true,
+      },
     ]
   },
 }
