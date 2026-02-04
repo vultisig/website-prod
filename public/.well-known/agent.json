@@ -1,0 +1,63 @@
+{
+  "name": "Vultisig",
+  "description": "Seedless, multi-chain crypto vault using Threshold Signature Schemes (TSS). Self-custodial MPC wallets for AI agents and humans. 36+ blockchains, no seed phrases.",
+  "url": "https://vultisig.com",
+  "type": "cryptocurrency_wallet",
+  "agent_friendly": true,
+  "wallet_architecture": "self-custody-tss",
+  "capabilities": [
+    "multi-chain-transfers",
+    "token-swaps",
+    "balance-queries",
+    "gas-estimation",
+    "vault-management",
+    "token-approvals",
+    "cross-chain-swaps",
+    "automated-trading"
+  ],
+  "supported_chains": {
+    "utxo": ["Bitcoin", "Litecoin", "Dogecoin", "BitcoinCash", "Dash", "Zcash"],
+    "evm": ["Ethereum", "BSC", "Polygon", "Avalanche", "Arbitrum", "Optimism", "Base", "Blast", "Cronos", "ZkSync", "Hyperliquid", "Mantle", "Sei"],
+    "cosmos": ["THORChain", "MayaChain", "Cosmos", "Osmosis", "Dydx", "Kujira", "Noble", "Terra", "TerraClassic", "Akash"],
+    "other": ["Solana", "Sui", "Polkadot", "TON", "Ripple", "Tron", "Cardano"]
+  },
+  "sdk": {
+    "language": "typescript",
+    "package": "@vultisig/sdk",
+    "install": "npm install @vultisig/sdk",
+    "repository": "https://github.com/vultisig/vultisig-sdk",
+    "documentation": "https://github.com/vultisig/vultisig-sdk/blob/main/docs/SDK-USERS-GUIDE.md"
+  },
+  "agent_resources": {
+    "llms_txt": "https://vultisig.com/llms.txt",
+    "llms_full_txt": "https://vultisig.com/llms-full.txt",
+    "skill_md": "https://vultisig.com/SKILL.md",
+    "agent_guide": "https://github.com/vultisig/vultisig-sdk/blob/main/docs/agent.md",
+    "cli": "https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli"
+  },
+  "vault_types": {
+    "fast_vault": {
+      "description": "2-of-2 with VultiServer. Agent holds one share, server auto-co-signs. No human approval needed.",
+      "use_case": "autonomous_agent_operations"
+    },
+    "secure_vault": {
+      "description": "2-of-2 with human co-signer via Vultisig mobile app. Human must scan QR to co-sign.",
+      "use_case": "human_gated_operations"
+    }
+  },
+  "swap_providers": ["THORChain", "MayaChain", "1inch", "LiFi", "KyberSwap"],
+  "token": {
+    "name": "VULT",
+    "chain": "Ethereum",
+    "contract": "0xb788144DF611029C60b859DF47e79B7726C4DEBa",
+    "utility": "Trading fee discounts up to 50%, marketplace fees, governance"
+  },
+  "links": {
+    "website": "https://vultisig.com",
+    "docs": "https://docs.vultisig.com",
+    "github": "https://github.com/vultisig",
+    "discord": "https://discord.gg/thq64eaYVN",
+    "twitter": "https://x.com/vultisig",
+    "telegram": "https://t.me/vultisig"
+  }
+}

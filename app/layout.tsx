@@ -228,6 +228,10 @@ export const metadata: Metadata = {
         url: "/icon.svg",
         color: "#000000",
       },
+      {
+        rel: "llms-txt",
+        url: "https://vultisig.com/llms.txt",
+      },
     ],
   },
   manifest: "/site.webmanifest",
