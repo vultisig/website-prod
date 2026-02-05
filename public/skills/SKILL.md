@@ -70,13 +70,13 @@ Traditional wallets store a single private key or seed phrase. If compromised, a
 
 | Use Case | Interface | Why |
 |----------|-----------|-----|
-| Shell scripts | [CLI](./vultisig-cli/SKILL.md) | Direct commands, easy scripting |
-| Automation bots | [CLI](./vultisig-cli/SKILL.md) | Simple, pipes to jq, env vars |
-| One-off operations | [CLI](./vultisig-cli/SKILL.md) | Quick, no code needed |
-| TypeScript/Node apps | [SDK](./vultisig-sdk/SKILL.md) | Full API, type safety |
-| Custom transaction logic | [SDK](./vultisig-sdk/SKILL.md) | signBytes, broadcastRawTx |
-| Browser/React apps | [SDK](./vultisig-sdk/SKILL.md) | Event system, async/await |
-| Complex workflows | [SDK](./vultisig-sdk/SKILL.md) | Programmatic control |
+| Shell scripts | [CLI](https://vultisig.com/cli/skill.md) | Direct commands, easy scripting |
+| Automation bots | [CLI](https://vultisig.com/cli/skill.md) | Simple, pipes to jq, env vars |
+| One-off operations | [CLI](https://vultisig.com/cli/skill.md) | Quick, no code needed |
+| TypeScript/Node apps | [SDK](https://vultisig.com/sdk/skill.md) | Full API, type safety |
+| Custom transaction logic | [SDK](https://vultisig.com/sdk/skill.md) | signBytes, broadcastRawTx |
+| Browser/React apps | [SDK](https://vultisig.com/sdk/skill.md) | Event system, async/await |
+| Complex workflows | [SDK](https://vultisig.com/sdk/skill.md) | Programmatic control |
 
 ### Quick Decision
 
@@ -126,7 +126,7 @@ npm install -g @vultisig/cli
 vultisig create fast --name "bot-wallet" --email "bot@example.com" --password "SecurePass123!"
 vultisig balance -o json
 ```
-→ [Full CLI Documentation](./vultisig-cli/SKILL.md)
+→ [Full CLI Documentation](https://vultisig.com/cli/skill.md)
 
 ### SDK Quick Start
 ```typescript
@@ -143,10 +143,10 @@ const vaultId = await sdk.createFastVault({
 const vault = await sdk.verifyVault(vaultId, 'email-code')
 const balance = await vault.balance(Chain.Ethereum)
 ```
-→ [Full SDK Documentation](./vultisig-sdk/SKILL.md)
+→ [Full SDK Documentation](https://vultisig.com/sdk/skill.md)
 
 ## Resources
 
 - [GitHub Repository](https://github.com/vultisig/vultisig-sdk)
-- [CLI Documentation](./vultisig-cli/SKILL.md)
-- [SDK Documentation](./vultisig-sdk/SKILL.md)
+- [CLI Documentation](https://vultisig.com/cli/skill.md)
+- [SDK Documentation](https://vultisig.com/sdk/skill.md)

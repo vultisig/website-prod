@@ -14,14 +14,39 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/skills',
+        destination: '/skills/SKILL.md',
+        permanent: false,
+      },
+      {
+        source: '/skill',
+        destination: '/skills/SKILL.md',
+        permanent: false,
+      },
+      {
         source: '/SKILL.md',
-        destination: '/skills.md',
+        destination: '/skills/SKILL.md',
         permanent: true,
       },
       {
         source: '/skill.md',
-        destination: '/skills.md',
+        destination: '/skills/SKILL.md',
         permanent: true,
+      },
+      {
+        source: '/skills.md',
+        destination: '/skills/SKILL.md',
+        permanent: false,
+      },
+      {
+        source: '/sdk/skill.md',
+        destination: '/skills/vultisig-sdk/SKILL.md',
+        permanent: false,
+      },
+      {
+        source: '/cli/skill.md',
+        destination: '/skills/vultisig-cli/SKILL.md',
+        permanent: false,
       },
     ]
   },
