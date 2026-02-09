@@ -11,6 +11,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import feature1Png from "./images/feature1.png"
+import feature2Png from "./images/feature2.png"
+import feature3Png from "./images/feature3.png"
+import Image from "next/image"
 
 function GradientText({
   children,
@@ -28,6 +32,39 @@ function GradientText({
   )
 }
 
+const features = [
+  {
+    tag: "Multi-device",
+    title: "No special hardware needed",
+    description:
+      "With Vultisig, you bring your own trusted devices - phone, desktop, laptops or tablets. No special hardware needed. Together, your devices create vaults that no single device can access.",
+    image: feature1Png,
+  },
+  {
+    tag: "Vault Share",
+    title: "Vault Shares = secure backups",
+    description: (
+      <p>
+        Each device has a unique backup called "Vault Share", which are secure
+        digital backups that eliminate the hassle of physical storage.
+        <br />
+        <span className="text-primary-accent4">
+          <strong>Individual Vault-shares never store funds</strong> and can be
+          safely imported/exported anywhere.
+        </span>
+      </p>
+    ),
+    image: feature2Png,
+  },
+  {
+    tag: "Multi-Factor",
+    title: "Private keys never exist in Vultisig",
+    description:
+      "Each vault is natively multi-factor. No assets can be accessed without collaboration. Access them remotely from anywhere in the world. Store each device's Vault Share separately and sleep soundly.",
+    image: feature3Png,
+  },
+]
+
 export default function HowItWorks() {
   const [imageLoading, setImageLoading] = useState(true)
 
@@ -36,13 +73,67 @@ export default function HowItWorks() {
       {/* HERO SECTION */}
       <section className="max-w-7xl mx-auto mb-32">
         <div className="flex flex-col items-center justify-center text-center mb-12">
-          <h1 className="text-5xl font-bold text-white mb-5">
+          <h1 className="text-5xl font-semibold text-white mb-5">
             Wallet recovery <GradientText>re-imagined.</GradientText>
           </h1>
-          <p className="text-gray-300 text-xl max-w-md mx-auto mb-0">
+          <p className="text-gray-300 text-xl font-normal max-w-md mx-auto mb-0">
             Introducing Vultisig recovery: Vault shares instead of seed phrases.
           </p>
         </div>
+
+        <div className="relative">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              style={{
+                top: `${index * 30 + 100}px`,
+                zIndex: 10 + index,
+              }}
+              className="
+                bg-gradient-to-b from-background to-backgroundSecondary
+                border border-borderLight rounded-3xl md:rounded-2xl
+                min-h-[701px]
+                lg:min-h-[400px]
+                sticky
+                overflow-hidden
+              "
+            >
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4 pt-8 p-5 md:p-10">
+                  <div className="inline-block bg-[#33E6BF]/[0.13] border border-[#33E6BF]/[0.5] text-[#33E6BF] px-3 py-1 rounded-full text-sm font-medium">
+                    {feature.tag}
+                  </div>
+                  <h3 className="text-2xl lg:text-5xl font-bold text-white">
+                    {index === 2 ? (
+                      <>
+                        Expand your wallet's power{" "}
+                        <span className="text-lg lg:text-2xl">
+                          (coming soon)
+                        </span>
+                      </>
+                    ) : (
+                      feature.title
+                    )}
+                  </h3>
+                  <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+                <div className="w-full h-[300px] md:h-[365px] md:w-[648px] relative">
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+          {/* Spacer to allow cards to scroll past viewport */}
+          <div className="h-[50vh]"></div>
+        </div>
+
         <div className="flex flex-col md:flex-row items-center justify-center gap-16">
           <div className="flex-1 flex justify-center mb-8 md:mb-0">
             {imageLoading && (

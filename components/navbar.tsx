@@ -3,12 +3,20 @@
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, Menu, X, Phone, Laptop, Monitor, Puzzle } from "lucide-react"
+import {
+  ChevronDown,
+  Menu,
+  X,
+  Phone,
+  Laptop,
+  Monitor,
+  Puzzle,
+} from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 
@@ -17,33 +25,44 @@ export default function Navbar() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
   const [isAtTop, setIsAtTop] = useState(true)
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
       setIsAtTop(window.scrollY < 5)
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isAtTop
-        ? 'w-full max-w-[100vw] bg-transparent rounded-none px-0 pt-4'
-        : 'top-6 inset-x-0 px-4 lg:px-2'
-      } `}>
-        <div className={`transition-all duration-300 w-full
-          ${isAtTop
-            ? 'px-4 lg:px-8 bg-[var(--background-secondary)]/90 backdrop-blur-md border border-transparent rounded-none lg:bg-transparent lg:backdrop-blur-0 lg:border-transparent'
-            : 'bg-[var(--background-secondary)]/90 backdrop-blur-md border border-slate-700 rounded-2xl px-6 py-3'
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2"
+        } `}
+      >
+        <div
+          className={`transition-all duration-300 w-full bg-backgroundSecondary/90 backdrop-blur-md border
+          ${
+            isAtTop
+              ? "px-4 lg:px-8 border-transparent rounded-none lg:bg-transparent lg:backdrop-blur-0 lg:border-transparent"
+              : "border-slate-700 rounded-2xl px-6 py-3"
           }
           lg:max-w-7xl lg:mx-auto
-        `}>
+        `}
+        >
           <div className="flex justify-between items-center">
             <a href="/" className="flex items-center">
-              <img src={'/images/vultisig-logo.svg'} alt="Vultisig logo" width={'25px'} height={'25px'}></img>
-              <span className="text-white text-xl font-semibold pl-3">Vultisig</span>
+              <img
+                src={"/images/vultisig-logo.svg"}
+                alt="Vultisig logo"
+                width={25}
+                height={25}
+              />
+              <span className="text-white text-xl font-semibold pl-3">
+                Vultisig
+              </span>
             </a>
 
             <div className="hidden lg:flex items-center">
@@ -54,22 +73,49 @@ export default function Navbar() {
                     <ChevronDown className="ml-1 h-4 w-4" />
                   </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="bg-[var(--background-secondary)] border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[220px]">
-                  <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                <DropdownMenuContent
+                  align="start"
+                  className="bg-[var(--background-secondary)] border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[220px]"
+                >
+                  <a
+                    href="/downloads"
+                    className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                  >
                     <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                      <Image src="/images/navbar-product-1.png" alt="Apps" width={28} height={28} />
+                      <Image
+                        src="/images/navbar-product-1.png"
+                        alt="Apps"
+                        width={28}
+                        height={28}
+                      />
                     </div>
                     <span className="font-medium">Vultisig Apps</span>
                   </a>
-                  <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                  <a
+                    href="/downloads"
+                    className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                  >
                     <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                      <Image src="/images/navbar-product-4.png" alt="Extension" width={28} height={28} />
+                      <Image
+                        src="/images/navbar-product-4.png"
+                        alt="Extension"
+                        width={28}
+                        height={28}
+                      />
                     </div>
                     <span className="font-medium">Vultisig Extension</span>
                   </a>
-                  <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                  <a
+                    href="/downloads"
+                    className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                  >
                     <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                      <Image src="/images/navbar-product-3.png" alt="Web" width={28} height={28} />
+                      <Image
+                        src="/images/navbar-product-3.png"
+                        alt="Web"
+                        width={28}
+                        height={28}
+                      />
                     </div>
                     <span className="font-medium">Vultisig Web</span>
                   </a>
@@ -81,7 +127,10 @@ export default function Navbar() {
                   </a> */}
                 </DropdownMenuContent>
               </DropdownMenu>
-              <a href="/how-it-works" className="text-gray-300 hover:text-white ml-8">
+              <a
+                href="/how-it-works"
+                className="text-gray-300 hover:text-white ml-8"
+              >
                 How It Works
               </a>
               {/* <a href="#" className="text-gray-300 hover:text-white ml-8">
@@ -90,10 +139,16 @@ export default function Navbar() {
               <a href="/vult" className="text-gray-300 hover:text-white ml-8">
                 $VULT
               </a>
-              <a href="/articles" className="text-gray-300 hover:text-white ml-8">
+              <a
+                href="/articles"
+                className="text-gray-300 hover:text-white ml-8"
+              >
                 Articles
               </a>
-              <a href="https://docs.vultisig.com" className="text-gray-300 hover:text-white ml-8">
+              <a
+                href="https://docs.vultisig.com"
+                className="text-gray-300 hover:text-white ml-8"
+              >
                 Docs
               </a>
 
@@ -175,14 +230,26 @@ export default function Navbar() {
             </div>
 
             <div className="hidden lg:block">
-              <a href="/downloads" className="text-gray-300 hover:text-white ml-8">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">Download App</Button>
+              <a
+                href="/downloads"
+                className="text-gray-300 hover:text-white ml-8"
+              >
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+                  Download App
+                </Button>
               </a>
             </div>
 
             <div className="lg:hidden">
-              <button onClick={() => setIsOpen(!isOpen)} className="text-gray-300 hover:text-white p-2">
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-gray-300 hover:text-white p-2"
+              >
+                {isOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
               </button>
             </div>
           </div>
@@ -199,31 +266,68 @@ export default function Navbar() {
                   type="button"
                 >
                   <span>Products</span>
-                  <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${mobileProductsOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`ml-1 h-4 w-4 transition-transform duration-200 ${mobileProductsOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
                 {mobileProductsOpen && (
-                  <div id="mobile-products-menu" className="flex flex-col gap-1 pl-6">
-                    <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                  <div
+                    id="mobile-products-menu"
+                    className="flex flex-col gap-1 pl-6"
+                  >
+                    <a
+                      href="/downloads"
+                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                    >
                       <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-product-1.png" alt="Mobile App" width={28} height={28} />
+                        <Image
+                          src="/images/navbar-product-1.png"
+                          alt="Mobile App"
+                          width={28}
+                          height={28}
+                        />
                       </div>
                       <span className="font-medium">Vultisig Mobile App</span>
                     </a>
-                    <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                    <a
+                      href="/downloads"
+                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                    >
                       <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-product-2.png" alt="macOS" width={28} height={28} />
+                        <Image
+                          src="/images/navbar-product-2.png"
+                          alt="macOS"
+                          width={28}
+                          height={28}
+                        />
                       </div>
                       <span className="font-medium">Vultisig macOS</span>
                     </a>
-                    <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                    <a
+                      href="/downloads"
+                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                    >
                       <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-product-3.png" alt="Windows" width={28} height={28} />
+                        <Image
+                          src="/images/navbar-product-3.png"
+                          alt="Windows"
+                          width={28}
+                          height={28}
+                        />
                       </div>
                       <span className="font-medium">Vultisig Windows</span>
                     </a>
-                    <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
+                    <a
+                      href="/downloads"
+                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                    >
                       <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-product-4.png" alt="Extension" width={28} height={28} />
+                        <Image
+                          src="/images/navbar-product-4.png"
+                          alt="Extension"
+                          width={28}
+                          height={28}
+                        />
                       </div>
                       <span className="font-medium">Vultisig Extension</span>
                     </a>
@@ -306,7 +410,10 @@ export default function Navbar() {
                     </div>
                   </div>
                 )} */}
-                <a href="/how-it-works" className="text-gray-300 hover:text-white py-2">
+                <a
+                  href="/how-it-works"
+                  className="text-gray-300 hover:text-white py-2"
+                >
                   How It Works
                 </a>
                 {/* <a href="#" className="text-gray-300 hover:text-white py-2">
@@ -318,13 +425,18 @@ export default function Navbar() {
                 <a href="/vult" className="text-gray-300 hover:text-white py-2">
                   $VULT
                 </a>
-                <a href="/articles" className="text-gray-300 hover:text-white py-2">
+                <a
+                  href="/articles"
+                  className="text-gray-300 hover:text-white py-2"
+                >
                   Articles
                 </a>
               </div>
               <div className="pt-2">
                 <a href="/downloads" className="text-gray-300 hover:text-white">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg w-full">Download App</Button>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg w-full">
+                    Download App
+                  </Button>
                 </a>
               </div>
             </div>

@@ -2,89 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Brockmann Font Face Declarations */
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
-      format('woff'),
-    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
-      format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
-    format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
-      format('woff'),
-    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
-      format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
-    format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
-      format('woff'),
-    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
-      format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
-    format('opentype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff')
-      format('woff'),
-    url('/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.ttf')
-      format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brockmann';
-  src: url('/fonts/brockmann-font-1751459394-0/brockmann-medium.otf')
-    format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 body {
-  font-family: 'Brockmann', Arial, Helvetica, sans-serif;
   -ms-overflow-style: none;
 }
 
@@ -96,18 +14,14 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @layer base {
   :root {
-    /* --background: 0 0% 100%; */
-    --background: #02122b;
-    --background-secondary: #061b3a;
-    --light-blob: #001f73;
+    /* --background: #02122b */
+    --background: 217 91% 9%;
+    /* #061b3a */
+    --background-secondary: 216 81% 13%;
+    /* #001f73 */
+    --light-blob: 224 100% 23%;
     --foreground: 0 0% 100%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 100%;
@@ -140,8 +54,8 @@ body::-webkit-scrollbar {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --primary-accent: #4879fd;
-    --primary-accent-rgb: 72, 121, 253;
+    /* --primary-accent: #4879fd; */
+    --primary-accent: 224 98% 64%;
     --border-color: #2155df;
     --border-color-rgb: 33, 85, 223;
     --border-light: #11284a;
@@ -179,8 +93,6 @@ body::-webkit-scrollbar {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --primary-accent: #4879fd;
-    --primary-accent-rgb: 72, 121, 253;
   }
   .terms-content ol,
   .terms-content ul {
@@ -246,11 +158,7 @@ body::-webkit-scrollbar {
   top: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  background: radial-gradient(
-    circle,
-    var(--light-blob) 0%,
-    /* rgba(var(--primary-accent-rgb), 0.7) 0%, */ transparent 70%
-  );
+  background: radial-gradient(circle, var(--light-blob) 0%, transparent 70%);
   opacity: 0.5;
   filter: blur(24px);
 }
@@ -259,7 +167,8 @@ body::-webkit-scrollbar {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .feature-description-wrapper.expanded {
