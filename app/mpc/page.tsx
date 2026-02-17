@@ -32,7 +32,7 @@ export default function MPCPage() {
           <Blockchains />
           <NoTrack />
           <Faq />
-          <Cta />
+          {/* <Cta /> */}
           <div className="flex flex-col md:flex-row items-center md:justify-center gap-4 pb-12 px-4">
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center px-4">
               JOIN THE DISCORD TO REQUEST NEW FEATURES!

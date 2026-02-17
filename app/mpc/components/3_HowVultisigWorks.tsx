@@ -8,10 +8,7 @@ import { GoShieldCheck } from "react-icons/go"
 
 export default function HowVultisigWorks() {
   return (
-    <section
-      className="px-6 md:px-20 py-20 max-w-7xl mx-auto"
-      id="how-it-works"
-    >
+    <section className="px-6 md:px-20 py-20 container" id="how-it-works">
       <Heading>How Vultisig Works?</Heading>
       <div className="grid md:grid-cols-3 gap-8 mb-12">
         {[

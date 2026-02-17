@@ -177,7 +177,7 @@ export default function DownloadsPage() {
 
   return (
     <main className="min-h-screen pt-20 sm:pt-32 pb-20 px-4">
-      <section className="max-w-7xl mx-auto mb-16 sm:mb-32">
+      <section className="container mb-16 sm:mb-32">
         <Tabs
           value={activeTab}
           onValueChange={handleTabChange}
@@ -544,7 +544,7 @@ export default function DownloadsPage() {
 
       {/* Discord section */}
       <section className="py-8 sm:py-12 px-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="container">
           <div className="flex justify-center items-center mt-4 sm:mt-8">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center px-4">

@@ -2,6 +2,7 @@ import React from "react"
 import Heading from "./Heading"
 import Image from "next/image"
 import vultisigGradientPng from "../images/blockchains-bg.png"
+import RadialBackground from "./RadialBackground"
 
 export default function Blockchains() {
   const chains = [
@@ -23,6 +24,8 @@ export default function Blockchains() {
 
   return (
     <section className="px-6 md:px-20 py-20 max-w-4xl mx-auto flex flex-col items-center gap-[70px] relative">
+      <RadialBackground />
+
       <Heading withMargin={false}>
         One Vault. <span className="text-primaryAccent">30+ Blockchains.</span>
       </Heading>

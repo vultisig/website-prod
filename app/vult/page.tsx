@@ -80,7 +80,7 @@ export default function VultPage() {
   return (
     <main className="min-h-screen pt-24 xs:pt-32 pb-20 px-2 xs:px-3 sm:px-4 bg-[var(--background)]">
       {/* HERO SECTION */}
-      <section className="max-w-7xl mx-auto mb-24 xs:mb-16 sm:mb-20">
+      <section className="container mb-24 xs:mb-16 sm:mb-20">
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-8 xs:gap-6 sm:gap-10 z-10">
           <div className="flex-1 flex flex-col items-start justify-center mb-10 xs:mb-8 md:mb-0 w-full">
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-4 xs:mb-5 sm:mb-6 leading-tight">
@@ -215,7 +215,7 @@ export default function VultPage() {
                 <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <Copy className="w-5 h-5 text-[#4879FD]" />
                 </div>
-                <span className="text-white text-lg xs:text-xl font-bold">
+                <span className="text-white text-lg xs:text-xl font-bold break-all">
                   0xb788144DF611029C60b859DF47e79B7726C4DEBa
                 </span>
                 <span className="text-gray-400 text-xs mt-1">
@@ -261,7 +261,7 @@ export default function VultPage() {
       </section>
 
       {/* VULT DISCOUNT TIERS SECTION */}
-      <section className="max-w-7xl mx-auto mb-24 xs:mb-16 sm:mb-20">
+      <section className="container mb-24 xs:mb-16 sm:mb-20">
         <div className="text-center mb-12">
           <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
             $VULT Discount Tiers
@@ -585,7 +585,7 @@ export default function VultPage() {
       </section>
 
       {/* AIRDROP PARTICIPATION SECTION */}
-      <section className="max-w-7xl mx-auto mb-24 xs:mb-16 sm:mb-20">
+      <section className="container mb-24 xs:mb-16 sm:mb-20">
         <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-4 xs:mb-5 sm:mb-6 max-w-2xl mx-auto">
           How to participate in the
           <br />
@@ -897,7 +897,7 @@ export default function VultPage() {
 
       {/* Discord section */}
       <section className="py-12 px-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="container">
           <div className="flex justify-center items-center mt-8">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
               <h3 className="text-xl sm:text-2xl font-bold text-white text-center">

@@ -78,7 +78,7 @@ export default function Hero() {
         </div>
       )}
 
-      <div className="relative max-w-7xl mx-auto w-full flex flex-col items-center justify-center md:block z-20">
+      <div className="relative container w-full flex flex-col items-center justify-center md:block z-20">
         <div className="w-full flex flex-col items-center justify-center md:block md:max-w-4xl">
           <div className="inline-flex items-center bg-[#092e3e] border border-[#33e6bf] rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
             <span className="font-medium text-base md:text-xs md:sm:text-sm text-[#33e6bf]">

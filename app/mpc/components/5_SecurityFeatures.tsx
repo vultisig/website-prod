@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 
 export default function SecurityFeatures() {
   return (
-    <section className="px-6 md:px-20 py-20 max-w-7xl mx-auto flex flex-col items-center gap-[70px]">
+    <section className="px-6 md:px-20 py-20 container flex flex-col items-center gap-[70px]">
       <Heading withMargin={false}>Security You Can Verify</Heading>
       <div className="grid md:grid-cols-4 gap-6">
         {[

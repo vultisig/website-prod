@@ -4,11 +4,12 @@ import feature1Png from "../images/image1.png"
 import feature2Png from "../images/image2.png"
 import feature3Png from "../images/image3.png"
 import Heading from "./Heading"
+import RadialBackground from "./RadialBackground"
 
 export default function MpcWallet() {
   return (
     <section
-      className="px-6 md:px-20 max-w-7xl mx-auto"
+      className="px-6 md:px-20 container relative"
       id="what-is-an-mpc-wallet?"
     >
       <Heading>What Is an MPC Wallet?</Heading>

@@ -101,7 +101,7 @@ export default async function ArticlesPage() {
       <CollectionPageJsonLd />
       <BreadcrumbJsonLd />
       <main className="min-h-screen pt-32 pb-20 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="container">
         <div className="flex flex-col items-center text-center mb-12">
           <div className="flex items-center gap-4 mb-6">
             <h1 className="text-5xl md:text-7xl font-bold text-white">Articles</h1>

@@ -1,4 +1,3 @@
-"use client"
 import {
   Accordion,
   AccordionContent,
@@ -6,7 +5,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import Heading from "./Heading"
-import { useIsMobile } from "@/hooks/use-mobile"
 
 const FAQ_ITEMS = [
   {
@@ -82,17 +80,10 @@ const FAQ_ITEMS = [
 ]
 
 export default function Faq() {
-  const isMobile = useIsMobile()
   return (
     <section className="px-6 md:px-20 py-20 max-w-4xl mx-auto" id="faq">
       <Heading className="mb-12">Frequently Asked Questions</Heading>
-      <Accordion
-        type="multiple"
-        defaultValue={
-          isMobile ? [] : FAQ_ITEMS.map((item) => `item-${item.question}`)
-        }
-        className="w-full space-y-3"
-      >
+      <Accordion type="multiple" className="w-full space-y-3">
         {FAQ_ITEMS.map((item) => (
           <AccordionItem
             key={item.question}

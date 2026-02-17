@@ -71,7 +71,7 @@ export default function HowItWorks() {
   return (
     <main className="min-h-screen pt-32 pb-20 px-4">
       {/* HERO SECTION */}
-      <section className="max-w-7xl mx-auto mb-32">
+      <section className="container mb-32">
         <div className="flex flex-col items-center justify-center text-center mb-12">
           <h1 className="text-5xl font-semibold text-white mb-5">
             Wallet recovery <GradientText>re-imagined.</GradientText>
@@ -134,7 +134,7 @@ export default function HowItWorks() {
           <div className="h-[50vh]"></div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-16">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-16 mt-16">
           <div className="flex-1 flex justify-center mb-8 md:mb-0">
             {imageLoading && (
               <div className="w-[490px] h-[520px]">
@@ -193,7 +193,7 @@ export default function HowItWorks() {
       </section>
 
       {/* TRADITIONAL WALLETS SECTION */}
-      <section className="max-w-7xl mx-auto mb-32">
+      <section className="container mb-32">
         <h2 className="text-5xl font-bold text-white text-center">
           How do <GradientText>traditional wallets</GradientText> work?
         </h2>
@@ -262,7 +262,7 @@ export default function HowItWorks() {
       </section>
 
       {/* SINGLE POINT OF FAILURE SECTION */}
-      <section className="max-w-7xl mx-auto mb-32">
+      <section className="container mb-32">
         <h2 className="text-5xl font-bold text-white mb-8 text-center">
           Private keys: a <GradientText>single</GradientText> point of failure
         </h2>
@@ -353,7 +353,7 @@ export default function HowItWorks() {
       </section>
 
       {/* FAQ SECTION */}
-      <section className="max-w-7xl mx-auto mb-32">
+      <section className="container mb-32">
         <h2 className="text-5xl font-bold text-white mb-12 text-center">
           Frequently Asked <GradientText>Questions</GradientText>
         </h2>

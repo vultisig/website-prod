@@ -4,7 +4,7 @@ import { FaDiscord, FaInstagram, FaXTwitter } from "react-icons/fa6"
 export default function Footer() {
   return (
     <footer className="border-t border-slate-800 py-16 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="container">
         <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-0">
           {/* Left side - Logo and socials */}
           <div className="flex-shrink-0">

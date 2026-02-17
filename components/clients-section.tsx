@@ -1,44 +1,40 @@
-"use client";
+"use client"
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react"
 
 export default function ClientsSection() {
   const clients = [
     { name: "DeFi Suisse", image: "/images/defi-suisse-logo.png" },
     { name: "THORChain", image: "/images/thorchain-logo.png" },
     { name: "Rujira", image: "/images/rujira-logo.png" },
-  ];
+  ]
 
-  const setRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [setWidth, setSetWidth] = useState(0);
-  const [repeatCount, setRepeatCount] = useState(2);
+  const setRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [setWidth, setSetWidth] = useState(0)
+  const [repeatCount, setRepeatCount] = useState(2)
 
   useLayoutEffect(() => {
     function measure() {
-      if (!setRef.current || !containerRef.current) return;
-      const singleSetWidth = setRef.current.offsetWidth;
-      const containerWidth = containerRef.current.offsetWidth;
+      if (!setRef.current || !containerRef.current) return
+      const singleSetWidth = setRef.current.offsetWidth
+      const containerWidth = containerRef.current.offsetWidth
 
-      if (!singleSetWidth || !containerWidth) return;
+      if (!singleSetWidth || !containerWidth) return
 
       // Repeat enough times to overflow the container + extra buffer
-      const needed = Math.ceil(containerWidth / singleSetWidth) + 2;
-      setRepeatCount(needed);
-      setSetWidth(singleSetWidth);
+      const needed = Math.ceil(containerWidth / singleSetWidth) + 2
+      setRepeatCount(needed)
+      setSetWidth(singleSetWidth)
     }
 
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+    measure()
+    window.addEventListener("resize", measure)
+    return () => window.removeEventListener("resize", measure)
+  }, [])
 
   const repeatedSets = Array.from({ length: repeatCount }).map((_, i) => (
-    <div
-      key={i}
-      ref={i === 0 ? setRef : null}
-      className="flex flex-shrink-0"
-    >
+    <div key={i} ref={i === 0 ? setRef : null} className="flex flex-shrink-0">
       {clients.map((client, idx) => (
         <div key={`${i}-${idx}`} className="flex items-center mx-4 sm:mx-8">
           <img
@@ -49,11 +45,11 @@ export default function ClientsSection() {
         </div>
       ))}
     </div>
-  ));
+  ))
 
   return (
     <section className="py-12 px-4">
-      <div className="max-w-7xl mx-auto text-center mb-12">
+      <div className="container text-center mb-12">
         <p className="text-gray-300 text-base sm:text-lg">
           Vultisig Vaults are battle-tested and trusted by thousands of users,
           <br className="hidden sm:block" />
@@ -90,5 +86,5 @@ export default function ClientsSection() {
         `}</style>
       )}
     </section>
-  );
+  )
 }

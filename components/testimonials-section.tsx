@@ -9,7 +9,7 @@ interface Testimonial {
   name: string
   text: string
   label: string
-  store?: 'google' | 'apple'
+  store?: "google" | "apple"
   date?: string
   score?: number
 }
@@ -27,11 +27,11 @@ export default function TestimonialsSection() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch('/api/reviews')
+        const response = await fetch("/api/reviews")
         const data = await response.json()
         setTestimonials(data.testimonials)
       } catch (error) {
-        console.error('Error fetching reviews:', error)
+        console.error("Error fetching reviews:", error)
         // Fallback to static testimonials
         setTestimonials([
           {
@@ -101,7 +101,7 @@ export default function TestimonialsSection() {
   const handleDragEnd = (threshold: number) => {
     if (!isDragging) return
     setIsDragging(false)
-    
+
     if (Math.abs(dragOffset) > threshold) {
       if (dragOffset > 0) {
         prevSlide()
@@ -141,13 +141,13 @@ export default function TestimonialsSection() {
   // Prevent text selection during drag
   useEffect(() => {
     if (isDragging) {
-      document.body.style.userSelect = 'none'
+      document.body.style.userSelect = "none"
     } else {
-      document.body.style.userSelect = ''
+      document.body.style.userSelect = ""
     }
-    
+
     return () => {
-      document.body.style.userSelect = ''
+      document.body.style.userSelect = ""
     }
   }, [isDragging])
 
@@ -176,98 +176,22 @@ export default function TestimonialsSection() {
     onMouseLeave: handleMouseUp,
     className: "cursor-grab active:cursor-grabbing",
     style: {
-      transition: isDragging ? 'none' : 'transform 0.3s ease-out'
-    }
+      transition: isDragging ? "none" : "transform 0.3s ease-out",
+    },
   }
 
   if (loading) {
     return (
-      <section className="py-10 px-4">
-        <div className="max-w-7xl mx-auto relative">
-          {/* Background light blob */}
-          <div
-            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[40vw] pointer-events-none z-0"
-            style={{
-              background: "radial-gradient(ellipse at center center, var(--light-blob) 0%,  #02122B00 80%)",
-              filter: "blur(48px)",
-            }}
-          >
-          </div>
-
-          {/* Header */}
-          <div className="text-center mb-16 relative z-10">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-              Security Backed by <span className="text-cyan-400">Stories</span>
-            </h2>
-            <p className="text-gray-300 text-lg sm:text-xl">
-              Vultisig is battle-tested and trusted by vault creators, multisig
-              <br className="hidden sm:block" />
-              users, and DAO operators around the world.
-            </p>
-          </div>
-
-          {/* Mobile skeleton carousel */}
-          <div className="block lg:hidden relative z-10 overflow-hidden">
-            <div className="flex mb-8">
-              {[1, 2, 3].map((index) => (
-                <div key={index} className="w-full flex-shrink-0 px-4">
-                  <TestimonialSkeleton />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Desktop skeleton carousel */}
-          <div className="relative hidden lg:block z-10 overflow-hidden">
-            <div className="flex gap-6 lg:gap-8 mb-12">
-              {[1, 2, 3].map((setIndex) => (
-                <div key={setIndex} className="w-full flex-shrink-0">
-                  <div className="grid grid-cols-3 gap-6 lg:gap-8">
-                    {[1, 2, 3].map((index) => (
-                      <div key={`${setIndex}-${index}`} className="flex justify-center">
-                        <TestimonialSkeleton />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Skeleton pagination dots */}
-          <div className="flex justify-center mb-8 relative z-10">
-            <div className="flex space-x-2">
-              {[1, 2].map((index) => (
-                <div key={index} className="w-3 h-3 rounded-full bg-slate-600 animate-pulse"></div>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA Button */}
-          <div className="text-center relative z-10">
-            <a href="/downloads">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-lg">
-                Download App
-              </Button>
-            </a>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  return (
-    <section className="py-10 px-4">
-      <div className="max-w-7xl mx-auto relative">
+      <section className="py-10 container relative">
         {/* Background light blob */}
         <div
           className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[40vw] pointer-events-none z-0"
           style={{
-            background: "radial-gradient(ellipse at center center, var(--light-blob) 0%,  #02122B00 80%)",
+            background:
+              "radial-gradient(ellipse at center center, var(--light-blob) 0%,  #02122B00 80%)",
             filter: "blur(48px)",
           }}
-        >
-        </div>
+        ></div>
 
         {/* Header */}
         <div className="text-center mb-16 relative z-10">
@@ -281,50 +205,29 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        {/* Mobile carousel */}
+        {/* Mobile skeleton carousel */}
         <div className="block lg:hidden relative z-10 overflow-hidden">
-          <div
-            {...carouselProps}
-            className="flex mb-8 cursor-grab active:cursor-grabbing"
-            style={{
-              ...carouselProps.style,
-              transform: getMobileTransform()
-            }}
-          >
-            {testimonials.map((testimonial, index) => (
+          <div className="flex mb-8">
+            {[1, 2, 3].map((index) => (
               <div key={index} className="w-full flex-shrink-0 px-4">
-                <TestimonialCard
-                  text={testimonial.text}
-                  author={testimonial.name}
-                  tag={testimonial.label}
-                  initial={testimonial.name.charAt(0)}
-                />
+                <TestimonialSkeleton />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Desktop carousel */}
+        {/* Desktop skeleton carousel */}
         <div className="relative hidden lg:block z-10 overflow-hidden">
-          <div
-            {...carouselProps}
-            className="flex gap-6 lg:gap-8 mb-12 cursor-grab active:cursor-grabbing"
-            style={{
-              ...carouselProps.style,
-              transform: getDesktopTransform()
-            }}
-          >
-            {Array.from({ length: Math.ceil(testimonials.length / 3) }).map((_, setIndex) => (
+          <div className="flex gap-6 lg:gap-8 mb-12">
+            {[1, 2, 3].map((setIndex) => (
               <div key={setIndex} className="w-full flex-shrink-0">
                 <div className="grid grid-cols-3 gap-6 lg:gap-8">
-                  {testimonials.slice(setIndex * 3, setIndex * 3 + 3).map((testimonial, index) => (
-                    <div key={`${setIndex}-${index}`} className="flex justify-center">
-                      <TestimonialCard
-                        text={testimonial.text}
-                        author={testimonial.name}
-                        tag={testimonial.label}
-                        initial={testimonial.name.charAt(0)}
-                      />
+                  {[1, 2, 3].map((index) => (
+                    <div
+                      key={`${setIndex}-${index}`}
+                      className="flex justify-center"
+                    >
+                      <TestimonialSkeleton />
                     </div>
                   ))}
                 </div>
@@ -333,26 +236,14 @@ export default function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Pagination dots */}
+        {/* Skeleton pagination dots */}
         <div className="flex justify-center mb-8 relative z-10">
-          {/* Mobile pagination */}
-          <div className="flex space-x-2 block lg:hidden">
-            {testimonials.map((_, index) => (
-              <button
+          <div className="flex space-x-2">
+            {[1, 2].map((index) => (
+              <div
                 key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`}
-              />
-            ))}
-          </div>
-          {/* Desktop pagination */}
-          <div className="hidden lg:flex space-x-2">
-            {Array.from({ length: Math.ceil(testimonials.length / 3) }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index * 3)}
-                className={`w-3 h-3 rounded-full transition-colors ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`}
-              />
+                className="w-3 h-3 rounded-full bg-slate-600 animate-pulse"
+              ></div>
             ))}
           </div>
         </div>
@@ -365,7 +256,126 @@ export default function TestimonialsSection() {
             </Button>
           </a>
         </div>
+      </section>
+    )
+  }
 
+  return (
+    <section className="py-10 container relative">
+      {/* Background light blob */}
+      <div
+        className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[40vw] pointer-events-none z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center center, var(--light-blob) 0%,  #02122B00 80%)",
+          filter: "blur(48px)",
+        }}
+      ></div>
+
+      {/* Header */}
+      <div className="text-center mb-16 relative z-10">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          Security Backed by <span className="text-cyan-400">Stories</span>
+        </h2>
+        <p className="text-gray-300 text-lg sm:text-xl">
+          Vultisig is battle-tested and trusted by vault creators, multisig
+          <br className="hidden sm:block" />
+          users, and DAO operators around the world.
+        </p>
+      </div>
+
+      {/* Mobile carousel */}
+      <div className="block lg:hidden relative z-10 overflow-hidden">
+        <div
+          {...carouselProps}
+          className="flex mb-8 cursor-grab active:cursor-grabbing"
+          style={{
+            ...carouselProps.style,
+            transform: getMobileTransform(),
+          }}
+        >
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="w-full flex-shrink-0 px-4">
+              <TestimonialCard
+                text={testimonial.text}
+                author={testimonial.name}
+                tag={testimonial.label}
+                initial={testimonial.name.charAt(0)}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop carousel */}
+      <div className="relative hidden lg:block z-10 overflow-hidden">
+        <div
+          {...carouselProps}
+          className="flex gap-6 lg:gap-8 mb-12 cursor-grab active:cursor-grabbing"
+          style={{
+            ...carouselProps.style,
+            transform: getDesktopTransform(),
+          }}
+        >
+          {Array.from({ length: Math.ceil(testimonials.length / 3) }).map(
+            (_, setIndex) => (
+              <div key={setIndex} className="w-full flex-shrink-0">
+                <div className="grid grid-cols-3 gap-6 lg:gap-8">
+                  {testimonials
+                    .slice(setIndex * 3, setIndex * 3 + 3)
+                    .map((testimonial, index) => (
+                      <div
+                        key={`${setIndex}-${index}`}
+                        className="flex justify-center"
+                      >
+                        <TestimonialCard
+                          text={testimonial.text}
+                          author={testimonial.name}
+                          tag={testimonial.label}
+                          initial={testimonial.name.charAt(0)}
+                        />
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ),
+          )}
+        </div>
+      </div>
+
+      {/* Pagination dots */}
+      <div className="flex justify-center mb-8 relative z-10">
+        {/* Mobile pagination */}
+        <div className="flex space-x-2 block lg:hidden">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`}
+            />
+          ))}
+        </div>
+        {/* Desktop pagination */}
+        <div className="hidden lg:flex space-x-2">
+          {Array.from({ length: Math.ceil(testimonials.length / 3) }).map(
+            (_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index * 3)}
+                className={`w-3 h-3 rounded-full transition-colors ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`}
+              />
+            ),
+          )}
+        </div>
+      </div>
+
+      {/* CTA Button */}
+      <div className="text-center relative z-10">
+        <a href="/downloads">
+          <Button variant={"primaryBlue"} size={"lg"}>
+            Download App
+          </Button>
+        </a>
       </div>
     </section>
   )

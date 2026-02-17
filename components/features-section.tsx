@@ -22,7 +22,7 @@ export default function FeaturesSection() {
 
   return (
     <section className="py-16 md:py-24 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="container">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white mb-5 tracking-tight">

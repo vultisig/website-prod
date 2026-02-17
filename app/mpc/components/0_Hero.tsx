@@ -10,12 +10,13 @@ import { CiBag1 } from "react-icons/ci"
 import { IoPersonRemoveOutline } from "react-icons/io5"
 import heroImage from "../images/hero.png"
 import Heading from "./Heading"
+import RadialBackground from "./RadialBackground"
 
 export default function Hero() {
   return (
     <section className="min-h-screen relative">
-      <div className="space-y-6 max-md:px-4 md:ml-24 pt-16 max-w-2xl relative z-10">
-        <h1 className="text-4xl md:text-7xl font-medium tracking-tight">
+      <div className="space-y-6 pt-16 container z-10 relative">
+        <h1 className="text-4xl md:text-7xl max-w-2xl font-medium tracking-tight">
           The Free Open-Source MPC Wallet For Everyone
         </h1>
 
@@ -41,7 +42,8 @@ export default function Hero() {
       />
 
       {/* Problems Section */}
-      <div className="px-6 md:px-20 py-20 md:mt-32 max-w-7xl mx-auto">
+      <div className="py-20 md:mt-40 container relative">
+        <RadialBackground />
         <Heading>
           Seed Phrases Are a{" "}
           <span className="text-primaryAccent inline-block">
@@ -49,7 +51,7 @@ export default function Hero() {
           </span>
         </Heading>
 
-        <div className="grid md:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
           {[
             {
               icon: <AlertTriangle strokeWidth={1.5} size={20} />,

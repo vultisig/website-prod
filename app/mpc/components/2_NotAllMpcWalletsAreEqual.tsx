@@ -1,6 +1,7 @@
 import React from "react"
 import Heading from "./Heading"
 import { Check, X } from "lucide-react"
+import RadialBackground from "./RadialBackground"
 
 const comparisonData = [
   {
@@ -42,7 +43,8 @@ const comparisonData = [
 
 export default function NotAllMpcWalletsAreEqual() {
   return (
-    <section className="px-6 md:px-20 py-20 max-w-7xl mx-auto">
+    <section className="px-6 md:px-20 py-20 container relative">
+      <RadialBackground />
       <Heading>Not All MPC Wallets Are Equal</Heading>
 
       <div className="flex flex-col gap-6 items-center">

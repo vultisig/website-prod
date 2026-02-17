@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import vultisigLogoTextPng from "../../../public/images/vultisig-logo-text.png"
-import bannerPng from "../images/banner.png"
+import bannerPng from "../../../public/images/banner-bg-download-vultisig.png"
 
 export default function Cta() {
   return (
-    <section className="px-6 md:px-20 py-20 max-w-7xl mx-auto">
+    <section className="px-6 md:px-20 py-20 container">
       <div className="relative border border-borderLight rounded-2xl overflow-hidden md:aspect-[3/1]">
         <Image
           src={bannerPng}

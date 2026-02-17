@@ -4,6 +4,7 @@ import Link from "next/link"
 import { NotepadTextIcon } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import RadialBackground from "./RadialBackground"
 
 const signatureIcon =
   "/images/figma/1843505b03f6ca672478713b2ab91800e46b8b40.svg"
@@ -89,7 +90,9 @@ const features = [
 
 export default function BuiltOnProvenMpcProtocols() {
   return (
-    <section className="px-6 md:px-20 py-20 max-w-7xl mx-auto flex flex-col items-center gap-[70px]">
+    <section className="px-6 md:px-20 py-20 container flex flex-col items-center gap-[70px] relative">
+      <RadialBackground />
+
       <Heading withMargin={false}>Built on Proven MPC Protocols</Heading>
 
       <div className="w-full">

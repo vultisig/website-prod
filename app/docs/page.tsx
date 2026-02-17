@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function DocsPage() {
   return (
     <main className="flex flex-col items-center w-full min-h-screen py-16 px-4">
-        <section className="relative flex flex-col md:flex-row items-center justify-between w-full max-w-7xl gap-8 md:gap-12 mt-16 md:mt-0 min-h-[400px] md:min-h-[500px]">
+        <section className="relative flex flex-col md:flex-row items-center justify-between w-full container gap-8 md:gap-12 mt-16 md:mt-0 min-h-[400px] md:min-h-[500px]">
             <div className="flex-1 text-left relative z-10">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">READ THE DOCS</h1>
             <p className="text-base sm:text-lg text-gray-300/90 mb-6">Vultisig is different. Get educated and enjoy safer asset management.</p>
@@ -31,7 +31,7 @@ export default function DocsPage() {
             </div>
         </section>
 
-        <section className="relative flex flex-col md:flex-row-reverse items-center justify-between w-full max-w-7xl md:gap-12 min-h-[400px] md:min-h-[500px]">
+        <section className="relative flex flex-col md:flex-row-reverse items-center justify-between w-full container md:gap-12 min-h-[400px] md:min-h-[500px]">
             <div className="flex-1 text-left md:text-right relative z-10">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">INTEGRATE VULTISIG</h2>
             <p className="text-base sm:text-lg text-gray-300/90 mb-6 ml-0 md:ml-[30vw]">Any DeFi app, chrome extension or wallet can integrate the Vultisig SDK - safely let your users generate/upload vault shares and co-sign transactions.</p>
@@ -45,7 +45,7 @@ export default function DocsPage() {
         </section>
         {/* Discord section */}
         <section className="py-12 px-4">
-          <div className="max-w-7xl mx-auto">
+          <div className="container">
             <div className="flex justify-center items-center mt-8">
                 <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
                     <h3 className="text-xl sm:text-2xl font-bold text-white text-center">JOIN THE DISCORD TO REQUEST NEW FEATURES!</h3>
