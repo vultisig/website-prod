@@ -4,16 +4,20 @@ import { BsEyeSlash, BsPersonSlash, BsShieldSlash } from "react-icons/bs"
 import { Badge } from "@/components/ui/badge"
 import noTrackPng from "../images/7_no-track-bg.png"
 import Image from "next/image"
+import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 
 export default function NoTrack() {
   return (
-    <section className="px-6 md:px-20 py-20 max-w-5xl mx-auto flex flex-col items-center gap-[70px] relative">
+    <section className="py-20 container max-w-5xl mx-auto flex flex-col items-center gap-10 relative">
       <div>
         <Heading className="mb-8">
           We Don't Track You.{" "}
           <span className="text-primaryAccent">Period.</span>
         </Heading>
-        <p className="text-center text-textSecondary mx-auto text-balance">
+        <p
+          className="text-center text-textSecondary mx-auto text-balance 
+            intersect-once intersect:motion-preset-slide-up-md motion-delay-200"
+        >
           Vultisig is a truly private wallet. We can't see your balances, we
           don't collect your data, and we do not store any information. Like
           self-custody should be done.
@@ -27,7 +31,15 @@ export default function NoTrack() {
         ].map((item, idx) => (
           <div
             key={idx}
-            className="relative bg-backgroundSecondary/40 border border-borderLight rounded-2xl"
+            className={cn(
+              "relative bg-backgroundSecondary/40 border border-borderLight rounded-2xl",
+              "intersect-once intersect:motion-preset-slide-up-md",
+            )}
+            style={
+              {
+                "--motion-delay": `${200 + idx * MOTION_CONSTANTS.delayBetween}ms`,
+              } as React.CSSProperties
+            }
           >
             <Image
               src={noTrackPng}
@@ -43,7 +55,10 @@ export default function NoTrack() {
           </div>
         ))}
       </div>
-      <p className="italic text-textSecondary text-sm text-balance text-center p-8">
+      <p
+        className="italic text-textSecondary text-sm text-balance text-center p-8
+      intersect-once intersect:motion-preset-slide-up-md motion-delay-500"
+      >
         All wallet operations happen locally on your devices. No data leaves
         your phone. No telemetry, no tracking pixels, no third-party analytics.
         Your financial activity is yours alone. Your transaction history,

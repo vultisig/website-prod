@@ -8,6 +8,7 @@ import CookieAnalytics from "@/components/cookie-analytics"
 import { Toaster } from "@/components/ui/sonner"
 import localFont from "next/font/local"
 import { cn } from "@/lib/utils"
+import LoadTailwindIntersect from "@/components/sections/LoadTailwindIntersect"
 
 const brockmann = localFont({
   style: "normal",
@@ -421,6 +422,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <Toaster />
+        <LoadTailwindIntersect />
       </body>
     </html>
   )

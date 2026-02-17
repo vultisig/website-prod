@@ -43,11 +43,11 @@ const comparisonData = [
 
 export default function NotAllMpcWalletsAreEqual() {
   return (
-    <section className="px-6 md:px-20 py-20 container relative">
+    <section className="py-20 container relative">
       <RadialBackground />
       <Heading>Not All MPC Wallets Are Equal</Heading>
 
-      <div className="flex flex-col gap-6 items-center">
+      <div className="flex flex-col gap-6 items-center intersect-once intersect:motion-preset-slide-up-md">
         <div className="border border-borderLight rounded-[16px] w-full max-w-4xl">
           {/* Header Row */}
           <div className="grid grid-cols-2 md:grid-cols-3 bg-backgroundSecondary/70 border-b border-borderLight">
@@ -62,7 +62,7 @@ export default function NotAllMpcWalletsAreEqual() {
               </p>
             </div>
             <div className="p-4 md:p-6">
-              <p className="text-[#4879fd] text-[20px] font-semibold text-center leading-5">
+              <p className="text-primaryAccent text-[20px] font-semibold text-center leading-5">
                 Vultisig
               </p>
             </div>

@@ -8,8 +8,8 @@ import SecurityFeatures from "./components/5_SecurityFeatures"
 import Blockchains from "./components/6_Blockchains"
 import NoTrack from "./components/7_NoTrack"
 import Faq from "./components/8_Faq"
-import Cta from "./components/9_Cta"
 import { cn } from "@/lib/utils"
+import CtaSection from "@/components/cta-section"
 
 export default function MPCPage() {
   return (
@@ -17,7 +17,7 @@ export default function MPCPage() {
       {/* Background decorative elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-20 -right-32 w-96 h-96 bg-[#0b4eff] rounded-full blur-3xl opacity-5"></div>
-        <div className="absolute top-96 -left-40 w-96 h-96 bg-[#4879fd] rounded-full blur-3xl opacity-5"></div>
+        <div className="absolute top-96 -left-40 w-96 h-96 bg-primaryAccent rounded-full blur-3xl opacity-5"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#0b4eff] rounded-full blur-3xl opacity-5"></div>
       </div>
 
@@ -32,7 +32,7 @@ export default function MPCPage() {
           <Blockchains />
           <NoTrack />
           <Faq />
-          {/* <Cta /> */}
+          <CtaSection />
           <div className="flex flex-col md:flex-row items-center md:justify-center gap-4 pb-12 px-4">
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center px-4">
               JOIN THE DISCORD TO REQUEST NEW FEATURES!

@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import Heading from "./Heading"
+import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 
 const FAQ_ITEMS = [
   {
@@ -84,11 +85,19 @@ export default function Faq() {
     <section className="px-6 md:px-20 py-20 max-w-4xl mx-auto" id="faq">
       <Heading className="mb-12">Frequently Asked Questions</Heading>
       <Accordion type="multiple" className="w-full space-y-3">
-        {FAQ_ITEMS.map((item) => (
+        {FAQ_ITEMS.map((item, idx) => (
           <AccordionItem
             key={item.question}
             value={`item-${item.question}`}
-            className="border border-borderLight bg-backgroundSecondary/70 rounded-lg px-6"
+            className={cn(
+              "border border-borderLight bg-backgroundSecondary/70 rounded-lg px-6",
+              "intersect-once intersect:motion-preset-slide-up-md",
+            )}
+            style={
+              {
+                "--motion-delay": `${idx * MOTION_CONSTANTS.delayBetween}ms`,
+              } as React.CSSProperties
+            }
           >
             <AccordionTrigger className="text-left">
               {item.question}

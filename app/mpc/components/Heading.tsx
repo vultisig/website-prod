@@ -13,7 +13,7 @@ export default function Heading({
   return (
     <h2
       className={cn(
-        "text-textPrimary text-center text-2xl md:text-[40px] font-medium tracking-[-1px]",
+        "text-textPrimary text-center text-2xl md:text-[40px] md:leading-tight font-medium intersect-once intersect:motion-preset-slide-up-md",
         withMargin && "mb-8 md:mb-16",
         className,
       )}

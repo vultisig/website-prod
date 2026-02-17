@@ -5,13 +5,11 @@ import feature2Png from "../images/image2.png"
 import feature3Png from "../images/image3.png"
 import Heading from "./Heading"
 import RadialBackground from "./RadialBackground"
+import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 
 export default function MpcWallet() {
   return (
-    <section
-      className="px-6 md:px-20 container relative"
-      id="what-is-an-mpc-wallet?"
-    >
+    <section className="container relative" id="what-is-an-mpc-wallet?">
       <Heading>What Is an MPC Wallet?</Heading>
       <div className="grid md:grid-cols-3 gap-5 mb-12">
         {[
@@ -40,10 +38,18 @@ export default function MpcWallet() {
               </>
             ),
           },
-        ].map((step) => (
+        ].map((step, idx) => (
           <div
             key={step.title}
-            className="relative bg-backgroundSecondary/40 pt-56 flex flex-col justify-end border border-borderLight rounded-[20px] overflow-hidden hover:border-primaryAccent/40 transition-colors"
+            className={cn(
+              "relative bg-backgroundSecondary/40 pt-56 flex flex-col justify-end border border-borderLight rounded-[20px] overflow-hidden hover:border-primaryAccent/40 transition-colors",
+              "intersect-once intersect:motion-preset-slide-up-md",
+            )}
+            style={
+              {
+                "--motion-delay": `${idx * MOTION_CONSTANTS.delayBetween}ms`,
+              } as React.CSSProperties
+            }
           >
             <Image
               src={step.image}

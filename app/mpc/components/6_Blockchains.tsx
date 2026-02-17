@@ -29,7 +29,7 @@ export default function Blockchains() {
       <Heading withMargin={false}>
         One Vault. <span className="text-primaryAccent">30+ Blockchains.</span>
       </Heading>
-      <div className="p-20 sm:my-16 w-full">
+      <div className="p-20 sm:my-16 w-full intersect-once intersect:motion-preset-expand motion-duration-1000">
         <Image
           src={vultisigGradientPng}
           alt="Vultisig"
@@ -73,7 +73,7 @@ export default function Blockchains() {
           </div>
         </div>
       </div>
-      <p className="text-center text-textSecondary text-lg">
+      <p className="text-center text-textSecondary text-lg intersect-once intersect:motion-preset-slide-up">
         Multi-chain support built-in. No additional setup needed.
       </p>
     </section>

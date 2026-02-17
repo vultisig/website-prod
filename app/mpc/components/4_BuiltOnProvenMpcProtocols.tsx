@@ -3,7 +3,7 @@ import Heading from "./Heading"
 import Link from "next/link"
 import { NotepadTextIcon } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 import RadialBackground from "./RadialBackground"
 
 const signatureIcon =
@@ -90,17 +90,25 @@ const features = [
 
 export default function BuiltOnProvenMpcProtocols() {
   return (
-    <section className="px-6 md:px-20 py-20 container flex flex-col items-center gap-[70px] relative">
+    <section className="py-20 container flex flex-col items-center gap-[70px] relative">
       <RadialBackground />
 
       <Heading withMargin={false}>Built on Proven MPC Protocols</Heading>
 
       <div className="w-full">
         <div className="grid gap-[20px] md:grid-cols-3">
-          {features.map((feature) => (
+          {features.map((feature, idx) => (
             <div
               key={feature.title}
-              className="relative flex min-h-[267px] flex-1 flex-col gap-[47px] overflow-hidden rounded-[20px] border border-borderLight bg-backgroundSecondary/40 p-[30px]"
+              className={cn(
+                "relative flex min-h-[267px] flex-1 flex-col gap-[47px] overflow-hidden rounded-[20px] border border-borderLight bg-backgroundSecondary/40 p-[30px]",
+                "intersect-once intersect:motion-preset-slide-up-md",
+              )}
+              style={
+                {
+                  "--motion-delay": `${idx * MOTION_CONSTANTS.delayBetween}ms`,
+                } as React.CSSProperties
+              }
             >
               <div
                 className={`flex flex-col gap-[47px] leading-[1.35] ${feature.textWidth}`}
@@ -120,7 +128,10 @@ export default function BuiltOnProvenMpcProtocols() {
 
       <Link
         href="https://docs.vultisig.com/security-and-technology/security-technology/how-dkls23-works"
-        className={cn(buttonVariants({ variant: "primaryBlue", size: "lg" }))}
+        className={cn(
+          buttonVariants({ variant: "primaryBlue", size: "lg" }),
+          "intersect-once intersect:motion-preset-slide-up-md motion-delay-500",
+        )}
       >
         <NotepadTextIcon />
         <span>Learn More</span>

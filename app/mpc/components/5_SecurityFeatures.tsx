@@ -4,12 +4,12 @@ import React from "react"
 import Heading from "./Heading"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 export default function SecurityFeatures() {
   return (
-    <section className="px-6 md:px-20 py-20 container flex flex-col items-center gap-[70px]">
+    <section className="py-20 container flex flex-col items-center gap-[70px]">
       <Heading withMargin={false}>Security You Can Verify</Heading>
       <div className="grid md:grid-cols-4 gap-6">
         {[
@@ -47,7 +47,15 @@ export default function SecurityFeatures() {
           return (
             <div
               key={idx}
-              className="bg-backgroundSecondary/40 border border-borderLight rounded-[20px] p-6 transition group"
+              className={cn(
+                "bg-backgroundSecondary/40 border border-borderLight rounded-[20px] p-6 transition group",
+                "intersect-once intersect:motion-preset-slide-up-md",
+              )}
+              style={
+                {
+                  "--motion-delay": `${idx * MOTION_CONSTANTS.delayBetween}ms`,
+                } as React.CSSProperties
+              }
             >
               <Badge variant={"secondary"} className="size-12 mb-6">
                 {feature.icon}
@@ -64,7 +72,10 @@ export default function SecurityFeatures() {
       </div>
       <Link
         href="/downloads"
-        className={cn(buttonVariants({ variant: "primaryBlue", size: "lg" }))}
+        className={cn(
+          buttonVariants({ variant: "primaryBlue", size: "lg" }),
+          "intersect-once intersect:motion-preset-slide-up-md motion-delay-500",
+        )}
       >
         <DownloadIcon />
         <span>Download App</span>

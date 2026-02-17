@@ -212,7 +212,7 @@ export default function HowItWorks() {
             "
           >
             <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center mb-6">
-              <Lock className="w-6 h-6 text-[#4879FD]" />
+              <Lock className="w-6 h-6 text-primaryAccent" />
             </div>
             <h3 className="text-xl font-bold text-white mb-3">Private keys</h3>
             <p className="text-gray-300 text-base leading-relaxed">
@@ -247,7 +247,7 @@ export default function HowItWorks() {
             "
           >
             <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center mb-6">
-              <Key className="w-6 h-6 text-[#4879FD]" />
+              <Key className="w-6 h-6 text-primaryAccent" />
             </div>
             <h3 className="text-xl font-bold text-white mb-3">
               One Click. Gone.

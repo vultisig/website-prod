@@ -1,14 +1,10 @@
-import React from "react"
-import Heading from "./Heading"
-import Image from "next/image"
-import feature1Png from "../images/image1.png"
-import feature2Png from "../images/image2.png"
-import feature3Png from "../images/image3.png"
 import { GoShieldCheck } from "react-icons/go"
+import Heading from "./Heading"
+import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 
 export default function HowVultisigWorks() {
   return (
-    <section className="px-6 md:px-20 py-20 container" id="how-it-works">
+    <section className="py-20 container" id="how-it-works">
       <Heading>How Vultisig Works?</Heading>
       <div className="grid md:grid-cols-3 gap-8 mb-12">
         {[
@@ -28,9 +24,9 @@ export default function HowVultisigWorks() {
                 <path
                   d="M13.5 36.5H11.5C9.29086 36.5 7.5 34.7092 7.5 32.5V11.5C7.5 9.29086 9.29086 7.5 11.5 7.5H36.5C38.7092 7.5 40.5 9.29086 40.5 11.5V32.5C40.5 34.7092 38.7092 36.5 36.5 36.5H34.5M13.5 36.5V40.5M13.5 36.5H34.5M34.5 36.5V40.5M15.5 22C15.5 26.6944 19.3056 30.5 24 30.5C28.6944 30.5 32.5 26.6944 32.5 22C32.5 17.3056 28.6944 13.5 24 13.5C19.3056 13.5 15.5 17.3056 15.5 22ZM15.5 22H22.5"
                   stroke="#4879FD"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             ),
@@ -70,14 +66,22 @@ export default function HowVultisigWorks() {
             highlight: "Fully self-custodial, fully open source.",
             icon: <GoShieldCheck className="size-12" />,
           },
-        ].map((step, i) => (
+        ].map((step, idx) => (
           <div
             key={step.title}
-            className="relative bg-backgroundSecondary/40 text-center flex flex-col items-center border border-borderLight rounded-[20px] p-7 gap-3 overflow-hidden hover:border-primaryAccent/40 transition-colors"
+            className={cn(
+              "relative bg-backgroundSecondary/40 text-center flex flex-col items-center border border-borderLight rounded-[20px] p-7 gap-3 overflow-hidden hover:border-primaryAccent/40 transition-colors",
+              "intersect-once intersect:motion-preset-slide-up-md",
+            )}
+            style={
+              {
+                "--motion-delay": `${idx * MOTION_CONSTANTS.delayBetween}ms`,
+              } as React.CSSProperties
+            }
           >
             <div className="relative mt-3 size-20 flex items-center gap-2.5 bg-primaryAccent/20 text-primaryAccent shadow-[0_4px_15px_0_rgba(72,121,253,0.46)_inset] p-[18px] rounded-[20px]">
               <div className="flex size-7 justify-center items-center absolute bg-alertInfo text-background rounded-full -right-2.5 -top-2.5 text-sm">
-                {i + 1}
+                {idx + 1}
               </div>
               {step.icon}
             </div>

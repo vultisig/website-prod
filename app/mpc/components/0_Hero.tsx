@@ -11,21 +11,22 @@ import { IoPersonRemoveOutline } from "react-icons/io5"
 import heroImage from "../images/hero.png"
 import Heading from "./Heading"
 import RadialBackground from "./RadialBackground"
+import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 
 export default function Hero() {
   return (
     <section className="min-h-screen relative">
       <div className="space-y-6 pt-16 container z-10 relative">
-        <h1 className="text-4xl md:text-7xl max-w-2xl font-medium tracking-tight">
+        <h1 className="text-4xl md:text-7xl max-w-2xl font-medium tracking-tight motion-preset-slide-up-md">
           The Free Open-Source MPC Wallet For Everyone
         </h1>
 
-        <p className="text-sm md:text-lg text-textSecondary max-w-[34rem]">
+        <p className="text-sm md:text-lg text-textSecondary max-w-[34rem] motion-preset-slide-up-md motion-delay-200">
           Split signing power across your devices. No seed phrases, no single
           point of failure, no company holding your keys. Vultisig uses
           threshold signatures so your crypto stays yours.
         </p>
-        <div className="flex gap-4 pt-4">
+        <div className="flex gap-4 pt-4 motion-preset-slide-up-md motion-delay-400">
           <Button variant={"primaryBlue"} className="md:h-12 md:px-8">
             <DownloadIcon /> Download App
           </Button>
@@ -82,7 +83,15 @@ export default function Hero() {
             return (
               <div
                 key={idx}
-                className="flex flex-col bg-backgroundSecondary/40 border border-borderLight rounded-[20px] p-6 md:p-7 hover:border-[#4879fd] hover:bg-gradient-to-br hover:from-[rgba(72,121,253,0.1)] hover:to-[rgba(11,78,255,0.05)] transition"
+                className={cn(
+                  "flex flex-col bg-backgroundSecondary/40 border border-borderLight rounded-[20px] p-6 md:p-7 hover:border-primaryAccent hover:bg-gradient-to-br hover:from-[rgba(72,121,253,0.1)] hover:to-[rgba(11,78,255,0.05)] transition",
+                  "intersect-once intersect:motion-preset-slide-up-md",
+                )}
+                style={
+                  {
+                    "--motion-delay": `${idx * MOTION_CONSTANTS.delayBetween}ms`,
+                  } as React.CSSProperties
+                }
               >
                 <div className="bg-primaryAccent/10 text-primaryAccent size-10 flex items-center justify-center rounded-lg mb-6 transition-colors">
                   {IconComponent}
