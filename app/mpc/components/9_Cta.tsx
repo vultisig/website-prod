@@ -6,13 +6,13 @@ import bannerPng from "../images/banner.png"
 export default function Cta() {
   return (
     <section className="px-6 md:px-20 py-20 max-w-7xl mx-auto">
-      <div className="relative border border-borderLight rounded-2xl overflow-hidden">
+      <div className="relative border border-borderLight rounded-2xl overflow-hidden md:aspect-[3/1]">
         <Image
           src={bannerPng}
           alt="Banner background"
           className="w-full h-full absolute inset-0 object-cover object-right max-md:opacity-50"
         />
-        <div className="relative flex flex-col gap-4 md:gap-8 items-start max-w-xl p-6 md:pl-12">
+        <div className="relative h-full flex flex-col justify-center gap-4 md:gap-8 items-start max-w-xl p-6 md:pl-12">
           <Image
             src={vultisigLogoTextPng}
             alt="Vultisig logo text"
