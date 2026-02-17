@@ -5,6 +5,7 @@ import Heading from "./Heading"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
 export default function SecurityFeatures() {
   return (
@@ -46,15 +47,15 @@ export default function SecurityFeatures() {
           return (
             <div
               key={idx}
-              className="bg-backgroundSecondary/40 border border-borderLight rounded-[20px] p-8 transition group"
+              className="bg-backgroundSecondary/40 border border-borderLight rounded-[20px] p-6 transition group"
             >
-              <div className="bg-primaryAccent/10 text-primaryAccent w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+              <Badge variant={"secondary"} className="size-12 mb-6">
                 {feature.icon}
-              </div>
+              </Badge>
               <h3 className="text-lg font-semibold mb-4 text-textPrimary">
                 {feature.title}
               </h3>
-              <p className="text-sm text-textSecondary leading-relaxed">
+              <p className="text-sm text-textSecondary">
                 {feature.description}
               </p>
             </div>
