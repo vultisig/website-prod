@@ -31,7 +31,7 @@ export default function FeaturesSection() {
               different
             </span>
           </h2>
-          <p className="text-[#c9d6e8] text-lg md:text-xl tracking-tight">
+          <p className="text-textSecondary text-lg md:text-xl tracking-tight">
             No tradeoffs. Just seamless, secure crypto management.
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function FeaturesSection() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="rounded-[20px] border border-[#11284a] p-[30px] flex flex-col gap-3 transition-all duration-300 hover:border-[#4879fd] hover:shadow-[0_0_20px_rgba(72,121,253,0.3)]"
+              className="rounded-[20px] border border-borderLight p-[30px] flex flex-col gap-3 transition-all duration-300 hover:border-[#4879fd] hover:shadow-[0_0_20px_rgba(72,121,253,0.3)]"
               style={{
                 background:
                   "linear-gradient(180deg, rgba(2, 18, 43, 1) 0%, rgba(6, 27, 58, 1) 100%)",
@@ -56,13 +56,13 @@ export default function FeaturesSection() {
                     className="w-6 h-6"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-[#eff2f6] tracking-tight">
+                <h3 className="text-xl font-semibold text-textPrimary tracking-tight">
                   {feature.title}
                 </h3>
               </div>
 
               {/* Description */}
-              <p className="text-base text-[#c9d6e8] leading-[1.5] tracking-tight">
+              <p className="text-base text-textSecondary leading-[1.5] tracking-tight">
                 {feature.description}
               </p>
             </div>

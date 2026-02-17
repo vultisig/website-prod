@@ -47,7 +47,6 @@ const config: Config = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          accent4: "hsl(var(--primary-accent))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -87,7 +86,12 @@ const config: Config = {
           700: "#1d4ed8",
         },
         borderLight: "#11284a",
-        textSecondary: "#c9d6e8",
+        textPrimary: "#F0F4FC",
+        textSecondary: "#C9D6E8",
+        textTertiary: "#8295AE",
+        primaryAccent: "hsl(var(--primary-accent))",
+        alertInfo: "#5CA7FF",
+        secondaryAccent: "#33E6BF",
       },
       borderRadius: {
         lg: "var(--radius)",

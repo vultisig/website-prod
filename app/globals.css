@@ -18,7 +18,7 @@ body::-webkit-scrollbar {
   :root {
     /* --background: #02122b */
     --background: 217 91% 9%;
-    /* #061b3a */
+    /* #061b3a - rgba(6,27,58) - backgroundSecondary */
     --background-secondary: 216 81% 13%;
     /* #001f73 */
     --light-blob: 224 100% 23%;

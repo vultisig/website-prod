@@ -5,13 +5,15 @@ export default function CtaSection() {
     <section className="py-10 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Main CTA with background */}
-        <div className="
-          bg-[var(--background-secondary)] border border-[#11284a]
+        <div
+          className="
+          bg-[var(--background-secondary)] border border-borderLight
           rounded-[20px] mb-16
           relative
           overflow-hidden
           h-[470px]
-        ">
+        "
+        >
           {/* Background glow effects */}
           <img
             src="/images/cta-glow.svg"
@@ -50,15 +52,25 @@ export default function CtaSection() {
             src="/images/cta-sparkle-2.svg"
             alt=""
             className="absolute hidden lg:block w-[98px] h-[80px] pointer-events-none"
-            style={{ left: "44.8%", top: "80%", transform: "rotate(176deg) scaleY(-1)" }}
+            style={{
+              left: "44.8%",
+              top: "80%",
+              transform: "rotate(176deg) scaleY(-1)",
+            }}
           />
 
           {/* Left content */}
           <div className="absolute left-[48px] top-1/2 -translate-y-1/2 flex flex-col gap-[33px] items-start w-[560px] z-10">
             {/* Logo */}
             <div className="flex items-center h-[44px]">
-              <img src="/images/vultisig-logo.svg" alt="Vultisig logo" className="h-[30px] w-auto" />
-              <span className="text-white text-3xl font-semibold pl-2">Vultisig</span>
+              <img
+                src="/images/vultisig-logo.svg"
+                alt="Vultisig logo"
+                className="h-[30px] w-auto"
+              />
+              <span className="text-white text-3xl font-semibold pl-2">
+                Vultisig
+              </span>
             </div>
 
             {/* Headline */}
@@ -68,7 +80,8 @@ export default function CtaSection() {
                 className="bg-clip-text"
                 style={{
                   WebkitTextFillColor: "transparent",
-                  backgroundImage: "linear-gradient(56deg, #33E6BF 8%, #0439C7 134%)"
+                  backgroundImage:
+                    "linear-gradient(56deg, #33E6BF 8%, #0439C7 134%)",
                 }}
               >
                 assets
@@ -91,7 +104,7 @@ export default function CtaSection() {
               left: "45.65%",
               right: "3.23%",
               top: "-15%",
-              aspectRatio: "812/804"
+              aspectRatio: "812/804",
             }}
           >
             <img
@@ -105,18 +118,38 @@ export default function CtaSection() {
         {/* Discord section */}
         <div className="flex justify-center items-center mt-8">
           <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-            <h3 className="text-xl sm:text-2xl font-bold text-white text-center sm:text-left">JOIN THE DISCORD TO REQUEST NEW FEATURES!</h3>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg" asChild>
-                <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer">
-                    DISCORD
-                </a>
-              </Button>
-            <h3 className="text-base sm:text-xl text-white text-center sm:text-left">Speak to a member of our team to see if Vultisig is the right option for you.</h3>
-              <Button variant={'outline'} className='border-blue-600 hover:bg-blue-600/40 hover:text-white' asChild>
-                <a href="https://discord.gg/thq64eaYVN" target="_blank" rel="noopener noreferrer">
-                    Book a Call
-                </a>
-              </Button>
+            <h3 className="text-xl sm:text-2xl font-bold text-white text-center sm:text-left">
+              JOIN THE DISCORD TO REQUEST NEW FEATURES!
+            </h3>
+            <Button
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
+              asChild
+            >
+              <a
+                href="https://discord.gg/thq64eaYVN"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                DISCORD
+              </a>
+            </Button>
+            <h3 className="text-base sm:text-xl text-white text-center sm:text-left">
+              Speak to a member of our team to see if Vultisig is the right
+              option for you.
+            </h3>
+            <Button
+              variant={"outline"}
+              className="border-blue-600 hover:bg-blue-600/40 hover:text-white"
+              asChild
+            >
+              <a
+                href="https://discord.gg/thq64eaYVN"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a Call
+              </a>
+            </Button>
           </div>
         </div>
       </div>

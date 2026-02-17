@@ -16,7 +16,7 @@ export default function Features() {
           Each device has a unique backup called "Vault Share", which are secure
           digital backups that eliminate the hassle of physical storage.
           <br />
-          <span className="text-primary-accent4">
+          <span className="text-primaryAccent">
             <strong>Individual Vault-shares never store funds</strong> and can
             be safely imported/exported anywhere.
           </span>

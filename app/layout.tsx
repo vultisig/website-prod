@@ -261,7 +261,7 @@ export default function RootLayout({
         className={cn(
           brockmann.className,
           brockmann.variable,
-          "antialiased bg-background",
+          "antialiased bg-background text-textPrimary",
         )}
       >
         <GoogleAnalyticsWrapper />
