@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
     // Convert file to buffer
     const arrayBuffer = await file.arrayBuffer()
-    let buffer = Buffer.from(arrayBuffer)
+    let buffer: Buffer<ArrayBufferLike> = Buffer.from(arrayBuffer)
 
     // Compress and resize image to stay under 1MB
     try {
