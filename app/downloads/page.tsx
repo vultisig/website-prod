@@ -20,12 +20,12 @@ const hashes = [
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "sha256:c2a7f8bfa3c0be48a75f9cba842bcd2097589ad37c7a8b283e35f7293f500e39",
+    hash: "sha256:f667bf55176c81e97a5741a03b7d359382276081270251b3e8db330cbfd4c3e3",
   },
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:8f1345471e7ab82a847128e039e80a064d7b1e465a32a50420d448ee905b1915",
+    hash: "sha256:30fd5e409b4649103fe1370c31c67da6a19b136494f93a2e04b9a30d17f2964c",
   },
 ]
 
@@ -329,7 +329,7 @@ export default function DownloadsPage() {
 
                           {/* Row 2 */}
                           <a
-                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.48/Vultisig-amd64-installer-v1.0.48.exe"
+                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.52/Vultisig-amd64-installer-v1.0.52.exe"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => trackDownload("windows")}
@@ -346,7 +346,7 @@ export default function DownloadsPage() {
                           </a>
 
                           <a
-                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.48/vultisig_1.0.48_amd64.deb"
+                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.52/vultisig_1.0.52_amd64.deb"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => trackDownload("linux")}
