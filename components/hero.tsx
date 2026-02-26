@@ -1,13 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import dynamic from "next/dynamic"
+import SplineOffscreen from "@/components/spline-offscreen"
 import { useState, useEffect } from "react"
-
-const Spline = dynamic(() => import("@/components/spline-wrapper"), {
-  ssr: false,
-  loading: () => null,
-})
 
 export default function Hero() {
   const words = ["DRAINED", "HACKED", "PHISHED"]
@@ -16,6 +11,8 @@ export default function Hero() {
   const [isTyping, setIsTyping] = useState(true)
   const [charIndex, setCharIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(true)
+  const [showSpline, setShowSpline] = useState(false)
+  const [splineReady, setSplineReady] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -26,6 +23,13 @@ export default function Hero() {
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
+
+  // Delay Spline mount by 2.5s on desktop
+  useEffect(() => {
+    if (isMobile) return
+    const timer = setTimeout(() => setShowSpline(true), 2500)
+    return () => clearTimeout(timer)
+  }, [isMobile])
 
   useEffect(() => {
     const currentWord = words[currentWordIndex]
@@ -63,7 +67,7 @@ export default function Hero() {
 
   return (
     <section
-      className="pt-32 pb-0 px-4 relative overflow-hidden min-h-screen flex flex-col justify-center items-center md:block"
+      className="pt-32 pb-0 px-4 relative overflow-hidden min-h-screen flex flex-col justify-center items-center"
       style={{
         pointerEvents: "none",
         userSelect: "none",
@@ -71,22 +75,30 @@ export default function Hero() {
           "linear-gradient(180deg, #02122b 0%, #061b3a 50%, #02122b 100%)",
       }}
     >
-      {/* Spline 3D Background - Only on desktop */}
-      {!isMobile && (
-        <div className="absolute inset-0 z-10 pointer-events-none">
-          <Spline />
+      {/* Spline 3D Background - Only on desktop, off main thread via Worker */}
+      {!isMobile && showSpline && (
+        <div
+          className="absolute inset-0 z-10 pointer-events-none"
+          style={{ opacity: splineReady ? 1 : 0, transition: 'opacity 10800ms cubic-bezier(0.22, 1, 0.36, 1)' }}
+        >
+          <SplineOffscreen
+            scene="https://prod.spline.design/TMNN6wJ0bfvnVGnB/scene.splinecode"
+            onLoad={() => {
+              requestAnimationFrame(() => setSplineReady(true))
+            }}
+          />
         </div>
       )}
 
-      <div className="relative container w-full flex flex-col items-center justify-center md:block z-20">
-        <div className="w-full flex flex-col items-center justify-center md:block md:max-w-4xl">
+      <div className={`relative container w-full flex flex-col items-center justify-center z-20 ${splineReady ? 'md:-translate-x-[25%]' : ''}`} style={{ transition: 'transform 5400ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
+        <div className={`w-full flex flex-col items-center justify-center md:max-w-4xl ${splineReady ? 'md:items-start' : ''}`}>
           <div className="inline-flex items-center bg-[#092e3e] border border-[#33e6bf] rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
             <span className="font-medium text-base md:text-xs md:sm:text-sm text-[#33e6bf]">
               Open-Source Audited
             </span>
           </div>
 
-          <h1 className="font-bold text-white mb-8 leading-tight text-center md:text-left text-5xl sm:text-6xl md:text-9xl">
+          <h1 className={`font-bold text-white mb-8 leading-tight text-center text-5xl sm:text-6xl md:text-9xl ${splineReady ? 'md:text-left' : ''}`}>
             NEVER GET
             <br />
             <span className="bg-gradient-to-r from-[#33e6bf] to-cyan-400 bg-clip-text text-transparent">

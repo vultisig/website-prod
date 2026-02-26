@@ -26,10 +26,9 @@ export default function GoogleAnalytics() {
 
   useEffect(() => {
     if (!mounted) return;
-    
-    const url = `${pathname}${
-      searchParams?.toString() ? `?${searchParams.toString()}` : ""
-    }`;
+
+    const url = `${pathname}${searchParams?.toString() ? `?${searchParams.toString()}` : ""
+      }`;
     trackPageview(url);
   }, [pathname, searchParams, mounted]);
 
