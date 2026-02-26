@@ -4,9 +4,9 @@ import { useLayoutEffect, useRef, useState } from "react"
 
 export default function ClientsSection() {
   const clients = [
-    { name: "DeFi Suisse", image: "/images/defi-suisse-logo.png" },
-    { name: "THORChain", image: "/images/thorchain-logo.png" },
-    { name: "Rujira", image: "/images/rujira-logo.png" },
+    { name: "DeFi Suisse", image: "/images/defi-suisse-logo.webp", width: 353, height: 92 },
+    { name: "THORChain", image: "/images/thorchain-logo.webp", width: 300, height: 64 },
+    { name: "Rujira", image: "/images/rujira-logo.webp", width: 383, height: 92 },
   ]
 
   const setRef = useRef<HTMLDivElement>(null)
@@ -40,6 +40,8 @@ export default function ClientsSection() {
           <img
             src={client.image}
             alt={client.name}
+            width={client.width}
+            height={client.height}
             className="h-8 sm:h-12 w-auto object-contain"
           />
         </div>
@@ -63,9 +65,9 @@ export default function ClientsSection() {
           style={
             setWidth > 0
               ? {
-                  width: `${setWidth * repeatCount}px`,
-                  animation: `scrollClients 10s linear infinite`,
-                }
+                width: `${setWidth * repeatCount}px`,
+                animation: `scrollClients 10s linear infinite`,
+              }
               : undefined
           }
         >

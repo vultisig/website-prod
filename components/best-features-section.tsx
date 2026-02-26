@@ -133,7 +133,7 @@ export default function BestFeaturesSection() {
                   }}
                 >
                   <img
-                    src={`/images/features-${index + 1}.svg`}
+                    src={`/images/features-${index + 1}.webp`}
                     alt={feature.title}
                     width="600"
                     height="400"

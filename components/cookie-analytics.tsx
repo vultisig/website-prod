@@ -5,7 +5,7 @@ export default function CookieAnalytics() {
   return (
     <Script
       id="cookie-analytics-loader"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       dangerouslySetInnerHTML={{
         __html: `
           (function () {
