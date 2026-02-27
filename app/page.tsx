@@ -10,7 +10,7 @@ import CtaSection from "@/components/cta-section"
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <main className="min-h-screen">
       <Hero />
       <ClientsSection />
       <FeaturesSection />
@@ -19,6 +19,6 @@ export default function Home() {
       <TestimonialsSection />
       <MediumSection />
       <CtaSection />
-    </div>
+    </main>
   )
 }

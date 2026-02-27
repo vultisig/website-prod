@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
@@ -26,12 +26,23 @@ export default function Navbar() {
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
   const [isAtTop, setIsAtTop] = useState(true)
   const pathname = usePathname()
+  const isAtTopRef = useRef(true)
+  const scrollTicking = useRef(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsAtTop(window.scrollY < 5)
+      if (scrollTicking.current) return
+      scrollTicking.current = true
+      requestAnimationFrame(() => {
+        const atTop = window.scrollY < 5
+        if (atTop !== isAtTopRef.current) {
+          isAtTopRef.current = atTop
+          setIsAtTop(atTop)
+        }
+        scrollTicking.current = false
+      })
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -244,6 +255,7 @@ export default function Navbar() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-gray-300 hover:text-white p-2"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
               >
                 {isOpen ? (
                   <X className="h-6 w-6" />

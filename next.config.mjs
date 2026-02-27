@@ -1,10 +1,18 @@
 /** @type {import('next').NextConfig} */
+const cacheOneYear = [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }]
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  async headers() {
+    return [
+      { source: '/fonts/:path*', headers: cacheOneYear },
+      { source: '/images/:path*', headers: cacheOneYear },
+    ]
   },
   async redirects() {
     return [

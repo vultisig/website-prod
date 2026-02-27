@@ -1,6 +1,7 @@
 "use client"
 
 import { useLayoutEffect, useRef, useState } from "react"
+import Image from "next/image"
 
 export default function ClientsSection() {
   const clients = [
@@ -15,6 +16,7 @@ export default function ClientsSection() {
   const [repeatCount, setRepeatCount] = useState(2)
 
   useLayoutEffect(() => {
+    let debounceTimer: ReturnType<typeof setTimeout>
     function measure() {
       if (!setRef.current || !containerRef.current) return
       const singleSetWidth = setRef.current.offsetWidth
@@ -29,15 +31,22 @@ export default function ClientsSection() {
     }
 
     measure()
-    window.addEventListener("resize", measure)
-    return () => window.removeEventListener("resize", measure)
+    const debouncedMeasure = () => {
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(measure, 150)
+    }
+    window.addEventListener("resize", debouncedMeasure, { passive: true })
+    return () => {
+      clearTimeout(debounceTimer)
+      window.removeEventListener("resize", debouncedMeasure)
+    }
   }, [])
 
   const repeatedSets = Array.from({ length: repeatCount }).map((_, i) => (
     <div key={i} ref={i === 0 ? setRef : null} className="flex flex-shrink-0">
       {clients.map((client, idx) => (
         <div key={`${i}-${idx}`} className="flex items-center mx-4 sm:mx-8">
-          <img
+          <Image
             src={client.image}
             alt={client.name}
             width={client.width}

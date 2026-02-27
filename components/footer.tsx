@@ -22,13 +22,14 @@ export default function Footer() {
 
             <div className="flex divide-x divide-foreground/20 mb-6">
               {[
-                { href: "https://github.com/vultisig", icon: <FaGithub /> },
-                { href: "https://discord.gg/thq64eaYVN", icon: <FaDiscord /> },
-                { href: "https://x.com/vultisig", icon: <FaXTwitter /> },
-                { href: "https://t.me/vultisig", icon: <FaTelegramPlane /> },
+                { href: "https://github.com/vultisig", icon: <FaGithub />, label: "GitHub" },
+                { href: "https://discord.gg/thq64eaYVN", icon: <FaDiscord />, label: "Discord" },
+                { href: "https://x.com/vultisig", icon: <FaXTwitter />, label: "X" },
+                { href: "https://t.me/vultisig", icon: <FaTelegramPlane />, label: "Telegram" },
                 {
                   href: "https://www.instagram.com/vultisig",
                   icon: <FaInstagram />,
+                  label: "Instagram",
                 },
               ].map((item, index) => (
                 <a
@@ -37,6 +38,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mr-2 pl-2 text-textSecondary hover:text-foreground"
+                  aria-label={item.label}
                 >
                   {item.icon}
                 </a>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import TestimonialCard from "./ui/testimonial-card"
 import TestimonialSkeleton from "./ui/testimonial-skeleton"
@@ -14,14 +14,33 @@ interface Testimonial {
   score?: number
 }
 
+const MOBILE_THRESHOLD = 50
+const DESKTOP_THRESHOLD = 30
+const TOUCH_TARGET_CLASS = "relative after:absolute after:content-[''] after:-inset-[18px]"
+
 export default function TestimonialsSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragOffset, setDragOffset] = useState(0)
-  const [startX, setStartX] = useState(0)
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const mobileTrackRef = useRef<HTMLDivElement>(null)
+  const desktopTrackRef = useRef<HTMLDivElement>(null)
+
+  // Drag state in refs — no re-renders during drag
+  const draggingRef = useRef(false)
+  const startXRef = useRef(0)
+  const dragOffsetRef = useRef(0)
+  const activeTrackRef = useRef<HTMLDivElement | null>(null)
+  const isMobileTrackRef = useRef(false)
+  const currentSlideRef = useRef(0)
+  const maxSlideRef = useRef(0)
+
+  useEffect(() => {
+    currentSlideRef.current = currentSlide
+  }, [currentSlide])
+
+  useEffect(() => {
+    maxSlideRef.current = testimonials.length - 1
+  }, [testimonials])
 
   // Fetch reviews from API
   useEffect(() => {
@@ -73,111 +92,76 @@ export default function TestimonialsSection() {
     fetchReviews()
   }, [])
 
-  // Navigation functions
-  const nextSlide = () => {
-    setCurrentSlide((prev) => Math.min(prev + 1, testimonials.length - 1))
-  }
+  // Direct DOM drag handlers — zero re-renders during drag
+  const handleDragStart = useCallback(
+    (clientX: number, track: HTMLDivElement | null, isMobile: boolean) => {
+      if (!track) return
+      draggingRef.current = true
+      startXRef.current = clientX
+      dragOffsetRef.current = 0
+      activeTrackRef.current = track
+      isMobileTrackRef.current = isMobile
+      track.style.transition = "none"
+      document.body.style.userSelect = "none"
+    },
+    [],
+  )
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => Math.max(prev - 1, 0))
-  }
+  const handleDragMove = useCallback((clientX: number) => {
+    if (!draggingRef.current || !activeTrackRef.current) return
+    dragOffsetRef.current = clientX - startXRef.current
+    const slide = currentSlideRef.current
+    const offset = dragOffsetRef.current
 
-  // Drag threshold constants
-  const MOBILE_THRESHOLD = 50
-  const DESKTOP_THRESHOLD = 30
+    if (isMobileTrackRef.current) {
+      activeTrackRef.current.style.transform = `translateX(calc(-${slide * 100}% + ${offset}px))`
+    } else {
+      const basePosition = Math.floor(slide / 3) * 100
+      const extraPx = basePosition === 100 ? -33 : 0
+      activeTrackRef.current.style.transform = `translateX(calc(-${basePosition}% + ${extraPx + offset}px))`
+    }
+  }, [])
 
-  // Common drag handlers
-  const handleDragStart = (clientX: number) => {
-    setIsDragging(true)
-    setStartX(clientX)
-    setDragOffset(0)
-  }
+  const handleDragEnd = useCallback((threshold: number) => {
+    if (!draggingRef.current || !activeTrackRef.current) return
+    const track = activeTrackRef.current
+    draggingRef.current = false
+    document.body.style.userSelect = ""
 
-  const handleDragMove = (clientX: number) => {
-    if (!isDragging) return
-    setDragOffset(clientX - startX)
-  }
+    const offset = dragOffsetRef.current
+    let newSlide = currentSlideRef.current
 
-  const handleDragEnd = (threshold: number) => {
-    if (!isDragging) return
-    setIsDragging(false)
-
-    if (Math.abs(dragOffset) > threshold) {
-      if (dragOffset > 0) {
-        prevSlide()
+    if (Math.abs(offset) > threshold) {
+      if (offset > 0) {
+        newSlide = Math.max(newSlide - 1, 0)
       } else {
-        nextSlide()
+        newSlide = Math.min(newSlide + 1, maxSlideRef.current)
       }
     }
-    setDragOffset(0)
-  }
 
-  // Mouse handlers for desktop
-  const handleMouseDown = (e: React.MouseEvent) => {
-    handleDragStart(e.clientX)
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    handleDragMove(e.clientX)
-  }
-
-  const handleMouseUp = () => {
-    handleDragEnd(DESKTOP_THRESHOLD)
-  }
-
-  // Touch handlers for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    handleDragStart(e.touches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    handleDragMove(e.touches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    handleDragEnd(MOBILE_THRESHOLD)
-  }
-
-  // Prevent text selection during drag
-  useEffect(() => {
-    if (isDragging) {
-      document.body.style.userSelect = "none"
+    // Animate to final position
+    track.style.transition = "transform 0.3s ease-out"
+    if (isMobileTrackRef.current) {
+      track.style.transform = `translateX(-${newSlide * 100}%)`
     } else {
-      document.body.style.userSelect = ""
+      const basePosition = Math.floor(newSlide / 3) * 100
+      const extraPx = basePosition === 100 ? -33 : 0
+      track.style.transform = `translateX(calc(-${basePosition}% + ${extraPx}px))`
     }
 
-    return () => {
-      document.body.style.userSelect = ""
-    }
-  }, [isDragging])
+    currentSlideRef.current = newSlide
+    setCurrentSlide(newSlide)
+    dragOffsetRef.current = 0
+    activeTrackRef.current = null
+  }, [])
 
-  // Calculate positions
-  const getCurrentPosition = () => currentSlide
+  // Transform helpers (non-drag state, applied via React style prop)
+  const getMobileTransform = () => `translateX(-${currentSlide * 100}%)`
 
   const getDesktopTransform = () => {
-    const basePosition = Math.floor(getCurrentPosition() / 3) * 100
-    const offset = dragOffset + (basePosition === 100 ? -33 : 0)
-    return `translateX(calc(-${basePosition}% + ${offset}px))`
-  }
-
-  const getMobileTransform = () => {
-    return `translateX(calc(-${getCurrentPosition() * 100}% + ${dragOffset}px))`
-  }
-
-  // Common carousel props
-  const carouselProps = {
-    ref: containerRef,
-    onTouchStart: handleTouchStart,
-    onTouchMove: handleTouchMove,
-    onTouchEnd: handleTouchEnd,
-    onMouseDown: handleMouseDown,
-    onMouseMove: handleMouseMove,
-    onMouseUp: handleMouseUp,
-    onMouseLeave: handleMouseUp,
-    className: "cursor-grab active:cursor-grabbing",
-    style: {
-      transition: isDragging ? "none" : "transform 0.3s ease-out",
-    },
+    const basePosition = Math.floor(currentSlide / 3) * 100
+    const extraPx = basePosition === 100 ? -33 : 0
+    return `translateX(calc(-${basePosition}% + ${extraPx}px))`
   }
 
   if (loading) {
@@ -287,11 +271,24 @@ export default function TestimonialsSection() {
       {/* Mobile carousel */}
       <div className="block lg:hidden relative z-10 overflow-hidden">
         <div
-          {...carouselProps}
+          ref={mobileTrackRef}
           className="flex mb-8 cursor-grab active:cursor-grabbing"
           style={{
-            ...carouselProps.style,
+            transition: "transform 0.3s ease-out",
             transform: getMobileTransform(),
+          }}
+          onTouchStart={(e) =>
+            handleDragStart(e.touches[0].clientX, mobileTrackRef.current, true)
+          }
+          onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+          onTouchEnd={() => handleDragEnd(MOBILE_THRESHOLD)}
+          onMouseDown={(e) =>
+            handleDragStart(e.clientX, mobileTrackRef.current, true)
+          }
+          onMouseMove={(e) => handleDragMove(e.clientX)}
+          onMouseUp={() => handleDragEnd(MOBILE_THRESHOLD)}
+          onMouseLeave={() => {
+            if (draggingRef.current) handleDragEnd(MOBILE_THRESHOLD)
           }}
         >
           {testimonials.map((testimonial, index) => (
@@ -310,11 +307,28 @@ export default function TestimonialsSection() {
       {/* Desktop carousel */}
       <div className="relative hidden lg:block z-10 overflow-hidden">
         <div
-          {...carouselProps}
+          ref={desktopTrackRef}
           className="flex gap-6 lg:gap-8 mb-12 cursor-grab active:cursor-grabbing"
           style={{
-            ...carouselProps.style,
+            transition: "transform 0.3s ease-out",
             transform: getDesktopTransform(),
+          }}
+          onTouchStart={(e) =>
+            handleDragStart(
+              e.touches[0].clientX,
+              desktopTrackRef.current,
+              false,
+            )
+          }
+          onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+          onTouchEnd={() => handleDragEnd(DESKTOP_THRESHOLD)}
+          onMouseDown={(e) =>
+            handleDragStart(e.clientX, desktopTrackRef.current, false)
+          }
+          onMouseMove={(e) => handleDragMove(e.clientX)}
+          onMouseUp={() => handleDragEnd(DESKTOP_THRESHOLD)}
+          onMouseLeave={() => {
+            if (draggingRef.current) handleDragEnd(DESKTOP_THRESHOLD)
           }}
         >
           {Array.from({ length: Math.ceil(testimonials.length / 3) }).map(
@@ -351,8 +365,11 @@ export default function TestimonialsSection() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`}
-            />
+              className={TOUCH_TARGET_CLASS}
+              aria-label={`Go to slide ${index + 1}`}
+            >
+              <span className={`w-3 h-3 rounded-full transition-colors block ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`} />
+            </button>
           ))}
         </div>
         {/* Desktop pagination */}
@@ -362,8 +379,11 @@ export default function TestimonialsSection() {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index * 3)}
-                className={`w-3 h-3 rounded-full transition-colors ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`}
-              />
+                className={TOUCH_TARGET_CLASS}
+                aria-label={`Go to page ${index + 1}`}
+              >
+                <span className={`w-3 h-3 rounded-full transition-colors block ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`} />
+              </button>
             ),
           )}
         </div>
