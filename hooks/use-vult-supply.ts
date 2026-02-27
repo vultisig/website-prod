@@ -19,28 +19,22 @@ export function useVultSupply(): SupplyData {
         setLoading(true)
         setError(null)
         
-        // Fetch token info from Etherscan API
+        // Fetch supply from CoinGecko (Etherscan V1 is deprecated, V2 requires API key)
         const response = await fetch(
-          'https://api.etherscan.io/api?module=token&action=tokeninfo&contractaddress=0xb788144df611029c60b859df47e79b7726c4deba&apikey=YourApiKeyToken'
+          'https://api.coingecko.com/api/v3/coins/vultisig?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false'
         )
-        
+
         if (!response.ok) {
-          throw new Error('Failed to fetch supply from Etherscan API')
+          throw new Error('Failed to fetch supply from CoinGecko')
         }
-        
+
         const data = await response.json()
-        
-        if (data.status === '1' && data.result && data.result[0]) {
-          const tokenInfo = data.result[0]
-          // Extract circulating supply (total supply minus any burned tokens)
-          const totalSupply = parseFloat(tokenInfo.totalSupply) || 0
-          const decimals = parseInt(tokenInfo.decimals) || 18
-          
-          // Convert from wei to actual token amount
-          const actualSupply = totalSupply / Math.pow(10, decimals)
-          setCirculatingSupply(actualSupply)
+        const supply = data.market_data?.circulating_supply ?? data.market_data?.total_supply
+
+        if (supply != null) {
+          setCirculatingSupply(supply)
         } else {
-          throw new Error(data.message || 'Invalid response from Etherscan API')
+          throw new Error('Supply data not available')
         }
       } catch (err) {
         console.error('Error fetching VULT supply:', err)
