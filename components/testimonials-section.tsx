@@ -364,8 +364,11 @@ export default function TestimonialsSection() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`}
-            />
+              className="relative after:absolute after:content-[''] after:-inset-[18px]"
+              aria-label={`Go to slide ${index + 1}`}
+            >
+              <span className={`w-3 h-3 rounded-full transition-colors block ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`} />
+            </button>
           ))}
         </div>
         {/* Desktop pagination */}
@@ -375,8 +378,11 @@ export default function TestimonialsSection() {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index * 3)}
-                className={`w-3 h-3 rounded-full transition-colors ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`}
-              />
+                className="relative after:absolute after:content-[''] after:-inset-[18px]"
+                aria-label={`Go to page ${index + 1}`}
+              >
+                <span className={`w-3 h-3 rounded-full transition-colors block ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`} />
+              </button>
             ),
           )}
         </div>

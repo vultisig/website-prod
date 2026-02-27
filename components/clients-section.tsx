@@ -1,6 +1,7 @@
 "use client"
 
 import { useLayoutEffect, useRef, useState } from "react"
+import Image from "next/image"
 
 export default function ClientsSection() {
   const clients = [
@@ -45,7 +46,7 @@ export default function ClientsSection() {
     <div key={i} ref={i === 0 ? setRef : null} className="flex flex-shrink-0">
       {clients.map((client, idx) => (
         <div key={`${i}-${idx}`} className="flex items-center mx-4 sm:mx-8">
-          <img
+          <Image
             src={client.image}
             alt={client.name}
             width={client.width}
