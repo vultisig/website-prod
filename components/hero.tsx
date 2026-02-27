@@ -2,26 +2,36 @@
 
 import { Button } from "@/components/ui/button"
 import SplineOffscreen from "@/components/spline-offscreen"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
+
+const WORDS = ["DRAINED", "HACKED", "PHISHED"]
 
 export default function Hero() {
-  const words = ["DRAINED", "HACKED", "PHISHED"]
-  const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [currentText, setCurrentText] = useState("")
-  const [isTyping, setIsTyping] = useState(true)
-  const [charIndex, setCharIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(true)
   const [showSpline, setShowSpline] = useState(false)
   const [splineReady, setSplineReady] = useState(false)
 
+  // Typewriter intermediate state in refs to avoid re-renders
+  const wordIndexRef = useRef(0)
+  const charIndexRef = useRef(0)
+  const isTypingRef = useRef(true)
+
   useEffect(() => {
+    let debounceTimer: ReturnType<typeof setTimeout>
     const checkMobile = () => {
-      const mobile = window.innerWidth < 768
-      setIsMobile(mobile)
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768)
+      }, 150)
     }
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
+    // Initial check without debounce
+    setIsMobile(window.innerWidth < 768)
+    window.addEventListener("resize", checkMobile, { passive: true })
+    return () => {
+      clearTimeout(debounceTimer)
+      window.removeEventListener("resize", checkMobile)
+    }
   }, [])
 
   // Delay Spline mount by 2.5s on desktop
@@ -32,38 +42,34 @@ export default function Hero() {
   }, [isMobile])
 
   useEffect(() => {
-    const currentWord = words[currentWordIndex]
-    if (isTyping) {
-      if (charIndex < currentWord.length) {
-        const timer = setTimeout(() => {
-          setCurrentText(currentWord.slice(0, charIndex + 1))
-          setCharIndex(charIndex + 1)
-        }, 100)
-        return () => clearTimeout(timer)
+    let timer: ReturnType<typeof setTimeout>
+    const tick = () => {
+      const word = WORDS[wordIndexRef.current]
+      if (isTypingRef.current) {
+        if (charIndexRef.current < word.length) {
+          charIndexRef.current++
+          setCurrentText(word.slice(0, charIndexRef.current))
+          timer = setTimeout(tick, 100)
+        } else {
+          isTypingRef.current = false
+          timer = setTimeout(tick, 1000)
+        }
       } else {
-        const timer = setTimeout(() => {
-          setIsTyping(false)
-        }, 1000)
-        return () => clearTimeout(timer)
-      }
-    } else {
-      if (charIndex > 0) {
-        const timer = setTimeout(() => {
-          setCurrentText(currentWord.slice(0, charIndex - 1))
-          setCharIndex(charIndex - 1)
-        }, 50)
-        return () => clearTimeout(timer)
-      } else {
-        const timer = setTimeout(() => {
-          setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length)
-          setIsTyping(true)
-          setCharIndex(0)
+        if (charIndexRef.current > 0) {
+          charIndexRef.current--
+          setCurrentText(word.slice(0, charIndexRef.current))
+          timer = setTimeout(tick, 50)
+        } else {
+          wordIndexRef.current = (wordIndexRef.current + 1) % WORDS.length
+          isTypingRef.current = true
           setCurrentText("")
-        }, 500)
-        return () => clearTimeout(timer)
+          timer = setTimeout(tick, 500)
+        }
       }
     }
-  }, [currentWordIndex, charIndex, isTyping, words])
+    timer = setTimeout(tick, 100)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <section

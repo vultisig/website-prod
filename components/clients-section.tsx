@@ -15,6 +15,7 @@ export default function ClientsSection() {
   const [repeatCount, setRepeatCount] = useState(2)
 
   useLayoutEffect(() => {
+    let debounceTimer: ReturnType<typeof setTimeout>
     function measure() {
       if (!setRef.current || !containerRef.current) return
       const singleSetWidth = setRef.current.offsetWidth
@@ -29,8 +30,15 @@ export default function ClientsSection() {
     }
 
     measure()
-    window.addEventListener("resize", measure)
-    return () => window.removeEventListener("resize", measure)
+    const debouncedMeasure = () => {
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(measure, 150)
+    }
+    window.addEventListener("resize", debouncedMeasure, { passive: true })
+    return () => {
+      clearTimeout(debounceTimer)
+      window.removeEventListener("resize", debouncedMeasure)
+    }
   }, [])
 
   const repeatedSets = Array.from({ length: repeatCount }).map((_, i) => (
