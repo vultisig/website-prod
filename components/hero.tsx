@@ -91,14 +91,14 @@ export default function Hero() {
       )}
 
       <div className={`relative container w-full flex flex-col items-center justify-center z-20 ${splineReady ? 'md:-translate-x-[25%]' : ''}`} style={{ transition: 'transform 5400ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
-        <div className={`w-full flex flex-col items-center justify-center md:max-w-4xl ${splineReady ? 'md:items-start' : ''}`}>
+        <div className="w-full flex flex-col items-center justify-center md:max-w-4xl">
           <div className="inline-flex items-center bg-[#092e3e] border border-[#33e6bf] rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
             <span className="font-medium text-base md:text-xs md:sm:text-sm text-[#33e6bf]">
               Open-Source Audited
             </span>
           </div>
 
-          <h1 className={`font-bold text-white mb-8 leading-tight text-center text-5xl sm:text-6xl md:text-9xl ${splineReady ? 'md:text-left' : ''}`}>
+          <h1 className="font-bold text-white mb-8 leading-tight text-center text-5xl sm:text-6xl md:text-9xl">
             NEVER GET
             <br />
             <span className="bg-gradient-to-r from-[#33e6bf] to-cyan-400 bg-clip-text text-transparent">
