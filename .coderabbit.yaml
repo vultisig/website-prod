@@ -1,0 +1,32 @@
+# CodeRabbit configuration for Vultisig repos
+# Docs: https://docs.coderabbit.ai/guides/configure-coderabbit
+
+language: en
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  collapse_walkthrough: true
+  auto_review:
+    enabled: true
+    drafts: true
+    base_branches:
+      - main
+      - master
+  path_instructions:
+    - path: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx"
+      instructions: |
+        Review Guidelines - DO NOT suggest these changes:
+        - Undefined/Null Checks: Never suggest adding undefined or null checks when TypeScript types already guarantee the value exists.
+        - Error Handling: Never suggest wrapping code in try-catch blocks or adding error handling unless there's a clear unhandled case.
+  tools:
+    shellcheck:
+      enabled: true
+    markdownlint:
+      enabled: true
+    github-checks:
+      enabled: true
+      timeout_ms: 300000
+chat:
+  auto_reply: true
