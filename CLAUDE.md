@@ -33,22 +33,27 @@ Next.js 15 (App Router) + Tailwind CSS + Radix UI.
 
 ```
 app/                → Next.js app directory
-  api/              → API routes
+  api/              → API routes (server-side)
   articles/         → Blog
-  docs/
+  mpc/              → MPC explainer pages
+  vult/             → VULT token page
   downloads/
   how-it-works/
   privacy/
   support/
-  vult/             → VULT token page
+  docs/
+  termofservice/
   layout.tsx        → Root layout
   page.tsx          → Homepage
   sitemap.ts        → SEO sitemap
 components/         → Reusable UI components (shadcn/ui pattern)
-content/            → Static content
+content/            → Static content (markdown, data)
 hooks/              → Custom React hooks
 lib/                → Utilities
-public/             → Static assets
+types/              → TypeScript type definitions
+workers/            → Web workers
+assets/             → Static assets (images, icons)
+public/             → Public static files
 ```
 
 ## Code Conventions
@@ -58,4 +63,14 @@ public/             → Static assets
 - shadcn/ui + Radix UI for components
 - Zod for form validation
 - React Hook Form for forms
-- Node.js 19+ (see .nvmrc)
+- npm as package manager (`package-lock.json`)
+
+## Knowledge Base
+
+For deeper context, see [vultisig-knowledge](https://github.com/vultisig/vultisig-knowledge). Read only when needed:
+
+| Situation | Read |
+|-----------|------|
+| First time in this repo | [repos/website-prod.md](https://github.com/vultisig/vultisig-knowledge/blob/main/repos/website-prod.md) |
+| Unsure about conventions | [coding/patterns.md](https://github.com/vultisig/vultisig-knowledge/blob/main/coding/patterns.md) |
+| Checking dependency versions | [coding/dependencies.md](https://github.com/vultisig/vultisig-knowledge/blob/main/coding/dependencies.md) |
