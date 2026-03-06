@@ -34,3 +34,12 @@ npm run build   # Verify production build
 - No wallet or crypto logic — low security tier
 - API routes run server-side — validate inputs
 - Don't expose internal service URLs in client-side code
+
+## Knowledge Base
+
+For deeper context beyond this file, see [vultisig-knowledge](https://github.com/vultisig/vultisig-knowledge).
+
+Key docs for this repo:
+- [repos/website-prod.md](https://github.com/vultisig/vultisig-knowledge/blob/main/repos/website-prod.md)
+- [coding/patterns.md](https://github.com/vultisig/vultisig-knowledge/blob/main/coding/patterns.md)
+- [coding/dependencies.md](https://github.com/vultisig/vultisig-knowledge/blob/main/coding/dependencies.md)
