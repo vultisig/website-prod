@@ -64,6 +64,7 @@ public/             → Public static files
 - Zod for form validation
 - React Hook Form for forms
 - npm as package manager (`package-lock.json`)
+- JSDoc (`/** ... */`) on all exported functions, classes, and type definitions
 
 ## Knowledge Base
 
