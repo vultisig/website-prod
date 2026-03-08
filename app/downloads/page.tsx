@@ -10,22 +10,22 @@ const hashes = [
   {
     os: "ios",
     icon: "/images/apple.svg",
-    hash: "sha256:b0c42dea4c23d7aa4278fb9e73f7beddf961f5c923b7cf675b179573feb0389b",
+    hash: "sha256:aa8c82df650a1c46d2e37b9eff9b2a1f087052dc8ed43856bf4b0728a3ab6f52",
   },
   {
     os: "android",
     icon: "/images/Android.svg",
-    hash: "sha256:ca233765b999dfef0287230e69cc8db13c092488608d5940380dee87d7f87545",
+    hash: "sha256:c8523494c5a7fb097597dd34c5c5c9b697f353174970cc38934000c1648eef44",
   },
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "sha256:f667bf55176c81e97a5741a03b7d359382276081270251b3e8db330cbfd4c3e3",
+    hash: "sha256:96f515ba9d123545c67d32c4ecb92aa4de039768d41637d2c6f68448523c2741",
   },
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:30fd5e409b4649103fe1370c31c67da6a19b136494f93a2e04b9a30d17f2964c",
+    hash: "sha256:8c2c82ec0f5488c02064f6079ef79eb5a99ce29f25d913b3a996ef9978cd2df9",
   },
 ]
 
@@ -294,7 +294,7 @@ export default function DownloadsPage() {
                           </a>
 
                           <a
-                            href="https://github.com/vultisig/vultisig-ios/releases/tag/v1.32.38"
+                            href="https://github.com/vultisig/vultisig-ios/releases/tag/v1.33.45"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => trackDownload("macos github")}
@@ -329,7 +329,7 @@ export default function DownloadsPage() {
 
                           {/* Row 2 */}
                           <a
-                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.52/Vultisig-amd64-installer-v1.0.52.exe"
+                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.54/Vultisig-amd64-installer-v1.0.54.exe"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => trackDownload("windows")}
@@ -346,7 +346,7 @@ export default function DownloadsPage() {
                           </a>
 
                           <a
-                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.52/vultisig_1.0.52_amd64.deb"
+                            href="https://github.com/vultisig/vultisig-windows/releases/download/v1.0.54/vultisig_1.0.54_amd64.deb"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => trackDownload("linux")}
@@ -363,7 +363,7 @@ export default function DownloadsPage() {
                           </a>
 
                           <a
-                            href="https://github.com/vultisig/vultisig-android/releases/tag/v1.0.93"
+                            href="https://github.com/vultisig/vultisig-android/releases/tag/v1.0.96"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => trackDownload("android github")}
