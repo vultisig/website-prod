@@ -81,7 +81,7 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        <div className="relative">
+        <div className="relative flex flex-col gap-4">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -92,8 +92,6 @@ export default function HowItWorks() {
               className="
                 bg-gradient-to-b from-background to-backgroundSecondary
                 border border-borderLight rounded-3xl md:rounded-2xl
-                min-h-[701px]
-                lg:min-h-[400px]
                 sticky
                 overflow-hidden
               "
@@ -119,7 +117,7 @@ export default function HowItWorks() {
                     {feature.description}
                   </p>
                 </div>
-                <div className="w-full h-[300px] md:h-[365px] md:w-[648px] relative">
+                <div className="w-full place-self-end h-[300px] md:h-[365px] md:w-[648px] relative">
                   <Image
                     src={feature.image}
                     alt={feature.title}
