@@ -147,8 +147,8 @@ export default function Navbar() {
               {/* <a href="#" className="text-gray-300 hover:text-white ml-8">
                 Backed By
               </a> */}
-              <a href="/vult" className="text-gray-300 hover:text-white ml-8">
-                $VULT
+              <a href="/mpc" className="text-gray-300 hover:text-white ml-8">
+                MPC Wallet
               </a>
               <a
                 href="/articles"
@@ -156,11 +156,8 @@ export default function Navbar() {
               >
                 Articles
               </a>
-              <a
-                href="https://docs.vultisig.com"
-                className="text-gray-300 hover:text-white ml-8"
-              >
-                Docs
+              <a href="/vult" className="text-gray-300 hover:text-white ml-8">
+                $VULT
               </a>
 
               {/* <DropdownMenu>
@@ -431,17 +428,17 @@ export default function Navbar() {
                 {/* <a href="#" className="text-gray-300 hover:text-white py-2">
                   Backed By
                 </a> */}
-                <a href="/docs" className="text-gray-300 hover:text-white py-2">
-                  Docs
-                </a>
-                <a href="/vult" className="text-gray-300 hover:text-white py-2">
-                  $VULT
+                <a href="/mpc" className="text-gray-300 hover:text-white py-2">
+                  MPC Wallet
                 </a>
                 <a
                   href="/articles"
                   className="text-gray-300 hover:text-white py-2"
                 >
                   Articles
+                </a>
+                <a href="/vult" className="text-gray-300 hover:text-white py-2">
+                  $VULT
                 </a>
               </div>
               <div className="pt-2">

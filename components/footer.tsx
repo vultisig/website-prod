@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { FaGithub, FaTelegramPlane } from "react-icons/fa"
 import { FaDiscord, FaInstagram, FaXTwitter } from "react-icons/fa6"
 
@@ -8,24 +9,40 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-0">
           {/* Left side - Logo and socials */}
           <div className="flex-shrink-0">
-            <div className="flex items-center mb-6">
-              <img
+            <div className="flex items-center gap-3 mb-6">
+              <Image
                 src={"/images/vultisig-logo.svg"}
                 alt="Vultisig logo"
-                width={"35px"}
-                height={"35px"}
-              ></img>
-              <span className="text-white text-2xl sm:text-3xl font-bold pl-1">
+                width={35}
+                height={35}
+              />
+              <span className="text-white text-2xl sm:text-3xl font-bold">
                 Vultisig
               </span>
             </div>
 
             <div className="flex divide-x divide-foreground/20 mb-6">
               {[
-                { href: "https://github.com/vultisig", icon: <FaGithub />, label: "GitHub" },
-                { href: "https://discord.gg/thq64eaYVN", icon: <FaDiscord />, label: "Discord" },
-                { href: "https://x.com/vultisig", icon: <FaXTwitter />, label: "X" },
-                { href: "https://t.me/vultisig", icon: <FaTelegramPlane />, label: "Telegram" },
+                {
+                  href: "https://github.com/vultisig",
+                  icon: <FaGithub />,
+                  label: "GitHub",
+                },
+                {
+                  href: "https://discord.gg/thq64eaYVN",
+                  icon: <FaDiscord />,
+                  label: "Discord",
+                },
+                {
+                  href: "https://x.com/vultisig",
+                  icon: <FaXTwitter />,
+                  label: "X",
+                },
+                {
+                  href: "https://t.me/vultisig",
+                  icon: <FaTelegramPlane />,
+                  label: "Telegram",
+                },
                 {
                   href: "https://www.instagram.com/vultisig",
                   icon: <FaInstagram />,
