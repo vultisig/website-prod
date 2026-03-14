@@ -84,7 +84,7 @@ export default function VultPage() {
               </GradientText>{" "}
               Token
             </h1>
-            <p className="text-gray-300 text-base xs:text-lg mb-6 xs:mb-7 sm:mb-8 max-w-lg">
+            <p className="text-textSecondary text-base xs:text-lg mb-6 xs:mb-7 sm:mb-8 max-w-lg">
               The $VULT token can be used to reduce trading fees on the Vultisig
               platform. <br />
               Hold between 1,500 to 1 Million $VULT and reduce your trading fees
@@ -250,7 +250,7 @@ export default function VultPage() {
           <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
             $VULT Discount Tiers
           </h2>
-          <p className="text-gray-300 text-sm xs:text-base mb-8">
+          <p className="text-textSecondary text-sm xs:text-base mb-8">
             Hold $VULT to unlock lower trading fees.
           </p>
           <div className="w-full flex justify-center items-center relative">
@@ -567,7 +567,6 @@ export default function VultPage() {
           </Card>
         </div>
       </section>
-
 
       {/* Discord section */}
       <section className="py-12 px-4">

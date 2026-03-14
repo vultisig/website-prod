@@ -16,7 +16,8 @@ interface Testimonial {
 
 const MOBILE_THRESHOLD = 50
 const DESKTOP_THRESHOLD = 30
-const TOUCH_TARGET_CLASS = "relative after:absolute after:content-[''] after:-inset-[18px]"
+const TOUCH_TARGET_CLASS =
+  "relative after:absolute after:content-[''] after:-inset-[18px]"
 
 export default function TestimonialsSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -182,7 +183,7 @@ export default function TestimonialsSection() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             Security Backed by <span className="text-cyan-400">Stories</span>
           </h2>
-          <p className="text-gray-300 text-lg sm:text-xl">
+          <p className="text-textSecondary text-lg sm:text-xl">
             Vultisig is battle-tested and trusted by vault creators, multisig
             <br className="hidden sm:block" />
             users, and DAO operators around the world.
@@ -261,7 +262,7 @@ export default function TestimonialsSection() {
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
           Security Backed by <span className="text-cyan-400">Stories</span>
         </h2>
-        <p className="text-gray-300 text-lg sm:text-xl">
+        <p className="text-textSecondary text-lg sm:text-xl">
           Vultisig is battle-tested and trusted by vault creators, multisig
           <br className="hidden sm:block" />
           users, and DAO operators around the world.
@@ -368,7 +369,9 @@ export default function TestimonialsSection() {
               className={TOUCH_TARGET_CLASS}
               aria-label={`Go to slide ${index + 1}`}
             >
-              <span className={`w-3 h-3 rounded-full transition-colors block ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`} />
+              <span
+                className={`w-3 h-3 rounded-full transition-colors block ${currentSlide === index ? "bg-blue-600" : "bg-slate-600"}`}
+              />
             </button>
           ))}
         </div>
@@ -382,7 +385,9 @@ export default function TestimonialsSection() {
                 className={TOUCH_TARGET_CLASS}
                 aria-label={`Go to page ${index + 1}`}
               >
-                <span className={`w-3 h-3 rounded-full transition-colors block ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`} />
+                <span
+                  className={`w-3 h-3 rounded-full transition-colors block ${Math.floor(currentSlide / 3) === index ? "bg-blue-600" : "bg-slate-600"}`}
+                />
               </button>
             ),
           )}

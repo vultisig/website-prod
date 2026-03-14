@@ -85,7 +85,10 @@ export default function Hero() {
       {!isMobile && showSpline && (
         <div
           className="absolute inset-0 z-10 pointer-events-none"
-          style={{ opacity: splineReady ? 1 : 0, transition: 'opacity 10800ms cubic-bezier(0.22, 1, 0.36, 1)' }}
+          style={{
+            opacity: splineReady ? 1 : 0,
+            transition: "opacity 10800ms cubic-bezier(0.22, 1, 0.36, 1)",
+          }}
         >
           <SplineOffscreen
             scene="https://prod.spline.design/TMNN6wJ0bfvnVGnB/scene.splinecode"
@@ -96,7 +99,12 @@ export default function Hero() {
         </div>
       )}
 
-      <div className={`relative container w-full flex flex-col items-center justify-center z-20 ${splineReady ? 'md:-translate-x-[25%]' : ''}`} style={{ transition: 'transform 5400ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
+      <div
+        className={`relative container w-full flex flex-col items-center justify-center z-20 ${splineReady ? "md:-translate-x-[25%]" : ""}`}
+        style={{
+          transition: "transform 5400ms cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
+      >
         <div className="w-full flex flex-col items-center justify-center md:max-w-4xl">
           <div className="inline-flex items-center bg-[#092e3e] border border-[#33e6bf] rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
             <span className="font-medium text-base md:text-xs md:sm:text-sm text-[#33e6bf]">
@@ -113,7 +121,7 @@ export default function Hero() {
             <br />
             AGAIN
           </h1>
-          {/* <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300 mb-8 text-center md:text-left">
+          {/* <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-textSecondary mb-8 text-center md:text-left">
             Secure Cross-Chain Multi-Signature Vaults
           </h2> */}
 

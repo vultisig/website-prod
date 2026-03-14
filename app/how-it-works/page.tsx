@@ -1,20 +1,206 @@
-"use client"
-
-import { Card } from "@/components/ui/card"
 import CtaSection from "@/components/cta-section"
-import { Lock, Key, Grid } from "lucide-react"
-import { useState } from "react"
-import { Skeleton } from "@/components/ui/skeleton"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { Key, Lock } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { FiUploadCloud } from "react-icons/fi"
+import { IoChatboxEllipsesOutline } from "react-icons/io5"
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+  LuBadgeCheck,
+  LuFileQuestion,
+  LuTabletSmartphone,
+} from "react-icons/lu"
+import { MdArrowOutward } from "react-icons/md"
 import feature1Png from "./images/feature1.png"
 import feature2Png from "./images/feature2.png"
 import feature3Png from "./images/feature3.png"
-import Image from "next/image"
+
+export default function HowItWorks() {
+  return (
+    <main className="min-h-screen container pt-32 pb-20 space-y-32">
+      {/* HERO SECTION */}
+      <section>
+        <div className="flex flex-col items-center justify-center text-center mb-12">
+          <Heading subtitle="Introducing Vultisig recovery: Vault shares instead of seed phrases.">
+            Wallet recovery <GradientText>re-imagined</GradientText>
+          </Heading>
+        </div>
+
+        <div className="relative flex flex-col gap-4">
+          {features.map((feature, index) => (
+            <Box
+              key={index}
+              style={{
+                top: `${index * 30 + 100}px`,
+                zIndex: 10 + index,
+              }}
+              className="sticky overflow-hidden"
+            >
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4 pt-8 p-5 md:p-10">
+                  <div className="inline-block bg-[#33E6BF]/[0.13] border border-[#33E6BF]/[0.5] text-[#33E6BF] px-3 py-1 rounded-full text-sm font-medium">
+                    {feature.tag}
+                  </div>
+                  <h3 className="text-2xl lg:text-4xl text-balance font-medium tracking-[-0.792px] text-white">
+                    {feature.title}
+                  </h3>
+                  <div className="text-textSecondary text-base lg:text-lg leading-relaxed">
+                    {feature.description}
+                  </div>
+                </div>
+                <div className="w-full place-self-end h-[300px] md:h-[365px] md:w-[648px] relative">
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </Box>
+          ))}
+          {/* Spacer to allow cards to scroll past viewport */}
+          <div className="h-[50vh]"></div>
+        </div>
+      </section>
+
+      <section className="mb-32 text-center">
+        <Heading subtitle="Simple, secure recovery. No seed phrases needed.">
+          How to <GradientText>recover?</GradientText>
+        </Heading>
+
+        <div className="grid md:grid-cols-4 gap-5 my-12">
+          {recoverySteps.map((step, i) => (
+            <Box key={step.question} className="p-5 pb-8 grid gap-6 group">
+              <div className="flex justify-between items-center">
+                <div className="size-9 flex items-center justify-center bg-primaryAccent/10 text-primaryAccent rounded-lg">
+                  <step.icon className="size-6" />
+                </div>
+                <div className="size-9 grid place-content-center rounded-full border border-borderLight bg-backgroundSecondary font-semibold">
+                  {(i + 1).toString().padStart(2, "0")}
+                </div>
+              </div>
+              <h3 className="text-2xl leading-6 font-bold mb-2">
+                {step.question}
+              </h3>
+              <div className="w-full h-px bg-gradient-to-r from-backgroundSecondary/0 via-[#284570] to-backgroundSecondary/0"></div>
+              <p className="text-secondary md:opacity-0 md:group-hover:motion-preset-fade-md md:group-hover:opacity-100 md:transition-opacity md:duration-300">
+                {step.answer}
+              </p>
+            </Box>
+          ))}
+        </div>
+      </section>
+
+      {/* TRADITIONAL WALLETS SECTION */}
+      <section>
+        <Heading>
+          How do <GradientText>traditional wallets</GradientText> work?
+        </Heading>
+
+        <div className="grid md:grid-cols-3 gap-10 mt-12">
+          {traditionalWalletCards.map((item) => (
+            <Box
+              key={item.title}
+              className="px-10 py-8 flex flex-col gap-4 items-start min-h-[240px] max-w-sm"
+            >
+              <div className="size-9 flex items-center justify-center bg-primaryAccent/10 text-primaryAccent rounded-lg">
+                <item.icon className="size-6" />
+              </div>
+              <h3 className="text-xl font-bold text-white">{item.title}</h3>
+              <p className="text-textSecondary text-base leading-relaxed">
+                {item.description}
+              </p>
+            </Box>
+          ))}
+        </div>
+      </section>
+
+      {/* SINGLE POINT OF FAILURE SECTION */}
+      <section>
+        <Heading subtitle="Vultisig eliminates the risks of traditional key management with next-gen crypto vaults.">
+          Private keys: a <GradientText>single</GradientText> point of failure
+        </Heading>
+
+        <div className="grid md:grid-cols-2 gap-8 my-7">
+          {singlePointFailureCards.map((item) => (
+            <Box
+              key={item.title}
+              className="p-5 pb-52 md:p-10 md:pb-60 flex flex-col items-start min-h-[340px] overflow-hidden relative"
+            >
+              <img
+                src={item.image}
+                className="absolute bottom-0 right-0 w-full h-auto min-w-96 max-w-[500px] object-contain opacity-80 pointer-events-none select-none"
+              />
+              <h3 className="text-2xl font-medium mb-4 md:mb-6 relative z-10">
+                {item.title}
+              </h3>
+              <p className="text-textSecondary mb-3 md:mb-4 relative z-10">
+                {item.line1}
+              </p>
+              <p className="text-textSecondary relative z-10 w-3/4">
+                {item.line2}
+              </p>
+            </Box>
+          ))}
+        </div>
+        <Box className="p-5 md:px-10 md:py-4 flex max-md:flex-col justify-center items-center gap-8">
+          <div className="grid place-items-start gap-4">
+            <h3 className="text-2xl md:text-3xl font-medium">
+              Why Vultisig is <GradientText>Better</GradientText>
+            </h3>
+            <ul className="md:list-disc md:list-inside text-textSecondary">
+              With Vultisig, there’s:
+              {[
+                "No seed phrases to lose or leak.",
+                "No single key that can be stolen.",
+                "No hardware dependency or hidden risks.",
+              ].map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+            <p className="text-textSecondary">
+              Instead, your security is built on{" "}
+              <span className="text-white">
+                collaboration between your own devices
+              </span>
+              , making it safer, simpler, and truly seedless.
+            </p>
+            <Link
+              href="/downloads"
+              className={cn(
+                buttonVariants({ variant: "primaryBlue", size: "lg" }),
+                "px-6 max-md:w-full",
+              )}
+            >
+              Protect Your Vaults Today
+              <MdArrowOutward className="size-5" />
+            </Link>
+          </div>
+          <img
+            src={"/images/hiw-5.svg"}
+            className="w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none"
+          />
+        </Box>
+      </section>
+
+      <CtaSection />
+    </main>
+  )
+}
+
+function Box({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn(
+        "bg-gradient-to-b from-background to-backgroundSecondary border border-borderLight rounded-3xl md:rounded-2xl",
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 
 function GradientText({
   children,
@@ -25,10 +211,39 @@ function GradientText({
 }) {
   return (
     <span
-      className={`bg-gradient-to-r from-[#33e6bf] to-cyan-400 bg-clip-text text-transparent font-bold ${className}`}
+      className={`bg-gradient-to-r from-[#33e6bf] to-cyan-400 bg-clip-text text-transparent ${className}`}
     >
       {children}
     </span>
+  )
+}
+
+function Heading({
+  children,
+  className,
+  subtitle,
+}: {
+  children: React.ReactNode
+  className?: string
+  subtitle?: React.ReactNode
+}) {
+  return (
+    <>
+      <h2
+        className={cn(
+          "text-4xl md:text-5xl font-medium text-center",
+          subtitle && "mb-5",
+          className,
+        )}
+      >
+        {children}
+      </h2>
+      {subtitle && (
+        <p className="text-textSecondary md:text-xl text-center mx-auto text-balance">
+          {subtitle}
+        </p>
+      )}
+    </>
   )
 }
 
@@ -64,355 +279,69 @@ const features = [
     image: feature3Png,
   },
 ]
+const recoverySteps = [
+  {
+    icon: LuFileQuestion,
+    question: "Lose device",
+    answer:
+      "Don’t panic. Your vault remains safe even if a device is lost, stolen, or broken.",
+  },
+  {
+    icon: LuTabletSmartphone,
+    question: "Get new device",
+    answer:
+      "Set up a new phone, desktop, or tablet just like you would normally.",
+  },
+  {
+    icon: FiUploadCloud,
+    question: "Import backup",
+    answer:
+      "Use the backup Vault Share you stored securely to re-import your lost device.",
+  },
+  {
+    icon: LuBadgeCheck,
+    question: "Respawned",
+    answer:
+      "Your vault is fully restored and ready to use. No keys exposed, no funds at risk.",
+  },
+]
 
-export default function HowItWorks() {
-  const [imageLoading, setImageLoading] = useState(true)
+const traditionalWalletCards = [
+  {
+    title: "Private keys",
+    description:
+      "You need to trust the key generation process or you could lose your keys.",
+    icon: Lock,
+  },
+  {
+    title: "Seed phrases",
+    description:
+      "A seed phrase is a human-readable representation of your private key using standardized words - stored in plain text accessible to anyone.",
+    icon: IoChatboxEllipsesOutline,
+  },
+  {
+    title: "One Click. Gone.",
+    description:
+      "With traditional wallets, it only takes one click to drain your funds. One malicious transaction or signature could cost you your assets.",
+    icon: Key,
+  },
+]
 
-  return (
-    <main className="min-h-screen pt-32 pb-20 px-4">
-      {/* HERO SECTION */}
-      <section className="container mb-32">
-        <div className="flex flex-col items-center justify-center text-center mb-12">
-          <h1 className="text-5xl font-semibold text-white mb-5">
-            Wallet recovery <GradientText>re-imagined.</GradientText>
-          </h1>
-          <p className="text-gray-300 text-xl font-normal max-w-md mx-auto mb-0">
-            Introducing Vultisig recovery: Vault shares instead of seed phrases.
-          </p>
-        </div>
-
-        <div className="relative flex flex-col gap-4">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              style={{
-                top: `${index * 30 + 100}px`,
-                zIndex: 10 + index,
-              }}
-              className="
-                bg-gradient-to-b from-background to-backgroundSecondary
-                border border-borderLight rounded-3xl md:rounded-2xl
-                sticky
-                overflow-hidden
-              "
-            >
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4 pt-8 p-5 md:p-10">
-                  <div className="inline-block bg-[#33E6BF]/[0.13] border border-[#33E6BF]/[0.5] text-[#33E6BF] px-3 py-1 rounded-full text-sm font-medium">
-                    {feature.tag}
-                  </div>
-                  <h3 className="text-2xl lg:text-5xl font-bold text-white">
-                    {index === 2 ? (
-                      <>
-                        Expand your wallet's power{" "}
-                        <span className="text-lg lg:text-2xl">
-                          (coming soon)
-                        </span>
-                      </>
-                    ) : (
-                      feature.title
-                    )}
-                  </h3>
-                  <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-                <div className="w-full place-self-end h-[300px] md:h-[365px] md:w-[648px] relative">
-                  <Image
-                    src={feature.image}
-                    alt={feature.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-          {/* Spacer to allow cards to scroll past viewport */}
-          <div className="h-[50vh]"></div>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center justify-center gap-16 mt-16">
-          <div className="flex-1 flex justify-center mb-8 md:mb-0">
-            {imageLoading && (
-              <div className="w-[490px] h-[520px]">
-                <Skeleton className="w-full h-full rounded-lg bg-slate-700/50 border border-[var(--border-color)] shadow-sm shadow-[var(--border-color)]" />
-              </div>
-            )}
-            <img
-              src="/images/hiw-1.svg"
-              alt="Wallet recovery re-imagined illustration"
-              width="490"
-              height="520"
-              className={`w-full max-w-[490px] h-auto object-contain rounded-xl ${imageLoading ? "hidden" : ""}`}
-              onLoad={() => setImageLoading(false)}
-              onError={() => setImageLoading(false)}
-            />
-          </div>
-          <div className="flex-1 max-w-2xl flex flex-col justify-between h-full">
-            <div className="text-left text-gray-300 text-lg mb-6">
-              <p className="mb-4">
-                With Vultisig, you bring your own trusted devices - phone,
-                desktop, laptops or tablets. No special hardware needed.
-              </p>
-              <p className="mb-4">
-                Together, your devices create vaults that no single device can
-                access. Each device has a unique backup called{" "}
-                <b>"Vault Share"</b>, which are secure digital backups that
-                eliminate the hassle of physical storage.
-              </p>
-              <p className="mb-4 text-white font-semibold">
-                The private key never exists in Vultisig, the devices just proof
-                the collaborative access to it!
-              </p>
-              <p className="mb-4">
-                Each vault is natively multi-factor -- No assets can be accessed
-                without collaboration. Access them remotely from anywhere in the
-                world.
-              </p>
-              <p>
-                Store each device's Vault Share separately and sleep soundly.
-              </p>
-            </div>
-            <div
-              className="border  rounded-xl p-4 "
-              style={{
-                color: "var(--primary-accent)",
-                borderColor: "var(--primary-accent)",
-              }}
-            >
-              <span className="font-semibold">
-                Individual Vault-shares never store funds
-              </span>{" "}
-              and can be safely imported/exported anywhere.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TRADITIONAL WALLETS SECTION */}
-      <section className="container mb-32">
-        <h2 className="text-5xl font-bold text-white text-center">
-          How do <GradientText>traditional wallets</GradientText> work?
-        </h2>
-        <div className="flex justify-center mb-2">
-          <img
-            src="/images/hiw-2.svg"
-            className="w-[600px] h-auto object-contain"
-            style={{ transform: "scaleX(1.5) scaleY(1.5)" }}
-          />
-        </div>
-        <div className="grid md:grid-cols-3 gap-10">
-          <Card
-            className="
-            bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl px-10 py-8 flex flex-col items-start min-h-[240px] max-w-sm mx-auto
-            hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
-            "
-          >
-            <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center mb-6">
-              <Lock className="w-6 h-6 text-primaryAccent" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">Private keys</h3>
-            <p className="text-gray-300 text-base leading-relaxed">
-              You need to trust the key generation process or you could lose
-              your keys.
-            </p>
-          </Card>
-          <Card
-            className="
-            bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl px-10 py-8 flex flex-col items-start min-h-[240px] max-w-sm mx-auto
-            hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
-            "
-          >
-            <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center mb-6">
-              <img
-                src="/images/hiw-seed-phrase.png"
-                alt="Seed Phrase"
-                className="w-6 h-6 object-contain"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">Seed phrases</h3>
-            <p className="text-gray-300 text-base leading-relaxed">
-              A seed phrase is a human-readable representation of your private
-              key using standardized words - stored in plain text accessible to
-              anyone.
-            </p>
-          </Card>
-          <Card
-            className="
-            bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl px-10 py-8 flex flex-col items-start min-h-[240px] max-w-sm mx-auto
-            hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
-            "
-          >
-            <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center mb-6">
-              <Key className="w-6 h-6 text-primaryAccent" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">
-              One Click. Gone.
-            </h3>
-            <p className="text-gray-300 text-base leading-relaxed">
-              With traditional wallets, it only takes one click to drain your
-              funds. One malicious transaction or signature could cost you your
-              assets.
-            </p>
-          </Card>
-        </div>
-      </section>
-
-      {/* SINGLE POINT OF FAILURE SECTION */}
-      <section className="container mb-32">
-        <h2 className="text-5xl font-bold text-white mb-8 text-center">
-          Private keys: a <GradientText>single</GradientText> point of failure
-        </h2>
-        <p className="text-center text-gray-300 text-lg mb-10">
-          VULTISIG eliminates the risks of traditional key management with
-          next-gen crypto vaults.
-        </p>
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          {/* Card 1 */}
-          <div className="relative">
-            <Card
-              className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-10 flex flex-col items-start min-h-[340px] overflow-hidden relative
-              hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
-              "
-            >
-              <img
-                src="/images/hiw-3.svg"
-                className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none"
-              />
-              <h3 className="text-2xl font-bold text-white mb-4 relative z-10">
-                Private key creation
-              </h3>
-              <p className="text-gray-300 mb-4 relative z-10">
-                Generating keys on a single device is a ticking time bomb. One
-                breach, one compromise - and it's game over.
-              </p>
-              <p className="text-gray-300 relative z-10">
-                Self-custody shouldn't mean playing defense with your entire net
-                worth.
-              </p>
-            </Card>
-          </div>
-          {/* Card 2 */}
-          <div className="relative">
-            <Card
-              className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-10 flex flex-col items-start min-h-[340px] overflow-hidden relative
-              hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
-              "
-            >
-              <img
-                src="/images/hiw-4.svg"
-                alt="Storage of private keys illustration"
-                width="500"
-                height="400"
-                className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none"
-              />
-              <h3 className="text-2xl font-bold text-white mb-4 relative z-10">
-                Storage of private keys
-              </h3>
-              <p className="text-gray-300 mb-4 relative z-10">
-                Keeping keys in one place? That's a single point of failure
-                begging to be exploited.
-              </p>
-              <p className="text-gray-300 relative z-10">
-                Whether it's a hack, misstep, or hardware loss - your access is
-                only as strong as its weakest link.
-              </p>
-            </Card>
-          </div>
-        </div>
-        {/* Card 3 */}
-        <div className="relative">
-          <Card
-            className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-10 flex flex-col items-start min-h-[340px] overflow-hidden relative
-            hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
-            "
-          >
-            <img
-              src="/images/hiw-5.svg"
-              alt="Human error illustration"
-              width="500"
-              height="400"
-              className="absolute bottom-0 right-0 w-full h-auto max-w-[500px] object-contain opacity-80 pointer-events-none select-none"
-            />
-            <h3 className="text-2xl font-bold text-white mb-4 relative z-10">
-              Human error
-            </h3>
-            <p className="text-gray-300 mb-2 relative z-10">
-              Let's face it: people click bad links. Scams get smarter. Social
-              engineering wins.
-            </p>
-            <p className="text-gray-300 relative z-10">
-              Most drains happen not through code, but through trust. One
-              mistake, and it's rekt.
-            </p>
-          </Card>
-        </div>
-      </section>
-
-      {/* FAQ SECTION */}
-      <section className="container mb-32">
-        <h2 className="text-5xl font-bold text-white mb-12 text-center">
-          Frequently Asked <GradientText>Questions</GradientText>
-        </h2>
-        <div className="w-full flex justify-center items-center">
-          <div className="w-full">
-            <Accordion type="single" collapsible className="space-y-4">
-              {[
-                {
-                  q: "What is an MPC wallet?",
-                  a: "An MPC (Multi-Party Computation) wallet splits your private key across multiple devices using threshold signatures. No single device ever holds the complete key, eliminating single points of failure.",
-                  id: "faq-1",
-                },
-                {
-                  q: "Is Vultisig safe if I lose a device?",
-                  a: "Yes. Vultisig uses a threshold scheme (2-of-2 for Fast Vaults, 2-of-3 for Secure Vaults). You can recover your vault using the remaining devices or your Vault Share backups.",
-                  id: "faq-2",
-                },
-                {
-                  q: "What is a Vault Share?",
-                  a: "A Vault Share is a secure digital backup unique to each device. Unlike seed phrases, Vault Shares never contain your complete private key and can be safely stored anywhere.",
-                  id: "faq-3",
-                },
-                {
-                  q: "Do I need special hardware?",
-                  a: "No. Vultisig works with your existing devices - phones, tablets, laptops, and desktops. No special hardware wallets required.",
-                  id: "faq-4",
-                },
-                {
-                  q: "What's the difference between Fast Vault and Secure Vault?",
-                  a: "Fast Vault is a 2-of-2 setup with instant server-assisted signing for everyday use. Secure Vault is a 2-of-3+ multi-device setup where you control all signing devices for maximum security.",
-                  id: "faq-5",
-                },
-                {
-                  q: "Can Vultisig access my funds?",
-                  a: "No. Vultisig is fully self-custodial. Even with Fast Vaults, we only hold one share that cannot access funds alone. Your vault, your keys, your crypto.",
-                  id: "faq-6",
-                },
-              ].map((faq) => (
-                <AccordionItem
-                  key={faq.id}
-                  value={faq.id}
-                  className="bg-[var(--background-secondary)] rounded-xl border-none
-                  hover:border-[var(--border-color)]
-                  hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
-                  "
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA SECTION (REUSED) */}
-      <CtaSection />
-    </main>
-  )
-}
+const singlePointFailureCards = [
+  {
+    image: "/images/hiw-3.svg",
+    title: "Private key creation",
+    line1:
+      "Generating keys on a single device is a ticking time bomb. One breach, one compromise - and it's game over.",
+    line2:
+      "Self-custody shouldn't mean playing defense with your entire net worth.",
+  },
+  {
+    image: "/images/hiw-4.svg",
+    title: "Storage of private keys",
+    line1:
+      "Keeping keys in one place? That's a single point of failure begging to be exploited.",
+    line2:
+      "Whether it's a hack, misstep, or hardware loss - your access is only as strong as its weakest link.",
+  },
+]

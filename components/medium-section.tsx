@@ -177,7 +177,7 @@ export default function MediumSection() {
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3 leading-tight">
             {article.title}
           </h3>
-          <p className="text-gray-300 text-sm leading-relaxed mb-4 flex-1">
+          <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
             {article.description}
           </p>
           <p className="text-gray-400 text-sm italic mt-auto">{article.date}</p>
@@ -230,7 +230,7 @@ export default function MediumSection() {
             </>
           )}
         </h2>
-        <p className="text-gray-300 text-lg sm:text-xl">
+        <p className="text-textSecondary text-lg sm:text-xl">
           Behind the vault: Insights, partnerships, and product updates{" "}
           <br className="hidden sm:block" />
           from the team building Vultisig.

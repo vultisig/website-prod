@@ -1,8 +1,8 @@
 "use client"
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { Article } from '@/lib/articles'
+import Link from "next/link"
+import Image from "next/image"
+import { Article } from "@/lib/articles"
 
 interface ArticleCardProps {
   article: Article
@@ -32,7 +32,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             className="object-cover group-hover:scale-105 transition-transform duration-300"
             onError={(e) => {
               const target = e.target as HTMLImageElement
-              target.style.display = 'none'
+              target.style.display = "none"
             }}
           />
         </div>
@@ -53,15 +53,15 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 leading-tight group-hover:text-blue-400 transition-colors">
           {article.title}
         </h2>
-        <p className="text-gray-300 text-sm leading-relaxed mb-4 flex-1">
+        <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
           {article.description}
         </p>
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
           <p className="text-gray-400 text-sm">
-            {new Date(article.publishedAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
+            {new Date(article.publishedAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
             })}
           </p>
           <span className="text-blue-400 text-sm group-hover:translate-x-1 transition-transform inline-block">
@@ -72,5 +72,3 @@ export default function ArticleCard({ article }: ArticleCardProps) {
     </Link>
   )
 }
-
-

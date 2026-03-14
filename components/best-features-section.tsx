@@ -77,7 +77,7 @@ export default function BestFeaturesSection() {
                     feature.title
                   )}
                 </h3>
-                <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
+                <p className="text-textSecondary text-base lg:text-lg leading-relaxed">
                   {feature.description}
                 </p>
               </div>

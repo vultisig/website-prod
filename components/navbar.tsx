@@ -79,7 +79,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <div className="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                  <div className="flex items-center text-textSecondary hover:text-white cursor-pointer">
                     <span>Products</span>
                     <ChevronDown className="ml-1 h-4 w-4" />
                   </div>
@@ -140,29 +140,35 @@ export default function Navbar() {
               </DropdownMenu>
               <a
                 href="/how-it-works"
-                className="text-gray-300 hover:text-white ml-8"
+                className="text-textSecondary hover:text-white ml-8"
               >
                 How It Works
               </a>
-              {/* <a href="#" className="text-gray-300 hover:text-white ml-8">
+              {/* <a href="#" className="text-textSecondary hover:text-white ml-8">
                 Backed By
               </a> */}
-              <a href="/mpc" className="text-gray-300 hover:text-white ml-8">
+              <a
+                href="/mpc"
+                className="text-textSecondary hover:text-white ml-8"
+              >
                 MPC Wallet
               </a>
               <a
                 href="/articles"
-                className="text-gray-300 hover:text-white ml-8"
+                className="text-textSecondary hover:text-white ml-8"
               >
                 Articles
               </a>
-              <a href="/vult" className="text-gray-300 hover:text-white ml-8">
+              <a
+                href="/vult"
+                className="text-textSecondary hover:text-white ml-8"
+              >
                 $VULT
               </a>
 
               {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <div className="flex items-center text-gray-300 hover:text-white cursor-pointer ml-8">
+                  <div className="flex items-center text-textSecondary hover:text-white cursor-pointer ml-8">
                     <span>Solutions</span>
                     <ChevronDown className="ml-1 h-4 w-4" />
                   </div>
@@ -175,7 +181,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Funds & Treasuries</div>
-                        <div className="text-xs text-gray-300">Institutional grade security with cross-chain support</div>
+                        <div className="text-xs text-textSecondary">Institutional grade security with cross-chain support</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -184,7 +190,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Whales</div>
-                        <div className="text-xs text-gray-300">Protect and grow wealth across generations</div>
+                        <div className="text-xs text-textSecondary">Protect and grow wealth across generations</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -193,7 +199,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Payroll</div>
-                        <div className="text-xs text-gray-300">Automate cross-chain payroll operations</div>
+                        <div className="text-xs text-textSecondary">Automate cross-chain payroll operations</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -202,7 +208,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Retail</div>
-                        <div className="text-xs text-gray-300">One wallet for all of crypto</div>
+                        <div className="text-xs text-textSecondary">One wallet for all of crypto</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -211,7 +217,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">DAOs</div>
-                        <div className="text-xs text-gray-300">Cross-chain multisig powered by Thorchain</div>
+                        <div className="text-xs text-textSecondary">Cross-chain multisig powered by Thorchain</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -220,7 +226,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Financial Advisors</div>
-                        <div className="text-xs text-gray-300">Premier cross-chain wallet for your clients</div>
+                        <div className="text-xs text-textSecondary">Premier cross-chain wallet for your clients</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -229,7 +235,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Ai Agents</div>
-                        <div className="text-xs text-gray-300">Ai-enhanced MPC wallet infrastructure</div>
+                        <div className="text-xs text-textSecondary">Ai-enhanced MPC wallet infrastructure</div>
                       </div>
                     </div>
                   </div>
@@ -240,7 +246,7 @@ export default function Navbar() {
             <div className="hidden lg:block">
               <a
                 href="/downloads"
-                className="text-gray-300 hover:text-white ml-8"
+                className="text-textSecondary hover:text-white ml-8"
               >
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
                   Download App
@@ -251,7 +257,7 @@ export default function Navbar() {
             <div className="lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-300 hover:text-white p-2"
+                className="text-textSecondary hover:text-white p-2"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
               >
                 {isOpen ? (
@@ -268,7 +274,7 @@ export default function Navbar() {
             <div className="lg:hidden mt-4 pb-4 border-t border-slate-700 pt-4">
               <div className="flex flex-col space-y-4">
                 <button
-                  className="flex items-center text-gray-300 hover:text-white cursor-pointer py-2 focus:outline-none"
+                  className="flex items-center text-textSecondary hover:text-white cursor-pointer py-2 focus:outline-none"
                   onClick={() => setMobileProductsOpen((v) => !v)}
                   aria-expanded={mobileProductsOpen}
                   aria-controls="mobile-products-menu"
@@ -343,7 +349,7 @@ export default function Navbar() {
                   </div>
                 )}
                 {/* <button
-                  className="flex items-center text-gray-300 hover:text-white cursor-pointer py-2 focus:outline-none"
+                  className="flex items-center text-textSecondary hover:text-white cursor-pointer py-2 focus:outline-none"
                   onClick={() => setMobileSolutionsOpen((v) => !v)}
                   aria-expanded={mobileSolutionsOpen}
                   aria-controls="mobile-solutions-menu"
@@ -360,7 +366,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Funds & Treasuries</div>
-                        <div className="text-xs text-gray-300">Institutional grade security with cross-chain support</div>
+                        <div className="text-xs text-textSecondary">Institutional grade security with cross-chain support</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -369,7 +375,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Whales</div>
-                        <div className="text-xs text-gray-300">Protect and grow wealth across generations</div>
+                        <div className="text-xs text-textSecondary">Protect and grow wealth across generations</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -378,7 +384,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Payroll</div>
-                        <div className="text-xs text-gray-300">Automate cross-chain payroll operations</div>
+                        <div className="text-xs text-textSecondary">Automate cross-chain payroll operations</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -387,7 +393,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Retail</div>
-                        <div className="text-xs text-gray-300">One wallet for all of crypto</div>
+                        <div className="text-xs text-textSecondary">One wallet for all of crypto</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -396,7 +402,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">DAOs</div>
-                        <div className="text-xs text-gray-300">Cross-chain multisig powered by Thorchain</div>
+                        <div className="text-xs text-textSecondary">Cross-chain multisig powered by Thorchain</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -405,7 +411,7 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Financial Advisors</div>
-                        <div className="text-xs text-gray-300">Premier cross-chain wallet for your clients</div>
+                        <div className="text-xs text-textSecondary">Premier cross-chain wallet for your clients</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
@@ -414,35 +420,44 @@ export default function Navbar() {
                       </div>
                       <div>
                         <div className="font-medium">Ai Agents</div>
-                        <div className="text-xs text-gray-300">Ai-enhanced MPC wallet infrastructure</div>
+                        <div className="text-xs text-textSecondary">Ai-enhanced MPC wallet infrastructure</div>
                       </div>
                     </div>
                   </div>
                 )} */}
                 <a
                   href="/how-it-works"
-                  className="text-gray-300 hover:text-white py-2"
+                  className="text-textSecondary hover:text-white py-2"
                 >
                   How It Works
                 </a>
-                {/* <a href="#" className="text-gray-300 hover:text-white py-2">
+                {/* <a href="#" className="text-textSecondary hover:text-white py-2">
                   Backed By
                 </a> */}
-                <a href="/mpc" className="text-gray-300 hover:text-white py-2">
+                <a
+                  href="/mpc"
+                  className="text-textSecondary hover:text-white py-2"
+                >
                   MPC Wallet
                 </a>
                 <a
                   href="/articles"
-                  className="text-gray-300 hover:text-white py-2"
+                  className="text-textSecondary hover:text-white py-2"
                 >
                   Articles
                 </a>
-                <a href="/vult" className="text-gray-300 hover:text-white py-2">
+                <a
+                  href="/vult"
+                  className="text-textSecondary hover:text-white py-2"
+                >
                   $VULT
                 </a>
               </div>
               <div className="pt-2">
-                <a href="/downloads" className="text-gray-300 hover:text-white">
+                <a
+                  href="/downloads"
+                  className="text-textSecondary hover:text-white"
+                >
                   <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg w-full">
                     Download App
                   </Button>
