@@ -58,7 +58,7 @@ function HashCard({
 
   return (
     <div
-      className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl p-5 flex flex-col w-full h-full items-start gap-4
+      className="bg-[#0B1B3B] border border-borderLight rounded-xl p-5 flex flex-col w-full h-full items-start gap-4
       hover:border-[#1B3F73]
       hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
       transition-all
@@ -183,7 +183,7 @@ export default function DownloadsPage() {
           onValueChange={handleTabChange}
           className="w-full"
         >
-          <div className="relative overflow-hidden bg-[var(--background-secondary)] border border-[var(--border-light)] rounded-2xl p-6 sm:p-8 lg:p-12 h-auto lg:h-[580px] mb-8">
+          <div className="relative overflow-hidden bg-backgroundSecondary border border-borderLight rounded-2xl p-6 sm:p-8 lg:p-12 h-auto lg:h-[580px] mb-8">
             <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-20">
               <TabsList className="flex p-0 w-full sm:w-fit bg-transparent gap-0">
                 <TabsTrigger

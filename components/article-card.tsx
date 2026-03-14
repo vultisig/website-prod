@@ -13,7 +13,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
     <Link
       href={`/articles/${article.slug}`}
       className="
-        bg-[var(--background-secondary)]
+        bg-backgroundSecondary
         border border-[var(--border-color)]
         hover:border-[var(--border-color)]
         hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]

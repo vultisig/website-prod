@@ -111,7 +111,7 @@ export default function FAQPage() {
           {/* Desktop Grid */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Card 1: Contact support */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
               <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-1.svg"
@@ -136,7 +136,7 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 2: User Support */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
               <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-2.svg"
@@ -162,7 +162,7 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 3: Read the docs */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
               <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-3.svg"
@@ -186,7 +186,7 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 4: Vulti Holdings Limited */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
               <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-4.svg"
@@ -215,7 +215,7 @@ export default function FAQPage() {
           <div className="md:hidden">
             <div className="flex overflow-x-auto gap-4 mb-6 xs:mb-7 sm:mb-8 w-full px-1 -mx-1 snap-x snap-mandatory carousel-scrollbar">
               {/* Card 1: Contact support */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
                 <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-1.svg"
@@ -240,7 +240,7 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 2: User Support */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
                 <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-2.svg"
@@ -266,7 +266,7 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 3: Read the docs */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
                 <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-3.svg"
@@ -290,7 +290,7 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 4: Vulti Holdings Limited */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
                 <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-4.svg"
@@ -331,7 +331,7 @@ export default function FAQPage() {
               >
                 <AccordionItem
                   value="faq-1"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What is Vultisig?
@@ -344,7 +344,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-2"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What are the benefits of using Vultisig?
@@ -357,7 +357,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-3"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     Can I recover my assets if I lose a device?
@@ -370,7 +370,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-4"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How is Vultisig used?
@@ -383,7 +383,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-5"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What are the fees and costs?
@@ -396,7 +396,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-6"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What cryptocurrencies are supported by Vultisig?
@@ -408,7 +408,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-7"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     Is Vultisig open source and audited?
@@ -421,7 +421,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-8"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How does Vultisig handle privacy and data protection?
@@ -433,7 +433,7 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-9"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How does Vultisig compare to other multisig wallets?

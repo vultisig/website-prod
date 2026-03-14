@@ -1,8 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import SplineOffscreen from "@/components/spline-offscreen"
-import { useState, useEffect, useRef, useCallback } from "react"
+import { Button } from "@/components/ui/button"
+import { useEffect, useRef, useState } from "react"
 
 const WORDS = ["DRAINED", "HACKED", "PHISHED"]
 

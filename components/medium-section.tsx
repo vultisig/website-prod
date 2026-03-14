@@ -186,7 +186,7 @@ export default function MediumSection() {
     )
 
     const cardClasses = `
-      bg-[var(--background-secondary)]
+      bg-backgroundSecondary
       border border-borderLight
       hover:border-[var(--border-color)]
       rounded-2xl p-4 sm:p-6
@@ -243,7 +243,7 @@ export default function MediumSection() {
             <div
               key={index}
               className="
-                  bg-[var(--background-secondary)]
+                  bg-backgroundSecondary
                   border border-borderLight
                   rounded-2xl p-4 sm:p-6
                   animate-pulse

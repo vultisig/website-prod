@@ -93,7 +93,7 @@ export default function VultPage() {
             {/* Carousel for cards on mobile */}
             <div className="w-full">
               <div className="flex md:hidden overflow-x-auto gap-4 mb-6 xs:mb-7 sm:mb-8 w-full px-1 -mx-1 snap-x snap-mandatory carousel-scrollbar">
-                <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
                   <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                     <Users className="w-5 h-5 text-[#4879FD]" />
                   </div>
@@ -102,7 +102,7 @@ export default function VultPage() {
                   </span>
                   <span className="text-gray-400 text-xs mt-1">MAX SUPPLY</span>
                 </Card>
-                <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
                   <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                     <ArrowUpDown className="w-5 h-5 text-[#4879FD]" />
                   </div>
@@ -117,7 +117,7 @@ export default function VultPage() {
                     CIRCULATING SUPPLY
                   </span>
                 </Card>
-                <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
                   <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                     <DollarSign className="w-5 h-5 text-[#4879FD]" />
                   </div>
@@ -138,7 +138,7 @@ export default function VultPage() {
               <div className="hidden md:flex flex-row gap-4 mb-6 xs:mb-7 sm:mb-8 w-full xs:w-auto">
                 <Card
                   className="
-                  bg-[#0B1B3B] border border-[var(--border-light)]
+                  bg-[#0B1B3B] border border-borderLight
                   rounded-xl px-4 xs:px-5 py-4 xs:py-5
                   flex flex-col items-start w-full xs:w-56 sm:w-64
                   hover:border-[var(--border-color)]
@@ -155,7 +155,7 @@ export default function VultPage() {
                 </Card>
                 <Card
                   className="
-                  bg-[#0B1B3B] border border-[var(--border-light)]
+                  bg-[#0B1B3B] border border-borderLight
                   rounded-xl px-4 xs:px-5 py-4 xs:py-5
                   flex flex-col items-start w-full xs:w-56 sm:w-64
                   hover:border-[var(--border-color)]
@@ -178,7 +178,7 @@ export default function VultPage() {
                 </Card>
                 <Card
                   className="
-                  bg-[#0B1B3B] border border-[var(--border-light)]
+                  bg-[#0B1B3B] border border-borderLight
                   rounded-xl px-4 xs:px-5 py-4 xs:py-5
                   flex flex-col items-start w-full xs:w-56 sm:w-64
                   hover:border-[var(--border-color)]
@@ -204,7 +204,7 @@ export default function VultPage() {
             </div>
             {/* Token Address Card - width matches text with 24px padding */}
             <div className="w-fit mb-4">
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-6 py-4 xs:py-5 flex flex-col items-start w-fit hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-6 py-4 xs:py-5 flex flex-col items-start w-fit hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
                 <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <Copy className="w-5 h-5 text-[#4879FD]" />
                 </div>
@@ -288,7 +288,7 @@ export default function VultPage() {
 
               <h3 className="text-xl font-bold text-white mb-4">Bronze</h3>
 
-              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+              <div className="bg-[var(--background)] border border-borderLight rounded-full px-5 py-2 mb-4 inline-block">
                 <span className="text-white">Discount: 5bps</span>
               </div>
 
@@ -338,7 +338,7 @@ export default function VultPage() {
 
               <h3 className="text-xl font-bold text-white mb-4">Silver</h3>
 
-              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+              <div className="bg-[var(--background)] border border-borderLight rounded-full px-5 py-2 mb-4 inline-block">
                 <span className="text-white">Discount: 10bps</span>
               </div>
 
@@ -388,7 +388,7 @@ export default function VultPage() {
 
               <h3 className="text-xl font-bold text-white mb-4">Gold</h3>
 
-              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+              <div className="bg-[var(--background)] border border-borderLight rounded-full px-5 py-2 mb-4 inline-block">
                 <span className="text-white">Discount: 20bps</span>
               </div>
 
@@ -438,7 +438,7 @@ export default function VultPage() {
 
               <h3 className="text-xl font-bold text-white mb-4">Platinum</h3>
 
-              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+              <div className="bg-[var(--background)] border border-borderLight rounded-full px-5 py-2 mb-4 inline-block">
                 <span className="text-white">Discount: 25bps</span>
               </div>
 
@@ -488,7 +488,7 @@ export default function VultPage() {
 
               <h3 className="text-xl font-bold text-white mb-4">Diamond</h3>
 
-              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+              <div className="bg-[var(--background)] border border-borderLight rounded-full px-5 py-2 mb-4 inline-block">
                 <span className="text-white">Discount: 35bps</span>
               </div>
 
@@ -540,7 +540,7 @@ export default function VultPage() {
 
               <h3 className="text-xl font-bold text-white mb-4">Ultimate</h3>
 
-              <div className="bg-[var(--background)] border border-[var(--border-light)] rounded-full px-5 py-2 mb-4 inline-block">
+              <div className="bg-[var(--background)] border border-borderLight rounded-full px-5 py-2 mb-4 inline-block">
                 <span className="text-white">Complete fee waiver</span>
               </div>
 

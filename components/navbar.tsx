@@ -173,7 +173,7 @@ export default function Navbar() {
                     <ChevronDown className="ml-1 h-4 w-4" />
                   </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="bg-[var(--background-secondary)] border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[340px]">
+                <DropdownMenuContent align="start" className="bg-backgroundSecondary border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[340px]">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
                       <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">

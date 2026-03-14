@@ -229,7 +229,7 @@ export default function AdminPage() {
   if (checkingAuth) {
     return (
       <main className="min-h-screen flex items-center justify-center px-4">
-        <div className="max-w-md w-full bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-8">
+        <div className="max-w-md w-full bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-8">
           <p className="text-gray-400 text-center">
             Checking authentication...
           </p>
@@ -241,7 +241,7 @@ export default function AdminPage() {
   if (!isAuthenticated) {
     return (
       <main className="min-h-screen flex items-center justify-center px-4">
-        <div className="max-w-md w-full bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-8">
+        <div className="max-w-md w-full bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-8">
           <h1 className="text-3xl font-bold text-white mb-2">Admin Access</h1>
           <p className="text-gray-400 mb-6">
             Enter password to access the article editor
@@ -299,7 +299,7 @@ export default function AdminPage() {
 
         {showForm ? (
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-6 space-y-6">
+            <div className="bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-6 space-y-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-2xl font-bold text-white">
                   {editingSlug ? "Edit Article" : "Create New Article"}
@@ -554,7 +554,7 @@ export default function AdminPage() {
         ) : (
           <div className="space-y-4">
             {articles.length === 0 ? (
-              <div className="text-center py-16 bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl">
+              <div className="text-center py-16 bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl">
                 <p className="text-gray-400 text-lg mb-4">No articles yet.</p>
                 <Button
                   onClick={resetForm}
@@ -567,7 +567,7 @@ export default function AdminPage() {
               articles.map((article) => (
                 <div
                   key={article.slug}
-                  className="bg-[var(--background-secondary)] border border-[var(--border-color)] rounded-2xl p-6"
+                  className="bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-6"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -633,7 +633,7 @@ export default function AdminPage() {
       </div>
 
       <Dialog open={showPreview} onOpenChange={setShowPreview}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-[var(--background-secondary)] border-[var(--border-color)]">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-backgroundSecondary border-[var(--border-color)]">
           <DialogHeader>
             <DialogTitle className="text-white">Article Preview</DialogTitle>
             <DialogDescription className="text-gray-400">
@@ -675,7 +675,7 @@ export default function AdminPage() {
       </Dialog>
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent className="bg-[var(--background-secondary)] border-[var(--border-color)]">
+        <AlertDialogContent className="bg-backgroundSecondary border-[var(--border-color)]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">
               Delete Article
