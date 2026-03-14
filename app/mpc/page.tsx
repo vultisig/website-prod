@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button"
+import CtaSection from "@/components/cta-section"
 import Hero from "./components/0_Hero"
 import MpcWallet from "./components/1_MpcWallet"
 import NotAllMpcWalletsAreEqual from "./components/2_NotAllMpcWalletsAreEqual"
@@ -8,8 +8,6 @@ import SecurityFeatures from "./components/5_SecurityFeatures"
 import Blockchains from "./components/6_Blockchains"
 import NoTrack from "./components/7_NoTrack"
 import Faq from "./components/8_Faq"
-import { cn } from "@/lib/utils"
-import CtaSection from "@/components/cta-section"
 
 export default function MPCPage() {
   return (
@@ -33,22 +31,6 @@ export default function MPCPage() {
           <NoTrack />
           <Faq />
           <CtaSection />
-          <div className="flex flex-col md:flex-row items-center md:justify-center gap-4 pb-12 px-4">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center px-4">
-              JOIN THE DISCORD TO REQUEST NEW FEATURES!
-            </h3>
-            <a
-              href="https://discord.gg/thq64eaYVN"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                buttonVariants({ variant: "primaryBlue" }),
-                "w-full md:w-auto",
-              )}
-            >
-              DISCORD
-            </a>
-          </div>
         </main>
       </div>
     </div>

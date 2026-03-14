@@ -1,12 +1,11 @@
 "use client"
 
-import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import React from "react"
-import { Users, ArrowUpDown, DollarSign, Copy } from "lucide-react"
-import Image from "next/image"
+import { Card } from "@/components/ui/card"
 import { useVultPrice } from "@/hooks/use-vult-price"
 import { useVultSupply } from "@/hooks/use-vult-supply"
+import { ArrowUpDown, Copy, DollarSign, Users } from "lucide-react"
+import React from "react"
 
 function GradientText({
   children,
@@ -565,29 +564,6 @@ export default function VultPage() {
               </div>
             </div>
           </Card>
-        </div>
-      </section>
-
-      {/* Discord section */}
-      <section className="py-12 px-4">
-        <div className="container">
-          <div className="flex justify-center items-center mt-8">
-            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-              <h3 className="text-xl sm:text-2xl font-bold text-white text-center">
-                JOIN THE DISCORD TO REQUEST NEW FEATURES!
-              </h3>
-              <a
-                href="https://discord.gg/thq64eaYVN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full md:w-auto"
-              >
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg w-full md:w-auto">
-                  DISCORD
-                </Button>
-              </a>
-            </div>
-          </div>
         </div>
       </section>
     </main>

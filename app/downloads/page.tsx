@@ -1,10 +1,10 @@
 "use client"
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { AnimatePresence, motion } from "motion/react"
 import Image from "next/image"
 import { useState } from "react"
-import { motion, AnimatePresence } from "motion/react"
 
 const hashes = [
   {
@@ -540,29 +540,6 @@ export default function DownloadsPage() {
             ))}
           </div>
         </Tabs>
-      </section>
-
-      {/* Discord section */}
-      <section className="py-8 sm:py-12 px-4">
-        <div className="container">
-          <div className="flex justify-center items-center mt-4 sm:mt-8">
-            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center px-4">
-                JOIN THE DISCORD TO REQUEST NEW FEATURES!
-              </h3>
-              <a
-                href="https://discord.gg/thq64eaYVN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full md:w-auto"
-              >
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg w-full md:w-auto">
-                  DISCORD
-                </Button>
-              </a>
-            </div>
-          </div>
-        </div>
       </section>
     </main>
   )

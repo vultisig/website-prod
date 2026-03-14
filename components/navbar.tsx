@@ -86,13 +86,13 @@ export default function Navbar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="start"
-                  className="bg-[var(--background-secondary)] border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[220px]"
+                  className="bg-backgroundSecondary border border-borderLight shadow-lg rounded-xl p-2 min-w-[220px]"
                 >
                   <a
                     href="/downloads"
                     className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                   >
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                       <Image
                         src="/images/navbar-product-1.png"
                         alt="Apps"
@@ -106,7 +106,7 @@ export default function Navbar() {
                     href="/downloads"
                     className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                   >
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                       <Image
                         src="/images/navbar-product-4.png"
                         alt="Extension"
@@ -120,7 +120,7 @@ export default function Navbar() {
                     href="/downloads"
                     className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                   >
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                       <Image
                         src="/images/navbar-product-3.png"
                         alt="Web"
@@ -131,7 +131,7 @@ export default function Navbar() {
                     <span className="font-medium">Vultisig Web</span>
                   </a>
                   {/* <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                       <Image src="/images/navbar-product-3.png" alt="Windows" width={28} height={28} />
                     </div>
                     <span className="font-medium">Vultisig Windows</span>
@@ -176,7 +176,7 @@ export default function Navbar() {
                 <DropdownMenuContent align="start" className="bg-[var(--background-secondary)] border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[340px]">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-1.png" alt="Funds & Treasuries" width={28} height={28} />
                       </div>
                       <div>
@@ -185,7 +185,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-2.png" alt="Whales" width={28} height={28} />
                       </div>
                       <div>
@@ -194,7 +194,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-3.png" alt="Payroll" width={28} height={28} />
                       </div>
                       <div>
@@ -203,7 +203,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-4.png" alt="Retail" width={28} height={28} />
                       </div>
                       <div>
@@ -212,7 +212,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-5.png" alt="DAOs" width={28} height={28} />
                       </div>
                       <div>
@@ -221,7 +221,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-6.png" alt="Financial Advisors" width={28} height={28} />
                       </div>
                       <div>
@@ -230,7 +230,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-7.png" alt="Ai Agents" width={28} height={28} />
                       </div>
                       <div>
@@ -294,7 +294,7 @@ export default function Navbar() {
                       href="/downloads"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image
                           src="/images/navbar-product-1.png"
                           alt="Mobile App"
@@ -308,7 +308,7 @@ export default function Navbar() {
                       href="/downloads"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image
                           src="/images/navbar-product-2.png"
                           alt="macOS"
@@ -322,7 +322,7 @@ export default function Navbar() {
                       href="/downloads"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image
                           src="/images/navbar-product-3.png"
                           alt="Windows"
@@ -336,7 +336,7 @@ export default function Navbar() {
                       href="/downloads"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image
                           src="/images/navbar-product-4.png"
                           alt="Extension"
@@ -361,7 +361,7 @@ export default function Navbar() {
                 {mobileSolutionsOpen && (
                   <div id="mobile-solutions-menu" className="flex flex-col gap-1 pl-6">
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-1.png" alt="Funds & Treasuries" width={28} height={28} />
                       </div>
                       <div>
@@ -370,7 +370,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-2.png" alt="Whales" width={28} height={28} />
                       </div>
                       <div>
@@ -379,7 +379,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-3.png" alt="Payroll" width={28} height={28} />
                       </div>
                       <div>
@@ -388,7 +388,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-4.png" alt="Retail" width={28} height={28} />
                       </div>
                       <div>
@@ -397,7 +397,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-5.png" alt="DAOs" width={28} height={28} />
                       </div>
                       <div>
@@ -406,7 +406,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-6.png" alt="Financial Advisors" width={28} height={28} />
                       </div>
                       <div>
@@ -415,7 +415,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                         <Image src="/images/navbar-solution-7.png" alt="Ai Agents" width={28} height={28} />
                       </div>
                       <div>
