@@ -15,6 +15,7 @@ import { MdArrowOutward } from "react-icons/md"
 import feature1Png from "./images/feature1.png"
 import feature2Png from "./images/feature2.png"
 import feature3Png from "./images/feature3.png"
+import { Box } from "@/components/ui/box"
 
 export default function HowItWorks() {
   return (
@@ -187,18 +188,6 @@ export default function HowItWorks() {
 
       <CtaSection />
     </main>
-  )
-}
-
-function Box({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={cn(
-        "bg-gradient-to-b from-background to-backgroundSecondary border border-borderLight rounded-3xl md:rounded-2xl",
-        className,
-      )}
-      {...props}
-    />
   )
 }
 

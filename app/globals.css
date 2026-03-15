@@ -27,7 +27,7 @@ body::-webkit-scrollbar {
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 9%;
+    --primary: 224 75% 50%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
@@ -56,9 +56,12 @@ body::-webkit-scrollbar {
     --sidebar-ring: 217.2 91.2% 59.8%;
     /* --primary-accent: #4879fd; */
     --primary-accent: 224 98% 64%;
-    --border-color: #2155df;
+    /* --primary-accent-2: #2155DF; */
+    --primary-accent-2: 224 75% 50%;
+    --border-color: hsl(224, 75%, 50%);
     --border-color-rgb: 33, 85, 223;
     --border-light: #11284a;
+    --border-normal: #1b3f73;
   }
   .dark {
     --background: 0 0% 3.9%;

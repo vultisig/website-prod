@@ -1,29 +1,21 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import {
-  ChevronDown,
-  Menu,
-  X,
-  Phone,
-  Laptop,
-  Monitor,
-  Puzzle,
-} from "lucide-react"
+import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
+import { ChevronDown, Menu, X } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
-  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
   const [isAtTop, setIsAtTop] = useState(true)
   const pathname = usePathname()
   const isAtTopRef = useRef(true)
@@ -49,19 +41,19 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2"
-        } `}
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2",
+        )}
       >
         <div
-          className={`transition-all duration-300 w-full bg-backgroundSecondary/90 backdrop-blur-md border
-          ${
+          className={cn(
+            "transition-all duration-300 w-full border-transparent rounded-2xl lg:max-w-7xl lg:mx-auto",
             isAtTop
-              ? "px-4 lg:px-8 border-transparent rounded-none lg:bg-transparent lg:backdrop-blur-0 lg:border-transparent"
-              : "border-slate-700 rounded-2xl px-6 py-3"
-          }
-          lg:max-w-7xl lg:mx-auto
-        `}
+              ? "px-4 lg:px-8"
+              : "border-slate-700 px-6 py-3 bg-backgroundSecondary/90 backdrop-blur-md border",
+            isOpen && "max-lg:bg-backgroundSecondary",
+          )}
         >
           <div className="flex justify-between items-center">
             <a href="/" className="flex items-center">
@@ -71,9 +63,7 @@ export default function Navbar() {
                 width={25}
                 height={25}
               />
-              <span className="text-white text-xl font-semibold pl-3">
-                Vultisig
-              </span>
+              <span className="text-xl font-semibold pl-3">Vultisig</span>
             </a>
 
             <div className="hidden lg:flex items-center">
@@ -89,7 +79,7 @@ export default function Navbar() {
                   className="bg-backgroundSecondary border border-borderLight shadow-lg rounded-xl p-2 min-w-[220px]"
                 >
                   <a
-                    href="/downloads"
+                    href="/downloads?tab=mobile"
                     className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                   >
                     <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
@@ -103,7 +93,7 @@ export default function Navbar() {
                     <span className="font-medium">Vultisig Apps</span>
                   </a>
                   <a
-                    href="/downloads"
+                    href="/downloads?tab=browser"
                     className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                   >
                     <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
@@ -117,7 +107,7 @@ export default function Navbar() {
                     <span className="font-medium">Vultisig Extension</span>
                   </a>
                   <a
-                    href="/downloads"
+                    href="/downloads?tab=web"
                     className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                   >
                     <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
@@ -130,12 +120,6 @@ export default function Navbar() {
                     </div>
                     <span className="font-medium">Vultisig Web</span>
                   </a>
-                  {/* <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
-                    <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
-                      <Image src="/images/navbar-product-3.png" alt="Windows" width={28} height={28} />
-                    </div>
-                    <span className="font-medium">Vultisig Windows</span>
-                  </a> */}
                 </DropdownMenuContent>
               </DropdownMenu>
               <a
@@ -243,16 +227,15 @@ export default function Navbar() {
               </DropdownMenu> */}
             </div>
 
-            <div className="hidden lg:block">
-              <a
-                href="/downloads"
-                className="text-textSecondary hover:text-white ml-8"
-              >
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
-                  Download App
-                </Button>
-              </a>
-            </div>
+            <Link
+              href="/downloads"
+              className={cn(
+                buttonVariants({ variant: "primaryBlue" }),
+                "max-lg:hidden",
+              )}
+            >
+              Download App
+            </Link>
 
             <div className="lg:hidden">
               <button
@@ -291,7 +274,7 @@ export default function Navbar() {
                     className="flex flex-col gap-1 pl-6"
                   >
                     <a
-                      href="/downloads"
+                      href="/downloads?tab=mobile"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
                       <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
@@ -305,7 +288,7 @@ export default function Navbar() {
                       <span className="font-medium">Vultisig Mobile App</span>
                     </a>
                     <a
-                      href="/downloads"
+                      href="/downloads?tab=mobile"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
                       <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
@@ -319,7 +302,7 @@ export default function Navbar() {
                       <span className="font-medium">Vultisig macOS</span>
                     </a>
                     <a
-                      href="/downloads"
+                      href="/downloads?tab=mobile"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
                       <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
@@ -333,7 +316,7 @@ export default function Navbar() {
                       <span className="font-medium">Vultisig Windows</span>
                     </a>
                     <a
-                      href="/downloads"
+                      href="/downloads?tab=browser"
                       className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
                       <div className="w-10 h-10 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
@@ -453,16 +436,15 @@ export default function Navbar() {
                   $VULT
                 </a>
               </div>
-              <div className="pt-2">
-                <a
-                  href="/downloads"
-                  className="text-textSecondary hover:text-white"
-                >
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg w-full">
-                    Download App
-                  </Button>
-                </a>
-              </div>
+              <Link
+                href="/downloads"
+                className={cn(
+                  buttonVariants({ variant: "primaryBlue" }),
+                  "mt-2 w-full",
+                )}
+              >
+                Download App
+              </Link>
             </div>
           )}
         </div>
