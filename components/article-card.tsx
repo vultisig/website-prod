@@ -14,9 +14,9 @@ export default function ArticleCard({ article }: ArticleCardProps) {
       href={`/articles/${article.slug}`}
       className="
         bg-backgroundSecondary
-        border border-[var(--border-color)]
-        hover:border-[var(--border-color)]
-        hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
+        border border-primary
+        hover:border-primary
+        hover:shadow-[0_0_4px_2px_hsl(var(--primary)/0.5)]
         rounded-2xl p-4 sm:p-6
         transition-all cursor-pointer
         flex flex-col

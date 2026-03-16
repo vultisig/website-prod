@@ -27,7 +27,7 @@ export default function FeaturesSection() {
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white mb-5 tracking-tight">
             Vultisig is{" "}
-            <span className="bg-gradient-to-r from-[#33E6BF] to-[#0439C7] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-secondaryAccent to-deepBlue bg-clip-text text-transparent">
               different
             </span>
           </h2>
@@ -41,15 +41,11 @@ export default function FeaturesSection() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="rounded-[20px] border border-borderLight p-[30px] flex flex-col gap-3 transition-all duration-300 hover:border-[#4879fd] hover:shadow-[0_0_20px_rgba(72,121,253,0.3)]"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(2, 18, 43, 1) 0%, rgba(6, 27, 58, 1) 100%)",
-              }}
+              className="rounded-[20px] border border-borderLight p-[30px] flex flex-col gap-3 transition-all duration-300 hover:border-primaryAccent hover:shadow-[0_0_20px_hsl(var(--primary-accent)/0.3)] bg-gradient-card"
             >
               {/* Icon and Title */}
               <div className="flex flex-col gap-3">
-                <div className="w-9 h-9 bg-[rgba(72,121,253,0.1)] rounded-lg flex items-center justify-center">
+                <div className="w-9 h-9 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                   <img
                     src={feature.icon}
                     alt={`${feature.title} icon`}

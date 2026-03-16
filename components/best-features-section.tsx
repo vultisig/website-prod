@@ -29,7 +29,7 @@ export default function BestFeaturesSection() {
       <div className="text-center">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white mb-8 tracking-tight">
           Best{" "}
-          <span className="bg-gradient-to-r from-[#33E6BF] to-[#0439C7] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-secondaryAccent to-deepBlue bg-clip-text text-transparent">
             features
           </span>{" "}
           in one place
@@ -64,7 +64,7 @@ export default function BestFeaturesSection() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
-                <div className="inline-block bg-[#33E6BF]/[0.13] border border-[#33E6BF]/[0.5] text-[#33E6BF] px-3 py-1 rounded-full text-sm font-medium">
+                <div className="inline-block bg-secondaryAccent/[0.13] border border-secondaryAccent/[0.5] text-secondaryAccent px-3 py-1 rounded-full text-sm font-medium">
                   {feature.tag}
                 </div>
                 <h3 className="text-2xl lg:text-5xl font-bold text-white">

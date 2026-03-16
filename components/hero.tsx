@@ -73,12 +73,10 @@ export default function Hero() {
 
   return (
     <section
-      className="pt-32 pb-0 px-4 relative overflow-hidden min-h-screen flex flex-col justify-center items-center"
+      className="pt-32 pb-0 px-4 relative overflow-hidden min-h-screen flex flex-col justify-center items-center bg-gradient-hero"
       style={{
         pointerEvents: "none",
         userSelect: "none",
-        background:
-          "linear-gradient(180deg, #02122b 0%, #061b3a 50%, #02122b 100%)",
       }}
     >
       {/* Spline 3D Background - Only on desktop, off main thread via Worker */}
@@ -106,8 +104,8 @@ export default function Hero() {
         }}
       >
         <div className="w-full flex flex-col items-center justify-center md:max-w-4xl">
-          <div className="inline-flex items-center bg-[#092e3e] border border-[#33e6bf] rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
-            <span className="font-medium text-base md:text-xs md:sm:text-sm text-[#33e6bf]">
+          <div className="inline-flex items-center bg-tealDark border border-secondaryAccent rounded-full px-6 py-2 mb-4 md:px-4 md:py-1 md:mt-20 md:mb-2">
+            <span className="font-medium text-base md:text-xs md:sm:text-sm text-secondaryAccent">
               Open-Source Audited
             </span>
           </div>
@@ -115,7 +113,7 @@ export default function Hero() {
           <h1 className="font-bold text-white mb-8 leading-tight text-center text-5xl sm:text-6xl md:text-9xl">
             NEVER GET
             <br />
-            <span className="bg-gradient-to-r from-[#33e6bf] to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-secondaryAccent to-cyan-400 bg-clip-text text-transparent">
               {currentText}
             </span>
             <br />

@@ -111,8 +111,8 @@ export default function FAQPage() {
           {/* Desktop Grid */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Card 1: Contact support */}
-            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-1.svg"
                   className="w-5 h-5 object-contain"
@@ -136,8 +136,8 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 2: User Support */}
-            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-2.svg"
                   className="w-5 h-5 object-contain"
@@ -162,8 +162,8 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 3: Read the docs */}
-            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-3.svg"
                   className="w-5 h-5 object-contain"
@@ -186,8 +186,8 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 4: Vulti Holdings Limited */}
-            <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-4.svg"
                   className="w-5 h-5 object-contain"
@@ -215,8 +215,8 @@ export default function FAQPage() {
           <div className="md:hidden">
             <div className="flex overflow-x-auto gap-4 mb-6 xs:mb-7 sm:mb-8 w-full px-1 -mx-1 snap-x snap-mandatory carousel-scrollbar">
               {/* Card 1: Contact support */}
-              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-1.svg"
                     className="w-5 h-5 object-contain"
@@ -240,8 +240,8 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 2: User Support */}
-              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-2.svg"
                     className="w-5 h-5 object-contain"
@@ -266,8 +266,8 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 3: Read the docs */}
-              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-3.svg"
                     className="w-5 h-5 object-contain"
@@ -290,8 +290,8 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 4: Vulti Holdings Limited */}
-              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-4.svg"
                     className="w-5 h-5 object-contain"

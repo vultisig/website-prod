@@ -2,26 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import GradientText from "@/components/ui/gradient-text"
 import { useVultPrice } from "@/hooks/use-vult-price"
 import { useVultSupply } from "@/hooks/use-vult-supply"
 import { ArrowUpDown, Copy, DollarSign, Users } from "lucide-react"
-import React from "react"
-
-function GradientText({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <span
-      className={`bg-gradient-to-r from-[#33e6bf] to-cyan-400 bg-clip-text text-transparent font-bold ${className}`}
-    >
-      {children}
-    </span>
-  )
-}
 
 export default function VultPage() {
   const {
@@ -93,18 +77,18 @@ export default function VultPage() {
             {/* Carousel for cards on mobile */}
             <div className="w-full">
               <div className="flex md:hidden overflow-x-auto gap-4 mb-6 xs:mb-7 sm:mb-8 w-full px-1 -mx-1 snap-x snap-mandatory carousel-scrollbar">
-                <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
-                  <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                    <Users className="w-5 h-5 text-[#4879FD]" />
+                <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                  <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                    <Users className="w-5 h-5 text-primaryAccent" />
                   </div>
                   <span className="text-white text-lg xs:text-xl font-bold">
                     100,000,000
                   </span>
                   <span className="text-gray-400 text-xs mt-1">MAX SUPPLY</span>
                 </Card>
-                <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
-                  <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                    <ArrowUpDown className="w-5 h-5 text-[#4879FD]" />
+                <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                  <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                    <ArrowUpDown className="w-5 h-5 text-primaryAccent" />
                   </div>
                   <span className="text-white text-lg xs:text-xl font-bold">
                     {supplyLoading
@@ -117,9 +101,9 @@ export default function VultPage() {
                     CIRCULATING SUPPLY
                   </span>
                 </Card>
-                <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
-                  <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                    <DollarSign className="w-5 h-5 text-[#4879FD]" />
+                <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                  <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                    <DollarSign className="w-5 h-5 text-primaryAccent" />
                   </div>
                   <span className="text-white text-lg xs:text-xl font-bold">
                     {priceLoading ? "..." : formatPrice(vultPrice)}
@@ -138,15 +122,15 @@ export default function VultPage() {
               <div className="hidden md:flex flex-row gap-4 mb-6 xs:mb-7 sm:mb-8 w-full xs:w-auto">
                 <Card
                   className="
-                  bg-[#0B1B3B] border border-borderLight
+                  bg-cardSurface border border-borderLight
                   rounded-xl px-4 xs:px-5 py-4 xs:py-5
                   flex flex-col items-start w-full xs:w-56 sm:w-64
                   hover:border-[var(--border-color)]
                   hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
                   "
                 >
-                  <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                    <Users className="w-5 h-5 text-[#4879FD]" />
+                  <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                    <Users className="w-5 h-5 text-primaryAccent" />
                   </div>
                   <span className="text-white text-lg xs:text-xl font-bold">
                     100,000,000
@@ -155,15 +139,15 @@ export default function VultPage() {
                 </Card>
                 <Card
                   className="
-                  bg-[#0B1B3B] border border-borderLight
+                  bg-cardSurface border border-borderLight
                   rounded-xl px-4 xs:px-5 py-4 xs:py-5
                   flex flex-col items-start w-full xs:w-56 sm:w-64
                   hover:border-[var(--border-color)]
                   hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
                   "
                 >
-                  <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                    <ArrowUpDown className="w-5 h-5 text-[#4879FD]" />
+                  <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                    <ArrowUpDown className="w-5 h-5 text-primaryAccent" />
                   </div>
                   <span className="text-white text-lg xs:text-xl font-bold">
                     {supplyLoading
@@ -178,15 +162,15 @@ export default function VultPage() {
                 </Card>
                 <Card
                   className="
-                  bg-[#0B1B3B] border border-borderLight
+                  bg-cardSurface border border-borderLight
                   rounded-xl px-4 xs:px-5 py-4 xs:py-5
                   flex flex-col items-start w-full xs:w-56 sm:w-64
                   hover:border-[var(--border-color)]
                   hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]
                   "
                 >
-                  <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                    <DollarSign className="w-5 h-5 text-[#4879FD]" />
+                  <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                    <DollarSign className="w-5 h-5 text-primaryAccent" />
                   </div>
                   <span className="text-white text-lg xs:text-xl font-bold">
                     {priceLoading ? "..." : formatPrice(vultPrice)}
@@ -204,9 +188,9 @@ export default function VultPage() {
             </div>
             {/* Token Address Card - width matches text with 24px padding */}
             <div className="w-fit mb-4">
-              <Card className="bg-[#0B1B3B] border border-borderLight rounded-xl px-6 py-4 xs:py-5 flex flex-col items-start w-fit hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                  <Copy className="w-5 h-5 text-[#4879FD]" />
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-6 py-4 xs:py-5 flex flex-col items-start w-fit hover:border-[var(--border-color)] hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)]">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+                  <Copy className="w-5 h-5 text-primaryAccent" />
                 </div>
                 <span className="text-white text-lg xs:text-xl font-bold break-all">
                   0xb788144DF611029C60b859DF47e79B7726C4DEBa

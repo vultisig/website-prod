@@ -11,12 +11,12 @@ import Faq from "./components/8_Faq"
 
 export default function MPCPage() {
   return (
-    <div className="w-full bg-gradient-to-b from-[#0a1423] via-[#0d1a2d] to-[#0a1423] text-white overflow-x-hidden min-h-screen">
+    <div className="w-full bg-gradient-mpc overflow-x-hidden min-h-screen">
       {/* Background decorative elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-20 -right-32 w-96 h-96 bg-[#0b4eff] rounded-full blur-3xl opacity-5"></div>
+        <div className="absolute top-20 -right-32 w-96 h-96 bg-primaryBlue rounded-full blur-3xl opacity-5"></div>
         <div className="absolute top-96 -left-40 w-96 h-96 bg-primaryAccent rounded-full blur-3xl opacity-5"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#0b4eff] rounded-full blur-3xl opacity-5"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primaryBlue rounded-full blur-3xl opacity-5"></div>
       </div>
 
       <div className="relative z-10">

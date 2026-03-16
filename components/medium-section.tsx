@@ -188,7 +188,7 @@ export default function MediumSection() {
     const cardClasses = `
       bg-backgroundSecondary
       border border-borderLight
-      hover:border-[var(--border-color)]
+      hover:border-primary
       rounded-2xl p-4 sm:p-6
       transition-colors cursor-pointer
       flex flex-col

@@ -7,7 +7,7 @@ export default function SetupSection() {
       <div className="text-center mb-16">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white mb-4 tracking-tight">
           The{" "}
-          <span className="bg-gradient-to-r from-[#33E6BF] to-[#0439C7] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-secondaryAccent to-deepBlue bg-clip-text text-transparent">
             setup
           </span>{" "}
           for your needs
@@ -22,11 +22,8 @@ export default function SetupSection() {
               p-6 sm:p-8
               relative
               overflow-hidden
+              bg-gradient-card
             "
-          style={{
-            background:
-              "linear-gradient(to bottom, var(--background), var(--background-secondary))",
-          }}
         >
           <div className="relative z-10">
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6">
@@ -77,11 +74,8 @@ export default function SetupSection() {
               p-6 sm:p-8
               relative
               overflow-hidden
+              bg-gradient-card
             "
-          style={{
-            background:
-              "linear-gradient(to bottom, var(--background), var(--background-secondary))",
-          }}
         >
           <div className="relative z-10">
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6">

@@ -16,6 +16,7 @@ import feature1Png from "./images/feature1.png"
 import feature2Png from "./images/feature2.png"
 import feature3Png from "./images/feature3.png"
 import { Box } from "@/components/ui/box"
+import GradientText from "@/components/ui/gradient-text"
 
 export default function HowItWorks() {
   return (
@@ -40,7 +41,7 @@ export default function HowItWorks() {
             >
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4 pt-8 p-5 md:p-10">
-                  <div className="inline-block bg-[#33E6BF]/[0.13] border border-[#33E6BF]/[0.5] text-[#33E6BF] px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="inline-block bg-secondaryAccent/[0.13] border border-secondaryAccent/[0.5] text-secondaryAccent px-3 py-1 rounded-full text-sm font-medium">
                     {feature.tag}
                   </div>
                   <h3 className="text-2xl lg:text-4xl text-balance font-medium tracking-[-0.792px] text-white">
@@ -85,7 +86,7 @@ export default function HowItWorks() {
               <h3 className="text-2xl leading-6 font-bold mb-2">
                 {step.question}
               </h3>
-              <div className="w-full h-px bg-gradient-to-r from-backgroundSecondary/0 via-[#284570] to-backgroundSecondary/0"></div>
+              <div className="w-full h-px bg-gradient-to-r from-backgroundSecondary/0 via-divider to-backgroundSecondary/0"></div>
               <p className="text-secondary md:opacity-0 md:group-hover:motion-preset-fade-md md:group-hover:opacity-100 md:transition-opacity md:duration-300">
                 {step.answer}
               </p>
@@ -188,22 +189,6 @@ export default function HowItWorks() {
 
       <CtaSection />
     </main>
-  )
-}
-
-function GradientText({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <span
-      className={`bg-gradient-to-r from-[#33e6bf] to-cyan-400 bg-clip-text text-transparent ${className}`}
-    >
-      {children}
-    </span>
   )
 }
 
