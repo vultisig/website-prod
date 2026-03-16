@@ -39,7 +39,7 @@ export default function HowItWorks() {
               }}
               className="sticky overflow-hidden"
             >
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-2 gap-8 intersect-once intersect:motion-preset-slide-up-md">
                 <div className="space-y-4 pt-8 p-5 md:p-10">
                   <div className="inline-block bg-secondaryAccent/[0.13] border border-secondaryAccent/[0.5] text-secondaryAccent px-3 py-1 rounded-full text-sm font-medium">
                     {feature.tag}
@@ -74,7 +74,10 @@ export default function HowItWorks() {
 
         <div className="grid md:grid-cols-4 gap-5 my-12">
           {recoverySteps.map((step, i) => (
-            <Box key={step.question} className="p-5 pb-8 grid gap-6 group">
+            <Box
+              key={step.question}
+              className="p-5 pb-8 grid gap-6 group intersect-once intersect:motion-preset-slide-up-md"
+            >
               <div className="flex justify-between items-center">
                 <div className="size-9 flex items-center justify-center bg-primaryAccent/10 text-primaryAccent rounded-lg">
                   <step.icon className="size-6" />
@@ -105,7 +108,7 @@ export default function HowItWorks() {
           {traditionalWalletCards.map((item) => (
             <Box
               key={item.title}
-              className="px-10 py-8 flex flex-col gap-4 items-start min-h-[240px] max-w-sm"
+              className="px-10 py-8 flex flex-col gap-4 items-start min-h-[240px] max-w-sm intersect-once motion-delay-200 intersect:motion-preset-slide-up-md"
             >
               <div className="size-9 flex items-center justify-center bg-primaryAccent/10 text-primaryAccent rounded-lg">
                 <item.icon className="size-6" />
@@ -129,7 +132,7 @@ export default function HowItWorks() {
           {singlePointFailureCards.map((item) => (
             <Box
               key={item.title}
-              className="p-5 pb-52 md:p-10 md:pb-60 flex flex-col items-start min-h-[340px] overflow-hidden relative"
+              className="p-5 pb-52 md:p-10 md:pb-60 flex flex-col items-start min-h-[340px] overflow-hidden relative intersect-once motion-delay-200 intersect:motion-preset-slide-up-md"
             >
               <img
                 src={item.image}
@@ -147,7 +150,7 @@ export default function HowItWorks() {
             </Box>
           ))}
         </div>
-        <Box className="p-5 md:px-10 md:py-4 flex max-md:flex-col justify-center items-center gap-8">
+        <Box className="p-5 md:px-10 md:py-4 flex max-md:flex-col justify-center items-center gap-8 intersect-once motion-delay-200 intersect:motion-preset-slide-up-md">
           <div className="grid place-items-start gap-4">
             <h3 className="text-2xl md:text-3xl font-medium">
               Why Vultisig is <GradientText>Better</GradientText>
@@ -202,7 +205,7 @@ function Heading({
   subtitle?: React.ReactNode
 }) {
   return (
-    <>
+    <div className="intersect-once motion-delay-200 intersect:motion-preset-slide-up-md">
       <h2
         className={cn(
           "text-4xl md:text-5xl font-medium text-center",
@@ -217,7 +220,7 @@ function Heading({
           {subtitle}
         </p>
       )}
-    </>
+    </div>
   )
 }
 
