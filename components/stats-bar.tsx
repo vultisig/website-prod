@@ -27,7 +27,7 @@ export default function StatsBar() {
                 >
                   {stat.value}
                 </span>
-                <span className="text-base md:text-lg text-textTertiary font-['Satoshi',sans-serif] mt-1">
+                <span className="text-base md:text-lg text-textTertiary font-satoshi mt-1">
                   {stat.label}
                 </span>
               </div>

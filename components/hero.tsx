@@ -1,8 +1,7 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Download } from "lucide-react"
 import HeroMockup from "@/components/hero-mockup"
+import Link from "next/link"
 
 export default function Hero() {
   return (
@@ -24,7 +23,7 @@ export default function Hero() {
             </h1>
 
             {/* Subheading */}
-            <p className="font-['Satoshi',sans-serif] text-textSecondary text-lg lg:text-xl tracking-tight max-w-[478px] leading-normal">
+            <p className="font-satoshi text-textSecondary text-lg lg:text-xl tracking-tight max-w-[478px] leading-normal">
               Vultisig uses multi-party computation to achieve native
               multi-factor authentication. No seed phrase, no single key, no
               single target. Available on 30+ chains.
@@ -32,7 +31,7 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex gap-5 w-full max-w-[390px]">
-              <a href="/downloads" className="flex-1">
+              <Link href="/downloads" className="flex-1">
                 <Button
                   variant="primaryBlue"
                   size="lg"
@@ -41,8 +40,8 @@ export default function Hero() {
                   <Download className="w-4 h-4" />
                   Download Free
                 </Button>
-              </a>
-              <a href="/how-it-works" className="flex-1">
+              </Link>
+              <Link href="/how-it-works" className="flex-1">
                 <Button
                   variant="secondary"
                   size="lg"
@@ -51,7 +50,7 @@ export default function Hero() {
                   How It Works
                   <ArrowRight className="w-4 h-4" />
                 </Button>
-              </a>
+              </Link>
             </div>
 
             {/* Social Proof */}
@@ -61,7 +60,7 @@ export default function Hero() {
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 border-2 border-background" />
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-400 border-2 border-background" />
               </div>
-              <p className="font-['Satoshi',sans-serif] text-base text-textSecondary tracking-tight">
+              <p className="font-satoshi text-base text-textSecondary tracking-tight">
                 Trusted by{" "}
                 <span className="font-medium text-textPrimary">50,000+</span>{" "}
                 vault creators worldwide

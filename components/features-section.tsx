@@ -1,3 +1,5 @@
+import SectionBadge from "@/components/ui/section-badge"
+
 export default function FeaturesSection() {
   const features = [
     {
@@ -27,9 +29,7 @@ export default function FeaturesSection() {
         <div className="text-left mb-12">
           {/* Pill badge */}
           <div className="mb-6">
-            <span className="inline-block rounded-full border px-4 py-1.5 text-sm uppercase tracking-wider text-[#4879fd] bg-[rgba(72,121,253,0.1)] border-[rgba(72,121,253,0.5)]">
-              Why Vultisig
-            </span>
+            <SectionBadge label="Why Vultisig" />
           </div>
 
           {/* Title */}
@@ -60,14 +60,14 @@ export default function FeaturesSection() {
             >
               {/* Icon and Title */}
               <div className="flex flex-col gap-3">
-                <div className="w-9 h-9 bg-[rgba(72,121,253,0.1)] rounded-lg flex items-center justify-center">
+                <div className="w-9 h-9 bg-primaryAccent/10 rounded-lg flex items-center justify-center">
                   <img
                     src={feature.icon}
                     alt={`${feature.title} icon`}
                     className="w-6 h-6"
                   />
                 </div>
-                <h3 className="text-[20px] font-semibold text-[#eff2f6] tracking-tight">
+                <h3 className="text-[20px] font-semibold text-textPrimary tracking-tight">
                   {feature.title}
                 </h3>
               </div>

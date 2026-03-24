@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import SectionBadge from "@/components/ui/section-badge"
 
 interface Article {
   title: string
@@ -26,6 +27,67 @@ interface InternalArticle {
   description: string
   publishedAt: string
   image?: string
+}
+
+function ArticleCard({
+  article,
+  index,
+}: {
+  article: Article
+  index: number
+}) {
+  const cardContent = (
+    <>
+      <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6 overflow-hidden">
+        <img
+          src={article.image || "/images/placeholder-article.svg"}
+          alt={article.title}
+          width="800"
+          height="450"
+          className="w-full h-full max-w-full object-cover"
+        />
+      </div>
+      <div className="flex flex-col flex-1">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-3 leading-tight">
+          {article.title}
+        </h3>
+        <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
+          {article.description}
+        </p>
+        <p className="text-gray-400 text-sm italic mt-auto">{article.date}</p>
+      </div>
+    </>
+  )
+
+  const cardClasses = `
+    bg-backgroundSecondary
+    border border-borderLight
+    hover:border-primary
+    rounded-2xl p-4 sm:p-6
+    transition-colors cursor-pointer
+    flex flex-col
+    block
+  `
+
+  if (article.isInternal) {
+    return (
+      <Link key={index} href={article.link} className={cardClasses}>
+        {cardContent}
+      </Link>
+    )
+  }
+
+  return (
+    <a
+      key={index}
+      href={article.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cardClasses}
+    >
+      {cardContent}
+    </a>
+  )
 }
 
 export default function MediumSection() {
@@ -147,73 +209,12 @@ export default function MediumSection() {
     fetchArticles()
   }, [])
 
-  const ArticleCard = ({
-    article,
-    index,
-  }: {
-    article: Article
-    index: number
-  }) => {
-    const cardContent = (
-      <>
-        <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6 overflow-hidden">
-          <img
-            src={article.image || "/images/placeholder-article.svg"}
-            alt={article.title}
-            width="800"
-            height="450"
-            className="w-full h-full max-w-full object-cover"
-          />
-        </div>
-        <div className="flex flex-col flex-1">
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-3 leading-tight">
-            {article.title}
-          </h3>
-          <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
-            {article.description}
-          </p>
-          <p className="text-gray-400 text-sm italic mt-auto">{article.date}</p>
-        </div>
-      </>
-    )
-
-    const cardClasses = `
-      bg-backgroundSecondary
-      border border-borderLight
-      hover:border-primary
-      rounded-2xl p-4 sm:p-6
-      transition-colors cursor-pointer
-      flex flex-col
-      block
-    `
-
-    if (article.isInternal) {
-      return (
-        <Link key={index} href={article.link} className={cardClasses}>
-          {cardContent}
-        </Link>
-      )
-    }
-
-    return (
-      <a
-        key={index}
-        href={article.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cardClasses}
-      >
-        {cardContent}
-      </a>
-    )
-  }
-
   return (
     <section className="py-10 container">
       <div className="mb-16">
-        <span className="inline-block mb-4 px-4 py-1.5 text-sm uppercase tracking-wider text-[#4879fd] bg-[rgba(72,121,253,0.1)] border border-[rgba(72,121,253,0.5)] rounded-full">
-          Articles
-        </span>
+        <div className="mb-4">
+          <SectionBadge label="Articles" />
+        </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
           Explore More on{" "}
           <span

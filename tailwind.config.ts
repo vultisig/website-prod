@@ -33,6 +33,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Brockmann", "Arial", "Helvetica", "sans-serif"],
         default: ["Brockmann", "Arial", "Helvetica", "sans-serif"],
+        satoshi: ["Satoshi", "sans-serif"],
       },
       fontWeight: {
         normal: "400",

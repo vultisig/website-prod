@@ -81,11 +81,6 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  {/* <a href="#" className="text-gray-400 hover:text-white">
-                    Backed By
-                  </a> */}
-                </li>
-                <li>
                   <a href="/docs" className="text-gray-400 hover:text-white">
                     Docs
                   </a>
@@ -95,11 +90,6 @@ export default function Footer() {
                     $VULT
                   </a>
                 </li>
-                {/* <li>
-                  <a href="/download" className="text-gray-400 hover:text-white">
-                    Extension
-                  </a>
-                </li> */}
               </ul>
             </div>
 

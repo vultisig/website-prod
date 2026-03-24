@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import Link from "next/link"
 import vultisigLogoTextPng from "../public/images/vultisig-logo-text.png"
 import bannerPng from "../public/images/banner-bg-download-vultisig.png"
 
@@ -24,9 +25,11 @@ export default function CtaSection() {
           No seed phrase. No subscription. No custodian. Just your crypto,
           secured by math &mdash; not trust.
         </p>
-        <Button variant={"primaryBlue"} className="md:h-12 md:px-7">
-          Download Vultisig
-        </Button>
+        <Link href="/downloads">
+          <Button variant={"primaryBlue"} className="md:h-12 md:px-7">
+            Download Vultisig
+          </Button>
+        </Link>
       </div>
     </section>
   )

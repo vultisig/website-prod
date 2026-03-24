@@ -1,16 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight, Zap, Shield } from "lucide-react"
+import SectionBadge from "@/components/ui/section-badge"
 
 export default function SetupSection() {
   return (
     <section className="py-16 container">
       {/* Header */}
       <div className="flex flex-col items-start gap-5 mb-12">
-        <div className="inline-flex items-center bg-primaryAccent/10 border border-primaryAccent/50 rounded-full px-4 py-1.5">
-          <span className="font-medium text-sm text-primaryAccent tracking-tight uppercase">
-            Choose your setup
-          </span>
-        </div>
+        <SectionBadge label="Choose your setup" />
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-textPrimary tracking-tight">
           The setup for{" "}
@@ -29,7 +26,7 @@ export default function SetupSection() {
       {/* Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Fast Vault Card */}
-        <div className="border border-borderLight rounded-3xl p-9 relative overflow-hidden bg-[rgba(11,26,58,0.5)] h-auto lg:h-[515px]">
+        <div className="border border-borderLight rounded-3xl p-9 relative overflow-hidden bg-cardSurface/50 h-auto lg:h-[515px]">
           <div className="relative z-10 flex flex-col gap-5">
             {/* Vault Type Pill */}
             <div className="inline-flex items-center gap-2 bg-[rgba(255,194,92,0.05)] border-[1.5px] border-[rgba(255,194,92,0.05)] rounded-full px-3.5 py-2 w-fit">
@@ -83,7 +80,7 @@ export default function SetupSection() {
         </div>
 
         {/* Secure Vault Card */}
-        <div className="border border-borderLight rounded-3xl p-9 relative overflow-hidden bg-[rgba(11,26,58,0.5)] h-auto lg:h-[515px]">
+        <div className="border border-borderLight rounded-3xl p-9 relative overflow-hidden bg-cardSurface/50 h-auto lg:h-[515px]">
           <div className="relative z-10 flex flex-col gap-5">
             {/* Vault Type Pill */}
             <div className="inline-flex items-center gap-2 bg-[rgba(19,200,157,0.05)] border-[1.5px] border-[rgba(19,200,157,0.05)] rounded-full px-3.5 py-2 w-fit">

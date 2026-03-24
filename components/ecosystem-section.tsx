@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState } from "react"
 import { ArrowLeft, ArrowRight, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -32,13 +32,13 @@ const testimonials: Testimonial[] = [
 export default function EcosystemSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const goToPrevious = useCallback(() => {
+  const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
-  }, [])
+  }
 
-  const goToNext = useCallback(() => {
+  const goToNext = () => {
     setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))
-  }, [])
+  }
 
   const current = testimonials[currentIndex]
 
