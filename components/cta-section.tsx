@@ -11,19 +11,16 @@ export default function CtaSection() {
         alt="Banner background"
         className="w-full h-full absolute inset-0 object-cover object-right max-md:opacity-50"
       />
-      <div className="relative h-full flex flex-col justify-center gap-4 md:gap-6 items-start max-w-xl p-6 md:pl-12">
+      <div className="relative h-full flex flex-col justify-center gap-4 md:gap-8 items-start max-w-xl p-6 md:pl-12">
         <Image
           src={vultisigLogoTextPng}
           alt="Vultisig logo text"
           className="w-24 md:w-40"
         />
         <strong className="capitalize text-2xl text-balance md:text-5xl">
-          The Only Wallet You&apos;ll Ever Need.
+          Secure your digital{" "}
+          <span className="text-secondaryAccent">assets</span> now!
         </strong>
-        <p className="text-textSecondary text-sm md:text-base leading-relaxed">
-          No seed phrase. No subscription. No custodian. Just your crypto,
-          secured by math &mdash; not trust.
-        </p>
         <Button variant={"primaryBlue"} className="md:h-12 md:px-7">
           Download Vultisig
         </Button>

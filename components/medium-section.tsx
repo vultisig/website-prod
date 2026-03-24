@@ -31,6 +31,7 @@ interface InternalArticle {
 export default function MediumSection() {
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
+  const [source, setSource] = useState<"internal" | "medium">("medium")
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -59,6 +60,7 @@ export default function MediumSection() {
                 isInternal: true,
               }))
             setArticles(formatted)
+            setSource("internal")
             return
           }
         }
@@ -104,6 +106,7 @@ export default function MediumSection() {
               }
             })
           setArticles(formatted)
+          setSource("medium")
         } else {
           setFallbackArticles()
         }
@@ -142,6 +145,7 @@ export default function MediumSection() {
           isInternal: false,
         },
       ])
+      setSource("medium")
     }
 
     fetchArticles()
@@ -163,6 +167,10 @@ export default function MediumSection() {
             width="800"
             height="450"
             className="w-full h-full max-w-full object-cover"
+            // onError={(e) => {
+            //   const target = e.target as HTMLImageElement
+            //   target.src = "/images/placeholder-article.svg"
+            // }}
           />
         </div>
         <div className="flex flex-col flex-1">
@@ -210,22 +218,23 @@ export default function MediumSection() {
 
   return (
     <section className="py-10 container">
-      <div className="mb-16">
-        <span className="inline-block mb-4 px-4 py-1.5 text-sm uppercase tracking-wider text-[#4879fd] bg-[rgba(72,121,253,0.1)] border border-[rgba(72,121,253,0.5)] rounded-full">
-          Articles
-        </span>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-          Explore More on{" "}
-          <span
-            className="bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(64deg, #33E6BF, #0439C7)",
-            }}
-          >
-            Medium
-          </span>
+      <div className="text-center mb-16">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          {source === "internal" ? (
+            <>
+              Latest <span className="text-cyan-400">Articles</span>
+            </>
+          ) : (
+            <>
+              Explore More on <span className="text-cyan-400">Medium</span>
+            </>
+          )}
         </h2>
+        <p className="text-textSecondary text-lg sm:text-xl">
+          Behind the vault: Insights, partnerships, and product updates{" "}
+          <br className="hidden sm:block" />
+          from the team building Vultisig.
+        </p>
       </div>
 
       {loading && (
@@ -253,11 +262,37 @@ export default function MediumSection() {
       )}
 
       {!loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {articles.map((article, index) => (
-            <ArticleCard key={index} article={article} index={index} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {articles.map((article, index) => (
+              <ArticleCard key={index} article={article} index={index} />
+            ))}
+          </div>
+
+          {source === "internal" && (
+            <div className="text-center mt-10">
+              <Link
+                href="/articles"
+                className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+              >
+                View all articles
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </div>
+          )}
+        </>
       )}
     </section>
   )
