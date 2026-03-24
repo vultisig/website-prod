@@ -1,0 +1,253 @@
+{
+  "project": "landing-page-v4-redesign",
+  "branchName": "feat/landing-page-v4-redesign",
+  "repo": "/Users/paaaotc/Documents/Vultisig/GitHub/website-prod",
+  "figma": {
+    "fileKey": "puB2fsVpPrBx3Sup7gaa3v",
+    "masterUrl": "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71822-12938",
+    "mcpInstructions": "BEFORE implementing any story, call mcp__figma__get_design_context or mcp__figma__get_screenshot with fileKey 'puB2fsVpPrBx3Sup7gaa3v' and the nodeId listed in the story. This returns exact copy, colors, spacing, and downloadable asset URLs. NEVER guess copy or styles — always fetch from Figma first."
+  },
+  "planFile": "LANDING-PAGE-V4-PLAN.md",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Rewrite Hero section — split layout with phone mockup",
+      "description": "Replace centered typewriter hero with split layout: left text (badge, heading, subheading, 2 CTAs, social proof) + right phone mockup with floating UI cards.",
+      "file": "components/hero.tsx",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71857-35179",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71822-13868",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71857-35178"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71857:35179", "label": "Hero parent frame" },
+        { "nodeId": "71822:13868", "label": "Hero left text container" },
+        { "nodeId": "71857:35178", "label": "Hero right phone mockup" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_design_context with fileKey 'puB2fsVpPrBx3Sup7gaa3v', nodeId '71822:13868' to get exact hero text copy and styles",
+        "STEP 0b: Call get_screenshot with fileKey 'puB2fsVpPrBx3Sup7gaa3v', nodeId '71857:35178' to see the phone mockup layout",
+        "Badge says 'Open-Source Audited', left-aligned, bg rgba(51,230,191,0.13), border rgba(51,230,191,0.5)",
+        "Heading: 'The wallet that made seed phrases obsolete' — 60px, left-aligned, no typewriter, white #f0f4fc",
+        "Subheading: 'Vultisig uses multi-party computation to achieve native multi-factor authentication. No seed phrase, no single key, no single target. Available on 30+ chains.' — 20px, #c9d6e8",
+        "Two CTA buttons side by side: 'Download Free' (bg #0b4eff, download icon) + 'How It Works →' (bg #11284a, arrow icon)",
+        "Social proof row: 3 overlapping avatars + 'Trusted by 50,000+ vault creators worldwide' (50,000+ bold white)",
+        "Right side: phone mockup image with floating UI elements (swap widget, vault badges, device pairing, QR receive) — export as images from Figma asset URLs",
+        "Spline 3D import and lazy loading removed entirely",
+        "Split layout: left ~47% / right ~53%, left-aligned text",
+        "Page renders without errors"
+      ],
+      "priority": 1,
+      "passes": false
+    },
+    {
+      "id": "US-002",
+      "title": "Create Stats Bar + remove Clients Carousel",
+      "description": "New stats-bar.tsx showing $500M+, 30+, 50K+, 0 with gradient text and vertical separators. Delete clients-section.tsx import from page.tsx.",
+      "file": "components/stats-bar.tsx (NEW)",
+      "deleteFile": "Remove ClientsSection import from app/page.tsx (keep clients-section.tsx file for now)",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71822-35533"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71822:35533", "label": "Stats bar section" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_design_context with fileKey 'puB2fsVpPrBx3Sup7gaa3v', nodeId '71822:35533' to get exact stats layout and styles",
+        "4 stats with gradient text: $500M+, 30+, 50K+, 0 — gradient linear-gradient(64deg, #33E6BF 8%, #0439C7 134%)",
+        "Labels below each: Assets secured, Chains supported, Active vaults, Security incidents — 18px, #8295ae",
+        "Vertical line separators between stats (92px height)",
+        "Stats text 45px Satoshi Medium",
+        "Horizontal layout, centered, 100px side padding",
+        "ClientsSection no longer rendered in page.tsx",
+        "Page renders without errors"
+      ],
+      "priority": 2,
+      "passes": false
+    },
+    {
+      "id": "US-003",
+      "title": "Update Features section — pill badge, new copy, left-aligned",
+      "description": "Add WHY VULTISIG pill badge, change title to 'Built different. Secured different.', update card titles, left-align everything.",
+      "file": "components/features-section.tsx",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71822-35537"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71822:35537", "label": "Features section (Why Vultisig)" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_design_context with fileKey 'puB2fsVpPrBx3Sup7gaa3v', nodeId '71822:35537' to get exact copy and card styles",
+        "WHY VULTISIG pill badge: bg rgba(72,121,253,0.1), border rgba(72,121,253,0.5), text #4879fd, uppercase",
+        "Title: 'Built different.' (white #f0f4fc) + line break + 'Secured different.' (gradient #33E6BF→#0439C7) — 48px",
+        "Subtitle: 'No tradeoffs. Just seamless, secure crypto management.' — left-aligned, 20px, #c9d6e8",
+        "Card titles: 'Phishing-proof by design', 'No seed phrase, ever', 'Truly omni-chain'",
+        "Card style: bg rgba(11,26,58,0.5), border #11284a, rounded-24px, padding 30px",
+        "Icon containers: bg rgba(72,121,253,0.1), rounded-8px",
+        "All content left-aligned (was centered)",
+        "Hover border effect removed"
+      ],
+      "priority": 3,
+      "passes": false
+    },
+    {
+      "id": "US-004",
+      "title": "Update Setup section — vault badges, new copy, CTAs",
+      "description": "Add CHOOSE YOUR SETUP badge, change title gradient, add vault type pills, change headings and CTAs to 'Learn More'.",
+      "file": "components/setup-section.tsx",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71825-36132"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71825:36132", "label": "Setup section (Choose your setup)" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_design_context with fileKey 'puB2fsVpPrBx3Sup7gaa3v', nodeId '71825:36132' to get exact layout and copy",
+        "CHOOSE YOUR SETUP pill badge (same blue pill style as features section)",
+        "Title: 'The setup for' (white) + 'your needs.' (gradient #33E6BF→#0439C7) — 48px, left-aligned",
+        "Subtitle: 'Fast Vault for daily spending. Secure Vault for maximum protection. Both are keyless and require no seed phrase.'",
+        "Fast Vault pill: lightning icon, bg rgba(255,194,92,0.05), rounded-99px",
+        "Secure Vault pill: shield icon, bg rgba(19,200,157,0.05), rounded-99px",
+        "Card 1 heading: 'For daily use' (was 'Fast Vault')",
+        "Card 2 heading: 'For maximum security' (was 'Secure Vault')",
+        "Both CTA buttons: 'Learn More' with arrow-up-right icon, bg #0b4eff",
+        "Card style: h-515px, overflow-clip, padding 36px"
+      ],
+      "priority": 4,
+      "passes": false
+    },
+    {
+      "id": "US-005",
+      "title": "Rewrite Best Features — bento grid with 7 cards",
+      "description": "Replace sticky-scroll 3-card layout with 3-column bento grid of 7 feature cards. Export card images from Figma asset URLs.",
+      "file": "components/best-features-section.tsx",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-147569",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-119611",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-146623",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-146737",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-146628",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-146684",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-146718",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-146354",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-146548"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71839:147569", "label": "Best Features parent" },
+        { "nodeId": "71839:119611", "label": "Bento grid layout" },
+        { "nodeId": "71839:146623", "label": "Card: Maximum Security" },
+        { "nodeId": "71839:146737", "label": "Card: M-of-N Signing" },
+        { "nodeId": "71839:146628", "label": "Card: Cross-chain Swaps" },
+        { "nodeId": "71839:146684", "label": "Card: Secure Notifications" },
+        { "nodeId": "71839:146718", "label": "Card: 100% Open Source" },
+        { "nodeId": "71839:146354", "label": "Card: 30+ Chains" },
+        { "nodeId": "71839:146548", "label": "Card: Hold $VULT" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_screenshot for nodeId '71839:147569' to see full bento layout, then get_design_context for each card nodeId to get copy and asset URLs",
+        "EVERYTHING IN ONE PLACE pill badge centered above title",
+        "Title: 'Best features in one place' — centered, white, no gradient, 48px",
+        "Subtitle: 'Multi-chain asset management, keyless security, DeFi access, and built-in swaps...' — centered, #c9d6e8",
+        "Download Vultisig button removed from this section",
+        "3-column bento grid: col1 2 tall cards, col2 3 medium cards, col3 2 tall cards",
+        "7 cards with correct titles: Maximum security, M-of-N signing, Cross-chain swaps, Secure notifications, 100% open source, 30+ chains/One vault, Hold $VULT/Trade for free",
+        "Card images exported from Figma asset URLs and saved to public/images/",
+        "Dark card style: bg rgba(11,26,58,0.5), border #11284a, rounded-24px"
+      ],
+      "priority": 5,
+      "passes": false
+    },
+    {
+      "id": "US-006",
+      "title": "Rewrite Testimonials → Ecosystem section",
+      "description": "Replace multi-card carousel with split layout: left text + CTA, right single testimonial card with navigation.",
+      "file": "components/ecosystem-section.tsx (NEW, replaces testimonials-section.tsx)",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-147485",
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-147827"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71839:147485", "label": "Ecosystem section parent" },
+        { "nodeId": "71839:147827", "label": "Testimonial card component" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_design_context for nodeId '71839:147485' and get_screenshot for nodeId '71839:147827' to see exact layout",
+        "Split layout: left text (868px) + right testimonial card (357px)",
+        "Left: TRUSTED BY THOUSANDS pill badge",
+        "Left: Title 'A wallet backed by a growing ecosystem.'",
+        "Left: Subtitle about growing ecosystem of users, developers, partners",
+        "Left: 'Download Vultisig' CTA button (blue)",
+        "Right: Single testimonial card with quote marks, review text, review title 'Novel approach to self-custody'",
+        "Right: Avatar + 'Mattj89iii' + 5 gold stars",
+        "Right: Left/right arrow navigation + dot indicators",
+        "Old carousel and pagination dots removed",
+        "Update import in page.tsx from TestimonialsSection to EcosystemSection"
+      ],
+      "priority": 6,
+      "passes": false
+    },
+    {
+      "id": "US-007",
+      "title": "Update Articles section — pill badge, new title, left-aligned",
+      "description": "Add ARTICLES badge, change title to 'Explore More on Medium', left-align, remove subtitle and 'View all articles' link.",
+      "file": "components/medium-section.tsx",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-147462"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71839:147462", "label": "Articles section" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_design_context with fileKey 'puB2fsVpPrBx3Sup7gaa3v', nodeId '71839:147462' to verify copy",
+        "ARTICLES pill badge left-aligned",
+        "Title: 'Explore More on' (white) + 'Medium' (gradient #33E6BF→#0439C7) — left-aligned",
+        "Subtitle text removed",
+        "'View all articles' link removed",
+        "Article cards still render from API, 3-column grid unchanged"
+      ],
+      "priority": 7,
+      "passes": false
+    },
+    {
+      "id": "US-008",
+      "title": "Update CTA section — new copy, remove Discord banner",
+      "description": "Change heading, add subtitle, remove Discord banner between CTA and footer.",
+      "file": "components/cta-section.tsx",
+      "figmaUrls": [
+        "https://www.figma.com/design/puB2fsVpPrBx3Sup7gaa3v/Vultisig-App?node-id=71839-147742"
+      ],
+      "figmaMcp": [
+        { "nodeId": "71839:147742", "label": "CTA bottom section" }
+      ],
+      "acceptanceCriteria": [
+        "STEP 0: Call get_design_context with fileKey 'puB2fsVpPrBx3Sup7gaa3v', nodeId '71839:147742' to verify copy and layout",
+        "Heading: 'The Only Wallet You'll Ever Need.'",
+        "Subtitle: 'No seed phrase. No subscription. No custodian. Just your crypto, secured by math - not trust.'",
+        "'Download Vultisig' button still present",
+        "Phone mockup background images intact",
+        "Discord banner ('JOIN THE DISCORD TO REQUEST NEW FEATURES!') completely removed",
+        "No gap or empty space where Discord banner was"
+      ],
+      "priority": 8,
+      "passes": false
+    },
+    {
+      "id": "US-009",
+      "title": "Wire page.tsx — final component order and cleanup",
+      "description": "Update app/page.tsx: import StatsBar, EcosystemSection, remove ClientsSection, verify correct render order.",
+      "file": "app/page.tsx",
+      "figmaUrls": [],
+      "figmaMcp": [],
+      "acceptanceCriteria": [
+        "Component order: Hero → StatsBar → FeaturesSection → SetupSection → BestFeaturesSection → EcosystemSection → MediumSection → CtaSection",
+        "No unused imports (ClientsSection, TestimonialsSection removed)",
+        "StatsBar imported from components/stats-bar",
+        "EcosystemSection imported from components/ecosystem-section",
+        "No TypeScript errors (npx tsc --noEmit passes)",
+        "Dev server runs without errors (npm run dev)"
+      ],
+      "priority": 9,
+      "passes": false
+    }
+  ]
+}
