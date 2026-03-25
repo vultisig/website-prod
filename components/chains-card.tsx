@@ -5,15 +5,15 @@ import { useLottieOnView } from "@/hooks/use-lottie-on-view"
 import animationData from "@/public/animations/30-chains.json"
 
 export default function ChainsCard() {
-  const { lottieRef, containerRef } = useLottieOnView(0.25)
+  const { lottieRef, containerRef, onMouseEnter, onMouseLeave } = useLottieOnView()
 
   return (
-    <div ref={containerRef} className="border border-borderLight rounded-3xl overflow-hidden flex flex-col items-start justify-end min-h-[400px] lg:h-[423px] relative">
+    <div ref={containerRef} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="border border-borderLight rounded-3xl overflow-hidden flex flex-col items-start justify-end min-h-[400px] lg:h-[423px] relative">
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
         autoplay={false}
-        loop
+        loop={false}
         className="absolute inset-0 w-full h-full [&_svg]:w-full [&_svg]:h-full [&_svg]:object-cover"
         style={{ objectFit: "cover" }}
         rendererSettings={{ preserveAspectRatio: "xMidYMid slice" }}

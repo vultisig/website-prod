@@ -1,33 +1,44 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useCallback } from "react"
 import type { LottieRefCurrentProps } from "lottie-react"
 
-export function useLottieOnView(speed = 0.35) {
+export function useLottieOnView(speed = 1) {
   const lottieRef = useRef<LottieRefCurrentProps>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const wantsToPlay = useRef(false)
 
   useEffect(() => {
-    lottieRef.current?.setSpeed(speed)
-    lottieRef.current?.pause()
+    const lottie = lottieRef.current
+    if (!lottie) return
 
-    const el = containerRef.current
-    if (!el) return
+    lottie.setSpeed(speed)
+    lottie.goToAndStop(0, true)
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          lottieRef.current?.play()
-        } else {
-          lottieRef.current?.pause()
-        }
-      },
-      { threshold: 0.2 },
-    )
+    const onComplete = () => {
+      if (wantsToPlay.current) {
+        lottie.goToAndPlay(0, true)
+      } else {
+        lottie.goToAndStop(0, true)
+      }
+    }
 
-    observer.observe(el)
-    return () => observer.disconnect()
+    lottie.animationItem?.addEventListener("complete", onComplete)
+    return () => {
+      lottie.animationItem?.removeEventListener("complete", onComplete)
+    }
   }, [speed])
 
-  return { lottieRef, containerRef }
+  const onMouseEnter = useCallback(() => {
+    wantsToPlay.current = true
+    const lottie = lottieRef.current
+    if (!lottie) return
+    lottie.goToAndPlay(0, true)
+  }, [speed])
+
+  const onMouseLeave = useCallback(() => {
+    wantsToPlay.current = false
+  }, [])
+
+  return { lottieRef, containerRef, onMouseEnter, onMouseLeave }
 }
