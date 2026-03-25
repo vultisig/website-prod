@@ -69,7 +69,7 @@ export default function Hero() {
           </div>
 
           {/* Right side — phone mockup */}
-          <div className="lg:w-[53%] relative flex items-center justify-center">
+          <div className="w-full max-h-[200px] sm:max-h-none lg:w-[53%] relative flex items-center justify-center lg:contents">
             <HeroMockup />
           </div>
         </div>
