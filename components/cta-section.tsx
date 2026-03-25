@@ -8,7 +8,7 @@ import DiscordSection from "./discord-section"
 export default function CtaSection() {
   return (
     <div className="container pb-10">
-      <section className="container relative border border-borderLight rounded-2xl overflow-hidden md:aspect-[2.7/1] intersect-once intersect:motion-preset-slide-up-md">
+      <section className="relative border border-borderLight rounded-2xl overflow-hidden md:aspect-[2.7/1] intersect-once intersect:motion-preset-slide-up-md">
         <Image
           src={bannerPng}
           alt="Banner background"
@@ -34,7 +34,7 @@ export default function CtaSection() {
           </Link>
         </div>
       </section>
-      {DiscordSection()}
+      <DiscordSection />
     </div>
   )
 }
