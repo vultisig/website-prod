@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 export default function DiscordSection() {
   return (
-    <div className="flex flex-col md:flex-row items-center md:justify-left gap-4 mt-10">
+    <div className="flex flex-col md:flex-row items-center md:justify-start gap-4 mt-10">
       <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-left">
         JOIN THE DISCORD TO REQUEST NEW FEATURES!
       </h3>
