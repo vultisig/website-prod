@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section className="pt-28 md:pt-36 pb-16 px-4 relative overflow-hidden bg-gradient-hero">
       <div className="container relative z-20">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+        <div className="flex flex-col lg:flex-row items-center gap-40 lg:gap-8">
           {/* Left side — text content */}
           <div className="flex flex-col items-start gap-6 lg:w-[47%]">
             {/* Badge */}
