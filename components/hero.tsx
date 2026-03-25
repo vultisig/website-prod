@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section className="pt-28 md:pt-36 pb-16 px-4 relative overflow-hidden bg-gradient-hero">
       <div className="container relative z-20">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-8">
           {/* Left side — text content */}
           <div className="flex flex-col items-start gap-6 lg:w-[47%]">
             {/* Badge */}
@@ -69,7 +69,7 @@ export default function Hero() {
           </div>
 
           {/* Right side — phone mockup */}
-          <div className="lg:w-[53%] relative flex items-center justify-center">
+          <div className="w-full max-h-[280px] sm:max-h-[400px] md:max-h-none lg:w-[53%] relative flex items-center justify-center lg:contents">
             <HeroMockup />
           </div>
         </div>

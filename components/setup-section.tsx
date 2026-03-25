@@ -26,11 +26,11 @@ export default function SetupSection() {
       {/* Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Fast Vault Card */}
-        <div className="border border-borderLight rounded-3xl p-9 relative overflow-hidden bg-cardSurface/50 h-auto lg:h-[515px]">
+        <div className="border border-borderLight rounded-3xl p-5 lg:p-9 relative overflow-hidden bg-cardSurface/50 flex flex-col gap-3.5 lg:h-[515px]">
           <div className="relative z-10 flex flex-col gap-5">
             {/* Vault Type Pill */}
             <div className="inline-flex items-center gap-2 bg-[rgba(255,194,92,0.05)] border-[1.5px] border-[rgba(255,194,92,0.05)] rounded-full px-3.5 py-2 w-fit">
-              <Zap className="w-4 h-4 text-textPrimary" />
+              <Zap className="w-4 h-4 text-[#FFC25C]" />
               <span className="font-medium text-sm text-textPrimary">
                 Fast Vault
               </span>
@@ -52,39 +52,40 @@ export default function SetupSection() {
             </p>
           </div>
 
-          {/* CTA */}
-          <a
-            href="https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#fast-vaults"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-9 left-9 z-10"
-          >
-            <Button
-              variant="primaryBlue"
-              className="rounded-xl px-3 py-4 h-[51px] w-[189px] text-sm gap-1.5 border-white/15"
-            >
-              Learn More
-              <ArrowUpRight className="h-5 w-5" />
-            </Button>
-          </a>
-
-          <div className="absolute bottom-0 right-0 z-0">
+          {/* Image - shown inline on mobile, absolute on desktop */}
+          <div className="relative z-0 lg:absolute lg:bottom-0 lg:right-0">
             <img
               src="/images/home-2.svg"
               alt="Fast Vault setup illustration"
               width="400"
               height="300"
-              className="opacity-80 w-auto max-w-[400px] h-auto object-contain"
+              className="opacity-80 w-full lg:w-auto lg:max-w-[400px] h-auto object-contain"
             />
           </div>
+
+          {/* CTA - shown inline on mobile, absolute on desktop */}
+          <a
+            href="https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#fast-vaults"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative z-10 lg:absolute lg:bottom-9 lg:left-9"
+          >
+            <Button
+              variant="primaryBlue"
+              className="rounded-xl px-3 py-4 h-[51px] w-full lg:w-[189px] text-sm gap-1.5 border-white/15"
+            >
+              Learn More
+              <ArrowUpRight className="h-5 w-5" />
+            </Button>
+          </a>
         </div>
 
         {/* Secure Vault Card */}
-        <div className="border border-borderLight rounded-3xl p-9 relative overflow-hidden bg-cardSurface/50 h-auto lg:h-[515px]">
+        <div className="border border-borderLight rounded-3xl p-5 lg:p-9 relative overflow-hidden bg-cardSurface/50 flex flex-col gap-3.5 lg:h-[515px]">
           <div className="relative z-10 flex flex-col gap-5">
             {/* Vault Type Pill */}
             <div className="inline-flex items-center gap-2 bg-[rgba(19,200,157,0.05)] border-[1.5px] border-[rgba(19,200,157,0.05)] rounded-full px-3.5 py-2 w-fit">
-              <Shield className="w-4 h-4 text-textPrimary" />
+              <Shield className="w-4 h-4 text-[#13C89D]" />
               <span className="font-medium text-sm text-textPrimary">
                 Secure Vault
               </span>
@@ -106,31 +107,32 @@ export default function SetupSection() {
             </p>
           </div>
 
-          {/* CTA */}
-          <a
-            href="https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#secure-vault"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-9 left-9 z-10"
-          >
-            <Button
-              variant="primaryBlue"
-              className="rounded-xl px-3 py-4 h-[51px] w-[189px] text-sm gap-1.5 border-white/15"
-            >
-              Learn More
-              <ArrowUpRight className="h-5 w-5" />
-            </Button>
-          </a>
-
-          <div className="absolute bottom-0 right-0 z-0">
+          {/* Image - shown inline on mobile, absolute on desktop */}
+          <div className="relative z-0 lg:absolute lg:bottom-0 lg:right-0">
             <img
               src="/images/home-3.svg"
               alt="Secure Vault setup illustration"
               width="400"
               height="300"
-              className="opacity-80 w-auto max-w-[400px] h-auto object-contain"
+              className="opacity-80 w-full lg:w-auto lg:max-w-[400px] h-auto object-contain"
             />
           </div>
+
+          {/* CTA - shown inline on mobile, absolute on desktop */}
+          <a
+            href="https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#secure-vault"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative z-10 lg:absolute lg:bottom-9 lg:left-9"
+          >
+            <Button
+              variant="primaryBlue"
+              className="rounded-xl px-3 py-4 h-[51px] w-full lg:w-[189px] text-sm gap-1.5 border-white/15"
+            >
+              Learn More
+              <ArrowUpRight className="h-5 w-5" />
+            </Button>
+          </a>
         </div>
       </div>
     </section>

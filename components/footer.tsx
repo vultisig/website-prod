@@ -62,9 +62,7 @@ export default function Footer() {
               ))}
             </div>
 
-            <p className="text-gray-400 text-sm">
-              © Copyright 2025 - Vultisig
-            </p>
+            <p className="text-gray-400 text-sm">© Copyright 2025 - Vultisig</p>
           </div>
 
           {/* Right side - Link columns */}
@@ -97,10 +95,7 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-4">SUPPORT</h4>
               <ul className="space-y-3">
                 <li>
-                  <a
-                    href="/support"
-                    className="text-gray-400 hover:text-white"
-                  >
+                  <a href="/support" className="text-gray-400 hover:text-white">
                     FAQs
                   </a>
                 </li>
@@ -115,10 +110,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="/support"
-                    className="text-gray-400 hover:text-white"
-                  >
+                  <a href="/support" className="text-gray-400 hover:text-white">
                     Contact Us
                   </a>
                 </li>
@@ -137,10 +129,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="/privacy"
-                    className="text-gray-400 hover:text-white"
-                  >
+                  <a href="/privacy" className="text-gray-400 hover:text-white">
                     Privacy Policy
                   </a>
                 </li>

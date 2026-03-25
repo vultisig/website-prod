@@ -46,7 +46,13 @@ export default function EcosystemSection() {
     <section className="py-16 md:py-24 container">
       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16 gap-12">
         {/* Left side - content */}
-        <div className="flex flex-col items-start gap-6 lg:w-[60%] xl:w-[65%]">
+        <div
+          className="flex flex-col items-start gap-6 lg:w-[60%] xl:w-[65%] rounded-3xl border border-[#11284A] p-8 md:p-[30px] relative overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(0deg, rgba(11,26,58,0.5), rgba(11,26,58,0.5)), radial-gradient(circle at 59% 146%, rgba(11,78,255,1) 0%, rgba(2,18,43,1) 100%)",
+          }}
+        >
           {/* Pill badge */}
           <div className="inline-flex items-center bg-primaryAccent/10 border border-primaryAccent/50 rounded-full px-4 py-1.5">
             <span className="font-medium text-sm text-primaryAccent tracking-tight uppercase">
