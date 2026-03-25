@@ -32,7 +32,13 @@ function MofNCard() {
       <div className="flex flex-col gap-3 pt-5 w-full">
         {/* Device 1: iPhone */}
         <div className="bg-backgroundSecondary border border-borderLight rounded-3xl flex items-center gap-3 p-4">
-          <Image src="/images/device-iphone.svg" alt="" width={32} height={32} className="shrink-0 rounded-full shadow-sm" />
+          <Image
+            src="/images/device-iphone.svg"
+            alt=""
+            width={32}
+            height={32}
+            className="shrink-0 rounded-full shadow-sm"
+          />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-white">iPhone</p>
             <p className="text-xs font-medium text-[#13c89d] tracking-wide">
@@ -47,7 +53,13 @@ function MofNCard() {
         </div>
         {/* Device 2: Waiting */}
         <div className="bg-[rgba(6,27,58,0.5)] border border-white/[0.03] border-dashed rounded-3xl flex items-center gap-3 p-4 shadow-[0_-4px_12px_rgba(3,13,29,0.35)]">
-          <Image src="/images/device-waiting-icon.svg" alt="" width={32} height={32} className="shrink-0 rounded-full" />
+          <Image
+            src="/images/device-waiting-icon.svg"
+            alt=""
+            width={32}
+            height={32}
+            className="shrink-0 rounded-full"
+          />
           <p className="flex-1 text-[13px] font-medium text-textSecondary tracking-wide">
             Waiting for device to join
           </p>
@@ -81,7 +93,13 @@ function SwapsCard() {
         {/* From: RUNE */}
         <div className="bg-backgroundSecondary border border-borderLight rounded-t-3xl rounded-b-xl p-4 flex items-center justify-between">
           <div className="bg-borderLight rounded-full pl-1.5 pr-3 py-1.5 flex items-center gap-2">
-            <Image src="/images/chains/rune.svg" alt="RUNE" width={36} height={36} className="rounded-full" />
+            <Image
+              src="/images/chains/rune.svg"
+              alt="RUNE"
+              width={36}
+              height={36}
+              className="rounded-full"
+            />
             <span className="text-xs font-medium text-textPrimary tracking-wide">
               RUNE
             </span>
@@ -98,7 +116,13 @@ function SwapsCard() {
         {/* To: BTC */}
         <div className="bg-cardSurface/50 border border-borderLight rounded-t-xl rounded-b-3xl p-4 flex items-center justify-between relative">
           <div className="bg-borderLight rounded-full pl-1.5 pr-3 py-1.5 flex items-center gap-2">
-            <Image src="/images/chains/btc-coin.svg" alt="BTC" width={36} height={36} className="rounded-full" />
+            <Image
+              src="/images/chains/btc-coin.svg"
+              alt="BTC"
+              width={36}
+              height={36}
+              className="rounded-full"
+            />
             <span className="text-xs font-medium text-white tracking-wide">
               BTC
             </span>
@@ -113,7 +137,7 @@ function SwapsCard() {
           </div>
         </div>
         {/* Swap icon overlay */}
-        <div className="absolute left-1/2 top-[calc(50%-10px)] -translate-x-1/2 -translate-y-1/2 z-10">
+        {/* <div className="absolute left-1/2 top-[calc(50%-10px)] -translate-x-1/2 -translate-y-1/2 z-10">
           <div className="bg-cardSurface/50 border border-borderLight rounded-full p-[7px] size-12 flex items-center justify-center">
             <div className="bg-[#2155df] rounded-[18px] size-8 flex items-center justify-center">
               <svg
@@ -133,7 +157,7 @@ function SwapsCard() {
               </svg>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <h3 className="text-[22px] font-medium text-textPrimary leading-[24px] tracking-tight mt-2">
@@ -148,23 +172,27 @@ function NotificationsCard() {
   return (
     <div className="bg-cardSurface/50 border border-borderLight rounded-3xl overflow-hidden flex flex-col gap-[18px] items-start justify-end p-[30px] min-h-[260px] lg:h-[277px] relative">
       {/* Phone with notification */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[59px] w-[241px] h-[194px]">
+      <div className="absolute left-1/2 -translate-x-1/2 -top-[30px] w-[340px] h-[240px]">
         {/* Phone body */}
-        <div className="absolute inset-x-[1%] top-0 bottom-0 bg-borderLight rounded-[37px] shadow-[inset_0px_-1px_4px_rgba(255,255,255,0.2),inset_-2px_0px_5px_-3px_rgba(255,255,255,0.4)]" />
-        {/* Dynamic island */}
-        <div className="absolute top-[15px] left-1/2 -translate-x-1/2 w-[60px] h-[20px] bg-borderLight rounded-lg" />
+        <div className="absolute inset-x-[1%] top-0 bottom-0 rounded-[37px] bg-[url('/images/hero/notif-bg.svg')] bg-center bg-no-repeat" />
         {/* Notification */}
-        <div className="absolute top-[50px] left-0 right-0 mx-[10px] backdrop-blur-xl rounded-3xl overflow-hidden">
-          <div className="bg-white/70 px-3 py-2.5 flex items-center gap-2">
-            <Image src="/images/notif-app-icon.svg" alt="Vultisig" width={26} height={26} className="rounded-lg shrink-0" />
+        <div className="absolute top-[80px] left-0 right-0 mx-[14px] backdrop-blur-xl rounded-3xl overflow-hidden">
+          <div className="bg-white/70 px-4 py-3 flex items-center gap-3">
+            <Image
+              src="/images/hero/app-icon.svg"
+              alt="Vultisig"
+              width={34}
+              height={34}
+              className="rounded-lg shrink-0"
+            />
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
-                <p className="text-[10px] font-semibold text-black leading-tight">
+                <p className="text-[13px] font-semibold text-black leading-tight">
                   Join keysign
                 </p>
-                <p className="text-[9px] text-[#3d3d3d]">9:41 AM</p>
+                <p className="text-[11px] text-[#3d3d3d]">9:41 AM</p>
               </div>
-              <p className="text-[10px] text-black leading-tight">
+              <p className="text-[13px] text-black leading-tight">
                 MacBook Pro wants to sign
               </p>
             </div>
@@ -248,7 +276,9 @@ function ChainsCard() {
           {row1.map((chain, i) => (
             <div
               key={`${chain}-${i}`}
-              className={`bg-primaryAccent/10 rounded-full p-[13px] shrink-0 ${i === row1.length - 1 ? "opacity-40" : ""}`}
+              className={`bg-primaryAccent/10 rounded-full p-[13px] shrink-0 ${
+                i === row1.length - 1 ? "opacity-40" : ""
+              }`}
             >
               <Image
                 src={`/images/chains/${chain}.svg`}
@@ -263,7 +293,9 @@ function ChainsCard() {
           {row2.map((chain, i) => (
             <div
               key={chain}
-              className={`bg-primaryAccent/10 rounded-full p-[13px] shrink-0 ${i === row2.length - 1 ? "opacity-40" : ""}`}
+              className={`bg-primaryAccent/10 rounded-full p-[13px] shrink-0 ${
+                i === row2.length - 1 ? "opacity-40" : ""
+              }`}
             >
               <Image
                 src={`/images/chains/${chain}.svg`}
@@ -283,8 +315,8 @@ function ChainsCard() {
           One vault.
         </h3>
         <p className="text-sm text-textSecondary leading-relaxed tracking-tight">
-          Bitcoin to Solana to Cosmos - every major chain, natively supported. No
-          bridging needed.
+          Bitcoin to Solana to Cosmos - every major chain, natively supported.
+          No bridging needed.
         </p>
       </div>
     </div>
@@ -301,7 +333,14 @@ function VultCard() {
         <div className="absolute top-[30px] left-[31px] w-[281px] bg-backgroundSecondary border border-borderLight rounded-xl p-3 opacity-50">
           <div className="flex items-center gap-2.5">
             <div className="w-[34px] h-[34px] rounded-full border border-[#ffc25c] bg-[#041733] overflow-hidden relative">
-              <Image src="/images/tiers/gold-icon.svg" alt="" fill sizes="42px" loading="lazy" className="object-contain p-1.5" />
+              <Image
+                src="/images/tiers/gold-icon.svg"
+                alt=""
+                fill
+                sizes="42px"
+                loading="lazy"
+                className="object-contain p-1.5"
+              />
             </div>
             <span className="text-sm font-medium text-textPrimary">Gold</span>
           </div>
@@ -311,7 +350,14 @@ function VultCard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-[38px] h-[38px] rounded-full border border-secondaryAccent bg-[#041733] overflow-hidden relative">
-                <Image src="/images/tiers/platinum-icon.svg" alt="" fill sizes="42px" loading="lazy" className="object-contain p-1.5" />
+                <Image
+                  src="/images/tiers/platinum-icon.svg"
+                  alt=""
+                  fill
+                  sizes="42px"
+                  loading="lazy"
+                  className="object-contain p-1.5"
+                />
               </div>
               <span className="text-[15px] font-medium text-textPrimary">
                 Platinum
@@ -327,7 +373,14 @@ function VultCard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full border border-[#9747ff] bg-[#041733] overflow-hidden shadow-md relative">
-                <Image src="/images/tiers/diamond-icon.svg" alt="" fill sizes="42px" loading="lazy" className="object-contain p-1.5" />
+                <Image
+                  src="/images/tiers/diamond-icon.svg"
+                  alt=""
+                  fill
+                  sizes="42px"
+                  loading="lazy"
+                  className="object-contain p-1.5"
+                />
               </div>
               <span className="text-base font-medium text-textPrimary">
                 Diamond
@@ -349,7 +402,14 @@ function VultCard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-[42px] h-[42px] rounded-full border border-[#041022] bg-[#041733] overflow-hidden shadow-md relative">
-                <Image src="/images/tiers/ultimate-icon.svg" alt="" fill sizes="42px" loading="lazy" className="object-contain p-1.5" />
+                <Image
+                  src="/images/tiers/ultimate-icon.svg"
+                  alt=""
+                  fill
+                  sizes="42px"
+                  loading="lazy"
+                  className="object-contain p-1.5"
+                />
               </div>
               <span className="text-[17px] font-medium text-textPrimary">
                 Ultimate
