@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils"
 
 export default function DiscordSection() {
   return (
-    <div className="flex flex-col md:flex-row items-center md:justify-center gap-4 pb-12 px-4 mt-10">
-      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center px-4">
+    <div className="flex flex-col md:flex-row items-center md:justify-left gap-4 mt-10">
+      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-left">
         JOIN THE DISCORD TO REQUEST NEW FEATURES!
       </h3>
       <Link
@@ -14,7 +14,7 @@ export default function DiscordSection() {
         rel="noopener noreferrer"
         className={cn(
           buttonVariants({ variant: "primaryBlue" }),
-          "w-full md:w-auto",
+          "w-full md:w-auto"
         )}
       >
         DISCORD
