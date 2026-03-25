@@ -1,21 +1,18 @@
 "use client"
 
-import { useRef, useEffect } from "react"
-import Lottie, { type LottieRefCurrentProps } from "lottie-react"
+import Lottie from "lottie-react"
+import { useLottieOnView } from "@/hooks/use-lottie-on-view"
 import animationData from "@/public/animations/secure-notifications.json"
 
 export default function SecureNotificationsCard() {
-  const lottieRef = useRef<LottieRefCurrentProps>(null)
-
-  useEffect(() => {
-    lottieRef.current?.setSpeed(0.5)
-  }, [])
+  const { lottieRef, containerRef } = useLottieOnView()
 
   return (
-    <div className="border border-borderLight rounded-3xl overflow-hidden flex flex-col gap-[18px] items-start justify-end min-h-[260px] lg:h-[277px] relative">
+    <div ref={containerRef} className="border border-borderLight rounded-3xl overflow-hidden flex flex-col gap-[18px] items-start justify-end min-h-[260px] lg:h-[277px] relative">
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
+        autoplay={false}
         loop
         className="absolute inset-0 w-full h-full [&_svg]:w-full [&_svg]:h-full [&_svg]:object-cover"
         style={{ objectFit: "cover" }}
