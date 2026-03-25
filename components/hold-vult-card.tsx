@@ -17,7 +17,9 @@ export default function HoldVultCard() {
         lottieRef={lottieRef}
         animationData={animationData}
         loop
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full [&_svg]:w-full [&_svg]:h-full [&_svg]:object-cover"
+        style={{ objectFit: "cover" }}
+        rendererSettings={{ preserveAspectRatio: "xMidYMid slice" }}
       />
       <div className="flex flex-col gap-[18px] p-[30px] relative z-10">
         <h3 className="text-[22px] font-medium text-textPrimary leading-[24px] tracking-tight">
