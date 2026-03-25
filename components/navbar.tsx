@@ -124,7 +124,7 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="lg:hidden mt-4 py-4 border-t border-borderLight">
+            <div className="lg:hidden mt-4 py-4 border-t border-borderLight min-h-[calc(100vh-60px)] bg-backgroundSecondary">
               <div className="flex flex-col space-y-4">
                 <div>
                   <button
