@@ -1,28 +1,6 @@
 import Image from "next/image"
 import SectionBadge from "@/components/ui/section-badge"
-
-/* ───────── Card 1: Maximum Security (gradient bg, text only) ───────── */
-function MaxSecurityCard() {
-  return (
-    <div
-      className="border border-borderLight rounded-3xl overflow-hidden flex flex-col items-start justify-end p-[30px] min-h-[400px] lg:h-[423px]"
-      style={{
-        backgroundImage:
-          "linear-gradient(-52deg, rgb(47, 99, 236) 18%, rgb(4, 57, 199) 82%)",
-      }}
-    >
-      <div className="flex flex-col gap-[18px]">
-        <h3 className="text-[22px] font-medium text-textPrimary leading-[24px] tracking-tight">
-          Maximum security
-        </h3>
-        <p className="text-sm text-textSecondary leading-relaxed tracking-tight">
-          Your vault shares can be stored anywhere without risk. No single piece
-          can compromise your funds.
-        </p>
-      </div>
-    </div>
-  )
-}
+import MaxSecurityCard from "@/components/max-security-card"
 
 /* ───────── Card 2: M-of-N Signing ───────── */
 function MofNCard() {
