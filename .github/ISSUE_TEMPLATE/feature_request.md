@@ -1,25 +1,22 @@
 ---
 name: Feature Request
 about: Request a new feature for agent or human implementation
-title: "[Add] "
 labels: enhancement
-assignees: ''
 ---
 
-<!-- Agent-ready issue template. Fill as much as you can — the more detail, the faster the implementation. -->
-
----
+<!-- Fill in the AGENT block: priority = critical|high|medium|low, size = tiny|small|medium -->
+<!-- AGENT
 type: "feature"
-priority: ""              <!-- critical | high | medium | low -->
-size: ""                  <!-- tiny (1 file) | small (1-3 files) | medium (3-8 files) -->
-platform: [docs]
+priority: ""
+size: ""
+platform: [web]
 files:
-  read: []                <!-- Files for context -->
-  write: []               <!-- Files to create or modify -->
-verify: ["yarn build"]
----
+  read: []
+  write: []
+verify: ["npm run build"]
+-->
 
-# [Add] <what to build> [<screen/area>]
+# [Add/Implement] [WHAT] [WHERE]
 
 ## Problem
 <!-- 2-3 sentences. What's missing or suboptimal? -->
@@ -37,13 +34,27 @@ verify: ["yarn build"]
 - [ ] <!-- Specific deliverable 3 -->
 
 ### Must NOT Do
-- Don't change existing behavior
-- Don't add extra dependencies without approval
+- <!-- Don't change existing behavior -->
+- <!-- Don't add extra dependencies without approval -->
 
 ### Out of Scope
-- <!-- Related but separate work — future issue -->
+- <!-- Related but separate work → future issue -->
 
 ## Acceptance Criteria
-- [ ] `yarn build` succeeds
+- [ ] `npm run build` succeeds
+- [ ] `npm run lint` passes
 - [ ] <!-- Specific behavior check 1 -->
 - [ ] <!-- Specific behavior check 2 -->
+
+## Examples
+
+**Input:**
+```text
+```
+
+**Output:**
+```text
+```
+
+## Technical Notes
+<!-- Architecture decisions, gotchas, related code patterns. Optional. -->

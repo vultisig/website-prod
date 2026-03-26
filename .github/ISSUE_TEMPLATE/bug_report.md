@@ -1,25 +1,22 @@
 ---
 name: Bug Report
 about: Report a bug for agent or human resolution
-title: "[Fix] "
 labels: bug
-assignees: ''
 ---
 
-<!-- Agent-ready issue template. Fill as much as you can — the more detail, the faster the fix. -->
-
----
+<!-- Fill in the AGENT block: priority = critical|high|medium|low, size = tiny|small|medium -->
+<!-- AGENT
 type: "bugfix"
-priority: ""              <!-- critical | high | medium | low -->
-size: ""                  <!-- tiny (1 file) | small (1-3 files) | medium (3-8 files) -->
-platform: [docs]
+priority: ""
+size: ""
+platform: [web]
 files:
-  read: []                <!-- Files the fixer should read for context -->
-  write: []               <!-- Files that need to be modified -->
-verify: ["yarn build"]
----
+  read: []
+  write: []
+verify: ["npm run build"]
+-->
 
-# [Fix] <what's broken> [<screen/area>]
+# [Fix] [WHAT] [WHERE]
 
 ## Problem
 <!-- 2-3 sentences. What's broken? Who's affected? -->
@@ -35,7 +32,7 @@ verify: ["yarn build"]
 3.
 
 ## Solution
-<!-- 1 paragraph. WHAT to do and WHY this approach. Leave blank if unsure. -->
+<!-- 1 paragraph. WHAT to do and WHY this approach. Not implementation details. -->
 
 
 ## Scope
@@ -45,10 +42,20 @@ verify: ["yarn build"]
 - [ ] <!-- Specific fix 2 -->
 
 ### Must NOT Do
-- Don't change unrelated code
-- Don't refactor surrounding logic
+- <!-- Don't refactor unrelated code -->
+- <!-- Don't change public API surface -->
 
 ## Acceptance Criteria
-- [ ] `yarn build` succeeds
-- [ ] <!-- Specific behavior check 1 -->
-- [ ] <!-- Specific behavior check 2 -->
+- [ ] `npm run build` succeeds
+- [ ] `npm run lint` passes
+- [ ] <!-- Specific behavior check -->
+
+## Examples
+
+**Before:**
+```text
+```
+
+**After:**
+```text
+```
