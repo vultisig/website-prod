@@ -16,31 +16,32 @@ import { cn, MOTION_CONSTANTS } from "@/lib/utils"
 export default function Hero() {
   return (
     <section className="min-h-screen relative">
-      <div className="space-y-6 pt-16 container z-10 relative">
-        <h1 className="text-4xl md:text-7xl max-w-2xl font-medium tracking-tight motion-preset-slide-up-md">
-          The Free Open-Source MPC Wallet For Everyone
-        </h1>
-
-        <p className="text-sm md:text-lg text-textSecondary max-w-[34rem] motion-preset-slide-up-md motion-delay-200">
-          Split signing power across your devices. No seed phrases, no single
-          point of failure, no company holding your keys. Vultisig uses
-          threshold signatures so your crypto stays yours.
-        </p>
-        <div className="flex gap-4 pt-4 motion-preset-slide-up-md motion-delay-400">
-          <Button variant={"primaryBlue"} className="md:h-12 md:px-8">
-            <DownloadIcon /> Download App
-          </Button>
-          <Button variant="secondary" className="md:h-12 md:px-8">
-            How It Works
-            <ArrowRightIcon />
-          </Button>
+      <div className="w-full lg:flex container">
+        <div className="space-y-6 z-10 relative pt-16 lg:min-w-[640px]">
+          <h1 className="text-4xl md:text-7xl max-w-2xl font-medium tracking-tight motion-preset-slide-up-md">
+            The Free Open-Source MPC Wallet For Everyone
+          </h1>
+          <p className="text-sm md:text-lg text-textSecondary max-w-[34rem] motion-preset-slide-up-md motion-delay-200">
+            Split signing power across your devices. No seed phrases, no single
+            point of failure, no company holding your keys. Vultisig uses
+            threshold signatures so your crypto stays yours.
+          </p>
+          <div className="flex gap-4 pt-4 motion-preset-slide-up-md motion-delay-400">
+            <Button variant={"primaryBlue"} className="md:h-12 md:px-8">
+              <DownloadIcon /> Download App
+            </Button>
+            <Button variant="secondary" className="md:h-12 md:px-8">
+              How It Works
+              <ArrowRightIcon />
+            </Button>
+          </div>
         </div>
+        <Image
+          src={heroImage}
+          alt="Vultisig Hero"
+          className="w-full h-auto rounded-lg max-lg:absolute max-lg:top-0 max-lg:right-0 object-cover object-right max-w-2xl opacity-50 md:opacity-90 md:-ml-4"
+        />
       </div>
-      <Image
-        src={heroImage}
-        alt="Vultisig Hero"
-        className="w-full h-auto rounded-lg absolute top-0 right-0 object-cover object-right max-w-2xl opacity-50 md:opacity-90"
-      />
 
       {/* Problems Section */}
       <div className="py-20 md:mt-40 container relative">

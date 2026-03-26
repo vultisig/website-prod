@@ -33,6 +33,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Brockmann", "Arial", "Helvetica", "sans-serif"],
         default: ["Brockmann", "Arial", "Helvetica", "sans-serif"],
+        satoshi: ["Satoshi", "sans-serif"],
       },
       fontWeight: {
         normal: "400",
@@ -89,12 +90,22 @@ const config: Config = {
           700: "#1d4ed8",
         },
         borderLight: "#11284a",
+        borderNormal: "#1B3F73",
         textPrimary: "#F0F4FC",
         textSecondary: "#C9D6E8",
         textTertiary: "#8295AE",
         primaryAccent: "hsl(var(--primary-accent))",
+        primaryAccent2: "hsl(var(--primary-accent-2))",
         alertInfo: "#5CA7FF",
         secondaryAccent: "#33E6BF",
+        deepBlue: "#0439C7",
+        primaryBlue: "#0b4eff",
+        tealDark: "#092e3e",
+        cardSurface: "#0B1B3B",
+        iconBg: "#193B7A",
+        divider: "#284570",
+        mpcBgDark: "#0a1423",
+        mpcBgMid: "#0d1a2d",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -117,6 +128,11 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-hero":
+          "linear-gradient(180deg, #02122b 0%, #061b3a 50%, #02122b 100%)",
+        "gradient-mpc": "linear-gradient(to bottom, #0a1423, #0d1a2d, #0a1423)",
+        "gradient-card":
+          "linear-gradient(to bottom, hsl(var(--background)), hsl(var(--background-secondary)))",
       },
     },
   },

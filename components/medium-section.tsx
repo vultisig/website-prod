@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import SectionBadge from "@/components/ui/section-badge"
 
 interface Article {
   title: string
@@ -28,10 +29,70 @@ interface InternalArticle {
   image?: string
 }
 
+function ArticleCard({
+  article,
+  index,
+}: {
+  article: Article
+  index: number
+}) {
+  const cardContent = (
+    <>
+      <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6 overflow-hidden">
+        <img
+          src={article.image || "/images/placeholder-article.svg"}
+          alt={article.title}
+          width="800"
+          height="450"
+          className="w-full h-full max-w-full object-cover"
+        />
+      </div>
+      <div className="flex flex-col flex-1">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-3 leading-tight">
+          {article.title}
+        </h3>
+        <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
+          {article.description}
+        </p>
+        <p className="text-gray-400 text-sm italic mt-auto">{article.date}</p>
+      </div>
+    </>
+  )
+
+  const cardClasses = `
+    bg-backgroundSecondary
+    border border-borderLight
+    hover:border-primary
+    rounded-2xl p-4 sm:p-6
+    transition-colors cursor-pointer
+    flex flex-col
+    block
+  `
+
+  if (article.isInternal) {
+    return (
+      <Link key={index} href={article.link} className={cardClasses}>
+        {cardContent}
+      </Link>
+    )
+  }
+
+  return (
+    <a
+      key={index}
+      href={article.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cardClasses}
+    >
+      {cardContent}
+    </a>
+  )
+}
+
 export default function MediumSection() {
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
-  const [source, setSource] = useState<"internal" | "medium">("medium")
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -60,7 +121,6 @@ export default function MediumSection() {
                 isInternal: true,
               }))
             setArticles(formatted)
-            setSource("internal")
             return
           }
         }
@@ -106,7 +166,6 @@ export default function MediumSection() {
               }
             })
           setArticles(formatted)
-          setSource("medium")
         } else {
           setFallbackArticles()
         }
@@ -145,96 +204,29 @@ export default function MediumSection() {
           isInternal: false,
         },
       ])
-      setSource("medium")
     }
 
     fetchArticles()
   }, [])
 
-  const ArticleCard = ({
-    article,
-    index,
-  }: {
-    article: Article
-    index: number
-  }) => {
-    const cardContent = (
-      <>
-        <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6 overflow-hidden">
-          <img
-            src={article.image || "/images/placeholder-article.svg"}
-            alt={article.title}
-            width="800"
-            height="450"
-            className="w-full h-full max-w-full object-cover"
-            // onError={(e) => {
-            //   const target = e.target as HTMLImageElement
-            //   target.src = "/images/placeholder-article.svg"
-            // }}
-          />
-        </div>
-        <div className="flex flex-col flex-1">
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-3 leading-tight">
-            {article.title}
-          </h3>
-          <p className="text-gray-300 text-sm leading-relaxed mb-4 flex-1">
-            {article.description}
-          </p>
-          <p className="text-gray-400 text-sm italic mt-auto">{article.date}</p>
-        </div>
-      </>
-    )
-
-    const cardClasses = `
-      bg-[var(--background-secondary)]
-      border border-borderLight
-      hover:border-[var(--border-color)]
-      rounded-2xl p-4 sm:p-6
-      transition-colors cursor-pointer
-      flex flex-col
-      block
-    `
-
-    if (article.isInternal) {
-      return (
-        <Link key={index} href={article.link} className={cardClasses}>
-          {cardContent}
-        </Link>
-      )
-    }
-
-    return (
-      <a
-        key={index}
-        href={article.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cardClasses}
-      >
-        {cardContent}
-      </a>
-    )
-  }
-
   return (
     <section className="py-10 container">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-          {source === "internal" ? (
-            <>
-              Latest <span className="text-cyan-400">Articles</span>
-            </>
-          ) : (
-            <>
-              Explore More on <span className="text-cyan-400">Medium</span>
-            </>
-          )}
+      <div className="mb-16">
+        <div className="mb-4">
+          <SectionBadge label="Articles" />
+        </div>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+          Explore More on{" "}
+          <span
+            className="bg-clip-text text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(64deg, #33E6BF, #0439C7)",
+            }}
+          >
+            Medium
+          </span>
         </h2>
-        <p className="text-gray-300 text-lg sm:text-xl">
-          Behind the vault: Insights, partnerships, and product updates{" "}
-          <br className="hidden sm:block" />
-          from the team building Vultisig.
-        </p>
       </div>
 
       {loading && (
@@ -243,7 +235,7 @@ export default function MediumSection() {
             <div
               key={index}
               className="
-                  bg-[var(--background-secondary)]
+                  bg-backgroundSecondary
                   border border-borderLight
                   rounded-2xl p-4 sm:p-6
                   animate-pulse
@@ -262,37 +254,11 @@ export default function MediumSection() {
       )}
 
       {!loading && (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {articles.map((article, index) => (
-              <ArticleCard key={index} article={article} index={index} />
-            ))}
-          </div>
-
-          {source === "internal" && (
-            <div className="text-center mt-10">
-              <Link
-                href="/articles"
-                className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-              >
-                View all articles
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </Link>
-            </div>
-          )}
-        </>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {articles.map((article, index) => (
+            <ArticleCard key={index} article={article} index={index} />
+          ))}
+        </div>
       )}
     </section>
   )

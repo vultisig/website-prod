@@ -1,29 +1,23 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import {
-  ChevronDown,
-  Menu,
-  X,
-  Phone,
-  Laptop,
-  Monitor,
-  Puzzle,
-} from "lucide-react"
+import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import Image from "next/image"
+import { cn } from "@/lib/utils"
+import { ChevronDown, Menu, X } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { HiOutlineComputerDesktop } from "react-icons/hi2"
+import { IoExtensionPuzzleOutline } from "react-icons/io5"
+import { LuTabletSmartphone } from "react-icons/lu"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
-  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
   const [isAtTop, setIsAtTop] = useState(true)
   const pathname = usePathname()
   const isAtTopRef = useRef(true)
@@ -49,19 +43,19 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2"
-        } `}
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2",
+        )}
       >
         <div
-          className={`transition-all duration-300 w-full bg-backgroundSecondary/90 backdrop-blur-md border
-          ${
+          className={cn(
+            "transition-all duration-300 w-full border-transparent rounded-2xl lg:max-w-7xl lg:mx-auto",
             isAtTop
-              ? "px-4 lg:px-8 border-transparent rounded-none lg:bg-transparent lg:backdrop-blur-0 lg:border-transparent"
-              : "border-slate-700 rounded-2xl px-6 py-3"
-          }
-          lg:max-w-7xl lg:mx-auto
-        `}
+              ? "px-4 lg:px-8"
+              : "border border-borderLight px-6 py-3 bg-foreground/5 backdrop-blur-md",
+            isOpen && "max-lg:bg-backgroundSecondary",
+          )}
         >
           <div className="flex justify-between items-center">
             <a href="/" className="flex items-center">
@@ -71,190 +65,52 @@ export default function Navbar() {
                 width={25}
                 height={25}
               />
-              <span className="text-white text-xl font-semibold pl-3">
-                Vultisig
-              </span>
+              <span className="text-xl font-semibold pl-3">Vultisig</span>
             </a>
 
-            <div className="hidden lg:flex items-center">
+            <div className="hidden lg:flex items-center gap-10">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <div className="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                  <div className="flex items-center text-textSecondary hover:text-white cursor-pointer">
                     <span>Products</span>
                     <ChevronDown className="ml-1 h-4 w-4" />
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="start"
-                  className="bg-[var(--background-secondary)] border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[220px]"
+                  className="bg-backgroundSecondary border border-borderLight shadow-lg rounded-xl p-2 min-w-[220px]"
                 >
-                  <a
-                    href="/downloads"
-                    className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                  >
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                      <Image
-                        src="/images/navbar-product-1.png"
-                        alt="Apps"
-                        width={28}
-                        height={28}
-                      />
-                    </div>
-                    <span className="font-medium">Vultisig Apps</span>
-                  </a>
-                  <a
-                    href="/downloads"
-                    className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                  >
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                      <Image
-                        src="/images/navbar-product-4.png"
-                        alt="Extension"
-                        width={28}
-                        height={28}
-                      />
-                    </div>
-                    <span className="font-medium">Vultisig Extension</span>
-                  </a>
-                  <a
-                    href="/downloads"
-                    className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                  >
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                      <Image
-                        src="/images/navbar-product-3.png"
-                        alt="Web"
-                        width={28}
-                        height={28}
-                      />
-                    </div>
-                    <span className="font-medium">Vultisig Web</span>
-                  </a>
-                  {/* <a href="/downloads" className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors">
-                    <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                      <Image src="/images/navbar-product-3.png" alt="Windows" width={28} height={28} />
-                    </div>
-                    <span className="font-medium">Vultisig Windows</span>
-                  </a> */}
+                  {products.map((product) => (
+                    <Link
+                      key={product.name}
+                      href={product.href}
+                      className="flex items-center gap-3 p-2 pr-4 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                    >
+                      <div className="size-10 bg-primaryAccent/10 text-alertInfo rounded-lg flex items-center justify-center">
+                        <product.icon size={22} />
+                      </div>
+                      <span className="font-medium">{product.name}</span>
+                    </Link>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-              <a
-                href="/how-it-works"
-                className="text-gray-300 hover:text-white ml-8"
-              >
-                How It Works
-              </a>
-              {/* <a href="#" className="text-gray-300 hover:text-white ml-8">
-                Backed By
-              </a> */}
-              <a href="/vult" className="text-gray-300 hover:text-white ml-8">
-                $VULT
-              </a>
-              <a
-                href="/articles"
-                className="text-gray-300 hover:text-white ml-8"
-              >
-                Articles
-              </a>
-              <a
-                href="https://docs.vultisig.com"
-                className="text-gray-300 hover:text-white ml-8"
-              >
-                Docs
-              </a>
-
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <div className="flex items-center text-gray-300 hover:text-white cursor-pointer ml-8">
-                    <span>Solutions</span>
-                    <ChevronDown className="ml-1 h-4 w-4" />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="bg-[var(--background-secondary)] border border-[var(--border-color)] shadow-lg rounded-xl p-2 min-w-[340px]">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-1.png" alt="Funds & Treasuries" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Funds & Treasuries</div>
-                        <div className="text-xs text-gray-300">Institutional grade security with cross-chain support</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-2.png" alt="Whales" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Whales</div>
-                        <div className="text-xs text-gray-300">Protect and grow wealth across generations</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-3.png" alt="Payroll" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Payroll</div>
-                        <div className="text-xs text-gray-300">Automate cross-chain payroll operations</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-4.png" alt="Retail" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Retail</div>
-                        <div className="text-xs text-gray-300">One wallet for all of crypto</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-5.png" alt="DAOs" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">DAOs</div>
-                        <div className="text-xs text-gray-300">Cross-chain multisig powered by Thorchain</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-6.png" alt="Financial Advisors" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Financial Advisors</div>
-                        <div className="text-xs text-gray-300">Premier cross-chain wallet for your clients</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-7.png" alt="Ai Agents" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Ai Agents</div>
-                        <div className="text-xs text-gray-300">Ai-enhanced MPC wallet infrastructure</div>
-                      </div>
-                    </div>
-                  </div>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
+              <NavLinks />
             </div>
 
-            <div className="hidden lg:block">
-              <a
-                href="/downloads"
-                className="text-gray-300 hover:text-white ml-8"
-              >
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
-                  Download App
-                </Button>
-              </a>
-            </div>
+            <Link
+              href="/downloads"
+              className={cn(
+                buttonVariants({ variant: "primaryBlue" }),
+                "max-lg:hidden",
+              )}
+            >
+              Download App
+            </Link>
 
             <div className="lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-300 hover:text-white p-2"
+                className="text-textSecondary hover:text-white p-2"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
               >
                 {isOpen ? (
@@ -268,189 +124,52 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="lg:hidden mt-4 pb-4 border-t border-slate-700 pt-4">
+            <div className="lg:hidden mt-4 py-4 border-t border-borderLight min-h-[calc(100vh-60px)] bg-backgroundSecondary">
               <div className="flex flex-col space-y-4">
-                <button
-                  className="flex items-center text-gray-300 hover:text-white cursor-pointer py-2 focus:outline-none"
-                  onClick={() => setMobileProductsOpen((v) => !v)}
-                  aria-expanded={mobileProductsOpen}
-                  aria-controls="mobile-products-menu"
-                  type="button"
-                >
-                  <span>Products</span>
-                  <ChevronDown
-                    className={`ml-1 h-4 w-4 transition-transform duration-200 ${mobileProductsOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-                {mobileProductsOpen && (
-                  <div
-                    id="mobile-products-menu"
-                    className="flex flex-col gap-1 pl-6"
+                <div>
+                  <button
+                    className="flex items-center text-textSecondary hover:text-white cursor-pointer py-2 focus:outline-none"
+                    onClick={() => setMobileProductsOpen((v) => !v)}
+                    aria-expanded={mobileProductsOpen}
+                    aria-controls="mobile-products-menu"
+                    type="button"
                   >
-                    <a
-                      href="/downloads"
-                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                    <span>Products</span>
+                    <ChevronDown
+                      className={`ml-1 size-4 transition-transform duration-200 ${mobileProductsOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {mobileProductsOpen && (
+                    <div
+                      id="mobile-products-menu"
+                      className="flex flex-col gap-1 pl-2"
                     >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image
-                          src="/images/navbar-product-1.png"
-                          alt="Mobile App"
-                          width={28}
-                          height={28}
-                        />
-                      </div>
-                      <span className="font-medium">Vultisig Mobile App</span>
-                    </a>
-                    <a
-                      href="/downloads"
-                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                    >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image
-                          src="/images/navbar-product-2.png"
-                          alt="macOS"
-                          width={28}
-                          height={28}
-                        />
-                      </div>
-                      <span className="font-medium">Vultisig macOS</span>
-                    </a>
-                    <a
-                      href="/downloads"
-                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                    >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image
-                          src="/images/navbar-product-3.png"
-                          alt="Windows"
-                          width={28}
-                          height={28}
-                        />
-                      </div>
-                      <span className="font-medium">Vultisig Windows</span>
-                    </a>
-                    <a
-                      href="/downloads"
-                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                    >
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image
-                          src="/images/navbar-product-4.png"
-                          alt="Extension"
-                          width={28}
-                          height={28}
-                        />
-                      </div>
-                      <span className="font-medium">Vultisig Extension</span>
-                    </a>
-                  </div>
+                      {products.map((product) => (
+                        <Link
+                          key={product.name}
+                          href={product.href}
+                          className="flex items-center gap-3 p-2 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
+                        >
+                          <div className="size-10 bg-primaryAccent/10 text-alertInfo rounded-lg flex items-center justify-center">
+                            <product.icon size={22} />
+                          </div>
+                          <span className="font-medium">{product.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <NavLinks />
+              </div>
+              <Link
+                href="/downloads"
+                className={cn(
+                  buttonVariants({ variant: "primaryBlue" }),
+                  "mt-2 w-full",
                 )}
-                {/* <button
-                  className="flex items-center text-gray-300 hover:text-white cursor-pointer py-2 focus:outline-none"
-                  onClick={() => setMobileSolutionsOpen((v) => !v)}
-                  aria-expanded={mobileSolutionsOpen}
-                  aria-controls="mobile-solutions-menu"
-                  type="button"
-                >
-                  <span>Solutions</span>
-                  <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {mobileSolutionsOpen && (
-                  <div id="mobile-solutions-menu" className="flex flex-col gap-1 pl-6">
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-1.png" alt="Funds & Treasuries" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Funds & Treasuries</div>
-                        <div className="text-xs text-gray-300">Institutional grade security with cross-chain support</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-2.png" alt="Whales" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Whales</div>
-                        <div className="text-xs text-gray-300">Protect and grow wealth across generations</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-3.png" alt="Payroll" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Payroll</div>
-                        <div className="text-xs text-gray-300">Automate cross-chain payroll operations</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-4.png" alt="Retail" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Retail</div>
-                        <div className="text-xs text-gray-300">One wallet for all of crypto</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-5.png" alt="DAOs" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">DAOs</div>
-                        <div className="text-xs text-gray-300">Cross-chain multisig powered by Thorchain</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-6.png" alt="Financial Advisors" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Financial Advisors</div>
-                        <div className="text-xs text-gray-300">Premier cross-chain wallet for your clients</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 px-3 py-3 rounded-lg text-white hover:bg-blue-900/40 transition-colors max-w-xs break-words">
-                      <div className="w-10 h-10 bg-[#193B7A] rounded-lg flex items-center justify-center">
-                        <Image src="/images/navbar-solution-7.png" alt="Ai Agents" width={28} height={28} />
-                      </div>
-                      <div>
-                        <div className="font-medium">Ai Agents</div>
-                        <div className="text-xs text-gray-300">Ai-enhanced MPC wallet infrastructure</div>
-                      </div>
-                    </div>
-                  </div>
-                )} */}
-                <a
-                  href="/how-it-works"
-                  className="text-gray-300 hover:text-white py-2"
-                >
-                  How It Works
-                </a>
-                {/* <a href="#" className="text-gray-300 hover:text-white py-2">
-                  Backed By
-                </a> */}
-                <a href="/docs" className="text-gray-300 hover:text-white py-2">
-                  Docs
-                </a>
-                <a href="/vult" className="text-gray-300 hover:text-white py-2">
-                  $VULT
-                </a>
-                <a
-                  href="/articles"
-                  className="text-gray-300 hover:text-white py-2"
-                >
-                  Articles
-                </a>
-              </div>
-              <div className="pt-2">
-                <a href="/downloads" className="text-gray-300 hover:text-white">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg w-full">
-                    Download App
-                  </Button>
-                </a>
-              </div>
+              >
+                Download App
+              </Link>
             </div>
           )}
         </div>
@@ -458,3 +177,62 @@ export default function Navbar() {
     </>
   )
 }
+
+function NavLinks() {
+  const pathname = usePathname()
+
+  return (
+    <>
+      {parentLinks.map((link) => (
+        <Link
+          key={link.name}
+          href={link.href}
+          className={cn(
+            "text-textSecondary hover:text-white py-2",
+            pathname.startsWith(link.href) &&
+              "text-white font-semibold tracking-wide",
+          )}
+        >
+          {link.name}
+        </Link>
+      ))}
+    </>
+  )
+}
+
+const products = [
+  {
+    name: "Vultisig Apps",
+    href: "/downloads?tab=mobile",
+    icon: LuTabletSmartphone,
+  },
+  {
+    name: "Vultisig Extension",
+    href: "/downloads?tab=browser",
+    icon: IoExtensionPuzzleOutline,
+  },
+  {
+    name: "Vultisig Web",
+    href: "/downloads?tab=mobile",
+    icon: HiOutlineComputerDesktop,
+  },
+]
+
+const parentLinks = [
+  {
+    name: "How It Works",
+    href: "/how-it-works",
+  },
+  {
+    name: "MPC Wallet",
+    href: "/mpc",
+  },
+  {
+    name: "Articles",
+    href: "/articles",
+  },
+  {
+    name: "$VULT",
+    href: "/vult",
+  },
+]

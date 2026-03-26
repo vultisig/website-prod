@@ -50,9 +50,13 @@ export async function GET() {
     const gplayModule = await import('google-play-scraper')
     const storeModule = await import('app-store-scraper')
 
+    // google-play-scraper exports under .default, app-store-scraper exports directly
+    const gplay = (gplayModule as any).default ?? gplayModule
+    const appStore = (storeModule as any).default ?? storeModule
+
     const [googleReviews, appleReviews] = await Promise.allSettled([
       // Fetch Google Play reviews
-      (gplayModule as any).default.reviews({
+      gplay.reviews({
         appId: GOOGLE_PLAY_APP_ID,
         sort: 2, // NEWEST = 2
         num: 50, // Fetch more to filter for 5-star reviews
@@ -60,9 +64,9 @@ export async function GET() {
         country: 'us'
       }),
       // Fetch Apple App Store reviews
-      (storeModule as any).default.reviews({
+      appStore.reviews({
         id: APPLE_APP_ID,
-        sort: 'mostRecent',
+        sort: appStore.sort?.RECENT ?? 'mostRecent',
         page: 1
       })
     ])

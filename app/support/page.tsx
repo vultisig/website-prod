@@ -1,10 +1,9 @@
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
 } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import type { Metadata } from "next"
 
@@ -112,8 +111,8 @@ export default function FAQPage() {
           {/* Desktop Grid */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Card 1: Contact support */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-1.svg"
                   className="w-5 h-5 object-contain"
@@ -137,8 +136,8 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 2: User Support */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-2.svg"
                   className="w-5 h-5 object-contain"
@@ -163,8 +162,8 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 3: Read the docs */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-3.svg"
                   className="w-5 h-5 object-contain"
@@ -187,8 +186,8 @@ export default function FAQPage() {
             </Card>
 
             {/* Card 4: Vulti Holdings Limited */}
-            <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
+              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                 <img
                   src="/images/faq-4.svg"
                   className="w-5 h-5 object-contain"
@@ -216,8 +215,8 @@ export default function FAQPage() {
           <div className="md:hidden">
             <div className="flex overflow-x-auto gap-4 mb-6 xs:mb-7 sm:mb-8 w-full px-1 -mx-1 snap-x snap-mandatory carousel-scrollbar">
               {/* Card 1: Contact support */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-1.svg"
                     className="w-5 h-5 object-contain"
@@ -241,8 +240,8 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 2: User Support */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-2.svg"
                     className="w-5 h-5 object-contain"
@@ -267,8 +266,8 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 3: Read the docs */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-3.svg"
                     className="w-5 h-5 object-contain"
@@ -291,8 +290,8 @@ export default function FAQPage() {
               </Card>
 
               {/* Card 4: Vulti Holdings Limited */}
-              <Card className="bg-[#0B1B3B] border border-[var(--border-light)] rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-[#193B7A] rounded-lg flex items-center justify-center mb-3 xs:mb-4">
+              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
+                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
                   <img
                     src="/images/faq-4.svg"
                     className="w-5 h-5 object-contain"
@@ -332,12 +331,12 @@ export default function FAQPage() {
               >
                 <AccordionItem
                   value="faq-1"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What is Vultisig?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     It is a secure, multi-authentication wallet based on MPC
                     technology that is used to manage digital assets.
                     Transactions require approval from multiple devices.
@@ -345,12 +344,12 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-2"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What are the benefits of using Vultisig?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     Vultisig offers enhanced security with multi-device
                     authentication, support for many blockchains, easy recovery
                     options, and no seed phrases or user tracking.
@@ -358,12 +357,12 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-3"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     Can I recover my assets if I lose a device?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     Yes, as long as you saved and have access to your backups
                     when creating the vault. You can import these backups on a
                     new device to regain access to your assets.
@@ -371,12 +370,12 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-4"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How is Vultisig used?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     Vultisig securely stores and manages digital assets. All
                     actions, such as sending or swapping, require the threshold
                     of devices to sign transactions.
@@ -384,12 +383,12 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-5"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What are the fees and costs?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     Vultisig is free to use. Only standard network fees apply to
                     sending. And for swaps and bridges, there's a 0.5% (50 bps)
                     fee.
@@ -397,24 +396,24 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-6"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What cryptocurrencies are supported by Vultisig?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     Vultisig supports major cryptocurrencies and tokens, with
                     over 30 chains and their tokens, currently available.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem
                   value="faq-7"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     Is Vultisig open source and audited?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     Yes, Vultisig is open source and has undergone security
                     audits. Both the audit reports and the source code are
                     accessible.
@@ -422,53 +421,30 @@ export default function FAQPage() {
                 </AccordionItem>
                 <AccordionItem
                   value="faq-8"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How does Vultisig handle privacy and data protection?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     Vultisig does not store any user information from its mobile
                     apps.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem
                   value="faq-9"
-                  className="bg-[var(--background-secondary)] rounded-xl border-none"
+                  className="bg-backgroundSecondary rounded-xl border-none"
                 >
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How does Vultisig compare to other multisig wallets?
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
                     It is built on MPC technology, which eliminates the need for
                     seed phrases and supports multiple blockchains, making
                     Vultisig flexible and chain-agnostic.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </div>
-          </div>
-        </section>
-
-        {/* Discord section */}
-        <section id="discord" className="py-12 px-4">
-          <div className="container">
-            <div className="flex justify-center items-center mt-8">
-              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                <h3 className="text-xl sm:text-2xl font-bold text-white text-center">
-                  JOIN THE DISCORD TO REQUEST NEW FEATURES!
-                </h3>
-                <a
-                  href="https://discord.gg/thq64eaYVN"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full md:w-auto"
-                >
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg w-full md:w-auto">
-                    DISCORD
-                  </Button>
-                </a>
-              </div>
             </div>
           </div>
         </section>

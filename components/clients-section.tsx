@@ -5,9 +5,24 @@ import Image from "next/image"
 
 export default function ClientsSection() {
   const clients = [
-    { name: "DeFi Suisse", image: "/images/defi-suisse-logo.webp", width: 353, height: 92 },
-    { name: "THORChain", image: "/images/thorchain-logo.webp", width: 300, height: 64 },
-    { name: "Rujira", image: "/images/rujira-logo.webp", width: 383, height: 92 },
+    {
+      name: "DeFi Suisse",
+      image: "/images/defi-suisse-logo.webp",
+      width: 353,
+      height: 92,
+    },
+    {
+      name: "THORChain",
+      image: "/images/thorchain-logo.webp",
+      width: 300,
+      height: 64,
+    },
+    {
+      name: "Rujira",
+      image: "/images/rujira-logo.webp",
+      width: 383,
+      height: 92,
+    },
   ]
 
   const setRef = useRef<HTMLDivElement>(null)
@@ -61,7 +76,7 @@ export default function ClientsSection() {
   return (
     <section className="py-12 px-4">
       <div className="container text-center mb-12">
-        <p className="text-gray-300 text-base sm:text-lg">
+        <p className="text-textSecondary text-base sm:text-lg">
           Vultisig Vaults are battle-tested and trusted by thousands of users,
           <br className="hidden sm:block" />
           with numbers growing daily.
@@ -74,9 +89,9 @@ export default function ClientsSection() {
           style={
             setWidth > 0
               ? {
-                width: `${setWidth * repeatCount}px`,
-                animation: `scrollClients 10s linear infinite`,
-              }
+                  width: `${setWidth * repeatCount}px`,
+                  animation: `scrollClients 10s linear infinite`,
+                }
               : undefined
           }
         >
