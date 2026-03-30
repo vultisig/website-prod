@@ -13,6 +13,8 @@ export default function HeroMockup() {
         src="/images/hero/bg.png"
         alt="Hero Mockup"
         fill
+        priority
+        sizes="(max-width: 1024px) 100vw, 53vw"
         className="absolute left-[4%] top-0 h-full object-contain"
       />
 

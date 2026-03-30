@@ -1,8 +1,10 @@
 User-agent: *
 Allow: /
+Allow: /_next/static/
+Disallow: /_next/data/
 Disallow: /api/
-Disallow: /_next/
 Disallow: /admin/
+Disallow: /articles/admin/
 
 Sitemap: https://vultisig.com/sitemap.xml
 
