@@ -8,10 +8,17 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'recharts', 'motion', 'react-icons'],
+  },
   async headers() {
     return [
       { source: '/fonts/:path*', headers: cacheOneYear },
       { source: '/images/:path*', headers: cacheOneYear },
+      { source: '/_next/static/:path*', headers: cacheOneYear },
     ]
   },
   async redirects() {

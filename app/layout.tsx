@@ -259,7 +259,6 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
-        <link rel="preconnect" href="https://prod.spline.design" />
         <link rel="dns-prefetch" href="https://static.ads-twitter.com" />
       </head>
       <body
