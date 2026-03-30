@@ -2,9 +2,6 @@
 const cacheOneYear = [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }]
 
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
