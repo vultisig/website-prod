@@ -11,7 +11,6 @@ import { ChevronDown, Menu, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import { HiOutlineComputerDesktop } from "react-icons/hi2"
 import { IoExtensionPuzzleOutline } from "react-icons/io5"
 import { LuTabletSmartphone } from "react-icons/lu"
 
@@ -50,7 +49,7 @@ export default function Navbar() {
       <nav
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2",
+          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2"
         )}
       >
         <div
@@ -59,7 +58,7 @@ export default function Navbar() {
             isAtTop
               ? "px-4 lg:px-8"
               : "border border-borderLight px-6 py-3 bg-foreground/5 backdrop-blur-md",
-            isOpen && "max-lg:bg-backgroundSecondary",
+            isOpen && "max-lg:bg-backgroundSecondary"
           )}
         >
           <div className="flex justify-between items-center">
@@ -106,7 +105,7 @@ export default function Navbar() {
               href="/downloads"
               className={cn(
                 buttonVariants({ variant: "primaryBlue" }),
-                "max-lg:hidden",
+                "max-lg:hidden"
               )}
             >
               Download App
@@ -141,7 +140,9 @@ export default function Navbar() {
                   >
                     <span>Products</span>
                     <ChevronDown
-                      className={`ml-1 size-4 transition-transform duration-200 ${mobileProductsOpen ? "rotate-180" : ""}`}
+                      className={`ml-1 size-4 transition-transform duration-200 ${
+                        mobileProductsOpen ? "rotate-180" : ""
+                      }`}
                     />
                   </button>
                   {mobileProductsOpen && (
@@ -170,7 +171,7 @@ export default function Navbar() {
                 href="/downloads"
                 className={cn(
                   buttonVariants({ variant: "primaryBlue" }),
-                  "mt-2 w-full",
+                  "mt-2 w-full"
                 )}
               >
                 Download App
@@ -195,7 +196,7 @@ function NavLinks() {
           className={cn(
             "text-textSecondary hover:text-white py-2",
             pathname.startsWith(link.href) &&
-              "text-white font-semibold tracking-wide",
+              "text-white font-semibold tracking-wide"
           )}
         >
           {link.name}
@@ -215,11 +216,6 @@ const products = [
     name: "Vultisig Extension",
     href: "/downloads?tab=browser",
     icon: IoExtensionPuzzleOutline,
-  },
-  {
-    name: "Vultisig Web",
-    href: "/downloads?tab=mobile",
-    icon: HiOutlineComputerDesktop,
   },
 ]
 
