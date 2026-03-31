@@ -24,6 +24,11 @@ export default function Navbar() {
   const scrollTicking = useRef(false)
 
   useEffect(() => {
+    setIsOpen(false)
+    setMobileProductsOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
     const handleScroll = () => {
       if (scrollTicking.current) return
       scrollTicking.current = true
