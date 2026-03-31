@@ -12,7 +12,7 @@ import Gtag from "./Gtag"
 import { HashCard } from "./HashCard"
 import extensionPng from "./images/extension.png"
 import mobilePng from "./images/mobile.png"
-import webPng from "./images/web.png"
+// import webPng from "./images/web.png"
 
 const hashes = [
   {
@@ -40,10 +40,10 @@ const hashes = [
 const titleMap = {
   mobile: "Mobile App",
   browser: "Browser Extension",
-  web: "Web",
+  // web: "Web",
 }
 
-const tabs = ["mobile", "browser", "web"] as const
+const tabs = ["mobile", "browser"] as const
 
 export default async function DownloadsPage({
   searchParams,
@@ -116,16 +116,16 @@ const tabContentMap = {
       alt: "Vulticonnect Browser Extension Preview",
     },
   },
-  web: {
-    title: "Vultisig Web",
-    description:
-      "A view only access to your vault and register your Vaults for the airdrop.",
-    channels: ["web"] as const,
-    image: {
-      src: webPng,
-      alt: "Vultisig Web Preview",
-    },
-  },
+  // web: {
+  //   title: "Vultisig Web",
+  //   description:
+  //     "A view only access to your vault and register your Vaults for the airdrop.",
+  //   channels: ["web"] as const,
+  //   image: {
+  //     src: webPng,
+  //     alt: "Vultisig Web Preview",
+  //   },
+  // },
 }
 
 function TabContentDetail({ type }: { type: keyof typeof tabContentMap }) {

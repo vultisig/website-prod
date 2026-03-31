@@ -231,7 +231,7 @@ export default function HowItWorks() {
                 <span className="absolute top-4 right-5 text-7xl font-bold text-primaryBlue/10 leading-none">
                   {step.number}
                 </span>
-                <img src={step.icon} alt="" className="h-9 w-auto" />
+                <img src={step.icon} alt="" className="h-9 w-auto self-start" />
                 <h3 className="text-lg font-semibold text-white">
                   {step.title}
                 </h3>

@@ -79,15 +79,15 @@ export const channels = {
     label: "Chrome",
     labelClass: "text-xs",
   },
-  web: {
-    href: "https://airdrop.vultisig.com/",
-    platform: null,
-    icon: "/images/vultiweb-logo.svg",
-    iconAlt: "Web App",
-    iconClass: "h-10 w-auto",
-    label: "Web App",
-    labelClass: "text-xs",
-  },
+  // web: {
+  //   href: "https://airdrop.vultisig.com/",
+  //   platform: null,
+  //   icon: "/images/vultiweb-logo.svg",
+  //   iconAlt: "Web App",
+  //   iconClass: "h-10 w-auto",
+  //   label: "Web App",
+  //   labelClass: "text-xs",
+  // },
 } as const
 
 export type ChannelKey = keyof typeof channels
