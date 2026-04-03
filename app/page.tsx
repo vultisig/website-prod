@@ -1,12 +1,17 @@
-import Navbar from "@/components/navbar"
+import dynamic from "next/dynamic"
 import Hero from "@/components/hero"
 import StatsBar from "@/components/stats-bar"
-import FeaturesSection from "@/components/features-section"
-import SetupSection from "@/components/setup-section"
-import BestFeaturesSection from "@/components/best-features-section"
-import EcosystemSection from "@/components/ecosystem-section"
-import MediumSection from "@/components/medium-section"
-import CtaSection from "@/components/cta-section"
+
+const FeaturesSection = dynamic(() => import("@/components/features-section"))
+const SetupSection = dynamic(() => import("@/components/setup-section"))
+const BestFeaturesSection = dynamic(
+  () => import("@/components/best-features-section"),
+)
+const EcosystemSection = dynamic(
+  () => import("@/components/ecosystem-section"),
+)
+const MediumSection = dynamic(() => import("@/components/medium-section"))
+const CtaSection = dynamic(() => import("@/components/cta-section"))
 
 export default function Home() {
   return (
