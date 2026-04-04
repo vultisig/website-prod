@@ -54,7 +54,7 @@ function ArticleCard({
         <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
           {article.description}
         </p>
-        <p className="text-gray-400 text-sm italic mt-auto">{article.date}</p>
+        <p className="text-gray-300 text-sm italic mt-auto">{article.date}</p>
       </div>
     </>
   )

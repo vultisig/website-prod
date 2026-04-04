@@ -57,14 +57,17 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           {article.description}
         </p>
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-300 text-sm">
             {new Date(article.publishedAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </p>
-          <span className="text-blue-400 text-sm group-hover:translate-x-1 transition-transform inline-block">
+          <span
+            aria-hidden="true"
+            className="text-blue-400 text-sm group-hover:translate-x-1 transition-transform inline-block"
+          >
             Read more →
           </span>
         </div>

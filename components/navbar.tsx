@@ -75,10 +75,13 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-10">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <div className="flex items-center text-textSecondary hover:text-white cursor-pointer">
+                  <button
+                    type="button"
+                    className="flex items-center text-textSecondary hover:text-white cursor-pointer bg-transparent border-none"
+                  >
                     <span>Products</span>
                     <ChevronDown className="ml-1 h-4 w-4" />
-                  </div>
+                  </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="start"

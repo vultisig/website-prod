@@ -218,7 +218,7 @@ export default function VultPage() {
         {/* Only show image on md+ screens, use absolute positioning */}
         <div className="hidden md:flex flex-1 justify-center items-center absolute top-[100px] right-[50px] z-0">
           <img
-            src="/images/Token-vult.svg"
+            src="/images/Token-vult.webp"
             alt="VULT token hero illustration"
             width="680"
             height="680"
@@ -516,7 +516,7 @@ export default function VultPage() {
               {/* Icon placeholder - will be replaced with actual icon */}
               <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#FFD700] p-4 bg-gradient-to-br from-blue-500/20 via-green-500/20 via-yellow-500/20 via-orange-500/20 to-pink-500/20 shadow-[0_0_12px_2px_rgba(255,215,0,0.12)]">
                 <img
-                  src="/images/ultimate.svg"
+                  src="/images/ultimate.webp"
                   alt="Ultimate"
                   className="w-full h-full object-contain"
                 />

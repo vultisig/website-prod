@@ -13,7 +13,7 @@ import LoadTailwindIntersect from "@/components/sections/LoadTailwindIntersect"
 const brockmann = localFont({
   style: "normal",
   variable: "--font-brockmann",
-  src: "../public/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff",
+  src: "../public/fonts/brockmann-font-1751459394-0/brockmann-medium-webfont.woff2",
   fallback: ["sans-serif"],
   display: "swap",
 })
@@ -259,7 +259,8 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
-        <link rel="dns-prefetch" href="https://static.ads-twitter.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://static.ads-twitter.com" />
       </head>
       <body
         className={cn(

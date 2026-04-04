@@ -1,6 +1,4 @@
 User-agent: *
-Allow: /
-Allow: /_next/static/
 Disallow: /_next/data/
 Disallow: /api/
 Disallow: /admin/
@@ -10,4 +8,3 @@ Sitemap: https://vultisig.com/sitemap.xml
 
 # AI Agent Discovery
 Llms-Txt: https://vultisig.com/llms.txt
-
