@@ -14,47 +14,52 @@ export default function HeroMockup() {
         alt="Hero Mockup"
         fill
         priority
-        sizes="(max-width: 1024px) 100vw, 53vw"
+        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 658px"
         className="absolute left-[4%] top-0 h-full object-contain"
       />
 
       <Image
         src="/images/hero/vault.svg"
-        alt="Phone Mockup"
+        alt="Vault screen"
         width={125}
         height={250}
+        loading="lazy"
         className="absolute right-[26.3%] top-[30.5%] w-[19%] h-auto"
       />
 
       <Image
         src="/images/hero/holding-vault.svg"
-        alt="Phone Mockup"
+        alt="Holding vault screen"
         width={145}
         height={290}
+        loading="lazy"
         className="absolute left-[25.6%] top-[22.5%] w-[22%] h-auto"
       />
 
       <Image
         src="/images/hero/swap.svg"
-        alt="Phone Mockup"
+        alt="Swap screen"
         width={178}
         height={350}
+        loading="lazy"
         className="absolute left-[12.3%] top-[33.5%] w-[27%] h-auto"
       />
 
       <Image
         src="/images/hero/waiting.svg"
-        alt="Phone Mockup"
+        alt="Waiting screen"
         width={184}
         height={360}
+        loading="lazy"
         className="absolute right-[14.3%] top-[47.5%] w-[28%] h-auto"
       />
 
       <Image
         src="/images/hero/qr.png"
-        alt="Phone Mockup"
+        alt="QR code screen"
         width={125}
         height={250}
+        loading="lazy"
         className="absolute left-[19.3%] top-[55.5%] w-[19%] h-auto"
       />
     </div>

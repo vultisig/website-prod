@@ -57,8 +57,9 @@ export default function SetupSection() {
             <img
               src="/images/home-2.svg"
               alt="Fast Vault setup illustration"
-              width="400"
-              height="300"
+              width={400}
+              height={300}
+              loading="lazy"
               className="opacity-80 w-full lg:w-auto lg:max-w-[400px] h-auto object-contain"
             />
           </div>
@@ -112,8 +113,9 @@ export default function SetupSection() {
             <img
               src="/images/home-3.svg"
               alt="Secure Vault setup illustration"
-              width="400"
-              height="300"
+              width={400}
+              height={300}
+              loading="lazy"
               className="opacity-80 w-full lg:w-auto lg:max-w-[400px] h-auto object-contain"
             />
           </div>

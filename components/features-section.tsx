@@ -64,7 +64,8 @@ export default function FeaturesSection() {
                   <img
                     src={feature.icon}
                     alt={`${feature.title} icon`}
-                    className="w-6 h-6"
+                    width={24}
+                    height={24}
                   />
                 </div>
                 <h3 className="text-[20px] font-semibold text-textPrimary tracking-tight">
