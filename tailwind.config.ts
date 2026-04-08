@@ -140,6 +140,7 @@ const config: Config = {
     require("tailwindcss-animate"),
     require("tailwindcss-motion"),
     require("tailwindcss-intersect"),
+    require("@tailwindcss/typography"),
   ],
 } satisfies Config
 

@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Pencil, Trash2, Plus, Eye } from "lucide-react"
 import type { Article } from "@/lib/articles"
+import RichTextEditor from "@/components/rich-text-editor"
 
 const DEFAULT_FORM = {
   title: "",
@@ -492,26 +493,23 @@ export default function AdminPage() {
                     htmlFor="content"
                     className="block text-white font-medium"
                   >
-                    Content (Markdown) *
-                  </label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setShowPreview(true)}
-                    className="border-slate-700 text-white hover:bg-slate-800 text-sm"
-                  >
-                    <Eye className="w-4 h-4 mr-2" /> Preview
-                  </Button>
-                </div>
-                <Textarea
-                  id="content"
-                  value={formData.content}
-                  onChange={(e) => updateField("content", e.target.value)}
-                  required
-                  className="bg-slate-900 border-slate-700 text-white min-h-[400px] text-sm"
-                  placeholder="Write your article content in Markdown..."
-                />
+                  Content (Rich Text) *
+                </label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowPreview(true)}
+                  className="border-slate-700 text-white hover:bg-slate-800 text-sm"
+                >
+                  <Eye className="w-4 h-4 mr-2" /> Preview
+                </Button>
               </div>
+              <RichTextEditor
+                content={formData.content}
+                onChange={(val) => updateField("content", val)}
+                placeholder="Write your article content..."
+              />
+            </div>
 
               <div className="flex items-center gap-2">
                 <input
