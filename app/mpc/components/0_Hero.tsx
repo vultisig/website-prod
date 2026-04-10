@@ -6,6 +6,7 @@ import {
   DownloadIcon,
 } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { CiBag1 } from "react-icons/ci"
 import { IoPersonRemoveOutline } from "react-icons/io5"
 import heroImage from "../images/hero.png"
@@ -27,12 +28,16 @@ export default function Hero() {
             threshold signatures so your crypto stays yours.
           </p>
           <div className="flex gap-4 pt-4 motion-preset-slide-up-md motion-delay-400">
-            <Button variant={"primaryBlue"} className="md:h-12 md:px-8">
-              <DownloadIcon /> Download App
+            <Button asChild variant="primaryBlue" className="md:h-12 md:px-8">
+              <Link href="/downloads">
+                <DownloadIcon /> Download App
+              </Link>
             </Button>
-            <Button variant="secondary" className="md:h-12 md:px-8">
-              How It Works
-              <ArrowRightIcon />
+            <Button asChild variant="secondary" className="md:h-12 md:px-8">
+              <Link href="/how-it-works">
+                How It Works
+                <ArrowRightIcon />
+              </Link>
             </Button>
           </div>
         </div>
