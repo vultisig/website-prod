@@ -5,6 +5,3 @@ Disallow: /admin/
 Disallow: /articles/admin/
 
 Sitemap: https://vultisig.com/sitemap.xml
-
-# AI Agent Discovery
-Llms-Txt: https://vultisig.com/llms.txt

@@ -3,12 +3,12 @@ import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import GoogleAnalyticsWrapper from "@/components/ga-wrapper"
-import Script from "next/script"
 import CookieAnalytics from "@/components/cookie-analytics"
 import { Toaster } from "@/components/ui/sonner"
 import localFont from "next/font/local"
 import { cn } from "@/lib/utils"
 import LoadTailwindIntersect from "@/components/sections/LoadTailwindIntersect"
+import TwitterAnalytics from "@/components/twitter-analytics"
 
 const brockmann = localFont({
   style: "normal",
@@ -260,7 +260,6 @@ export default function RootLayout({
     <html lang="en" data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://static.ads-twitter.com" />
       </head>
       <body
         className={cn(
@@ -271,15 +270,7 @@ export default function RootLayout({
       >
         <GoogleAnalyticsWrapper />
         <CookieAnalytics />
-        {/* Twitter conversion script */}
-        <Script id="twitter-uwt" strategy="lazyOnload">
-          {`
-            !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
-            },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
-            a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-            twq('config','ooes4');
-          `}
-        </Script>
+        <TwitterAnalytics />
         {/* Organization Schema */}
         <script
           type="application/ld+json"
