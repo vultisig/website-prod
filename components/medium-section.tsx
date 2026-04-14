@@ -1,8 +1,6 @@
-"use client"
-
-import { useState, useEffect } from "react"
 import Link from "next/link"
 import SectionBadge from "@/components/ui/section-badge"
+import { getAllArticles } from "@/lib/articles"
 
 interface Article {
   title: string
@@ -28,6 +26,36 @@ interface InternalArticle {
   publishedAt: string
   image?: string
 }
+
+const FALLBACK_ARTICLES: Article[] = [
+  {
+    title: "Biweekly News Recap, May 7 - May 21",
+    description:
+      "Welcome to the first installment of Vultisig's Biweekly News Recap Series, where we run through the most important events...",
+    date: "May 23, 2025",
+    image: "/images/home-5.svg",
+    link: "#",
+    isInternal: false,
+  },
+  {
+    title: "Vultisig supports RUJIRA Merge",
+    description:
+      "When migrating from RUJIRA to RUJIRA, the Vultisig wallet on android and iOS testflight, now supports in-app steps to...",
+    date: "May 1, 2025",
+    image: "/images/home-6.svg",
+    link: "#",
+    isInternal: false,
+  },
+  {
+    title: "Major Partnership Unveiled: Vultisig Teams Up with Kraken",
+    description:
+      "We are thrilled to announce that our exchange partner will be Kraken, one of the most prestigious and trusted crypto...",
+    date: "April 4, 2025",
+    image: "/images/home-7.svg",
+    link: "#",
+    isInternal: false,
+  },
+]
 
 function ArticleCard({
   article,
@@ -90,124 +118,74 @@ function ArticleCard({
   )
 }
 
-export default function MediumSection() {
-  const [articles, setArticles] = useState<Article[]>([])
-  const [loading, setLoading] = useState(true)
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+}
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        setLoading(true)
-
-        const internalRes = await fetch("/api/articles")
-        if (internalRes.ok) {
-          const internalData = await internalRes.json()
-          if (internalData.articles?.length > 0) {
-            const formatted: Article[] = internalData.articles
-              .slice(0, 3)
-              .map((a: InternalArticle) => ({
-                title: a.title,
-                description:
-                  a.description.length > 150
-                    ? a.description.substring(0, 150) + "..."
-                    : a.description,
-                date: new Date(a.publishedAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                }),
-                image: a.image || "",
-                link: `/articles/${a.slug}`,
-                isInternal: true,
-              }))
-            setArticles(formatted)
-            return
-          }
-        }
-
-        await fetchMediumArticles()
-      } catch {
-        await fetchMediumArticles()
-      } finally {
-        setLoading(false)
+async function getServerArticles(): Promise<Article[]> {
+  if (process.env.MONGODB_URI) {
+    try {
+      const internalArticles = await getAllArticles()
+      if (internalArticles.length > 0) {
+        return internalArticles
+          .slice(0, 3)
+          .map((article: InternalArticle) => ({
+            title: article.title,
+            description:
+              article.description.length > 150
+                ? article.description.substring(0, 150) + "..."
+                : article.description,
+            date: formatDate(article.publishedAt),
+            image: article.image || "",
+            link: `/articles/${article.slug}`,
+            isInternal: true,
+          }))
       }
+    } catch {
+      // Fall through to cached Medium fallback.
     }
+  }
 
-    const fetchMediumArticles = async () => {
-      try {
-        const response = await fetch(
-          "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@vultisig",
-        )
+  try {
+    const response = await fetch(
+      "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@vultisig",
+      {
+        next: { revalidate: 3600 },
+      },
+    )
 
-        if (!response.ok) throw new Error("Failed to fetch")
+    if (!response.ok) throw new Error("Failed to fetch Medium feed")
 
-        const data = await response.json()
+    const data = await response.json()
 
-        if (data.status === "ok" && data.items) {
-          const formatted: Article[] = data.items
-            .slice(0, 3)
-            .map((item: MediumRSSItem) => {
-              const imgMatch = item.description.match(
-                /<img[^>]+src="([^"]+)"[^>]*>/i,
-              )
-              return {
-                title: item.title,
-                description:
-                  item.description.replace(/<[^>]*>/g, "").substring(0, 150) +
-                  "...",
-                date: new Date(item.pubDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                }),
-                image: imgMatch?.[1] || item.thumbnail || "",
-                link: item.link,
-                isInternal: false,
-              }
-            })
-          setArticles(formatted)
-        } else {
-          setFallbackArticles()
+    if (data.status === "ok" && data.items) {
+      return data.items.slice(0, 3).map((item: MediumRSSItem) => {
+        const imgMatch = item.description.match(/<img[^>]+src="([^"]+)"[^>]*>/i)
+        return {
+          title: item.title,
+          description:
+            item.description.replace(/<[^>]*>/g, "").substring(0, 150) + "...",
+          date: formatDate(item.pubDate),
+          image: imgMatch?.[1] || item.thumbnail || "",
+          link: item.link,
+          isInternal: false,
         }
-      } catch {
-        setFallbackArticles()
-      }
+      })
     }
+  } catch {
+    // Fall back to shipped content if external data is unavailable.
+  }
 
-    const setFallbackArticles = () => {
-      setArticles([
-        {
-          title: "Biweekly News Recap, May 7 - May 21",
-          description:
-            "Welcome to the first installment of Vultisig's Biweekly News Recap Series, where we run through the most important events...",
-          date: "May 23, 2025",
-          image: "/images/home-5.svg",
-          link: "#",
-          isInternal: false,
-        },
-        {
-          title: "Vultisig supports RUJIRA Merge",
-          description:
-            "When migrating from RUJIRA to RUJIRA, the Vultisig wallet on android and iOS testflight, now supports in-app steps to...",
-          date: "May 1, 2025",
-          image: "/images/home-6.svg",
-          link: "#",
-          isInternal: false,
-        },
-        {
-          title: "Major Partnership Unveiled: Vultisig Teams Up with Kraken",
-          description:
-            "We are thrilled to announce that our exchange partner will be Kraken, one of the most prestigious and trusted crypto...",
-          date: "April 4, 2025",
-          image: "/images/home-7.svg",
-          link: "#",
-          isInternal: false,
-        },
-      ])
-    }
+  return FALLBACK_ARTICLES
+}
 
-    fetchArticles()
-  }, [])
+export default async function MediumSection() {
+  const articles = await getServerArticles()
+  const hasInternalArticles = articles.some((article) => article.isInternal)
 
   return (
     <section className="py-10 container">
@@ -229,35 +207,33 @@ export default function MediumSection() {
         </h2>
       </div>
 
-      {loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {[1, 2, 3].map((index) => (
-            <div
-              key={index}
-              className="
-                  bg-backgroundSecondary
-                  border border-borderLight
-                  rounded-2xl p-4 sm:p-6
-                  animate-pulse
-                "
-            >
-              <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6"></div>
-              <div className="space-y-3">
-                <div className="h-6 bg-slate-700 rounded"></div>
-                <div className="h-4 bg-slate-700 rounded"></div>
-                <div className="h-4 bg-slate-700 rounded w-3/4"></div>
-                <div className="h-4 bg-slate-700 rounded w-1/2"></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {articles.map((article, index) => (
+          <ArticleCard key={index} article={article} index={index} />
+        ))}
+      </div>
 
-      {!loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {articles.map((article, index) => (
-            <ArticleCard key={index} article={article} index={index} />
-          ))}
+      {hasInternalArticles && (
+        <div className="text-center mt-10">
+          <Link
+            href="/articles"
+            className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+          >
+            View all articles
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </Link>
         </div>
       )}
     </section>
