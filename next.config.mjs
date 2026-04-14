@@ -12,11 +12,11 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.ads-twitter.com https://cdn.markfi.xyz",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.ads-twitter.com https://cdn.markfi.xyz https://static.cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https: blob:",
       "font-src 'self'",
-      "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://api.rss2json.com https://api.coingecko.com https://*.vultisig.com https://*.markfi.xyz",
+      "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://api.rss2json.com https://api.coingecko.com https://*.vultisig.com https://*.markfi.xyz https://cloudflareinsights.com https://static.cloudflareinsights.com",
       "frame-ancestors 'self'",
     ].join('; '),
   },

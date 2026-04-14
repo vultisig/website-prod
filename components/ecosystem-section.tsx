@@ -156,18 +156,26 @@ export default function EcosystemSection() {
             </button>
 
             {/* Dot indicators */}
-            <div className="flex gap-2 ml-2">
+            <div className="flex gap-1.5 ml-2">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                  className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors ${
                     currentIndex === index
-                      ? "bg-primaryAccent"
-                      : "bg-borderLight hover:bg-borderNormal"
+                      ? "bg-primaryAccent/14"
+                      : "hover:bg-borderLight/60"
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
-                />
+                >
+                  <span
+                    className={`block h-2.5 w-2.5 rounded-full transition-colors ${
+                      currentIndex === index
+                        ? "bg-primaryAccent"
+                        : "bg-borderLight hover:bg-borderNormal"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>
