@@ -22,18 +22,39 @@ import {
   Image as ImageIcon,
   Strikethrough,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-
 interface RichTextEditorProps {
   content: string
   onChange: (content: string) => void
   placeholder?: string
+  id?: string
+}
+
+// Only allow http(s), mailto, and site-relative links — blocks javascript:
+// and data: URLs that would execute on click in the public article page.
+const ALLOWED_PROTOCOLS = ["http:", "https:", "mailto:"]
+
+function sanitizeUrl(input: string): string | null {
+  const trimmed = input.trim()
+  if (!trimmed) return null
+  if (trimmed.startsWith("/")) return trimmed
+  try {
+    const u = new URL(trimmed)
+    return ALLOWED_PROTOCOLS.includes(u.protocol) ? u.toString() : null
+  } catch {
+    try {
+      const u = new URL(`https://${trimmed}`)
+      return u.hostname ? u.toString() : null
+    } catch {
+      return null
+    }
+  }
 }
 
 export default function RichTextEditor({
   content,
   onChange,
   placeholder = "Start writing...",
+  id,
 }: RichTextEditorProps) {
   const editor = useEditor({
     immediatelyRender: false,
@@ -75,6 +96,7 @@ export default function RichTextEditor({
     },
     editorProps: {
       attributes: {
+        ...(id ? { id } : {}),
         class:
           "prose prose-invert prose-sm sm:prose-base max-w-none focus:outline-none min-h-[400px] p-4 text-white",
       },
@@ -95,9 +117,13 @@ export default function RichTextEditor({
 
   const addImage = () => {
     const url = window.prompt("Enter image URL")
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run()
+    if (url === null) return
+    const safe = sanitizeUrl(url)
+    if (!safe) {
+      window.alert("Invalid image URL. Use http(s) or a site-relative path.")
+      return
     }
+    editor.chain().focus().setImage({ src: safe }).run()
   }
 
   const setLink = () => {
@@ -110,7 +136,13 @@ export default function RichTextEditor({
       return
     }
 
-    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run()
+    const safe = sanitizeUrl(url)
+    if (!safe) {
+      window.alert("Invalid link. Use http(s), mailto, or a site-relative path.")
+      return
+    }
+
+    editor.chain().focus().extendMarkRange("link").setLink({ href: safe }).run()
   }
 
   return (
@@ -118,12 +150,14 @@ export default function RichTextEditor({
       <div className="flex flex-wrap items-center gap-1 p-2 border-b border-slate-700 bg-slate-900/80 sticky top-0 z-10">
         <div className="flex items-center gap-1 mr-2 border-r border-slate-700 pr-2">
           <MenuButton
+            label="Heading 2"
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             active={editor.isActive("heading", { level: 2 })}
           >
             <Heading2 className="w-4 h-4" />
           </MenuButton>
           <MenuButton
+            label="Heading 3"
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             active={editor.isActive("heading", { level: 3 })}
           >
@@ -133,24 +167,28 @@ export default function RichTextEditor({
 
         <div className="flex items-center gap-1 mr-2 border-r border-slate-700 pr-2">
           <MenuButton
+            label="Bold"
             onClick={() => editor.chain().focus().toggleBold().run()}
             active={editor.isActive("bold")}
           >
             <Bold className="w-4 h-4" />
           </MenuButton>
           <MenuButton
+            label="Italic"
             onClick={() => editor.chain().focus().toggleItalic().run()}
             active={editor.isActive("italic")}
           >
             <Italic className="w-4 h-4" />
           </MenuButton>
           <MenuButton
+            label="Strikethrough"
             onClick={() => editor.chain().focus().toggleStrike().run()}
             active={editor.isActive("strike")}
           >
             <Strikethrough className="w-4 h-4" />
           </MenuButton>
           <MenuButton
+            label="Inline code"
             onClick={() => editor.chain().focus().toggleCode().run()}
             active={editor.isActive("code")}
           >
@@ -160,18 +198,21 @@ export default function RichTextEditor({
 
         <div className="flex items-center gap-1 mr-2 border-r border-slate-700 pr-2">
           <MenuButton
+            label="Bullet list"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             active={editor.isActive("bulletList")}
           >
             <List className="w-4 h-4" />
           </MenuButton>
           <MenuButton
+            label="Numbered list"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             active={editor.isActive("orderedList")}
           >
             <ListOrdered className="w-4 h-4" />
           </MenuButton>
           <MenuButton
+            label="Blockquote"
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             active={editor.isActive("blockquote")}
           >
@@ -180,22 +221,26 @@ export default function RichTextEditor({
         </div>
 
         <div className="flex items-center gap-1 mr-2 border-r border-slate-700 pr-2">
-          <MenuButton onClick={setLink} active={editor.isActive("link")}>
+          <MenuButton label="Insert link" onClick={setLink} active={editor.isActive("link")}>
             <LinkIcon className="w-4 h-4" />
           </MenuButton>
-          <MenuButton onClick={addImage}>
+          <MenuButton label="Insert image" onClick={addImage} toggle={false}>
             <ImageIcon className="w-4 h-4" />
           </MenuButton>
         </div>
 
         <div className="flex items-center gap-1 ml-auto">
           <MenuButton
+            label="Undo"
+            toggle={false}
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
           >
             <Undo className="w-4 h-4" />
           </MenuButton>
           <MenuButton
+            label="Redo"
+            toggle={false}
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
           >
@@ -259,11 +304,15 @@ function MenuButton({
   onClick,
   active = false,
   disabled = false,
+  label,
+  toggle = true,
   children,
 }: {
   onClick: () => void
   active?: boolean
   disabled?: boolean
+  label: string
+  toggle?: boolean
   children: React.ReactNode
 }) {
   return (
@@ -271,6 +320,9 @@ function MenuButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
+      aria-label={label}
+      title={label}
+      aria-pressed={toggle ? active : undefined}
       className={`p-1.5 rounded transition-colors ${
         active
           ? "bg-blue-600 text-white"

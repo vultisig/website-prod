@@ -505,6 +505,7 @@ export default function AdminPage() {
                 </Button>
               </div>
               <RichTextEditor
+                id="content"
                 content={formData.content}
                 onChange={(val) => updateField("content", val)}
                 placeholder="Write your article content..."
