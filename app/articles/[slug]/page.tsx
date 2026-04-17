@@ -1,4 +1,4 @@
-import { getArticleBySlug, getAllArticles } from "@/lib/articles"
+import { getArticleBySlug, getAllArticles, toMetaDescription } from "@/lib/articles"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
@@ -34,15 +34,17 @@ export async function generateMetadata({
       : `https://vultisig.com${article.image}`
     : undefined
 
+  const metaDescription = toMetaDescription(article.description)
+
   return {
     title: `${article.title} - Vultisig`,
-    description: article.description,
+    description: metaDescription,
     alternates: {
       canonical: url,
     },
     openGraph: {
       title: article.title,
-      description: article.description,
+      description: metaDescription,
       url,
       images: imageUrl ? [imageUrl] : [],
       type: "article",
@@ -54,7 +56,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: article.title,
-      description: article.description,
+      description: metaDescription,
       images: imageUrl ? [imageUrl] : [],
     },
   }
@@ -71,7 +73,7 @@ function ArticleJsonLd({
     "@context": "https://schema.org",
     "@type": "Article",
     headline: article.title,
-    description: article.description,
+    description: toMetaDescription(article.description),
     image: article.image
       ? article.image.startsWith("http")
         ? article.image

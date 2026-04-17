@@ -14,6 +14,31 @@ export interface Article {
   featured?: boolean
 }
 
+// Strip markdown, collapse whitespace, and truncate at a word boundary
+// so meta/og/twitter descriptions render cleanly in SERPs and social cards.
+export function toMetaDescription(raw: string, maxLen = 160): string {
+  if (!raw) return ''
+  const stripped = raw
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/(\*\*|__)(.*?)\1/g, '$2')
+    .replace(/(\*|_)(?=\S)(.+?)(?<=\S)\1/g, '$2')
+    .replace(/^\s{0,3}#{1,6}\s+/gm, '')
+    .replace(/^\s{0,3}>\s?/gm, '')
+    .replace(/^\s*[-*+]\s+/gm, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  if (stripped.length <= maxLen) return stripped
+  const slice = stripped.slice(0, maxLen)
+  const lastSpace = slice.lastIndexOf(' ')
+  const cut = lastSpace > maxLen * 0.6 ? slice.slice(0, lastSpace) : slice
+  return cut.replace(/[.,;:!?\s]+$/, '') + '…'
+}
+
 function validateSlug(slug: string): { valid: boolean; error?: string } {
   if (!slug?.trim()) return { valid: false, error: 'Slug cannot be empty' }
   if (!/^[a-z0-9-]+$/.test(slug)) {
