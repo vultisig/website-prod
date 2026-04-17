@@ -16,7 +16,6 @@ import {
   Undo,
   Redo,
   Code,
-  Heading1,
   Heading2,
   Heading3,
   Link as LinkIcon,
@@ -49,7 +48,6 @@ export default function RichTextEditor({
       Markdown.configure({
         html: false,
         tightLists: true,
-        tightListClass: "tight",
         bulletListMarker: "-",
         linkify: true,
         breaks: true,
@@ -83,9 +81,12 @@ export default function RichTextEditor({
     },
   })
 
-  // Sync editor content with prop if it changes externally (e.g. loading an article)
+  // Sync editor content with prop if it changes externally (e.g. loading an article).
+  // Skip when focused so TipTap's markdown roundtrip (trailing newlines, list normalization)
+  // can't trigger a feedback loop with onUpdate -> parent state -> this effect.
   useEffect(() => {
-    if (editor && content !== editor.storage.markdown.getMarkdown()) {
+    if (!editor || editor.isFocused) return
+    if (content !== editor.storage.markdown.getMarkdown()) {
       editor.commands.setContent(content)
     }
   }, [content, editor])
@@ -116,12 +117,6 @@ export default function RichTextEditor({
     <div className="w-full border border-slate-700 rounded-lg overflow-hidden bg-slate-900/50">
       <div className="flex flex-wrap items-center gap-1 p-2 border-b border-slate-700 bg-slate-900/80 sticky top-0 z-10">
         <div className="flex items-center gap-1 mr-2 border-r border-slate-700 pr-2">
-          <MenuButton
-            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            active={editor.isActive("heading", { level: 1 })}
-          >
-            <Heading1 className="w-4 h-4" />
-          </MenuButton>
           <MenuButton
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             active={editor.isActive("heading", { level: 2 })}
