@@ -27,6 +27,7 @@ import {
 import { Pencil, Trash2, Plus, Eye } from "lucide-react"
 import type { Article } from "@/lib/articles"
 import RichTextEditor from "@/components/rich-text-editor"
+import { cn } from "@/lib/utils"
 
 const DEFAULT_FORM = {
   title: "",
@@ -347,6 +348,17 @@ export default function AdminPage() {
                   className="bg-slate-900 border-slate-700 text-white min-h-[100px]"
                   placeholder="Enter article description"
                 />
+                <div className="flex justify-between mt-1 px-1">
+                  <p className="text-xs text-gray-500">
+                    Recommended: 150-160 characters for SEO. No markdown.
+                  </p>
+                  <p className={cn(
+                    "text-xs font-medium",
+                    formData.description.length > 160 ? "text-red-400" : "text-gray-400"
+                  )}>
+                    {formData.description.length} / 160
+                  </p>
+                </div>
               </div>
 
               <div>

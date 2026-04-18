@@ -47,11 +47,7 @@ export default function EcosystemSection() {
       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16 gap-12">
         {/* Left side - content */}
         <div
-          className="flex flex-col items-start gap-6 lg:w-[60%] xl:w-[65%] rounded-3xl border border-[#11284A] p-8 md:p-[30px] relative overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(0deg, rgba(11,26,58,0.5), rgba(11,26,58,0.5)), radial-gradient(circle at 59% 146%, rgba(11,78,255,1) 0%, rgba(2,18,43,1) 100%)",
-          }}
+          className="flex flex-col items-start gap-6 lg:w-[60%] xl:w-[65%] rounded-3xl border border-[#11284A] p-8 md:p-[30px] relative overflow-hidden bg-[linear-gradient(0deg,rgba(11,26,58,0.5),rgba(11,26,58,0.5)),_radial-gradient(circle_at_59%_146%,rgba(11,78,255,1)_0%,rgba(2,18,43,1)_100%)]"
         >
           {/* Pill badge */}
           <div className="inline-flex items-center bg-primaryAccent/10 border border-primaryAccent/50 rounded-full px-4 py-1.5">
@@ -85,16 +81,11 @@ export default function EcosystemSection() {
         <div className="lg:w-[40%] xl:w-[35%] flex flex-col gap-6">
           {/* Testimonial card */}
           <div
-            className="relative rounded-2xl border border-borderLight overflow-hidden p-8"
-            style={{
-              background:
-                "linear-gradient(180deg, #061B3A 0%, rgba(6, 27, 58, 0) 100%)",
-            }}
+            className="relative rounded-2xl border border-borderLight overflow-hidden p-8 bg-[linear-gradient(180deg,#061B3A_0%,rgba(6,27,58,0)_100%)]"
           >
             {/* Quote marks */}
             <div
-              className="text-5xl font-bold leading-none mb-4 select-none"
-              style={{ color: "hsl(var(--primary-accent) / 0.3)" }}
+              className="text-5xl font-bold leading-none mb-4 select-none text-[hsl(var(--primary-accent)/0.3)]"
               aria-hidden="true"
             >
               &ldquo;&rdquo;
