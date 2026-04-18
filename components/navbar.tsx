@@ -62,7 +62,7 @@ export default function Navbar() {
           )}
         >
           <div className="flex justify-between items-center">
-            <a href="/" className="flex items-center">
+            <a href="/" className="flex items-center" title="Vultisig Home">
               <img
                 src={"/images/vultisig-logo.svg"}
                 alt="Vultisig logo"
@@ -91,6 +91,7 @@ export default function Navbar() {
                     <Link
                       key={product.name}
                       href={product.href}
+                      title={product.name}
                       className="flex items-center gap-3 p-2 pr-4 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
                     >
                       <div className="size-10 bg-primaryAccent/10 text-alertInfo rounded-lg flex items-center justify-center">
@@ -106,6 +107,7 @@ export default function Navbar() {
 
             <Link
               href="/downloads"
+              title="Download Vultisig App"
               className={cn(
                 buttonVariants({ variant: "primaryBlue" }),
                 "max-lg:hidden"

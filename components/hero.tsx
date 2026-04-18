@@ -19,7 +19,7 @@ export default function Hero() {
 
             {/* Heading */}
             <h1 className="font-medium text-textPrimary text-4xl sm:text-5xl lg:text-[60px] leading-tight tracking-[-1.5px] max-w-[546px]">
-              The wallet that made seed phrases obsolete
+              Vultisig: The Free MPC Wallet that makes seed phrases obsolete
             </h1>
 
             {/* Subheading */}
@@ -77,11 +77,7 @@ export default function Hero() {
 
       {/* Bottom glow */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[100vw] h-[40vh] pointer-events-none z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse at center bottom, rgba(72, 121, 253, 0.15) 0%, transparent 70%)",
-        }}
+        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[100vw] h-[40vh] pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center_bottom,rgba(72,121,253,0.15)_0%,transparent_70%)]"
       />
     </section>
   )

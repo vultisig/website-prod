@@ -56,6 +56,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="mr-2 pl-2 p-2.5 text-textSecondary hover:text-foreground min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
                   aria-label={item.label}
+                  title={item.label}
                 >
                   {item.icon}
                 </a>
@@ -73,18 +74,19 @@ export default function Footer() {
                 <li>
                   <a
                     href="/how-it-works"
+                    title="How Vultisig Works"
                     className="text-gray-300 hover:text-white"
                   >
                     How It Works
                   </a>
                 </li>
                 <li>
-                  <a href="/docs" className="text-gray-300 hover:text-white">
+                  <a href="/docs" title="Vultisig Documentation" className="text-gray-300 hover:text-white">
                     Docs
                   </a>
                 </li>
                 <li>
-                  <a href="/vult" className="text-gray-300 hover:text-white">
+                  <a href="/vult" title="$VULT Token Information" className="text-gray-300 hover:text-white">
                     $VULT
                   </a>
                 </li>
@@ -95,7 +97,7 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-4">SUPPORT</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/support" className="text-gray-300 hover:text-white">
+                  <a href="/support" title="Vultisig Support & FAQs" className="text-gray-300 hover:text-white">
                     FAQs
                   </a>
                 </li>
@@ -104,13 +106,14 @@ export default function Footer() {
                     href="https://docs.vultisig.com/other/security"
                     target="_blank"
                     rel="noopener noreferrer"
+                    title="Security Audits"
                     className="text-gray-300 hover:text-white"
                   >
                     Audits
                   </a>
                 </li>
                 <li>
-                  <a href="/support" className="text-gray-300 hover:text-white">
+                  <a href="/support" title="Vultisig Support & FAQs" className="text-gray-300 hover:text-white">
                     Contact Us
                   </a>
                 </li>
@@ -123,13 +126,14 @@ export default function Footer() {
                 <li>
                   <a
                     href="/termofservice"
+                    title="Terms of Service"
                     className="text-gray-300 hover:text-white"
                   >
                     Terms of Service
                   </a>
                 </li>
                 <li>
-                  <a href="/privacy" className="text-gray-300 hover:text-white">
+                  <a href="/privacy" title="Privacy Policy" className="text-gray-300 hover:text-white">
                     Privacy Policy
                   </a>
                 </li>

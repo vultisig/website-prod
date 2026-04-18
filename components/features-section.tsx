@@ -36,11 +36,7 @@ export default function FeaturesSection() {
           <h2 className="text-[48px] font-medium leading-tight tracking-tight mb-5">
             <span className="text-textPrimary block">Built different.</span>
             <span
-              className="block bg-clip-text text-transparent"
-              style={{
-                backgroundImage:
-                  "linear-gradient(64deg, #33E6BF 8%, #0439C7 134%)",
-              }}
+              className="block bg-clip-text text-transparent bg-[linear-gradient(64deg,#33E6BF_8%,#0439C7_134%)]"
             >
               Secured different.
             </span>
