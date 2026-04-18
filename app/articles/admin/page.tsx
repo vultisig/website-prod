@@ -27,6 +27,7 @@ import {
 import { Pencil, Trash2, Plus, Eye } from "lucide-react"
 import type { Article } from "@/lib/articles"
 import RichTextEditor from "@/components/rich-text-editor"
+import { cn } from "@/lib/utils"
 
 const DEFAULT_FORM = {
   title: "",
