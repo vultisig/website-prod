@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 interface Review {
   id: string
@@ -22,21 +22,24 @@ interface CachedData {
   timestamp: number
 }
 
-// In-memory cache with 1-hour TTL
 let cachedReviews: CachedData | null = null
-const CACHE_TTL_MS = 60 * 60 * 1000 // 1 hour
+const CACHE_TTL_MS = 30 * 60 * 1000 // 30 min
 
-// Next.js route segment config for edge caching
-export const revalidate = 3600 // Revalidate every hour
+export const revalidate = 1800 // Revalidate every 30 min
 
-export async function GET() {
-  // Check if we have valid cached data
-  if (cachedReviews && Date.now() - cachedReviews.timestamp < CACHE_TTL_MS) {
+export async function GET(request: NextRequest) {
+  const forceRefresh = request.nextUrl.searchParams.get('refresh') === '1'
+
+  if (!forceRefresh && cachedReviews && Date.now() - cachedReviews.timestamp < CACHE_TTL_MS) {
     return NextResponse.json(
-      { testimonials: cachedReviews.testimonials, cached: true },
+      {
+        testimonials: cachedReviews.testimonials,
+        cached: true,
+        lastUpdated: new Date(cachedReviews.timestamp).toISOString(),
+      },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+          'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600',
         },
       }
     )
@@ -128,10 +131,14 @@ export async function GET() {
     }
 
     return NextResponse.json(
-      { testimonials, cached: false },
+      {
+        testimonials,
+        cached: false,
+        lastUpdated: new Date(cachedReviews.timestamp).toISOString(),
+      },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+          'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600',
         },
       }
     )

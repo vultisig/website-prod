@@ -73,7 +73,7 @@ export default function SetupSection() {
           >
             <Button
               variant="primaryBlue"
-              className="rounded-xl px-3 py-4 h-[51px] w-full lg:w-[189px] text-sm gap-1.5 border-white/15"
+              className="rounded-xl px-5 py-4 h-[51px] w-full lg:w-auto text-sm gap-1.5 border-white/15"
             >
               Learn about Fast Vault
               <ArrowUpRight className="h-5 w-5" />
@@ -129,7 +129,7 @@ export default function SetupSection() {
           >
             <Button
               variant="primaryBlue"
-              className="rounded-xl px-3 py-4 h-[51px] w-full lg:w-[189px] text-sm gap-1.5 border-white/15"
+              className="rounded-xl px-5 py-4 h-[51px] w-full lg:w-auto text-sm gap-1.5 border-white/15"
             >
               Learn about Secure Vault
               <ArrowUpRight className="h-5 w-5" />
