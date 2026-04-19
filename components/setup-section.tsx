@@ -2,6 +2,9 @@ import { Button } from "@/components/ui/button"
 import { ArrowUpRight, Zap, Shield } from "lucide-react"
 import SectionBadge from "@/components/ui/section-badge"
 
+const VAULT_CTA_CLASS =
+  "rounded-xl px-5 py-4 h-[51px] w-full lg:w-auto text-sm gap-1.5 border-white/15"
+
 export default function SetupSection() {
   return (
     <section className="py-16 container">
@@ -73,7 +76,7 @@ export default function SetupSection() {
           >
             <Button
               variant="primaryBlue"
-              className="rounded-xl px-5 py-4 h-[51px] w-full lg:w-auto text-sm gap-1.5 border-white/15"
+              className={VAULT_CTA_CLASS}
             >
               Learn about Fast Vault
               <ArrowUpRight className="h-5 w-5" />
@@ -129,7 +132,7 @@ export default function SetupSection() {
           >
             <Button
               variant="primaryBlue"
-              className="rounded-xl px-5 py-4 h-[51px] w-full lg:w-auto text-sm gap-1.5 border-white/15"
+              className={VAULT_CTA_CLASS}
             >
               Learn about Secure Vault
               <ArrowUpRight className="h-5 w-5" />
