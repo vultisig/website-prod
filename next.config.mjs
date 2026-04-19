@@ -32,7 +32,6 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['lucide-react', 'recharts', 'motion', 'react-icons'],
-    optimizeCss: true,
   },
   async headers() {
     return [
