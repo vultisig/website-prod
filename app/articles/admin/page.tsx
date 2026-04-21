@@ -29,7 +29,18 @@ import type { Article } from "@/lib/articles"
 import RichTextEditor from "@/components/rich-text-editor"
 import { cn } from "@/lib/utils"
 
-const DEFAULT_FORM = {
+type FormState = {
+  title: string
+  description: string
+  content: string
+  author: string
+  image: string
+  tags: string
+  featured: boolean
+  status: "draft" | "published"
+}
+
+const DEFAULT_FORM: FormState = {
   title: "",
   description: "",
   content: "",
@@ -37,7 +48,7 @@ const DEFAULT_FORM = {
   image: "",
   tags: "",
   featured: false,
-  status: "draft" as "draft" | "published",
+  status: "draft",
 }
 
 export default function AdminPage() {
@@ -52,7 +63,7 @@ export default function AdminPage() {
   const [deleteSlug, setDeleteSlug] = useState<string | null>(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [forceShowForm, setForceShowForm] = useState(false)
-  const [formData, setFormData] = useState(DEFAULT_FORM)
+  const [formData, setFormData] = useState<FormState>(DEFAULT_FORM)
   const [uploadingImage, setUploadingImage] = useState(false)
 
   useEffect(() => {
@@ -250,9 +261,9 @@ export default function AdminPage() {
     }
   }
 
-  const updateField = <K extends keyof typeof DEFAULT_FORM>(
+  const updateField = <K extends keyof FormState>(
     field: K,
-    value: (typeof DEFAULT_FORM)[K],
+    value: FormState[K],
   ) => setFormData({ ...formData, [field]: value })
 
   if (checkingAuth) {
