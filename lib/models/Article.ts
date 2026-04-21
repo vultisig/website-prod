@@ -11,6 +11,7 @@ export interface IArticle extends Document {
   image?: string
   tags?: string[]
   featured?: boolean
+  status?: 'draft' | 'published'
   createdAt: Date
 }
 
@@ -62,6 +63,12 @@ const ArticleSchema = new Schema<IArticle>(
       type: Boolean,
       default: false,
     },
+    status: {
+      type: String,
+      enum: ['draft', 'published'],
+      default: 'draft',
+      required: true,
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt automatically
@@ -72,6 +79,7 @@ const ArticleSchema = new Schema<IArticle>(
 ArticleSchema.index({ slug: 1 })
 ArticleSchema.index({ publishedAt: -1 })
 ArticleSchema.index({ featured: 1 })
+ArticleSchema.index({ status: 1 })
 
 const Article: Model<IArticle> =
   mongoose.models.Article || mongoose.model<IArticle>('Article', ArticleSchema)

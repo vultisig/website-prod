@@ -12,6 +12,7 @@ export interface Article {
   image?: string
   tags?: string[]
   featured?: boolean
+  status: 'draft' | 'published'
 }
 
 // Strip markdown, collapse whitespace, and truncate at a word boundary
@@ -57,41 +58,23 @@ function toArticleInterface(doc: IArticle): Article {
     publishedAt: doc.publishedAt.toISOString(),
     updatedAt: doc.updatedAt?.toISOString(),
     image: doc.image,
-    tags: doc.tags,
+    tags: doc.tags || [],
     featured: doc.featured || false,
+    status: doc.status || 'published',
   }
 }
 
-export async function getAllArticles(): Promise<Article[]> {
+export async function getAllArticles(includeDrafts = false): Promise<Article[]> {
   try {
     await connectDB()
-    const articles = await Article.find({})
+    const query = includeDrafts ? {} : { $or: [{ status: 'published' }, { status: { $exists: false } }] }
+    const articles = await Article.find(query)
       .sort({ publishedAt: -1 })
       .lean()
-    
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`[getAllArticles] Found ${articles.length} articles`)
-    }
-    
-    return articles.map((doc: any) => ({
-      slug: doc.slug,
-      title: doc.title,
-      description: doc.description,
-      content: doc.content,
-      author: doc.author,
-      publishedAt: doc.publishedAt.toISOString(),
-      updatedAt: doc.updatedAt?.toISOString(),
-      image: doc.image,
-      tags: doc.tags || [],
-      featured: doc.featured || false,
-    }))
+
+    return articles.map((doc: any) => toArticleInterface(doc))
   } catch (error) {
     console.error('Error fetching articles:', error)
-    // Log more details in production
-    if (error instanceof Error) {
-      console.error('Error message:', error.message)
-      console.error('Error stack:', error.stack)
-    }
     return []
   }
 }
@@ -106,18 +89,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     
     if (!article) return null
 
-    return {
-      slug: article.slug,
-      title: article.title,
-      description: article.description,
-      content: article.content,
-      author: article.author,
-      publishedAt: article.publishedAt.toISOString(),
-      updatedAt: article.updatedAt?.toISOString(),
-      image: article.image,
-      tags: article.tags || [],
-      featured: article.featured || false,
-    }
+    return toArticleInterface(article)
   } catch (error) {
     console.error('Error fetching article:', error)
     return null
@@ -148,6 +120,7 @@ export async function createArticle(article: Omit<Article, 'slug'>, slug: string
       image: article.image,
       tags: article.tags || [],
       featured: article.featured || false,
+      status: article.status || 'draft',
     })
 
     return true
@@ -165,59 +138,52 @@ export async function updateArticle(
   slug: string,
   oldSlug?: string
 ): Promise<boolean> {
+  if (oldSlug !== undefined) {
+    if (typeof oldSlug !== 'string') throw new Error('Invalid old slug')
+    const oldSlugValidation = validateSlug(oldSlug)
+    if (!oldSlugValidation.valid) throw new Error(oldSlugValidation.error)
+  }
   try {
     const validation = validateSlug(slug)
     if (!validation.valid) throw new Error(validation.error)
 
-    if (oldSlug) {
-      const oldValidation = validateSlug(oldSlug)
-      if (!oldValidation.valid) throw new Error('Invalid old slug')
-    }
-
     await connectDB()
 
-    // If slug changed, update the slug
+    const updateData = {
+      title: article.title,
+      description: article.description,
+      content: article.content,
+      author: article.author || 'Vultisig',
+      publishedAt: article.publishedAt ? new Date(article.publishedAt) : undefined,
+      updatedAt: new Date(),
+      image: article.image,
+      tags: article.tags || [],
+      featured: article.featured || false,
+      status: article.status,
+    }
+
     if (oldSlug && oldSlug !== slug) {
-      // Check if new slug already exists
       const existing = await Article.findOne({ slug })
       if (existing) {
         throw new Error(`Article with slug "${slug}" already exists`)
       }
-
-      // Update the article with new slug
-      await Article.findOneAndUpdate(
+      const updatedArticle = await Article.findOneAndUpdate(
         { slug: oldSlug },
-        {
-          slug,
-          title: article.title,
-          description: article.description,
-          content: article.content,
-          author: article.author || 'Vultisig',
-          publishedAt: article.publishedAt ? new Date(article.publishedAt) : undefined,
-          updatedAt: new Date(),
-          image: article.image,
-          tags: article.tags || [],
-          featured: article.featured || false,
-        },
-        { new: true }
+        { slug, ...updateData },
+        { new: true, runValidators: true }
       )
+      if (!updatedArticle) {
+        throw new Error(`Article with slug "${oldSlug}" not found`)
+      }
     } else {
-      // Update existing article
-      await Article.findOneAndUpdate(
+      const updatedArticle = await Article.findOneAndUpdate(
         { slug },
-        {
-          title: article.title,
-          description: article.description,
-          content: article.content,
-          author: article.author || 'Vultisig',
-          publishedAt: article.publishedAt ? new Date(article.publishedAt) : undefined,
-          updatedAt: new Date(),
-          image: article.image,
-          tags: article.tags || [],
-          featured: article.featured || false,
-        },
-        { new: true }
+        updateData,
+        { new: true, runValidators: true }
       )
+      if (!updatedArticle) {
+        throw new Error(`Article with slug "${slug}" not found`)
+      }
     }
 
     return true
