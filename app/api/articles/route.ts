@@ -15,14 +15,10 @@ async function isAuthed(req: NextRequest): Promise<boolean> {
   const apiKey = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : req.headers.get('X-VULTISIG-SCOUT-KEY')
   
   if (apiKey && process.env.SCOUT_API_KEY) {
-    try {
-      return crypto.timingSafeEqual(
-        Buffer.from(apiKey),
-        Buffer.from(process.env.SCOUT_API_KEY)
-      )
-    } catch {
-      return false
-    }
+    const providedKeyDigest = crypto.createHash('sha256').update(apiKey).digest()
+    const expectedKeyDigest = crypto.createHash('sha256').update(process.env.SCOUT_API_KEY).digest()
+
+    return crypto.timingSafeEqual(providedKeyDigest, expectedKeyDigest)
   }
   
   return false
