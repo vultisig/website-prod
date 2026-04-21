@@ -49,6 +49,21 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/download/vultisig',
+        destination: '/downloads',
+        permanent: true,
+      },
+      {
+        source: '/technical-overview',
+        destination: '/how-it-works',
+        permanent: true,
+      },
+      {
+        source: '/security-features',
+        destination: '/mpc',
+        permanent: true,
+      },
+      {
         source: '/skills',
         destination: '/skills/SKILL.md',
         permanent: false,
