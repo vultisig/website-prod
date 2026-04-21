@@ -11,7 +11,7 @@ export interface IArticle extends Document {
   image?: string
   tags?: string[]
   featured?: boolean
-  status: 'draft' | 'published'
+  status?: 'draft' | 'published'
   createdAt: Date
 }
 
