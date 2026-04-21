@@ -24,9 +24,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Pencil, Trash2, Plus, Eye } from "lucide-react"
+import { Pencil, Trash2, Plus, Eye, CheckCircle } from "lucide-react"
 import type { Article } from "@/lib/articles"
 import RichTextEditor from "@/components/rich-text-editor"
+import { cn } from "@/lib/utils"
 
 const DEFAULT_FORM = {
   title: "",
@@ -36,6 +37,7 @@ const DEFAULT_FORM = {
   image: "",
   tags: "",
   featured: false,
+  status: "draft" as const,
 }
 
 export default function AdminPage() {
@@ -123,6 +125,7 @@ export default function AdminPage() {
       image: article.image || "",
       tags: article.tags?.join(", ") || "",
       featured: article.featured || false,
+      status: article.status || "published",
     })
     setEditingSlug(article.slug)
   }
@@ -153,7 +156,6 @@ export default function AdminPage() {
       toast.error(err instanceof Error ? err.message : "Failed to upload image")
     } finally {
       setUploadingImage(false)
-      // Reset file input
       e.target.value = ""
     }
   }
@@ -195,9 +197,33 @@ export default function AdminPage() {
 
       toast.success(`Article ${isEdit ? "updated" : "created"}!`)
       closeForm()
-      router.push(`/articles/${slug}`)
+      if (formData.status === "published") {
+        router.push(`/articles/${slug}`)
+      }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handlePublish = async (article: Article) => {
+    setLoading(true)
+    try {
+      const res = await fetch("/api/articles", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...article,
+          status: "published",
+          oldSlug: article.slug,
+        }),
+      })
+      if (!res.ok) throw new Error("Failed to publish")
+      toast.success("Article published!")
+      fetchArticles()
+    } catch (err) {
+      toast.error("Failed to publish article")
     } finally {
       setLoading(false)
     }
@@ -231,9 +257,7 @@ export default function AdminPage() {
     return (
       <main className="min-h-screen flex items-center justify-center px-4">
         <div className="max-w-md w-full bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-8">
-          <p className="text-gray-400 text-center">
-            Checking authentication...
-          </p>
+          <p className="text-gray-400 text-center">Checking authentication...</p>
         </div>
       </main>
     )
@@ -305,14 +329,34 @@ export default function AdminPage() {
                 <h2 className="text-2xl font-bold text-white">
                   {editingSlug ? "Edit Article" : "Create New Article"}
                 </h2>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={closeForm}
-                  className="border-slate-700 text-white hover:bg-slate-800"
-                >
-                  Cancel
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant={formData.status === "draft" ? "secondary" : "outline"}
+                    onClick={() => updateField("status", "draft")}
+                    className={cn(
+                      "text-xs uppercase tracking-widest px-4",
+                      formData.status === "draft"
+                        ? "bg-yellow-600/20 text-yellow-500 border-yellow-600/50"
+                        : "border-slate-700 text-gray-400"
+                    )}
+                  >
+                    Draft
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={formData.status === "published" ? "secondary" : "outline"}
+                    onClick={() => updateField("status", "published")}
+                    className={cn(
+                      "text-xs uppercase tracking-widest px-4",
+                      formData.status === "published"
+                        ? "bg-green-600/20 text-green-500 border-green-600/50"
+                        : "border-slate-700 text-gray-400"
+                    )}
+                  >
+                    Published
+                  </Button>
+                </div>
               </div>
 
               <div>
@@ -387,7 +431,6 @@ export default function AdminPage() {
                   Upload an image or use an external URL
                 </p>
 
-                {/* Upload Section */}
                 <div className="mb-4">
                   <label
                     htmlFor="image-upload"
@@ -423,13 +466,8 @@ export default function AdminPage() {
                       </Button>
                     </label>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Max 10MB (will be compressed to under 1MB). Formats: JPG,
-                    PNG, GIF, WebP
-                  </p>
                 </div>
 
-                {/* URL Input Section */}
                 <div className="mb-4">
                   <label
                     htmlFor="image-url"
@@ -460,7 +498,6 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                {/* Preview */}
                 {formData.image && (
                   <div className="mt-4">
                     <img
@@ -541,15 +578,18 @@ export default function AdminPage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2"
+                className={cn(
+                  "px-8 py-2 text-white",
+                  formData.status === "published" ? "bg-blue-600 hover:bg-blue-700" : "bg-yellow-600 hover:bg-yellow-700"
+                )}
               >
                 {loading
                   ? editingSlug
                     ? "Updating..."
-                    : "Publishing..."
+                    : "Saving..."
                   : editingSlug
                     ? "Update Article"
-                    : "Publish Article"}
+                    : formData.status === "published" ? "Publish Article" : "Save as Draft"}
               </Button>
               <Button
                 type="button"
@@ -577,13 +617,23 @@ export default function AdminPage() {
               articles.map((article) => (
                 <div
                   key={article.slug}
-                  className="bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-6"
+                  className={cn(
+                    "bg-backgroundSecondary border rounded-2xl p-6 transition-colors",
+                    article.status === "draft" ? "border-yellow-900/50" : "border-[var(--border-color)]"
+                  )}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white mb-2">
-                        {article.title}
-                      </h3>
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-xl font-bold text-white">
+                          {article.title}
+                        </h3>
+                        {article.status === "draft" && (
+                          <span className="text-[10px] uppercase tracking-widest bg-yellow-900/30 text-yellow-500 px-2 py-0.5 rounded border border-yellow-800/50">
+                            Draft
+                          </span>
+                        )}
+                      </div>
                       <p className="text-gray-400 text-sm mb-3">
                         {article.description}
                       </p>
@@ -606,6 +656,17 @@ export default function AdminPage() {
                       </div>
                     </div>
                     <div className="flex gap-2 ml-4">
+                      {article.status === "draft" && (
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          disabled={loading}
+                          onClick={() => handlePublish(article)}
+                          className="bg-green-600 hover:bg-green-700 text-white"
+                        >
+                          <CheckCircle className="w-4 h-4 mr-2" /> Publish
+                        </Button>
+                      )}
                       <Button
                         variant="outline"
                         size="sm"

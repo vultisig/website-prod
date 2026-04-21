@@ -39,6 +39,7 @@ export async function generateMetadata({
   return {
     title: `${article.title} - Vultisig`,
     description: metaDescription,
+    robots: article.status === 'draft' ? { index: false, follow: false } : undefined,
     alternates: {
       canonical: url,
     },
@@ -168,6 +169,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
       <main className="min-h-screen py-16 px-4">
         <div className="max-w-4xl mx-auto">
+          {article.status === 'draft' && (
+            <div className="mb-8 p-4 bg-yellow-900/30 border border-yellow-700/50 rounded-xl text-yellow-200 text-center font-medium">
+              ⚠️ You are viewing an unlisted draft. This page is not visible on the main articles list.
+            </div>
+          )}
           <nav aria-label="Breadcrumb" className="mb-8">
             <ol className="flex items-center gap-2 text-sm text-gray-400">
               <li>

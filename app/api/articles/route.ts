@@ -7,18 +7,22 @@ const error = (message: string, status = 500) => json({ message }, status)
 
 async function isAuthed(req: NextRequest): Promise<boolean> {
   const token = req.cookies.get('admin_token')?.value
-  return token ? await verifyAuthToken(token) : false
+  const apiKey = req.headers.get('X-VULTISIG-SCOUT-KEY')
+  const validToken = token ? await verifyAuthToken(token) : false
+  const validApiKey = apiKey && process.env.SCOUT_API_KEY ? apiKey === process.env.SCOUT_API_KEY : false
+  return validToken || validApiKey
 }
 
-export async function GET() {
-  const articles = await getAllArticles()
+export async function GET(req: NextRequest) {
+  const authed = await isAuthed(req)
+  const articles = await getAllArticles(authed)
   return json({ articles })
 }
 
 export async function POST(req: NextRequest) {
   if (!(await isAuthed(req))) return error('Unauthorized', 401)
 
-  const { title, description, content, author, image, tags, slug, publishedAt, updatedAt, featured } = await req.json()
+  const { title, description, content, author, image, tags, slug, publishedAt, updatedAt, featured, status } = await req.json()
 
   if (!title || !description || !content || !slug) {
     return error('Missing required fields: title, description, content, slug', 400)
@@ -35,6 +39,7 @@ export async function POST(req: NextRequest) {
       image,
       tags: tags || [],
       featured: featured || false,
+      status: status || 'draft',
     }, slug)
 
     return json({ message: 'Article created', slug }, 201)
@@ -48,7 +53,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   if (!(await isAuthed(req))) return error('Unauthorized', 401)
 
-  const { title, description, content, author, image, tags, slug, oldSlug, publishedAt, featured } = await req.json()
+  const { title, description, content, author, image, tags, slug, oldSlug, publishedAt, featured, status } = await req.json()
 
   if (!title || !description || !content || !slug) {
     return error('Missing required fields: title, description, content, slug', 400)
@@ -64,6 +69,7 @@ export async function PUT(req: NextRequest) {
       image,
       tags: tags || [],
       featured: featured || false,
+      status: status || 'draft',
     }, slug, oldSlug)
 
     return json({ message: 'Article updated', slug })
