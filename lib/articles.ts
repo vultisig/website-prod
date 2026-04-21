@@ -48,6 +48,22 @@ function validateSlug(slug: string): { valid: boolean; error?: string } {
   return { valid: true }
 }
 
+function toArticleInterface(doc: IArticle): Article {
+  return {
+    slug: doc.slug,
+    title: doc.title,
+    description: doc.description,
+    content: doc.content,
+    author: doc.author,
+    publishedAt: doc.publishedAt.toISOString(),
+    updatedAt: doc.updatedAt?.toISOString(),
+    image: doc.image,
+    tags: doc.tags || [],
+    featured: doc.featured || false,
+    status: doc.status || 'published',
+  }
+}
+
 export async function getAllArticles(includeDrafts = false): Promise<Article[]> {
   try {
     await connectDB()
@@ -55,20 +71,8 @@ export async function getAllArticles(includeDrafts = false): Promise<Article[]> 
     const articles = await Article.find(query)
       .sort({ publishedAt: -1 })
       .lean()
-    
-    return articles.map((doc: any) => ({
-      slug: doc.slug,
-      title: doc.title,
-      description: doc.description,
-      content: doc.content,
-      author: doc.author,
-      publishedAt: doc.publishedAt.toISOString(),
-      updatedAt: doc.updatedAt?.toISOString(),
-      image: doc.image,
-      tags: doc.tags || [],
-      featured: doc.featured || false,
-      status: doc.status || 'published',
-    }))
+
+    return articles.map((doc: any) => toArticleInterface(doc))
   } catch (error) {
     console.error('Error fetching articles:', error)
     return []
@@ -85,19 +89,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     
     if (!article) return null
 
-    return {
-      slug: article.slug,
-      title: article.title,
-      description: article.description,
-      content: article.content,
-      author: article.author,
-      publishedAt: article.publishedAt.toISOString(),
-      updatedAt: article.updatedAt?.toISOString(),
-      image: article.image,
-      tags: article.tags || [],
-      featured: article.featured || false,
-      status: (article as any).status || 'published',
-    }
+    return toArticleInterface(article)
   } catch (error) {
     console.error('Error fetching article:', error)
     return null
