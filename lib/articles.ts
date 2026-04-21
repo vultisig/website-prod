@@ -51,7 +51,7 @@ function validateSlug(slug: string): { valid: boolean; error?: string } {
 export async function getAllArticles(includeDrafts = false): Promise<Article[]> {
   try {
     await connectDB()
-    const query = includeDrafts ? {} : { status: 'published' }
+    const query = includeDrafts ? {} : { $or: [{ status: 'published' }, { status: { $exists: false } }] }
     const articles = await Article.find(query)
       .sort({ publishedAt: -1 })
       .lean()
@@ -146,6 +146,7 @@ export async function updateArticle(
   slug: string,
   oldSlug?: string
 ): Promise<boolean> {
+  if (oldSlug && typeof oldSlug !== 'string') throw new Error('Invalid old slug')
   try {
     const validation = validateSlug(slug)
     if (!validation.valid) throw new Error(validation.error)
@@ -170,9 +171,9 @@ export async function updateArticle(
       if (existing) {
         throw new Error(`Article with slug "${slug}" already exists`)
       }
-      await Article.findOneAndUpdate({ slug: oldSlug }, { slug, ...updateData }, { new: true })
+      await Article.findOneAndUpdate({ slug: oldSlug }, { slug, ...updateData }, { new: true, runValidators: true })
     } else {
-      await Article.findOneAndUpdate({ slug }, updateData, { new: true })
+      await Article.findOneAndUpdate({ slug }, updateData, { new: true, runValidators: true })
     }
 
     return true

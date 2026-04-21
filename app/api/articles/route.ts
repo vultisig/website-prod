@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { createArticle, updateArticle, deleteArticle, getAllArticles } from '@/lib/articles'
 import { verifyAuthToken } from '@/lib/auth'
@@ -7,10 +8,24 @@ const error = (message: string, status = 500) => json({ message }, status)
 
 async function isAuthed(req: NextRequest): Promise<boolean> {
   const token = req.cookies.get('admin_token')?.value
-  const apiKey = req.headers.get('X-VULTISIG-SCOUT-KEY')
   const validToken = token ? await verifyAuthToken(token) : false
-  const validApiKey = apiKey && process.env.SCOUT_API_KEY ? apiKey === process.env.SCOUT_API_KEY : false
-  return validToken || validApiKey
+  if (validToken) return true
+
+  const authHeader = req.headers.get('Authorization')
+  const apiKey = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : req.headers.get('X-VULTISIG-SCOUT-KEY')
+  
+  if (apiKey && process.env.SCOUT_API_KEY) {
+    try {
+      return crypto.timingSafeEqual(
+        Buffer.from(apiKey),
+        Buffer.from(process.env.SCOUT_API_KEY)
+      )
+    } catch {
+      return false
+    }
+  }
+  
+  return false
 }
 
 export async function GET(req: NextRequest) {
