@@ -37,7 +37,7 @@ const DEFAULT_FORM = {
   image: "",
   tags: "",
   featured: false,
-  status: "draft" as const,
+  status: "draft" as "draft" | "published",
 }
 
 export default function AdminPage() {
@@ -250,8 +250,10 @@ export default function AdminPage() {
     }
   }
 
-  const updateField = (field: string, value: any) =>
-    setFormData({ ...formData, [field]: value })
+  const updateField = <K extends keyof typeof DEFAULT_FORM>(
+    field: K,
+    value: (typeof DEFAULT_FORM)[K],
+  ) => setFormData({ ...formData, [field]: value })
 
   if (checkingAuth) {
     return (
