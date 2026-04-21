@@ -146,7 +146,11 @@ export async function updateArticle(
   slug: string,
   oldSlug?: string
 ): Promise<boolean> {
-  if (oldSlug && typeof oldSlug !== 'string') throw new Error('Invalid old slug')
+  if (oldSlug !== undefined) {
+    if (typeof oldSlug !== 'string') throw new Error('Invalid old slug')
+    const oldSlugValidation = validateSlug(oldSlug)
+    if (!oldSlugValidation.valid) throw new Error(oldSlugValidation.error)
+  }
   try {
     const validation = validateSlug(slug)
     if (!validation.valid) throw new Error(validation.error)
@@ -171,9 +175,23 @@ export async function updateArticle(
       if (existing) {
         throw new Error(`Article with slug "${slug}" already exists`)
       }
-      await Article.findOneAndUpdate({ slug: oldSlug }, { slug, ...updateData }, { new: true, runValidators: true })
+      const updatedArticle = await Article.findOneAndUpdate(
+        { slug: oldSlug },
+        { slug, ...updateData },
+        { new: true, runValidators: true }
+      )
+      if (!updatedArticle) {
+        throw new Error(`Article with slug "${oldSlug}" not found`)
+      }
     } else {
-      await Article.findOneAndUpdate({ slug }, updateData, { new: true, runValidators: true })
+      const updatedArticle = await Article.findOneAndUpdate(
+        { slug },
+        updateData,
+        { new: true, runValidators: true }
+      )
+      if (!updatedArticle) {
+        throw new Error(`Article with slug "${slug}" not found`)
+      }
     }
 
     return true
