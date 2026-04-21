@@ -84,7 +84,7 @@ export async function PUT(req: NextRequest) {
       image,
       tags: tags || [],
       featured: featured || false,
-      status: status || 'draft',
+      status: status ?? 'published',
     }, slug, oldSlug)
 
     return json({ message: 'Article updated', slug })
