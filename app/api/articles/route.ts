@@ -1,13 +1,54 @@
 import { NextRequest, NextResponse } from 'next/server'
+import type { Article } from '@/lib/articles'
 import { createArticle, updateArticle, deleteArticle, getAllArticles } from '@/lib/articles'
-import { verifyAuthToken } from '@/lib/auth'
+import { canWriteArticles, isAdminAuthed } from '@/lib/auth'
 
 const json = (data: any, status = 200) => NextResponse.json(data, { status })
 const error = (message: string, status = 500) => json({ message }, status)
 
-async function isAuthed(req: NextRequest): Promise<boolean> {
-  const token = req.cookies.get('admin_token')?.value
-  return token ? await verifyAuthToken(token) : false
+type ArticleRequestBody = {
+  title?: string
+  description?: string
+  content?: string
+  author?: string
+  image?: string
+  tags?: string[]
+  slug?: string
+  oldSlug?: string
+  publishedAt?: string
+  updatedAt?: string
+  featured?: boolean
+}
+
+type ParsedArticlePayload = {
+  article: Omit<Article, 'slug'>
+  slug: string
+  oldSlug?: string
+}
+
+async function parseArticlePayload(req: NextRequest): Promise<ParsedArticlePayload> {
+  const body = (await req.json()) as ArticleRequestBody
+  const { title, description, content, author, image, tags, slug, oldSlug, publishedAt, updatedAt, featured } = body
+
+  if (!title || !description || !content || !slug) {
+    throw new Error('Missing required fields: title, description, content, slug')
+  }
+
+  return {
+    article: {
+      title,
+      description,
+      content,
+      author: author || 'Vultisig',
+      publishedAt: publishedAt || new Date().toISOString(),
+      updatedAt,
+      image,
+      tags: Array.isArray(tags) ? tags : [],
+      featured: Boolean(featured),
+    },
+    slug,
+    oldSlug,
+  }
 }
 
 export async function GET() {
@@ -16,65 +57,37 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  if (!(await isAuthed(req))) return error('Unauthorized', 401)
-
-  const { title, description, content, author, image, tags, slug, publishedAt, updatedAt, featured } = await req.json()
-
-  if (!title || !description || !content || !slug) {
-    return error('Missing required fields: title, description, content, slug', 400)
-  }
+  if (!(await canWriteArticles(req))) return error('Unauthorized', 401)
 
   try {
-    await createArticle({
-      title,
-      description,
-      content,
-      author: author || 'Vultisig',
-      publishedAt: publishedAt || new Date().toISOString(),
-      updatedAt,
-      image,
-      tags: tags || [],
-      featured: featured || false,
-    }, slug)
+    const { article, slug } = await parseArticlePayload(req)
+    await createArticle(article, slug)
 
     return json({ message: 'Article created', slug }, 201)
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Failed to create article'
-    const status = msg.includes('already exists') ? 409 : 500
+    const status = msg.includes('already exists') ? 409 : msg.includes('Missing required fields') ? 400 : 500
     return error(msg, status)
   }
 }
 
 export async function PUT(req: NextRequest) {
-  if (!(await isAuthed(req))) return error('Unauthorized', 401)
-
-  const { title, description, content, author, image, tags, slug, oldSlug, publishedAt, featured } = await req.json()
-
-  if (!title || !description || !content || !slug) {
-    return error('Missing required fields: title, description, content, slug', 400)
-  }
+  if (!(await canWriteArticles(req))) return error('Unauthorized', 401)
 
   try {
-    await updateArticle({
-      title,
-      description,
-      content,
-      author: author || 'Vultisig',
-      publishedAt: publishedAt || new Date().toISOString(),
-      image,
-      tags: tags || [],
-      featured: featured || false,
-    }, slug, oldSlug)
+    const { article, slug, oldSlug } = await parseArticlePayload(req)
+    await updateArticle(article, slug, oldSlug)
 
     return json({ message: 'Article updated', slug })
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Failed to update article'
-    return error(msg, 500)
+    const status = msg.includes('Missing required fields') ? 400 : 500
+    return error(msg, status)
   }
 }
 
 export async function DELETE(req: NextRequest) {
-  if (!(await isAuthed(req))) return error('Unauthorized', 401)
+  if (!(await isAdminAuthed(req))) return error('Unauthorized', 401)
 
   const slug = new URL(req.url).searchParams.get('slug')
   if (!slug) return error('Slug is required', 400)

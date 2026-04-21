@@ -73,18 +73,7 @@ export async function getAllArticles(): Promise<Article[]> {
       console.log(`[getAllArticles] Found ${articles.length} articles`)
     }
     
-    return articles.map((doc: any) => ({
-      slug: doc.slug,
-      title: doc.title,
-      description: doc.description,
-      content: doc.content,
-      author: doc.author,
-      publishedAt: doc.publishedAt.toISOString(),
-      updatedAt: doc.updatedAt?.toISOString(),
-      image: doc.image,
-      tags: doc.tags || [],
-      featured: doc.featured || false,
-    }))
+    return articles.map((doc: any) => toArticleInterface(doc))
   } catch (error) {
     console.error('Error fetching articles:', error)
     // Log more details in production
@@ -106,18 +95,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     
     if (!article) return null
 
-    return {
-      slug: article.slug,
-      title: article.title,
-      description: article.description,
-      content: article.content,
-      author: article.author,
-      publishedAt: article.publishedAt.toISOString(),
-      updatedAt: article.updatedAt?.toISOString(),
-      image: article.image,
-      tags: article.tags || [],
-      featured: article.featured || false,
-    }
+    return toArticleInterface(article)
   } catch (error) {
     console.error('Error fetching article:', error)
     return null
