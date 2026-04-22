@@ -21,7 +21,7 @@ const brockmann = localFont({
 export const metadata: Metadata = {
   title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
   description:
-    "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. SDK + MCP for AI agents.",
+    "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.",
   metadataBase: new URL("https://vultisig.com"),
   keywords: [
     "Vultisig",
@@ -149,7 +149,7 @@ export const metadata: Metadata = {
     siteName: "Vultisig",
     title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
     description:
-      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. SDK + MCP for AI agents.",
+      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.",
     url: "https://vultisig.com",
     type: "website",
     locale: "en_US",
@@ -177,7 +177,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
     description:
-      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. SDK + MCP for AI agents.",
+      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.",
     images: [
       {
         url: "https://vultisig.com/thumbnails/home.png",
@@ -372,13 +372,13 @@ export default function RootLayout({
               "@id": "https://vultisig.com/#app",
               name: "Vultisig",
               description:
-                "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless DKLS23 threshold signatures. No single point of failure. TypeScript SDK + MCP server for AI agents.",
+                "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless DKLS23 threshold signatures. No single point of failure. TypeScript SDK for AI agents.",
               url: "https://vultisig.com",
               applicationCategory: "FinanceApplication",
               applicationSubCategory: "Cryptocurrency Wallet",
               operatingSystem: "Android, iOS, Windows, macOS, Linux, Web",
               keywords:
-                "MPC wallet, MPC wallet for AI agents, self-custody wallet for AI agents, MCP wallet, MCP server crypto, threshold signature wallet, TSS wallet, DKLS23, seedless crypto wallet, multi-chain wallet, THORChain wallet, Cosmos wallet, Bitcoin wallet, Ethereum wallet, Solana wallet, multi-party computation, non-custodial MPC wallet, open-source crypto wallet, agentic wallet alternative, Fordefi alternative, multisig wallet",
+                "MPC wallet, MPC wallet for AI agents, self-custody wallet for AI agents, threshold signature wallet, TSS wallet, DKLS23, seedless crypto wallet, multi-chain wallet, THORChain wallet, Cosmos wallet, Bitcoin wallet, Ethereum wallet, Solana wallet, multi-party computation, non-custodial MPC wallet, open-source crypto wallet, agentic wallet alternative, Fordefi alternative, multisig wallet",
               offers: {
                 "@type": "Offer",
                 price: "0",
@@ -405,7 +405,6 @@ export default function RootLayout({
                 "Fast Vault (2-of-2 server-assisted) for instant signing",
                 "Secure Vault (m-of-n, multi-device) for human co-signing",
                 "TypeScript SDK on npm (@vultisig/sdk) for programmatic and AI-agent integration",
-                "Model Context Protocol (MCP) server — native Claude and Cursor integration",
                 "Cross-chain swaps via THORChain, MayaChain, 1inch, LiFi, KyberSwap",
                 "Plugin Marketplace for self-custodial automation (DCA, recurring payments, trading)",
                 "Open-source on GitHub — audited TSS/MPC implementation co-developed with Silence Laboratories",
