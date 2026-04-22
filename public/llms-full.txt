@@ -13,7 +13,7 @@ Two vault types:
 
 - [Vultisig SDK](https://www.npmjs.com/package/@vultisig/sdk): TypeScript SDK — `npm install @vultisig/sdk`
 - [SDK Source](https://github.com/vultisig/vultisig-sdk): Monorepo with SDK, CLI, core libraries, and examples
-- [Agent Integration Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/agent.md): Comprehensive guide written for AI agent integration
+- [Agent Integration Guide](https://github.com/vultisig/vultisig-sdk/blob/main/AGENTS.md): Comprehensive guide written for AI agent integration
 - [SDK Users Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/SDK-USERS-GUIDE.md): Full API walkthrough — vault types, operations, events, caching
 - [Architecture](https://github.com/vultisig/vultisig-sdk/blob/main/docs/architecture/ARCHITECTURE.md): SDK internals, data flow, design patterns
 - [CLI Tool](https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli): `vsig vault create`, `vsig send`, `vsig swap`

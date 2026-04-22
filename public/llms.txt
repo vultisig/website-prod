@@ -6,7 +6,7 @@
 
 - [Vultisig SDK](https://www.npmjs.com/package/@vultisig/sdk): TypeScript SDK for vault creation, signing, swaps, balances — `npm install @vultisig/sdk`
 - [SDK Source](https://github.com/vultisig/vultisig-sdk): Monorepo with SDK, CLI, core libraries, and examples
-- [Agent Integration Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/agent.md): Comprehensive guide for AI agent integration
+- [Agent Integration Guide](https://github.com/vultisig/vultisig-sdk/blob/main/AGENTS.md): Comprehensive guide for AI agent integration
 - [SDK Users Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/SDK-USERS-GUIDE.md): Full API walkthrough — vault types, operations, events, caching
 - [CLI Tool](https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli): Command-line vault management — `vsig vault create`, `vsig send`, `vsig swap`
 - [SKILL.md](https://vultisig.com/SKILL.md): Step-by-step operating procedure with exact SDK method signatures and code examples

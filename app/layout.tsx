@@ -21,7 +21,7 @@ const brockmann = localFont({
 export const metadata: Metadata = {
   title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
   description:
-    "Vultisig is a free, secure MPC wallet with TSS technology. Manage Bitcoin, Ethereum & 30+ chains without seed phrases. No single point of failure. Self-custody made simple.",
+    "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. SDK + MCP for AI agents.",
   metadataBase: new URL("https://vultisig.com"),
   keywords: [
     "Vultisig",
@@ -149,7 +149,7 @@ export const metadata: Metadata = {
     siteName: "Vultisig",
     title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
     description:
-      "Vultisig: The free MPC wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. SDK + MCP for AI agents.",
     url: "https://vultisig.com",
     type: "website",
     locale: "en_US",
@@ -177,7 +177,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
     description:
-      "Vultisig: The free MPC wallet with TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. SDK + MCP for AI agents.",
     images: [
       {
         url: "https://vultisig.com/thumbnails/home.png",
@@ -325,6 +325,11 @@ export default function RootLayout({
                 "https://github.com/vultisig",
                 "https://t.me/vultisig",
                 "https://www.youtube.com/@Vultisig",
+                "https://apps.apple.com/app/apple-store/id6503023896",
+                "https://play.google.com/store/apps/details?id=com.vultisig.wallet",
+                "https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb",
+                "https://www.npmjs.com/package/@vultisig/sdk",
+                "https://en.wikipedia.org/wiki/Threshold_cryptosystem",
               ],
             }),
           }}
@@ -367,13 +372,13 @@ export default function RootLayout({
               "@id": "https://vultisig.com/#app",
               name: "Vultisig",
               description:
-                "The leading MPC wallet with multi-signature security and TSS technology. Secure Bitcoin, Ethereum, and 30+ chains without seed phrases. No single point of failure.",
+                "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless DKLS23 threshold signatures. No single point of failure. TypeScript SDK + MCP server for AI agents.",
               url: "https://vultisig.com",
               applicationCategory: "FinanceApplication",
               applicationSubCategory: "Cryptocurrency Wallet",
               operatingSystem: "Android, iOS, Windows, macOS, Linux, Web",
               keywords:
-                "MPC wallet, multi-party computation, TSS wallet, multisig wallet, crypto vault, seedless wallet, self-custody",
+                "MPC wallet, MPC wallet for AI agents, self-custody wallet for AI agents, MCP wallet, MCP server crypto, threshold signature wallet, TSS wallet, DKLS23, seedless crypto wallet, multi-chain wallet, THORChain wallet, Cosmos wallet, Bitcoin wallet, Ethereum wallet, Solana wallet, multi-party computation, non-custodial MPC wallet, open-source crypto wallet, agentic wallet alternative, Fordefi alternative, multisig wallet",
               offers: {
                 "@type": "Offer",
                 price: "0",
@@ -394,16 +399,17 @@ export default function RootLayout({
                 worstRating: "1",
               },
               featureList: [
-                "MPC (Multi-Party Computation) security",
-                "Threshold Signature Scheme (TSS) technology",
-                "Multi-signature wallet",
-                "30+ blockchain support",
-                "No seed phrases required",
-                "Self-custodial - you control your keys",
-                "Multi-device signing",
-                "Cross-chain swaps via THORChain",
-                "AI agent integration ready",
-                "Open source and audited",
+                "MPC (Multi-Party Computation) security via DKLS23 Threshold Signature Scheme",
+                "Seedless — no 12 or 24 word recovery phrase to store",
+                "36+ blockchains including Bitcoin, Ethereum, Solana, THORChain, Cosmos, TON, Cardano, Tron, XRP",
+                "Fast Vault (2-of-2 server-assisted) for instant signing",
+                "Secure Vault (m-of-n, multi-device) for human co-signing",
+                "TypeScript SDK on npm (@vultisig/sdk) for programmatic and AI-agent integration",
+                "Model Context Protocol (MCP) server — native Claude and Cursor integration",
+                "Cross-chain swaps via THORChain, MayaChain, 1inch, LiFi, KyberSwap",
+                "Plugin Marketplace for self-custodial automation (DCA, recurring payments, trading)",
+                "Open-source on GitHub — audited TSS/MPC implementation co-developed with Silence Laboratories",
+                "iOS, Android, Windows, macOS, Linux, and Chrome browser extension",
               ],
               downloadUrl: "https://vultisig.com/downloads",
               installUrl: "https://vultisig.com/downloads",
