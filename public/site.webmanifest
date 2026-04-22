@@ -1,0 +1,30 @@
+{
+  "name": "Vultisig",
+  "short_name": "Vultisig",
+  "description": "Vultisig is a free, secure MPC wallet with TSS technology. Manage Bitcoin, Ethereum & 30+ chains without seed phrases.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#000000",
+  "background_color": "#061b3a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/vnd.microsoft.icon"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
