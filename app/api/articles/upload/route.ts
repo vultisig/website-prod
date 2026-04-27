@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyAuthToken } from '@/lib/auth'
+import { canWriteArticles } from '@/lib/auth'
 import connectDB from '@/lib/mongodb'
 import { GridFSBucket } from 'mongodb'
 import mongoose from 'mongoose'
@@ -11,13 +11,8 @@ const error = (message: string, status = 500) => json({ message }, status)
 const MAX_SIZE = 1 * 1024 * 1024 // 1MB
 const MAX_DIMENSION = 1920 // Max width or height
 
-async function isAuthed(req: NextRequest): Promise<boolean> {
-  const token = req.cookies.get('admin_token')?.value
-  return token ? await verifyAuthToken(token) : false
-}
-
 export async function POST(req: NextRequest) {
-  if (!(await isAuthed(req))) {
+  if (!(await canWriteArticles(req))) {
     return error('Unauthorized', 401)
   }
 
