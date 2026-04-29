@@ -26,7 +26,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   "macos-github": {
-    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.33.45",
+    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.35.50",
     platform: "macos github",
     icon: "/images/macOS.svg",
     iconAlt: "MacOS Github",
@@ -44,7 +44,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   windows: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.54/Vultisig-amd64-installer-v1.0.54.exe",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.58/Vultisig-amd64-installer-v1.0.58.exe",
     platform: "windows",
     icon: "/images/windows.svg",
     iconAlt: "Windows",
@@ -53,7 +53,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   linux: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.54/vultisig_1.0.54_amd64.deb",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.58/vultisig_1.0.58_amd64.deb",
     platform: "linux",
     icon: "/images/linux.svg",
     iconAlt: "Linux",
@@ -62,7 +62,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   "android-github": {
-    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.96",
+    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.101",
     platform: "android github",
     icon: "/images/Android.svg",
     iconAlt: "Android",

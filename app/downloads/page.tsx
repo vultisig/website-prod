@@ -18,22 +18,22 @@ const hashes = [
   {
     os: "ios",
     icon: "/images/apple.svg",
-    hash: "sha256:aa8c82df650a1c46d2e37b9eff9b2a1f087052dc8ed43856bf4b0728a3ab6f52",
+    hash: "sha256:65e9cb3536b819cfce613c61abf15b528f97688b85e3285893c7efda8a4c2d80",
   },
   {
     os: "android",
     icon: "/images/Android.svg",
-    hash: "sha256:c8523494c5a7fb097597dd34c5c5c9b697f353174970cc38934000c1648eef44",
+    hash: "sha256:95851af9f164783246b80d0a7684a3613fdaa346c17d2534f3d4935e4000cbcf",
   },
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "sha256:96f515ba9d123545c67d32c4ecb92aa4de039768d41637d2c6f68448523c2741",
+    hash: "sha256:71aa668802ad138087d522eb7d1d448b3a7c444fd6ebb845f366464945979050",
   },
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:8c2c82ec0f5488c02064f6079ef79eb5a99ce29f25d913b3a996ef9978cd2df9",
+    hash: "sha256:0dcbd43414d61c02973edf71b6e5b1f37173f899d018155275d710f9fb06ec95",
   },
 ]
 
