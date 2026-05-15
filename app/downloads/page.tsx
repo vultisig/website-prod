@@ -28,12 +28,12 @@ const hashes = [
   {
     os: "linux",
     icon: "/images/linux.svg",
-    hash: "sha256:71aa668802ad138087d522eb7d1d448b3a7c444fd6ebb845f366464945979050",
+    hash: "sha256:b4b26bd61a84ab1366f6844a9a46527225630193b505124cf4f2febc89056913",
   },
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:0dcbd43414d61c02973edf71b6e5b1f37173f899d018155275d710f9fb06ec95",
+    hash: "sha256:0862c498fa9745ebbea122c99f749dfc34b4cb663051539733fac003f9fd6e65",
   },
 ]
 
