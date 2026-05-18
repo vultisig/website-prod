@@ -6,6 +6,48 @@ const JWT_SECRET = new TextEncoder().encode(
   (process.env.ADMIN_PASSWORD || '') + '-jwt-secret'
 )
 
+const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS'])
+
+function getForwardedHeaderValue(value: string | null): string | null {
+  return value?.split(',')[0]?.trim() || null
+}
+
+function getRequestOrigin(req: NextRequest): string {
+  const forwardedHost = getForwardedHeaderValue(req.headers.get('x-forwarded-host'))
+  const host = forwardedHost || req.headers.get('host')
+
+  if (!host) {
+    return new URL(req.url).origin
+  }
+
+  const forwardedProto = getForwardedHeaderValue(req.headers.get('x-forwarded-proto'))
+  const protocol = forwardedProto || new URL(req.url).protocol.replace(':', '')
+
+  return `${protocol}://${host}`
+}
+
+export function isSameOriginRequest(req: NextRequest): boolean {
+  const expectedOrigin = getRequestOrigin(req)
+  const origin = req.headers.get('origin')
+
+  if (origin) {
+    return origin === expectedOrigin
+  }
+
+  const referer = req.headers.get('referer')
+  if (!referer) return false
+
+  try {
+    return new URL(referer).origin === expectedOrigin
+  } catch {
+    return false
+  }
+}
+
+function isSafeAdminRequest(req: NextRequest): boolean {
+  return SAFE_METHODS.has(req.method) || isSameOriginRequest(req)
+}
+
 export async function createAuthToken(): Promise<string> {
   return new SignJWT({ authenticated: true })
     .setProtectedHeader({ alg: 'HS256' })
@@ -16,7 +58,7 @@ export async function createAuthToken(): Promise<string> {
 
 export async function verifyAuthToken(token: string): Promise<boolean> {
   try {
-    await jwtVerify(token, JWT_SECRET)
+    await jwtVerify(token, JWT_SECRET, { algorithms: ['HS256'] })
     return true
   } catch {
     return false
@@ -47,12 +89,20 @@ export async function isAdminAuthed(req: NextRequest): Promise<boolean> {
   return token ? verifyAuthToken(token) : false
 }
 
+export async function canAdminWriteArticles(req: NextRequest): Promise<boolean> {
+  return (await isAdminAuthed(req)) && isSafeAdminRequest(req)
+}
+
+export async function canReadPrivateArticleImages(req: NextRequest): Promise<boolean> {
+  return (await isAdminAuthed(req)) && isSameOriginRequest(req)
+}
+
 export function isScoutAuthed(req: NextRequest): boolean {
   const apiKey = getScoutApiKeyFromRequest(req)
   return apiKey ? verifyScoutApiKey(apiKey) : false
 }
 
 export async function canWriteArticles(req: NextRequest): Promise<boolean> {
-  if (await isAdminAuthed(req)) return true
+  if (await canAdminWriteArticles(req)) return true
   return isScoutAuthed(req)
 }

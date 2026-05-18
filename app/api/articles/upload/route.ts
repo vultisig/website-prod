@@ -109,8 +109,8 @@ export async function POST(req: NextRequest) {
 
     const bucket = new GridFSBucket(db, { bucketName: 'article-images' })
     const uploadStream = bucket.openUploadStream(filename, {
-      contentType,
       metadata: {
+        contentType,
         originalName: file.name,
         originalSize: file.size,
         compressedSize: buffer.length,
@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return new Promise((resolve) => {
+    return new Promise<NextResponse>((resolve) => {
       uploadStream.end(buffer)
 
       uploadStream.on('finish', () => {
