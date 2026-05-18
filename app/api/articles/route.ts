@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import type { Article } from '@/lib/articles'
 import { createArticle, updateArticle, deleteArticle, getAllArticles } from '@/lib/articles'
-import { canWriteArticles, isAdminAuthed } from '@/lib/auth'
+import { canAdminWriteArticles, canWriteArticles } from '@/lib/auth'
 
 const json = (data: any, status = 200) => NextResponse.json(data, { status })
 const error = (message: string, status = 500) => json({ message }, status)
@@ -93,7 +93,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  if (!(await isAdminAuthed(req))) return error('Unauthorized', 401)
+  if (!(await canAdminWriteArticles(req))) return error('Unauthorized', 401)
 
   const slug = new URL(req.url).searchParams.get('slug')
   if (!slug) return error('Slug is required', 400)

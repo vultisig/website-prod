@@ -2,6 +2,51 @@ import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import { GridFSBucket } from 'mongodb'
 import mongoose from 'mongoose'
+import { canReadPrivateArticleImages } from '@/lib/auth'
+import Article from '@/lib/models/Article'
+
+const FALLBACK_IMAGE_CONTENT_TYPE = 'image/jpeg'
+const ALLOWED_IMAGE_CONTENT_TYPES = new Set([
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+])
+
+function getSafeImageContentType(contentType: string | undefined): string {
+  if (!contentType) return FALLBACK_IMAGE_CONTENT_TYPE
+
+  const normalizedContentType = contentType.toLowerCase()
+  if (!ALLOWED_IMAGE_CONTENT_TYPES.has(normalizedContentType)) {
+    return FALLBACK_IMAGE_CONTENT_TYPE
+  }
+
+  return normalizedContentType === 'image/jpg'
+    ? FALLBACK_IMAGE_CONTENT_TYPE
+    : normalizedContentType
+}
+
+function getGridFsContentType(file: { contentType?: string; metadata?: { contentType?: string } }): string {
+  return getSafeImageContentType(file.metadata?.contentType || file.contentType)
+}
+
+async function isReferencedByPublishedArticle(imagePath: string): Promise<boolean> {
+  const escapedImagePath = imagePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const publishedArticleQuery = {
+    $and: [
+      { $or: [{ status: 'published' }, { status: { $exists: false } }] },
+      {
+        $or: [
+          { image: imagePath },
+          { content: { $regex: escapedImagePath } },
+        ],
+      },
+    ],
+  }
+
+  return (await Article.exists(publishedArticleQuery)) !== null
+}
 
 export async function GET(
   req: NextRequest,
@@ -17,6 +62,10 @@ export async function GET(
     }
 
     const bucket = new GridFSBucket(db, { bucketName: 'article-images' })
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return new NextResponse('Image not found', { status: 404 })
+    }
+
     const objectId = new mongoose.Types.ObjectId(id)
     
     // First, check if file exists and get metadata
@@ -26,11 +75,16 @@ export async function GET(
     }
 
     const file = files[0]
-    const contentType = file.contentType || 'image/jpeg'
+    const contentType = getGridFsContentType(file)
+    const imagePath = `/api/articles/image/${id}`
+
+    if (!(await canReadPrivateArticleImages(req)) && !(await isReferencedByPublishedArticle(imagePath))) {
+      return new NextResponse('Image not found', { status: 404 })
+    }
     
     const downloadStream = bucket.openDownloadStream(objectId)
 
-    return new Promise((resolve) => {
+    return new Promise<NextResponse>((resolve) => {
       const chunks: Buffer[] = []
 
       downloadStream.on('data', (chunk: Buffer) => {
@@ -43,6 +97,8 @@ export async function GET(
         resolve(new NextResponse(buffer, {
           headers: {
             'Content-Type': contentType,
+            'X-Content-Type-Options': 'nosniff',
+            'Content-Security-Policy': "default-src 'none'; sandbox",
             'Cache-Control': 'public, max-age=31536000, immutable',
           },
         }))
