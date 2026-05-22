@@ -23,7 +23,7 @@ const hashes = [
   {
     os: "android",
     icon: "/images/Android.svg",
-    hash: "sha256:95851af9f164783246b80d0a7684a3613fdaa346c17d2534f3d4935e4000cbcf",
+    hash: "sha256:0e7e00fb74f8c2ee68d80eb54d71d4ee884f94909ce2ef2af059ceec807f793a",
   },
   {
     os: "linux",
