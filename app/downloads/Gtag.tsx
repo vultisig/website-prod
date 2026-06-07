@@ -44,7 +44,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   windows: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.62/Vultisig-amd64-installer-v1.0.62.exe",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.63/Vultisig-amd64-installer-v1.0.63.exe",
     platform: "windows",
     icon: "/images/windows.svg",
     iconAlt: "Windows",
@@ -53,7 +53,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   linux: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.62/vultisig_1.0.62_amd64.deb",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.63/vultisig_1.0.63_amd64.deb",
     platform: "linux",
     icon: "/images/linux.svg",
     iconAlt: "Linux",
