@@ -26,7 +26,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   "macos-github": {
-    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.37.57",
+    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.38.59",
     platform: "macos github",
     icon: "/images/macOS.svg",
     iconAlt: "MacOS Github",

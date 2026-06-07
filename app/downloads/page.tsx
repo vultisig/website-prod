@@ -18,7 +18,7 @@ const hashes = [
   {
     os: "ios",
     icon: "/images/apple.svg",
-    hash: "sha256:3b395275042382387befd9b2a270c956d8b95723b813f66efcd5f500466891b1",
+    hash: "sha256:ca8f55ca3252a6358b2214bfcaf476dd11147771dbedebaac5a08328e34c965f",
   },
   {
     os: "android",
