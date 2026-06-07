@@ -33,7 +33,7 @@ const hashes = [
   {
     os: "windows",
     icon: "/images/windows.svg",
-    hash: "sha256:3350165ef3d2f3481498bd28bba31b821a5065f05aa0a25c60b0c4e24c6e4a73",
+    hash: "sha256:a19c5d65444bc3d0476134d68768b6b874c7a47a54f1422801eab2421164aebf",
   },
 ]
 
