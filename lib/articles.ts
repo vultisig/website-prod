@@ -96,6 +96,34 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   }
 }
 
+// Rank published articles by shared-tag overlap with the current one, so every
+// article links out to its closest neighbours. Falls back to most-recent when
+// no tags overlap, guaranteeing a non-empty "Related reading" block.
+export async function getRelatedArticles(
+  currentSlug: string,
+  tags: string[] = [],
+  limit = 3,
+): Promise<Article[]> {
+  const all = await getAllArticles()
+  const others = all.filter((a) => a.slug !== currentSlug)
+  const tagSet = new Set(tags)
+
+  const scored = others
+    .map((a) => ({
+      article: a,
+      overlap: (a.tags || []).filter((t) => tagSet.has(t)).length,
+    }))
+    .sort((x, y) => {
+      if (y.overlap !== x.overlap) return y.overlap - x.overlap
+      return (
+        new Date(y.article.publishedAt).getTime() -
+        new Date(x.article.publishedAt).getTime()
+      )
+    })
+
+  return scored.slice(0, limit).map((s) => s.article)
+}
+
 export async function createArticle(article: Omit<Article, 'slug'>, slug: string): Promise<boolean> {
   try {
     const validation = validateSlug(slug)

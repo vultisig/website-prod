@@ -1,9 +1,14 @@
-import { getArticleBySlug, getAllArticles, toMetaDescription } from "@/lib/articles"
+import {
+  getArticleBySlug,
+  getRelatedArticles,
+  toMetaDescription,
+} from "@/lib/articles"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import type { Metadata } from "next"
 import MarkdownRenderer from "@/components/markdown-renderer"
+import RelatedArticles from "@/components/related-articles"
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>
@@ -39,7 +44,8 @@ export async function generateMetadata({
   return {
     title: `${article.title} - Vultisig`,
     description: metaDescription,
-    robots: article.status === 'draft' ? { index: false, follow: false } : undefined,
+    robots:
+      article.status === "draft" ? { index: false, follow: false } : undefined,
     alternates: {
       canonical: url,
     },
@@ -155,6 +161,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = await getArticleBySlug(slug)
   if (!article) notFound()
 
+  const related = await getRelatedArticles(slug, article.tags, 3)
+
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -169,9 +177,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
       <main className="min-h-screen py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          {article.status === 'draft' && (
+          {article.status === "draft" && (
             <div className="mb-8 p-4 bg-yellow-900/30 border border-yellow-700/50 rounded-xl text-yellow-200 text-center font-medium">
-              ⚠️ You are viewing an unlisted draft. This page is not visible on the main articles list.
+              ⚠️ You are viewing an unlisted draft. This page is not visible on
+              the main articles list.
             </div>
           )}
           <nav aria-label="Breadcrumb" className="mb-8">
@@ -243,6 +252,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
             <MarkdownRenderer content={article.content} />
           </article>
+
+          <RelatedArticles articles={related} />
 
           <div className="mt-8 text-center">
             <Link
