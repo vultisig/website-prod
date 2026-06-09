@@ -9,6 +9,7 @@ import localFont from "next/font/local"
 import { cn } from "@/lib/utils"
 import LoadTailwindIntersect from "@/components/sections/LoadTailwindIntersect"
 import TwitterAnalytics from "@/components/twitter-analytics"
+import Script from "next/script"
 
 const brockmann = localFont({
   style: "normal",
@@ -334,6 +335,7 @@ export default function RootLayout({
         <Toaster />
         <LoadTailwindIntersect />
       </body>
+      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
     </html>
   )
 }
