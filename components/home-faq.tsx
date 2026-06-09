@@ -1,8 +1,5 @@
-// Homepage FAQ. Rendered with native <details> so every answer ships in the
-// initial server HTML — crawlable by Google and cited by AI answer engines —
-// and the FAQPage JSON-LD below mirrors the visible copy exactly (Google
-// requires markup to match on-page content). Q&A pairs deliberately seed our
-// pillar terms: MPC wallet, seedless/seed-phrase, and agentic (AI agent) wallet.
+// Native <details> keeps every answer in the server HTML (crawlable + AI-citable);
+// the FAQPage JSON-LD below must mirror the visible copy (Google's match rule).
 
 const FAQ_ITEMS = [
   {
