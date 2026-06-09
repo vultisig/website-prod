@@ -250,7 +250,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               )}
             </div>
 
-            <MarkdownRenderer content={article.content} />
+            <MarkdownRenderer
+              content={article.content}
+              currentPath={`/articles/${article.slug}`}
+            />
           </article>
 
           <RelatedArticles articles={related} />
