@@ -108,18 +108,15 @@ export async function getRelatedArticles(
   const others = all.filter((a) => a.slug !== currentSlug)
   const tagSet = new Set(tags)
 
+  // getAllArticles() is already sorted publishedAt desc and Array.sort is
+  // stable, so sorting on overlap alone keeps most-recent-first within each
+  // tier and falls back to recency when no tags overlap.
   const scored = others
     .map((a) => ({
       article: a,
       overlap: (a.tags || []).filter((t) => tagSet.has(t)).length,
     }))
-    .sort((x, y) => {
-      if (y.overlap !== x.overlap) return y.overlap - x.overlap
-      return (
-        new Date(y.article.publishedAt).getTime() -
-        new Date(x.article.publishedAt).getTime()
-      )
-    })
+    .sort((x, y) => y.overlap - x.overlap)
 
   return scored.slice(0, limit).map((s) => s.article)
 }
