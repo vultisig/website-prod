@@ -109,8 +109,7 @@ export default function MarkdownRenderer({
             ),
             a: ({ href = "", children }) => {
               const internalHref = getInternalHref(href)
-              const className =
-                "text-blue-400 hover:text-blue-300 underline"
+              const className = "text-blue-400 hover:text-blue-300 underline"
 
               return internalHref ? (
                 <Link href={internalHref} className={className}>

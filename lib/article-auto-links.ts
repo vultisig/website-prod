@@ -43,20 +43,19 @@ function collectExistingTargets(node: MarkdownNode, targets: Set<string>) {
   node.children?.forEach((child) => collectExistingTargets(child, targets))
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
+
 function findFirstGlossaryMatch(value: string, usedTargets: Set<string>) {
-  let bestMatch:
-    | { index: number; match: string; href: string }
-    | undefined
+  let bestMatch: { index: number; match: string; href: string } | undefined
 
   for (const entry of glossary) {
     if (usedTargets.has(entry.href)) continue
 
     for (const term of entry.terms) {
-      const match = new RegExp(`\\b${term}\\b`, "i").exec(value)
-      if (
-        match &&
-        (!bestMatch || match.index < bestMatch.index)
-      ) {
+      const match = new RegExp(`\\b${escapeRegExp(term)}\\b`, "i").exec(value)
+      if (match && (!bestMatch || match.index < bestMatch.index)) {
         bestMatch = {
           index: match.index,
           match: match[0],
