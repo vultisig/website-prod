@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight, Zap, Shield } from "lucide-react"
-import SectionBadge from "@/components/ui/section-badge"
 
 const VAULT_CTA_CLASS =
   "rounded-xl px-5 py-4 h-[51px] w-full lg:w-auto text-sm gap-1.5 border-white/15"
@@ -10,8 +9,6 @@ export default function SetupSection() {
     <section className="py-16 container">
       {/* Header */}
       <div className="flex flex-col items-start gap-5 mb-12">
-        <SectionBadge label="Choose your setup" />
-
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-textPrimary tracking-tight">
           The setup for{" "}
           <span className="bg-gradient-to-r from-secondaryAccent to-deepBlue bg-clip-text text-transparent">
