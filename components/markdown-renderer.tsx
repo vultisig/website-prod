@@ -1,13 +1,19 @@
 "use client"
 
+import Link from "next/link"
 import ReactMarkdown from "react-markdown"
 import remarkBreaks from "remark-breaks"
+import { articleAutoLinks, getInternalHref } from "@/lib/article-auto-links"
 
 interface MarkdownRendererProps {
   content: string
+  currentPath?: string
 }
 
-export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
+export default function MarkdownRenderer({
+  content,
+  currentPath,
+}: MarkdownRendererProps) {
   // ULTIMATE SIMPLE FIX: Replace empty lines with a marker that creates visible spacing
   // Process line by line and inject spacing markers
 
@@ -37,7 +43,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
     <div className="max-w-none font-sans">
       <div className="text-textSecondary leading-relaxed">
         <ReactMarkdown
-          remarkPlugins={[remarkBreaks]}
+          remarkPlugins={[remarkBreaks, articleAutoLinks(currentPath)]}
           components={{
             h1: ({ children }) => (
               <h1 className="text-3xl font-bold text-white mt-8 mb-4">
@@ -101,16 +107,25 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             li: ({ children }) => (
               <li className="text-textSecondary mb-1">{children}</li>
             ),
-            a: ({ href, children }) => (
-              <a
-                href={href}
-                className="text-blue-400 hover:text-blue-300 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {children}
-              </a>
-            ),
+            a: ({ href = "", children }) => {
+              const internalHref = getInternalHref(href)
+              const className = "text-blue-400 hover:text-blue-300 underline"
+
+              return internalHref ? (
+                <Link href={internalHref} className={className}>
+                  {children}
+                </Link>
+              ) : (
+                <a
+                  href={href}
+                  className={className}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {children}
+                </a>
+              )
+            },
             code: ({ children }) => (
               <code className="bg-slate-800 px-2 py-1 rounded text-sm text-blue-300 font-mono">
                 {children}
