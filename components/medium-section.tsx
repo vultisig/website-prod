@@ -68,7 +68,7 @@ function ArticleCard({
     <>
       <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6 overflow-hidden">
         <img
-          src={article.image || "/images/placeholder-article.svg"}
+          src={article.image || "/images/home-5.svg"}
           alt={article.title}
           width="800"
           height="450"
