@@ -62,7 +62,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   "android-github": {
-    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.107",
+    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.108",
     platform: "android github",
     icon: "/images/Android.svg",
     iconAlt: "Android",
