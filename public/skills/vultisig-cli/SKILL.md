@@ -122,6 +122,8 @@ vultisig swap ethereum bitcoin 0.1 --password "SecurePass123!" -y -o json
 | `portfolio -o json` | Total portfolio value in fiat |
 | `send <chain> <to> <amount>` | Send native token |
 | `send <chain> <to> <amount> --token <addr>` | Send ERC-20 token |
+| `agent ask "<message>"` | One-shot natural-language mode for AI agents (see [AI Agent Integration](#ai-agent-integration)) |
+| `agent` / `agent --via-agent` | Interactive chat TUI / NDJSON agent-to-agent pipe |
 
 ### Swap Operations
 
@@ -166,6 +168,52 @@ vultisig send ethereum 0x... 0.1 -y --password "pass" -o json
 vultisig info -o json
 # {"vault":{"id":"...","name":"...","type":"fast","chains":[...]}}
 ```
+
+## AI Agent Integration
+
+The CLI is built to run inside agents. Beyond the structured commands above, it offers a natural-language mode and runs unattended without hanging on prompts.
+
+### Non-interactive by default
+
+In a non-TTY environment (pipes, scripts, agents), the CLI auto-detects this and skips interactive prompts. Vault creation falls back to two-step mode automatically:
+
+```bash
+# Auto-detects non-TTY, skips the interactive OTP prompt, returns immediately
+vultisig create fast --name "agent-wallet" --email "agent@example.com" --password "$VAULT_PASSWORD" -o json
+
+# Verify later, once you have the email code
+vultisig verify <vaultId> --code 123456
+```
+
+Use `--ci` for full automation mode (equivalent to `--output json --non-interactive --quiet`). Supply the password through `--password` or `VAULT_PASSWORD` so no command blocks on input.
+
+### Agent ask (natural language)
+
+Send a single natural-language message and get a structured response. This mode is designed for AI-to-AI use and routes through the Vultisig agent backend.
+
+```bash
+# Query
+vultisig agent ask "What is my ETH balance?" --password "$VAULT_PASSWORD"
+
+# Execute a transaction
+vultisig agent ask "Send 0.01 ETH to 0x742d..." --password "$VAULT_PASSWORD"
+
+# Continue a conversation, structured JSON for parsing
+vultisig agent ask "Now swap it to USDC" --session abc123 --password "$VAULT_PASSWORD" --json
+```
+
+```json
+{
+  "session_id": "abc123-def456",
+  "response": "Your ETH balance is 1.5 ETH ($3,750.00 USD).",
+  "tool_calls": [{ "action": "get_balances", "success": true }],
+  "transactions": [{ "hash": "0x9f8e...", "chain": "ethereum", "explorerUrl": "https://etherscan.io/tx/0x9f8e..." }]
+}
+```
+
+On failure, stdout is a single JSON object with a human-readable `error` and a stable `code` (for example `BACKEND_UNREACHABLE`, `AUTH_FAILED`, `VAULT_LOCKED`). Branch on `code`, not on the message.
+
+For an interactive chat TUI or NDJSON agent-to-agent piping, use `vultisig agent` and `vultisig agent --via-agent`.
 
 ## Common Workflows
 
