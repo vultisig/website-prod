@@ -16,7 +16,7 @@ Two vault types:
 - [Agent Integration Guide](https://github.com/vultisig/vultisig-sdk/blob/main/AGENTS.md): Comprehensive guide written for AI agent integration
 - [SDK Users Guide](https://github.com/vultisig/vultisig-sdk/blob/main/docs/SDK-USERS-GUIDE.md): Full API walkthrough — vault types, operations, events, caching
 - [Architecture](https://github.com/vultisig/vultisig-sdk/blob/main/docs/architecture/ARCHITECTURE.md): SDK internals, data flow, design patterns
-- [CLI Tool](https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli): `vsig vault create`, `vsig send`, `vsig swap`
+- [CLI Tool](https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli): `vultisig create fast`, `vultisig send`, `vultisig swap`, plus natural-language `vultisig agent ask` for AI-to-AI use
 - [SKILL.md](https://vultisig.com/SKILL.md): Step-by-step operating procedure with exact SDK method signatures and code examples
 
 ## Agent Quick Start
@@ -177,19 +177,22 @@ const vaultId = await sdk.createFastVaultFromSeedphrase({
 # Source: clients/cli/ — https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli
 
 # Install CLI globally
-npm install -g @vultisig/sdk
+npm install -g @vultisig/cli
 
-# Create vault
-vsig vault create --name agent-vault --type fast
+# Create a Fast Vault (non-TTY auto-detects and skips interactive prompts)
+vultisig create fast --name agent-vault --email agent@example.com --password "$VAULT_PASSWORD" -o json
 
-# Check balance
-vsig balance --chain Ethereum
+# Check balance (positional chain arg, case-insensitive)
+vultisig balance ethereum -o json
 
 # Send transaction
-vsig send --chain Ethereum --to 0x... --amount 0.1
+vultisig send ethereum 0xRecipient 0.1 --password "$VAULT_PASSWORD" -y -o json
 
-# Swap
-vsig swap --from ETH --to USDC --amount 0.1
+# Swap (positional from/to chains)
+vultisig swap ethereum bitcoin 0.1 --password "$VAULT_PASSWORD" -y -o json
+
+# Natural-language, one-shot — built for AI agent integration
+vultisig agent ask "What is my ETH balance?" --password "$VAULT_PASSWORD" --json
 ```
 
 ## Key Concepts
