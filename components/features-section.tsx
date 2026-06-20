@@ -1,5 +1,3 @@
-import SectionBadge from "@/components/ui/section-badge"
-
 export default function FeaturesSection() {
   const features = [
     {
@@ -27,11 +25,6 @@ export default function FeaturesSection() {
       <div className="container">
         {/* Header */}
         <div className="text-left mb-12">
-          {/* Pill badge */}
-          <div className="mb-6">
-            <SectionBadge label="Why Vultisig" />
-          </div>
-
           {/* Title */}
           <h2 className="text-[48px] font-medium leading-tight tracking-tight mb-5">
             <span className="text-textPrimary block">Built different.</span>
@@ -43,7 +36,16 @@ export default function FeaturesSection() {
           </h2>
 
           <p className="text-textSecondary text-lg md:text-xl tracking-tight">
-            No tradeoffs. Just seamless, secure crypto management.
+            No tradeoffs. Just seamless, secure crypto management. Fully open
+            source and audited&nbsp;&mdash;{" "}
+            <a
+              href="https://github.com/vultisig"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-secondaryAccent font-medium hover:underline underline-offset-4"
+            >
+              view the code &rarr;
+            </a>
           </p>
         </div>
 

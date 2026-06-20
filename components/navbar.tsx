@@ -18,6 +18,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
   const [isAtTop, setIsAtTop] = useState(true)
+  const [logoSweeping, setLogoSweeping] = useState(false)
   const pathname = usePathname()
   const isAtTopRef = useRef(true)
   const scrollTicking = useRef(false)
@@ -62,13 +63,29 @@ export default function Navbar() {
           )}
         >
           <div className="flex justify-between items-center">
-            <a href="/" className="flex items-center" title="Vultisig Home">
-              <img
-                src={"/images/vultisig-logo.svg"}
-                alt="Vultisig logo"
-                width={25}
-                height={25}
-              />
+            <a
+              href="/"
+              className="flex items-center"
+              title="Vultisig Home"
+              onMouseEnter={() => setLogoSweeping(true)}
+            >
+              <span
+                className={cn("vlogo", logoSweeping && "vlogo-sweeping")}
+                onAnimationEnd={(e) => {
+                  if (e.animationName === "vlogo-stem") setLogoSweeping(false)
+                }}
+              >
+                <span className="vlogo-inner">
+                  <img
+                    src={"/images/vultisig-logo.svg"}
+                    alt="Vultisig logo"
+                    width={31}
+                    height={31}
+                  />
+                  <span className="vlogo-beam" aria-hidden="true" />
+                  <span className="vlogo-stem" aria-hidden="true" />
+                </span>
+              </span>
               <span className="text-xl font-semibold pl-3">Vultisig</span>
             </a>
 

@@ -1,5 +1,4 @@
 import Link from "next/link"
-import SectionBadge from "@/components/ui/section-badge"
 import { getAllArticles } from "@/lib/articles"
 
 interface Article {
@@ -190,9 +189,6 @@ export default async function MediumSection() {
   return (
     <section className="py-10 container">
       <div className="mb-16">
-        <div className="mb-4">
-          <SectionBadge label="Articles" />
-        </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
           Explore More on{" "}
           <span

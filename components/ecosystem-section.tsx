@@ -49,13 +49,6 @@ export default function EcosystemSection() {
         <div
           className="flex flex-col items-start gap-6 lg:w-[60%] xl:w-[65%] rounded-3xl border border-[#11284A] p-8 md:p-[30px] relative overflow-hidden bg-[linear-gradient(0deg,rgba(11,26,58,0.5),rgba(11,26,58,0.5)),_radial-gradient(circle_at_59%_146%,rgba(11,78,255,1)_0%,rgba(2,18,43,1)_100%)]"
         >
-          {/* Pill badge */}
-          <div className="inline-flex items-center bg-primaryAccent/10 border border-primaryAccent/50 rounded-full px-4 py-1.5">
-            <span className="font-medium text-sm text-primaryAccent tracking-tight uppercase">
-              Trusted by thousands
-            </span>
-          </div>
-
           {/* Title */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-textPrimary tracking-tight">
             A wallet backed by a{" "}

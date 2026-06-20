@@ -10,13 +10,6 @@ export default function Hero() {
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-8">
           {/* Left side — text content */}
           <div className="flex flex-col items-start gap-6 lg:w-[47%]">
-            {/* Badge */}
-            <div className="inline-flex items-center bg-secondaryAccent/[0.13] border border-secondaryAccent/50 rounded-full px-4 py-1.5">
-              <span className="font-medium text-sm text-secondaryAccent tracking-tight">
-                Open-Source Audited
-              </span>
-            </div>
-
             {/* Heading */}
             <h1 className="font-medium text-textPrimary text-4xl sm:text-5xl lg:text-[60px] leading-tight tracking-[-1.5px] max-w-[546px]">
               Vultisig: The Free MPC Wallet that makes seed phrases obsolete

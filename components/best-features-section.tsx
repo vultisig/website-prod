@@ -1,4 +1,3 @@
-import SectionBadge from "@/components/ui/section-badge"
 import MaxSecurityCard from "@/components/max-security-card"
 import OpenSourceCard from "@/components/open-source-card"
 import SecureNotificationsCard from "@/components/secure-notifications-card"
@@ -13,8 +12,6 @@ export default function BestFeaturesSection() {
     <section className="py-16 container">
       {/* Header */}
       <div className="text-center mb-12 flex flex-col items-center gap-4">
-        <SectionBadge label="Everything in one place" />
-
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-textPrimary tracking-tight">
           Best features in one place
         </h2>
