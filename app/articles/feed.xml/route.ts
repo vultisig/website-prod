@@ -16,7 +16,7 @@ export async function GET() {
       <guid isPermaLink="true">${url}</guid>
       <description><![CDATA[${article.description}]]></description>
       <pubDate>${pubDate}</pubDate>
-      <author>hello@vultisig.com (${article.author})</author>
+      <author>marketing@vultisig.com (${article.author})</author>
       ${article.tags?.map(tag => `<category>${tag}</category>`).join('\n      ') || ''}
     </item>`
     })
