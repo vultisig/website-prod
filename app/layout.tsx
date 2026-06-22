@@ -72,13 +72,6 @@ export const metadata: Metadata = {
         alt: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
         type: "image/png",
       },
-      {
-        url: "https://vultisig.com/logo.svg",
-        width: 512,
-        height: 512,
-        alt: "Vultisig Logo",
-        type: "image/svg+xml",
-      },
     ],
     countryName: "British Virgin Islands",
   },
