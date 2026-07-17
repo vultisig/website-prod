@@ -35,9 +35,11 @@ export default function PrivacyPolicy() {
           and storage of personal data, only doing so when voluntarily provided
           by you or required by law. This Privacy Policy describes how we may
           collect, process, use, transfer, and secure your personal data when
-          you access and use Vultisig.org (the “Website”) or any of our mobile
+          you access and use Vultisig.org (the “Website”), any of our mobile
           applications (the “App”) which allow access to various blockchains
-          from a mobile device (the Website and the App collectively the
+          from a mobile device, or our browser extension (the “Extension”) which
+          allows you to sign blockchain transactions on decentralized
+          applications (the Website, the App and the Extension collectively the
           “Services”).
         </li>{" "}
         <br />
@@ -97,6 +99,65 @@ export default function PrivacyPolicy() {
           may include your email address, feedback information, and other
           personal data you may voluntarily provide, such as your name, address,
           and other contact details.
+        </li>{" "}
+        <br />
+        <li>
+          <strong>
+            <u>VULTISIG BROWSER EXTENSION</u>
+          </strong>
+          <br /> <br />
+          This section describes how the Vultisig browser extension (the
+          “Extension”), a self-custodial and non-custodial crypto wallet that
+          lets you sign blockchain transactions on decentralized applications
+          (“dApps”), handles user data. Vultisig does not collect, track, or
+          transmit your personal data, private keys, or vault contents to our
+          servers. All wallet data is created and held on your device.
+          <br /> <br />
+          <strong>Data the Extension collects and processes:</strong>
+          <ul>
+            <li>
+              <strong>Vault and wallet data</strong> (public keys, vault
+              metadata, addresses, and user settings) is stored locally on your
+              device using the browser’s local storage. It is never sent to
+              Vultisig.
+            </li>
+            <li>
+              <strong>Clipboard access</strong> is used only when you explicitly
+              copy an address or transaction, or paste an address into the
+              Extension. Clipboard contents are never collected, stored, or
+              transmitted.
+            </li>
+            <li>
+              <strong>Active tab and website information</strong> (the current
+              site’s URL and favicon) is read only to display dApp connection
+              status. It is not collected or shared.
+            </li>
+            <li>
+              <strong>Notifications</strong> are generated locally from
+              transaction-signing requests and are rendered on your device.
+              Notification content is not sent to third parties.
+            </li>
+            <li>
+              <strong>Host access</strong> is used solely to let connected dApp
+              websites send connection and signing requests to the Extension.
+            </li>
+          </ul>
+          <strong>How data is used:</strong> Any data the Extension accesses is
+          used exclusively to provide wallet functionality — displaying
+          balances, showing dApp connection status, and coordinating transaction
+          signing. To relay multi-device (MPC/TSS) signing messages, encrypted
+          signing payloads may transit Vultisig relay infrastructure; these are
+          used only to complete the signing you initiate and are not used to
+          identify you.
+          <br /> <br />
+          <strong>How data is stored:</strong> Wallet and settings data is
+          stored locally on your device. Vultisig operates no server-side store
+          of your wallet contents or private keys.
+          <br /> <br />
+          <strong>How data is shared:</strong> Vultisig does not sell or transfer
+          Extension user data to third parties. We do not use Extension data for
+          any purpose unrelated to the wallet’s single purpose, nor for
+          creditworthiness or lending purposes.
         </li>{" "}
         <br />
         <li>
