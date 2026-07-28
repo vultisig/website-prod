@@ -1,14 +1,19 @@
-import {
-  getArticleBySlug,
-  getRelatedArticles,
-  toMetaDescription,
-} from "@/lib/articles"
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import Image from "next/image"
 import type { Metadata } from "next"
+import Image from "next/image"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+
+import ArticleToc from "@/components/articles/article-toc"
 import MarkdownRenderer from "@/components/markdown-renderer"
 import RelatedArticles from "@/components/related-articles"
+import { pickRelatedArticles } from "@/lib/article-categories"
+import { formatArticleDate } from "@/lib/article-format"
+import { extractHeadings } from "@/lib/article-toc"
+import {
+  getAllArticles,
+  getArticleBySlug,
+  toMetaDescription,
+} from "@/lib/articles"
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>
@@ -156,116 +161,103 @@ function BreadcrumbJsonLd({
   )
 }
 
+const BREADCRUMB_TITLE_MAX = 40
+
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params
   const article = await getArticleBySlug(slug)
   if (!article) notFound()
 
-  const related = await getRelatedArticles(slug, article.tags, 3)
+  const headings = extractHeadings(article.content)
+  const related = pickRelatedArticles(await getAllArticles(), article, 3)
 
-  const formatDate = (date: string) =>
-    new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
+  const shortTitle =
+    article.title.length > BREADCRUMB_TITLE_MAX
+      ? `${article.title.slice(0, BREADCRUMB_TITLE_MAX)}...`
+      : article.title
 
   return (
     <>
       <ArticleJsonLd article={article} slug={slug} />
       <BreadcrumbJsonLd article={article} slug={slug} />
 
-      <main className="min-h-screen py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+      <main className="min-h-screen bg-v5-page px-4 pb-[112px] pt-[110px] md:px-[30px] md:pb-[30px] md:pt-[134px]">
+        <div className="mx-auto max-w-v5-content">
           {article.status === "draft" && (
-            <div className="mb-8 p-4 bg-yellow-900/30 border border-yellow-700/50 rounded-xl text-yellow-200 text-center font-medium">
-              ⚠️ You are viewing an unlisted draft. This page is not visible on
-              the main articles list.
+            <div className="mb-8 rounded-xl border border-v5-warning bg-v5-warning/20 p-4 text-center text-v5-body-m font-medium text-v5-text-inverse">
+              You are viewing an unlisted draft. This page is not visible on the
+              main articles list.
             </div>
           )}
-          <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex items-center gap-2 text-sm text-gray-400">
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>/</li>
-              <li>
-                <Link
-                  href="/articles"
-                  className="hover:text-white transition-colors"
-                >
-                  Articles
-                </Link>
-              </li>
-              <li>/</li>
-              <li className="text-white truncate max-w-[200px]">
-                {article.title}
-              </li>
-            </ol>
-          </nav>
 
-          <article className="bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-6 sm:p-8 md:p-12">
-            {article.image && (
-              <div className="aspect-video bg-slate-700 rounded-xl mb-8 overflow-hidden relative">
-                <Image
-                  src={article.image}
-                  alt={article.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            )}
+          <div className="flex flex-col gap-[30px] lg:flex-row lg:gap-[84px]">
+            <div className="flex flex-col gap-[30px] lg:w-[938px]">
+              <nav aria-label="Breadcrumb">
+                <ol className="flex flex-wrap items-center gap-1.5 text-v5-card-body text-v5-text-inverse">
+                  <li>
+                    <Link href="/" className="underline hover:text-v5-cta">
+                      Home
+                    </Link>
+                  </li>
+                  <li aria-hidden>/</li>
+                  <li>
+                    <Link
+                      href="/articles"
+                      className="underline hover:text-v5-cta"
+                    >
+                      Articles
+                    </Link>
+                  </li>
+                  <li aria-hidden>/</li>
+                  <li className="font-medium">{shortTitle}</li>
+                </ol>
+              </nav>
 
-            {article.tags && article.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
-                {article.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="text-sm px-3 py-1 bg-blue-900/40 text-blue-300 rounded-md"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-              {article.title}
-            </h1>
-
-            <div className="flex items-center gap-4 text-gray-400 text-sm mb-8 pb-8 border-b border-slate-700">
-              <span>By {article.author}</span>
-              <span>•</span>
-              <time dateTime={article.publishedAt}>
-                {formatDate(article.publishedAt)}
-              </time>
-              {article.updatedAt && (
-                <>
-                  <span>•</span>
-                  <span>Updated {formatDate(article.updatedAt)}</span>
-                </>
+              {article.image && (
+                <div className="relative aspect-[1200/675] w-full overflow-hidden rounded-[20px] bg-v5-panel">
+                  <Image
+                    src={article.image}
+                    alt={article.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 938px"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               )}
+
+              <h1 className="text-v5-display-xs font-semibold text-v5-text-inverse md:text-v5-hero">
+                {article.title}
+              </h1>
+
+              <p className="text-v5-body-m-relaxed font-medium text-v5-text-tertiary md:text-v5-subtitle">
+                <span>By {article.author}</span>
+                {"  •  "}
+                <time dateTime={article.publishedAt}>
+                  {formatArticleDate(article.publishedAt)}
+                </time>
+                {article.updatedAt && (
+                  <>
+                    {"  •  "}
+                    <span>Updated {formatArticleDate(article.updatedAt)}</span>
+                  </>
+                )}
+              </p>
+
+              <ArticleToc headings={headings} variant="inline" />
+
+              <MarkdownRenderer
+                content={article.content}
+                currentPath={`/articles/${article.slug}`}
+              />
             </div>
 
-            <MarkdownRenderer
-              content={article.content}
-              currentPath={`/articles/${article.slug}`}
-            />
-          </article>
+            <div className="lg:w-[358px] lg:shrink-0">
+              <ArticleToc headings={headings} variant="sidebar" />
+            </div>
+          </div>
 
           <RelatedArticles articles={related} />
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/articles"
-              className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors"
-            >
-              ← Back to Articles
-            </Link>
-          </div>
         </div>
       </main>
     </>
