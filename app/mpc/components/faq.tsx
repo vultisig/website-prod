@@ -101,7 +101,7 @@ export default function MpcFaq() {
         aside={
           <h2
             id="faq"
-            className="text-v5-hero-sm font-medium text-v5-text-inverse md:w-[476px] md:shrink-0 md:text-v5-faq-title"
+            className="text-v5-hero-sm font-medium text-v5-text-inverse v5wide:w-[476px] v5wide:shrink-0 v5wide:text-v5-faq-title"
           >
             Frequently Asked Questions
           </h2>

@@ -46,7 +46,7 @@ export default function Privacy() {
             </p>
           </div>
 
-          <div className="flex w-full flex-col items-center gap-6 md:w-[810px] md:gap-8">
+          <div className="flex w-full flex-col items-center gap-6 md:max-w-[810px] md:gap-8">
             <ul className="flex w-full flex-col gap-4 md:flex-row md:gap-5">
               {PROMISES.map((promise) => (
                 <li

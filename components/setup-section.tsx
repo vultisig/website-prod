@@ -113,7 +113,7 @@ export default function SetupSection() {
 
           <div className="flex w-full flex-col rounded-3xl bg-v5-page">
             <div className="flex flex-col gap-3 p-4 md:flex-row md:p-[30px]">
-              <div className="flex flex-col gap-3 md:w-[476px]">
+              <div className="flex min-w-0 flex-col gap-3 md:w-[476px]">
                 <VaultTabs selected={selected} onSelect={setSelected} />
                 <div className="flex flex-col gap-3 pt-6 text-v5-text-inverse">
                   <h3 className="text-v5-card-title font-semibold">
@@ -122,7 +122,7 @@ export default function SetupSection() {
                   {vault.paragraphs.map((paragraph) => (
                     <p
                       key={paragraph}
-                      className="text-v5-body-m-tight font-normal md:w-[407px]"
+                      className="text-v5-body-m-tight font-normal md:max-w-[407px]"
                     >
                       {paragraph}
                     </p>
@@ -135,7 +135,7 @@ export default function SetupSection() {
                 width={1268}
                 height={796}
                 sizes="(max-width: 767px) 90vw, 634px"
-                className="h-auto w-full rounded-3xl md:w-[634px]"
+                className="h-auto w-full min-w-0 rounded-3xl md:w-[634px]"
               />
             </div>
 

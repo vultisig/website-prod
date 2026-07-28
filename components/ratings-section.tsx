@@ -104,7 +104,7 @@ export default function RatingsSection() {
           </LandingButton>
         </div>
 
-        <ReviewCarousel reviews={FALLBACK_REVIEWS} className="hidden md:flex" />
+        <ReviewCarousel reviews={FALLBACK_REVIEWS} className="hidden v5wide:flex" />
       </div>
     </section>
   )

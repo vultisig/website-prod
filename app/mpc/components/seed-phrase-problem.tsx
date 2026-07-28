@@ -50,7 +50,7 @@ const RISKS: Risk[] = [
 
 function RiskCard({ title, body, icon, mirrored }: Risk) {
   return (
-    <li className="flex flex-1 flex-col items-start gap-3.5 rounded-2xl bg-v5-white p-5 text-v5-text-inverse md:h-[335px] md:rounded-3xl md:p-[30px]">
+    <li className="flex min-w-0 flex-1 flex-col items-start gap-3.5 rounded-2xl bg-v5-white p-5 text-v5-text-inverse md:h-[335px] md:rounded-3xl md:p-[30px]">
       <Image
         src={icon.src}
         alt={icon.alt}

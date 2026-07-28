@@ -33,7 +33,8 @@ export default function FaqSection({
       <div
         className={cn(
           "mx-auto flex max-w-v5-content flex-col gap-10",
-          aside && "md:flex-row md:items-start md:justify-center md:gap-[50px]",
+          aside &&
+            "v5wide:flex-row v5wide:items-start v5wide:justify-center v5wide:gap-[50px]",
         )}
       >
         {title && <SectionHeading title={title} subtitle={subtitle} />}
@@ -42,7 +43,7 @@ export default function FaqSection({
           type="multiple"
           className={cn(
             "flex flex-col gap-3 md:gap-5",
-            aside && "md:w-[810px] md:shrink-0",
+            aside && "v5wide:w-[810px] v5wide:shrink-0",
           )}
         >
           {items.map((item, index) => (

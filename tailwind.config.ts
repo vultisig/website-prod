@@ -29,6 +29,10 @@ const config: Config = {
       md: "768px",
       lg: "1024px",
       xl: "1240px",
+      // Compositions that only fit inside the full 1380px V5 content frame
+      // (frame + 2x30px gutters). Below this they fall back to the stacked
+      // mobile composition rather than overflowing the viewport.
+      v5wide: "1360px",
       "2xl": "1536px",
     },
     extend: {

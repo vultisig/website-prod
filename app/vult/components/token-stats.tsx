@@ -50,7 +50,7 @@ function Stat({ figure, label, emphasis = "lead" }: StatProps) {
     >
       <p
         className={cn(
-          "font-bold md:text-v5-figure-md",
+          "font-bold md:text-v5-figure-sm v5wide:text-v5-figure-md",
           emphasis === "lead" ? "text-v5-figure-lg" : "text-v5-figure-sm",
         )}
       >
@@ -99,7 +99,7 @@ export default function TokenStats() {
             onClick={copyAddress}
             title={VULT_CONTRACT_ADDRESS}
             aria-label={`Copy the $VULT contract address ${VULT_CONTRACT_ADDRESS}`}
-            className="flex items-center justify-center gap-[5px] text-v5-figure-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-v5-text-inverse md:text-v5-figure-md"
+            className="flex items-center justify-center gap-[5px] text-v5-figure-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-v5-text-inverse v5wide:text-v5-figure-md"
           >
             {VULT_CONTRACT_SHORT}
             {copied ? (

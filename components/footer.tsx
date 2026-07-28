@@ -126,9 +126,9 @@ export default function Footer() {
           className="hidden md:block"
         />
 
-        <div className="flex flex-col gap-10 md:w-[793px] md:gap-[86px]">
+        <div className="flex w-full min-w-0 flex-col gap-10 md:max-w-[793px] md:gap-[86px]">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-end md:gap-[27px]">
-            <h2 className="text-v5-display-sm font-semibold uppercase text-v5-text-inverse md:w-[595px]">
+            <h2 className="text-v5-display-sm font-semibold uppercase text-v5-text-inverse md:max-w-[595px]">
               Join the Discord to request new features!
             </h2>
             <LandingButton asChild className="w-full md:w-[176px]">
@@ -138,7 +138,7 @@ export default function Footer() {
             </LandingButton>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:flex md:gap-[84px]">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:flex md:justify-between md:gap-8 v5wide:gap-[84px]">
             {FOOTER_COLUMNS.map((column) => (
               <div
                 key={column.title}
