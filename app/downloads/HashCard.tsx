@@ -1,20 +1,26 @@
 "use client"
-import { Box } from "@/components/ui/box"
-import { Button } from "@/components/ui/button"
-import { CheckIcon, CopyIcon } from "lucide-react"
+
 import Image from "next/image"
 import { useState } from "react"
 
-export function HashCard({
-  icon,
-  hash,
-  os,
-}: {
-  icon: string
-  hash: string
-  os: string
-}) {
+const ICONS: Record<string, { src: string; width: number }> = {
+  ios: { src: "/v5/download-ios.webp", width: 42 },
+  android: { src: "/v5/download-android-apk.svg", width: 35 },
+  linux: { src: "/v5/download-linux.webp", width: 42 },
+  windows: { src: "/v5/download-windows.svg", width: 42 },
+}
+
+const OS_NAMES: Record<string, string> = {
+  ios: "iOS",
+  android: "Android",
+  linux: "Linux",
+  windows: "Windows",
+}
+
+export function HashCard({ hash, os }: { hash: string; os: string }) {
   const [copied, setCopied] = useState(false)
+  const icon = ICONS[os]
+  const osName = OS_NAMES[os] ?? os
 
   const handleCopy = async () => {
     try {
@@ -26,58 +32,24 @@ export function HashCard({
     }
   }
 
-  // Truncate hash for display
-  const displayHash =
-    hash.length > 30
-      ? `${hash.substring(0, 15)}...${hash.substring(hash.length - 15)}`
-      : hash
-
   return (
-    <Box className="p-4 space-y-4">
-      {/* Icon Container */}
-      <div className="w-12 h-12 rounded-xl bg-backgroundSecondary border border-blue-500/20 flex items-center justify-center">
-        <Image
-          src={icon}
-          alt={os + " icon"}
-          width={24}
-          height={24}
-          className="size-6 object-contain"
-        />
-      </div>
-
-      <div className="flex flex-col w-full gap-1">
-        {/* Label */}
-        <span className="text-white font-medium text-base">SHA256</span>
-
-        {/* Hash + Copy Button */}
-        <div className="flex items-center w-full gap-1">
-          <span
-            className="text-xs text-gray-400 truncate select-all"
-            title={hash}
-          >
-            {displayHash}
-          </span>
-
-          <Button
-            size="icon"
-            variant="ghost"
-            className="text-gray-400 hover:text-white hover:bg-transparent h-5 w-5 p-0 flex-shrink-0 relative"
-            onClick={handleCopy}
-          >
-            <span className="sr-only">{copied ? "Copied!" : "Copy"}</span>
-            <CopyIcon
-              className={`transition-opacity duration-300 ${
-                copied ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <CheckIcon
-              className={`text-green-500 transition-opacity duration-300 absolute top-0 left-0 ${
-                copied ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          </Button>
-        </div>
-      </div>
-    </Box>
+    <button
+      type="button"
+      onClick={handleCopy}
+      title={hash}
+      aria-label={`Copy the ${osName} build SHA256 checksum`}
+      className="flex h-[153px] flex-col items-center gap-[15px] rounded-3xl bg-v5-white p-[30px]"
+    >
+      <Image
+        src={icon.src}
+        alt=""
+        width={icon.width}
+        height={42}
+        className="h-[42px] w-auto"
+      />
+      <span className="text-v5-download-label-sm font-semibold text-v5-text-inverse">
+        {copied ? "Copied!" : "SHA256"}
+      </span>
+    </button>
   )
 }

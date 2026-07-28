@@ -1,128 +1,119 @@
 "use client"
 
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void
-  }
-}
+import Image from "next/image"
 
+import { cn } from "@/lib/utils"
+
+/**
+ * Download URLs live here and nowhere else — release bumps edit `href` (and the
+ * matching `hashes` entry in ./page.tsx). `macos-appstore` shares the iOS App
+ * Store listing, so the V5 layout links macOS to the GitHub build instead.
+ */
 export const channels = {
   "ios-appstore": {
     href: "https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8",
     platform: "ios app store",
-    icon: "/images/apple.svg",
-    iconAlt: "App Store",
-    iconClass: "h-7 w-auto",
-    label: "App Store",
-    labelClass: "text-xs",
+    icon: "/v5/download-ios.webp",
+    iconWidth: 54,
+    label: "iOS",
   },
   "macos-appstore": {
     href: "https://apps.apple.com/app/apple-store/id6503023896?pt=126546604&ct=website-download&mt=8",
     platform: "macos app store",
-    icon: "/images/macOS.svg",
-    iconAlt: "MacOS",
-    iconClass: "h-8 w-auto",
-    label: "MacOS",
-    labelClass: "text-xs",
+    icon: "/v5/download-macos.webp",
+    iconWidth: 54,
+    label: "macOS",
   },
   "macos-github": {
     href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.41.65",
     platform: "macos github",
-    icon: "/images/macOS.svg",
-    iconAlt: "MacOS Github",
-    iconClass: "h-8 w-auto",
-    label: "MacOS from Github",
-    labelClass: "text-[11px] leading-tight",
+    icon: "/v5/download-macos.webp",
+    iconWidth: 54,
+    label: "macOS",
   },
   "android-playstore": {
     href: "https://play.google.com/store/apps/details?id=com.vultisig.wallet",
     platform: "android play store",
-    icon: "/images/googleplay-icon.svg",
-    iconAlt: "Google Play",
-    iconClass: "h-7 w-auto",
-    label: "Google Play",
-    labelClass: "text-xs",
+    icon: "/v5/download-android.webp",
+    iconWidth: 50,
+    label: "Android",
   },
   windows: {
     href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.68/Vultisig-amd64-installer-v1.0.68.exe",
     platform: "windows",
-    icon: "/images/windows.svg",
-    iconAlt: "Windows",
-    iconClass: "h-8 w-auto",
+    icon: "/v5/download-windows.svg",
+    iconWidth: 54,
     label: "Windows",
-    labelClass: "text-xs",
   },
   linux: {
     href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.68/vultisig_1.0.68_amd64.deb",
     platform: "linux",
-    icon: "/images/linux.svg",
-    iconAlt: "Linux",
-    iconClass: "h-7 w-auto",
+    icon: "/v5/download-linux.webp",
+    iconWidth: 54,
     label: "Linux",
-    labelClass: "text-xs",
   },
   "android-github": {
     href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.114",
     platform: "android github",
-    icon: "/images/Android.svg",
-    iconAlt: "Android",
-    iconClass: "h-6 w-auto",
-    label: "Android",
-    labelClass: "text-xs",
+    icon: "/v5/download-android-apk.svg",
+    iconWidth: 45,
+    label: "Android APK",
   },
   chrome: {
     href: "https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb?authuser=0&hl=en-GB&pli=1",
     platform: "chrome extension",
-    icon: "/images/chrome.png",
-    iconAlt: "Chrome",
-    iconClass: "h-8 w-auto",
-    label: "Chrome",
-    labelClass: "text-xs",
+    icon: "/v5/download-chrome.webp",
+    iconWidth: 54,
+    label: "Chrome extension",
   },
-  // web: {
-  //   href: "https://airdrop.vultisig.com/",
-  //   platform: null,
-  //   icon: "/images/vultiweb-logo.svg",
-  //   iconAlt: "Web App",
-  //   iconClass: "h-10 w-auto",
-  //   label: "Web App",
-  //   labelClass: "text-xs",
-  // },
 } as const
 
 export type ChannelKey = keyof typeof channels
 
-export default function Gtag({ channelKey }: { channelKey: ChannelKey }) {
-  const channel = channels[channelKey]
+function trackDownload(platform: string) {
+  window.gtag?.("event", "download_click", {
+    platform,
+    item_id: "vultisig",
+    item_name: "Vultisig",
+    item_category: "download",
+    transport_type: "beacon",
+  })
+}
 
-  const trackDownload = (platform: string) => {
-    window.gtag?.("event", "download_click", {
-      platform,
-      item_id: "vultisig",
-      item_name: "Vultisig",
-      item_category: "download",
-      transport_type: "beacon",
-    })
-  }
+/**
+ * Figma shows the label only on hover at 1440px, but always on mobile where
+ * there is no hover — so it stays in the DOM and the link keeps a name in
+ * every state.
+ */
+export default function DownloadCard({
+  channelKey,
+  className,
+}: {
+  channelKey: ChannelKey
+  className?: string
+}) {
+  const channel = channels[channelKey]
 
   return (
     <a
       href={channel.href}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => channel.platform && trackDownload(channel.platform)}
-      className="bg-background border-[1.5px] border-borderNormal rounded-xl sm:rounded-3xl py-3 sm:px-4 flex flex-col items-center justify-between hover:border-blue-500 hover:shadow-[0_0_4px_2px_rgba(var(--border-color-rgb),0.5)] transition-all max-sm:size-[72px] size-[99px]"
+      aria-label={`Download Vultisig for ${channel.label}`}
+      onClick={() => trackDownload(channel.platform)}
+      className={cn(
+        "group flex h-[203.5px] flex-col items-center justify-center gap-[22px] rounded-3xl bg-v5-white p-[30px]",
+        className,
+      )}
     >
-      <div className="h-10 flex justify-center items-center">
-        <img
-          src={channel.icon}
-          alt={channel.iconAlt}
-          className={channel.iconClass}
-        />
-      </div>
-      <span
-        className={`max-sm:text-[8px] font-medium text-center ${channel.labelClass}`}
-      >
+      <Image
+        src={channel.icon}
+        alt=""
+        width={channel.iconWidth}
+        height={54}
+        className="h-[54px] w-auto"
+      />
+      <span className="whitespace-nowrap text-v5-download-label-sm font-semibold text-v5-text-inverse md:hidden md:text-v5-download-label md:group-hover:block">
         {channel.label}
       </span>
     </a>
