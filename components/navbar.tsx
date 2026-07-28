@@ -1,261 +1,255 @@
 "use client"
 
-import { buttonVariants } from "@/components/ui/button"
+import { ChevronDown, Menu, X } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
+
+import { LandingButton } from "@/components/ui/landing-button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
-import { ChevronDown, Menu, X } from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import { IoExtensionPuzzleOutline } from "react-icons/io5"
-import { LuTabletSmartphone } from "react-icons/lu"
+
+type NavEntry = {
+  label: string
+  /** Absent while the destination page does not exist yet (Agent group). */
+  href?: string
+  children?: { label: string; href?: string }[]
+}
+
+const NAV_ENTRIES: NavEntry[] = [
+  {
+    label: "Wallet",
+    children: [
+      { label: "Vultisig App", href: "/downloads?tab=mobile" },
+      { label: "Vultisig Extension", href: "/downloads?tab=browser" },
+    ],
+  },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "MPC Wallet", href: "/mpc" },
+  {
+    label: "Agent",
+    children: [
+      { label: "For Users" },
+      { label: "For Agents" },
+      { label: "For Builders" },
+    ],
+  },
+  { label: "$VULT", href: "/vult" },
+  { label: "Articles", href: "/articles" },
+  { label: "Chains", href: "/#chains" },
+]
+
+const PILL_ITEM =
+  "flex items-center gap-2 rounded-full px-6 py-5 text-v5-link font-medium text-v5-text-inverse transition-colors"
+const MENU_ITEM =
+  "flex items-center justify-center rounded-full px-2.5 py-4 text-v5-link font-medium text-v5-text-inverse transition-colors"
+
+function isActive(pathname: string, href?: string): boolean {
+  if (!href || href.startsWith("/#")) return false
+  const route = href.split("?")[0]
+  if (route === "/") return pathname === "/"
+  return pathname.startsWith(route)
+}
+
+function Logo() {
+  return (
+    <Link href="/" className="flex items-center gap-2.5" title="Vultisig home">
+      <Image
+        src="/v5/vultisig-mark.svg"
+        alt=""
+        width={27}
+        height={27}
+        priority
+      />
+      <Image
+        src="/v5/vultisig-wordmark.svg"
+        alt="Vultisig"
+        width={96}
+        height={29}
+        priority
+      />
+    </Link>
+  )
+}
+
+function DesktopEntry({ entry }: { entry: NavEntry }) {
+  const pathname = usePathname()
+
+  if (!entry.children) {
+    return (
+      <Link
+        href={entry.href ?? "#"}
+        className={cn(
+          PILL_ITEM,
+          "hover:bg-v5-page",
+          isActive(pathname, entry.href) && "bg-v5-page",
+        )}
+      >
+        {entry.label}
+      </Link>
+    )
+  }
+
+  const groupActive = entry.children.some((child) =>
+    isActive(pathname, child.href),
+  )
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={cn(
+          PILL_ITEM,
+          "hover:bg-v5-page data-[state=open]:bg-v5-page",
+          groupActive && "bg-v5-page",
+        )}
+      >
+        {entry.label}
+        <ChevronDown className="size-4" aria-hidden />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="center"
+        sideOffset={8}
+        className="w-[204px] rounded-3xl border-0 bg-v5-white p-3 shadow-v5-menu"
+      >
+        {entry.children.map((child) =>
+          child.href ? (
+            <Link
+              key={child.label}
+              href={child.href}
+              className={cn(
+                MENU_ITEM,
+                "hover:bg-v5-page",
+                isActive(pathname, child.href) && "bg-v5-page",
+              )}
+            >
+              {child.label}
+            </Link>
+          ) : (
+            <span key={child.label} className={MENU_ITEM} aria-disabled>
+              {child.label}
+            </span>
+          ),
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+function MobilePanel() {
+  const pathname = usePathname()
+
+  return (
+    <div className="mx-4 mb-4 rounded-3xl bg-v5-white p-3 shadow-v5-menu xl:hidden">
+      {NAV_ENTRIES.map((entry) => {
+        if (!entry.children) {
+          return (
+            <Link
+              key={entry.label}
+              href={entry.href ?? "#"}
+              className={cn(
+                MENU_ITEM,
+                "justify-start",
+                isActive(pathname, entry.href) && "bg-v5-page",
+              )}
+            >
+              {entry.label}
+            </Link>
+          )
+        }
+
+        return (
+          <div key={entry.label} className="py-2">
+            <p className="px-2.5 text-v5-caption font-medium uppercase text-v5-text-tertiary">
+              {entry.label}
+            </p>
+            {entry.children.map((child) =>
+              child.href ? (
+                <Link
+                  key={child.label}
+                  href={child.href}
+                  className={cn(
+                    MENU_ITEM,
+                    "justify-start",
+                    isActive(pathname, child.href) && "bg-v5-page",
+                  )}
+                >
+                  {child.label}
+                </Link>
+              ) : (
+                <span
+                  key={child.label}
+                  className={cn(MENU_ITEM, "justify-start")}
+                  aria-disabled
+                >
+                  {child.label}
+                </span>
+              ),
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
-  const [isAtTop, setIsAtTop] = useState(true)
-  const [logoSweeping, setLogoSweeping] = useState(false)
   const pathname = usePathname()
-  const isAtTopRef = useRef(true)
-  const scrollTicking = useRef(false)
 
-  useEffect(() => {
-    setIsOpen(false)
-    setMobileProductsOpen(false)
-  }, [pathname])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollTicking.current) return
-      scrollTicking.current = true
-      requestAnimationFrame(() => {
-        const atTop = window.scrollY < 5
-        if (atTop !== isAtTopRef.current) {
-          isAtTopRef.current = atTop
-          setIsAtTop(atTop)
-        }
-        scrollTicking.current = false
-      })
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  useEffect(() => setIsOpen(false), [pathname])
 
   return (
-    <>
-      <nav
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isAtTop ? "w-full bg-transparent px-0 pt-4" : "top-6 px-4 lg:px-2"
-        )}
-      >
-        <div
-          className={cn(
-            "transition-all duration-300 w-full border-transparent rounded-2xl lg:max-w-7xl lg:mx-auto",
-            isAtTop
-              ? "px-4 lg:px-8"
-              : "border border-borderLight px-6 py-3 bg-foreground/5 backdrop-blur-md",
-            isOpen && "max-lg:bg-backgroundSecondary"
-          )}
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* Desktop — logo, centred nav pill, CTA (Figma 79718:62435) */}
+      <div className="relative mx-auto hidden max-w-v5-content items-center justify-between px-[30px] xl:flex">
+        <Logo />
+        <nav
+          aria-label="Main"
+          className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2.5 rounded-full bg-v5-white p-2"
         >
-          <div className="flex justify-between items-center">
-            <a
-              href="/"
-              className="flex items-center"
-              title="Vultisig Home"
-              onMouseEnter={() => setLogoSweeping(true)}
-            >
-              <span
-                className={cn("vlogo", logoSweeping && "vlogo-sweeping")}
-                onAnimationEnd={(e) => {
-                  if (e.animationName === "vlogo-stem") setLogoSweeping(false)
-                }}
-              >
-                <span className="vlogo-inner">
-                  <img
-                    src={"/images/vultisig-logo.svg"}
-                    alt="Vultisig logo"
-                    width={31}
-                    height={31}
-                  />
-                  <span className="vlogo-beam" aria-hidden="true" />
-                  <span className="vlogo-stem" aria-hidden="true" />
-                </span>
-              </span>
-              <span className="text-xl font-semibold pl-3">Vultisig</span>
-            </a>
+          {NAV_ENTRIES.map((entry) => (
+            <DesktopEntry key={entry.label} entry={entry} />
+          ))}
+        </nav>
+        <LandingButton asChild size="lg">
+          <Link href="/downloads">Download App</Link>
+        </LandingButton>
+      </div>
 
-            <div className="hidden lg:flex items-center gap-10">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    type="button"
-                    className="flex items-center text-textSecondary hover:text-white cursor-pointer bg-transparent border-none"
-                  >
-                    <span>Products</span>
-                    <ChevronDown className="ml-1 h-4 w-4" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="start"
-                  className="bg-backgroundSecondary border border-borderLight shadow-lg rounded-xl p-2 min-w-[220px]"
-                >
-                  {products.map((product) => (
-                    <Link
-                      key={product.name}
-                      href={product.href}
-                      title={product.name}
-                      className="flex items-center gap-3 p-2 pr-4 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                    >
-                      <div className="size-10 bg-primaryAccent/10 text-alertInfo rounded-lg flex items-center justify-center">
-                        <product.icon size={22} />
-                      </div>
-                      <span className="font-medium">{product.name}</span>
-                    </Link>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <NavLinks />
-            </div>
-
-            <Link
-              href="/downloads"
-              title="Download Vultisig App"
-              className={cn(
-                buttonVariants({ variant: "primaryBlue" }),
-                "max-lg:hidden"
-              )}
-            >
-              Download App
-            </Link>
-
-            <div className="lg:hidden">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-textSecondary hover:text-white p-2"
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-              >
-                {isOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu */}
-          {isOpen && (
-            <div className="lg:hidden mt-4 py-4 border-t border-borderLight min-h-[calc(100vh-60px)] bg-backgroundSecondary">
-              <div className="flex flex-col space-y-4">
-                <div>
-                  <button
-                    className="flex items-center text-textSecondary hover:text-white cursor-pointer py-2 focus:outline-none"
-                    onClick={() => setMobileProductsOpen((v) => !v)}
-                    aria-expanded={mobileProductsOpen}
-                    aria-controls="mobile-products-menu"
-                    type="button"
-                  >
-                    <span>Products</span>
-                    <ChevronDown
-                      className={`ml-1 size-4 transition-transform duration-200 ${
-                        mobileProductsOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  {mobileProductsOpen && (
-                    <div
-                      id="mobile-products-menu"
-                      className="flex flex-col gap-1 pl-2"
-                    >
-                      {products.map((product) => (
-                        <Link
-                          key={product.name}
-                          href={product.href}
-                          className="flex items-center gap-3 p-2 rounded-lg text-white hover:bg-blue-900/40 transition-colors"
-                        >
-                          <div className="size-10 bg-primaryAccent/10 text-alertInfo rounded-lg flex items-center justify-center">
-                            <product.icon size={22} />
-                          </div>
-                          <span className="font-medium">{product.name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <NavLinks />
-              </div>
-              <Link
-                href="/downloads"
-                className={cn(
-                  buttonVariants({ variant: "primaryBlue" }),
-                  "mt-2 w-full"
-                )}
-              >
-                Download App
-              </Link>
-            </div>
-          )}
-        </div>
-      </nav>
-    </>
-  )
-}
-
-function NavLinks() {
-  const pathname = usePathname()
-
-  return (
-    <>
-      {parentLinks.map((link) => (
+      {/* Mobile / tablet (Figma 79740:297806) */}
+      <div className="flex items-center gap-3 p-4 xl:hidden">
         <Link
-          key={link.name}
-          href={link.href}
-          className={cn(
-            "text-textSecondary hover:text-white py-2",
-            pathname.startsWith(link.href) &&
-              "text-white font-semibold tracking-wide"
-          )}
+          href="/"
+          className="flex flex-1 items-center"
+          title="Vultisig home"
         >
-          {link.name}
+          <Image
+            src="/v5/vultisig-mark.svg"
+            alt="Vultisig"
+            width={40}
+            height={40}
+            priority
+          />
         </Link>
-      ))}
-    </>
+        <LandingButton asChild size="sm" className="rounded-full py-3">
+          <Link href="/downloads">Download</Link>
+        </LandingButton>
+        <button
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
+          aria-expanded={isOpen}
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          className="rounded-full bg-v5-white p-[11px] text-v5-text-inverse"
+        >
+          {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
+      </div>
+      {isOpen && <MobilePanel />}
+    </header>
   )
 }
-
-const products = [
-  {
-    name: "Vultisig Apps",
-    href: "/downloads?tab=mobile",
-    icon: LuTabletSmartphone,
-  },
-  {
-    name: "Vultisig Extension",
-    href: "/downloads?tab=browser",
-    icon: IoExtensionPuzzleOutline,
-  },
-]
-
-const parentLinks = [
-  {
-    name: "How It Works",
-    href: "/how-it-works",
-  },
-  {
-    name: "MPC Wallet",
-    href: "/mpc",
-  },
-  {
-    name: "Articles",
-    href: "/articles",
-  },
-  {
-    name: "$VULT",
-    href: "/vult",
-  },
-]
