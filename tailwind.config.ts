@@ -117,6 +117,7 @@ const config: Config = {
           accent: "#4879fd", // Primary/Accent 4
           accent2: "#538bff", // stats / promo panel blue
           deep: "#063ed4", // "setup for your needs" panel
+          amber: "#f39c2b", // review carousel card
           success: "#13c89d", // Alerts/Succes
           warning: "#ffc25c", // Alerts/Warning
           purple: "#8f65ff", // App Store/DCA Purple
@@ -125,6 +126,7 @@ const config: Config = {
             dark: "#02122b", // Backgrounds/background
             1: "#061b3a", // Backgrounds/surface-1
             2: "#11284a", // Backgrounds/surface-2 + Buttons/Secondary
+            light: "#d8e0ec", // ratings panel
           },
           text: {
             primary: "#f0f4fc", // Text/Primary

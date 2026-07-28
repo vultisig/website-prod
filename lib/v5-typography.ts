@@ -17,6 +17,13 @@ export const v5FontSize = {
   "v5-button": ["14px", { lineHeight: "18px", letterSpacing: "0" }],
   "v5-button-sm": ["13px", { lineHeight: "18px", letterSpacing: "0" }],
   "v5-tile-label": ["8px", { lineHeight: "12px", letterSpacing: "0.08px" }],
+  "v5-display-tight": ["48px", { lineHeight: "1.09", letterSpacing: "-1.056px" }],
+  "v5-display-sm-tight": [
+    "32px",
+    { lineHeight: "1.09", letterSpacing: "-0.704px" },
+  ],
+  "v5-score": ["36px", { lineHeight: "1.09", letterSpacing: "-0.792px" }],
+  "v5-quote": ["20px", { lineHeight: "1.29", letterSpacing: "-0.38px" }],
   "v5-card-title": ["32px", { lineHeight: "1.19", letterSpacing: "-0.608px" }],
   "v5-card-title-sm": ["26px", { lineHeight: "1.19", letterSpacing: "-0.494px" }],
   "v5-body-m-tight": ["16px", { lineHeight: "1.5", letterSpacing: "-0.304px" }],

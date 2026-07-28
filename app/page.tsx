@@ -9,6 +9,7 @@ const BestFeaturesSection = dynamic(
 )
 const SetupSection = dynamic(() => import("@/components/setup-section"))
 const ChainsSection = dynamic(() => import("@/components/chains-section"))
+const RatingsSection = dynamic(() => import("@/components/ratings-section"))
 const MediumSection = dynamic(() => import("@/components/medium-section"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
@@ -21,6 +22,7 @@ export default function Home() {
       <BestFeaturesSection />
       <SetupSection />
       <ChainsSection />
+      <RatingsSection />
       <HomeFaq />
       <MediumSection />
       <FooterBanner />
