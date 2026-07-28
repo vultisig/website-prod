@@ -60,6 +60,10 @@ export const v5FontSize = {
   "v5-display": ["48px", { lineHeight: "normal", letterSpacing: "-1.056px" }],
   "v5-display-md": ["40px", { lineHeight: "normal", letterSpacing: "-0.88px" }],
   "v5-eyebrow": ["14px", { lineHeight: "1.35", letterSpacing: "-0.308px" }],
+  // Vultisig/Headings/Title1 — Arena step-card titles
+  "v5-title1": ["28px", { lineHeight: "34px", letterSpacing: "-0.64px" }],
+  // Numbered step badge on the Arena cards
+  "v5-step-badge": ["22.9px", { lineHeight: "1.35", letterSpacing: "-0.504px" }],
   // Vultisig/Headings/Large Title — $VULT tier card names
   "v5-tier-title": ["34px", { lineHeight: "37px", letterSpacing: "-1px" }],
   // Oversized fee-reduction percentage on the tier cards
