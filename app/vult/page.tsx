@@ -7,6 +7,7 @@ const HoldingBenefits = dynamic(() => import("./components/holding-benefits"))
 const IdeaBanner = dynamic(() => import("./components/idea-banner"))
 const FeatureBoard = dynamic(() => import("./components/feature-board"))
 const Arena = dynamic(() => import("./components/arena"))
+const VultFaq = dynamic(() => import("./components/faq"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
 export default function VultPage() {
@@ -18,6 +19,7 @@ export default function VultPage() {
       <IdeaBanner />
       <FeatureBoard />
       <Arena />
+      <VultFaq />
       <FooterBanner />
     </main>
   )
