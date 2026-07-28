@@ -116,8 +116,8 @@ function FooterLinkItem({ label, href, icon }: FooterLink) {
 
 export default function Footer() {
   return (
-    <footer className="bg-v5-page px-4 pb-4 md:px-[30px] md:pb-[30px]">
-      <div className="mx-auto max-w-v5-content rounded-v5-panel bg-v5-panel p-6 md:flex md:items-start md:justify-between md:p-[60px]">
+    <footer className="flex flex-col gap-[30px] bg-v5-page px-4 pb-4 md:px-[30px] md:pb-[30px]">
+      <div className="mx-auto w-full max-w-v5-content rounded-v5-panel bg-v5-panel p-6 md:flex md:items-start md:justify-between md:p-[60px]">
         <Image
           src="/v5/vultisig-mark.svg"
           alt="Vultisig"
@@ -165,6 +165,10 @@ export default function Footer() {
           />
         </div>
       </div>
+
+      <p className="mx-auto w-full max-w-v5-content text-v5-caption font-semibold text-v5-text-inverse">
+        @ Copyright {new Date().getFullYear()} - Vultisig
+      </p>
     </footer>
   )
 }
