@@ -125,6 +125,7 @@ const config: Config = {
           info: "#5ca7ff", // Alerts/Info (light)
           "info-dark": "#5180fc", // Alerts/Info (dark)
           vult: "#00ff76", // $VULT brand green — hero accent + token-stats strip
+          royal: "#104ae1", // "Got an idea?" banner
           // $VULT discount-tier card surfaces
           tier: {
             bronze: "#f05c2f",

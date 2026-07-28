@@ -10,5 +10,8 @@ export const VULT_BUY_URL =
 
 export const VULT_MAX_SUPPLY = 100_000_000
 
+/** Feature requests are collected in Discord — same invite the footer already uses. */
+export const FEATURE_REQUEST_URL = "https://discord.gg/thq64eaYVN"
+
 /** Figma shows the address as `0xb78...EBa` — 5 leading, 3 trailing characters. */
 export const VULT_CONTRACT_SHORT = `${VULT_CONTRACT_ADDRESS.slice(0, 5)}...${VULT_CONTRACT_ADDRESS.slice(-3)}`
