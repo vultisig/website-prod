@@ -9,6 +9,7 @@ const WhatIsMpc = dynamic(() => import("./components/what-is-mpc"))
 const ComparisonTable = dynamic(
   () => import("./components/comparison-table"),
 )
+const HowItWorks = dynamic(() => import("./components/how-it-works"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
 export default function MpcPage() {
@@ -18,6 +19,7 @@ export default function MpcPage() {
       <SeedPhraseProblem />
       <WhatIsMpc />
       <ComparisonTable />
+      <HowItWorks />
       <FooterBanner />
     </main>
   )
