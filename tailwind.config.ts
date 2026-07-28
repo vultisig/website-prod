@@ -106,11 +106,86 @@ const config: Config = {
         divider: "#284570",
         mpcBgDark: "#0a1423",
         mpcBgMid: "#0d1a2d",
+        // V5 light theme — names mirror the Figma variable collection
+        v5: {
+          page: "#f0f4fc", // Text/Primary — doubles as the light page surface
+          panel: "#e2e8f4", // footer / inset panel surface
+          white: "#ffffff", // Neutrals/White
+          cta: "#0b4eff", // Buttons/CTA (Primary)
+          accent: "#4879fd", // Primary/Accent 4
+          success: "#13c89d", // Alerts/Succes
+          warning: "#ffc25c", // Alerts/Warning
+          purple: "#8f65ff", // App Store/DCA Purple
+          orange: "#ffaa1c", // App Store/Sends Orange
+          surface: {
+            dark: "#02122b", // Backgrounds/background
+            1: "#061b3a", // Backgrounds/surface-1
+            2: "#11284a", // Backgrounds/surface-2 + Buttons/Secondary
+          },
+          text: {
+            primary: "#f0f4fc", // Text/Primary
+            secondary: "#c9d6e8", // Text/Secondary
+            tertiary: "#8295ae", // Text/Tertiary
+            inverse: "#02122b", // Text/Inverse
+          },
+          border: {
+            light: "#11284a", // Borders/Light
+            normal: "#1b3f73", // Borders/Normal
+            faint: "rgba(255,255,255,0.03)", // Borders/Extra Light
+          },
+        },
+      },
+      fontSize: {
+        // V5 Figma text styles
+        "v5-headline": ["40px", { lineHeight: "42px", letterSpacing: "-1px" }],
+        "v5-title2": ["22px", { lineHeight: "24px", letterSpacing: "-0.36px" }],
+        "v5-title3": ["17px", { lineHeight: "20px", letterSpacing: "-0.3px" }],
+        "v5-body-m": ["16px", { lineHeight: "24px", letterSpacing: "0" }],
+        "v5-body-s": ["14px", { lineHeight: "20px", letterSpacing: "0" }],
+        "v5-footnote": [
+          "13px",
+          { lineHeight: "18px", letterSpacing: "0.06px" },
+        ],
+        "v5-caption": ["12px", { lineHeight: "16px", letterSpacing: "0.12px" }],
+        "v5-caption-sm": [
+          "10px",
+          { lineHeight: "14px", letterSpacing: "0.12px" },
+        ],
+        "v5-button": ["14px", { lineHeight: "18px", letterSpacing: "0" }],
+        "v5-button-sm": ["13px", { lineHeight: "18px", letterSpacing: "0" }],
+        // V5 display scale — uniform -0.022em tracking
+        "v5-display-lg": [
+          "64px",
+          { lineHeight: "0.89", letterSpacing: "-1.408px" },
+        ],
+        "v5-display": [
+          "48px",
+          { lineHeight: "normal", letterSpacing: "-1.056px" },
+        ],
+        "v5-display-sm": [
+          "32px",
+          { lineHeight: "1.35", letterSpacing: "-0.704px" },
+        ],
+        "v5-subtitle": [
+          "20px",
+          { lineHeight: "1.35", letterSpacing: "-0.44px" },
+        ],
+        "v5-label": ["18px", { lineHeight: "1.35", letterSpacing: "-0.396px" }],
+        "v5-link": ["16px", { lineHeight: "1.35", letterSpacing: "-0.352px" }],
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        "v5-panel": "30px",
+      },
+      boxShadow: {
+        "v5-button":
+          "inset 0px -1px 1.6px 0px rgba(15,28,62,0.48), inset 0px 1px 1.9px 0px rgba(255,255,255,0.24)",
+        "v5-menu": "0px 2px 8.35px 0px rgba(76,120,183,0.17)",
+      },
+      maxWidth: {
+        "v5-content": "1380px",
       },
       keyframes: {
         "accordion-down": {
@@ -133,6 +208,12 @@ const config: Config = {
         "gradient-mpc": "linear-gradient(to bottom, #0a1423, #0d1a2d, #0a1423)",
         "gradient-card":
           "linear-gradient(to bottom, hsl(var(--background)), hsl(var(--background-secondary)))",
+        // CSS stand-in for the V5 banner dot texture (Figma ships a 294KB PNG)
+        "v5-dots":
+          "radial-gradient(rgba(255,255,255,0.30) 1.5px, transparent 1.5px)",
+      },
+      backgroundSize: {
+        "v5-dots": "26px 26px",
       },
     },
   },
