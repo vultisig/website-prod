@@ -35,6 +35,14 @@ export const v5FontSize = {
     "26px",
     { lineHeight: "1.19", letterSpacing: "-0.494px" },
   ],
+  "v5-card-title-md": [
+    "28px",
+    { lineHeight: "normal", letterSpacing: "-0.532px" },
+  ],
+  "v5-body-l-relaxed": [
+    "18px",
+    { lineHeight: "1.5", letterSpacing: "-0.342px" },
+  ],
   "v5-body-m-tight": ["16px", { lineHeight: "1.5", letterSpacing: "-0.304px" }],
   "v5-body-m-relaxed": [
     "16px",
