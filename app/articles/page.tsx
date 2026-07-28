@@ -1,7 +1,15 @@
-import { getAllArticles } from "@/lib/articles"
-import Link from "next/link"
-import ArticleCard from "@/components/article-card"
 import type { Metadata } from "next"
+import Link from "next/link"
+
+import ArticleSearchGrid from "@/components/articles/article-search-grid"
+import CategoryTabs from "@/components/articles/category-tabs"
+import FeaturedArticle from "@/components/articles/featured-article"
+import {
+  buildCategoryTabs,
+  filterByCategory,
+  resolveCategory,
+} from "@/lib/article-categories"
+import { getAllArticles, type Article } from "@/lib/articles"
 
 // Make articles page dynamic - articles change frequently
 export const dynamic = "force-dynamic"
@@ -88,63 +96,67 @@ function BreadcrumbJsonLd() {
   )
 }
 
-export default async function ArticlesPage() {
-  const articles = await getAllArticles()
+/** The promoted article: an explicit `featured` flag, else the most recent. */
+function pickFeatured(articles: Article[]): Article | undefined {
+  return articles.find((article) => article.featured) || articles[0]
+}
 
-  // Debug: Log article count (remove in production if needed)
-  if (process.env.NODE_ENV === "development") {
-    console.log(`[ArticlesPage] Rendering with ${articles.length} articles`)
-  }
+function EmptyState() {
+  return (
+    <div className="py-16 text-center">
+      <p className="mb-4 text-v5-subtitle text-v5-text-tertiary">
+        No articles yet.
+      </p>
+      <Link href="/articles/admin" className="text-v5-cta underline">
+        Create your first article
+      </Link>
+    </div>
+  )
+}
+
+export default async function ArticlesPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const params = await searchParams
+  const category = resolveCategory(params?.category)
+  const rawQuery = Array.isArray(params?.q) ? params?.q[0] : params?.q
+
+  const articles = await getAllArticles()
+  const tabs = buildCategoryTabs(articles)
+  const inCategory = filterByCategory(articles, category)
+  const featured = pickFeatured(inCategory)
+  const rest = inCategory.filter((article) => article.slug !== featured?.slug)
 
   return (
     <>
       <CollectionPageJsonLd />
       <BreadcrumbJsonLd />
-      <main className="min-h-screen pt-32 pb-20 px-4">
-        <div className="container">
-          <div className="flex flex-col items-center text-center mb-12">
-            <div className="flex items-center gap-4 mb-6">
-              <h1 className="text-5xl md:text-7xl font-bold text-white">
-                Articles
-              </h1>
-              <a
-                href="/articles/feed.xml"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-orange-400 hover:text-orange-300 transition-colors"
-                title="RSS Feed"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z" />
-                </svg>
-              </a>
-            </div>
-            <p className="text-textSecondary text-xl max-w-2xl">
+      <main className="min-h-screen bg-v5-page px-4 pb-[112px] pt-[126px] md:px-[30px] md:pb-[30px] md:pt-[216px]">
+        <div className="mx-auto flex max-w-v5-content flex-col gap-[30px]">
+          <div className="flex flex-col gap-6 text-v5-text-inverse">
+            <h1 className="text-v5-display-xs font-medium md:text-v5-hero">
+              Vultisig Articles
+            </h1>
+            <p className="text-v5-body-m-relaxed md:text-v5-subtitle">
               Insights, updates, and deep dives into MPC wallets, security, and
-              blockchain technology
+              blockchain technology.
             </p>
           </div>
 
           {articles.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-gray-400 text-lg mb-4">No articles yet.</p>
-              <Link
-                href="/articles/admin"
-                className="text-blue-400 hover:text-blue-300 underline"
-              >
-                Create your first article
-              </Link>
-            </div>
+            <EmptyState />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {articles.map((article) => (
-                <ArticleCard key={article.slug} article={article} />
-              ))}
-            </div>
+            <>
+              {featured && <FeaturedArticle article={featured} />}
+              <ArticleSearchGrid
+                articles={rest}
+                category={category}
+                initialQuery={rawQuery || ""}
+                tabs={<CategoryTabs tabs={tabs} active={category} />}
+              />
+            </>
           )}
         </div>
       </main>

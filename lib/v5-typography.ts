@@ -99,6 +99,15 @@ export const v5FontSize = {
     "24px",
     { lineHeight: "37px", letterSpacing: "-1px" },
   ],
+  // Articles — featured hero title
+  "v5-headline-lg": ["36px", { lineHeight: "1.35", letterSpacing: "-0.792px" }],
+  // Articles — "Related Articles" section title
+  "v5-section-title": [
+    "48px",
+    { lineHeight: "1.35", letterSpacing: "-1.056px" },
+  ],
+  // Articles — h3 inside article prose
+  "v5-prose-h3": ["24px", { lineHeight: "1.35", letterSpacing: "-0.528px" }],
 } satisfies Record<string, FontSizeToken>
 
 export const v5FontSizeNames = Object.keys(v5FontSize)
