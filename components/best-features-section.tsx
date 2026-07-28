@@ -14,9 +14,11 @@ export default function BestFeaturesSection() {
   return (
     <section className="bg-v5-page pt-4 md:px-[30px] md:pt-[30px]">
       <div className="mx-auto max-w-v5-content">
-        <div className="flex flex-col items-center gap-8 rounded-[20px] bg-v5-surface-dark px-4 pb-12 pt-5 md:gap-[50px] md:rounded-v5-panel md:p-[60px]">
+        <div className="flex flex-col items-center gap-8 rounded-[20px] bg-v5-surface-1 px-4 py-9 md:gap-[50px] md:rounded-v5-panel md:p-[60px]">
           <SectionHeading
             tone="onDark"
+            /* Figma runs this subtitle across the full panel, on one line. */
+            className="[&_p]:max-w-none"
             title="Best features in one place."
             subtitle="Multi-chain asset management, keyless security, DeFi access, and built-in swaps - all inside one secure vault environment."
           />
