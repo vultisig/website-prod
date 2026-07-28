@@ -60,6 +60,11 @@ export const v5FontSize = {
   "v5-display": ["48px", { lineHeight: "normal", letterSpacing: "-1.056px" }],
   "v5-display-md": ["40px", { lineHeight: "normal", letterSpacing: "-0.88px" }],
   "v5-eyebrow": ["14px", { lineHeight: "1.35", letterSpacing: "-0.308px" }],
+  // Vultisig/Headings/Large Title — $VULT tier card names
+  "v5-tier-title": ["34px", { lineHeight: "37px", letterSpacing: "-1px" }],
+  // Oversized fee-reduction percentage on the tier cards
+  "v5-tier-figure": ["96px", { lineHeight: "1.354", letterSpacing: "0" }],
+  "v5-tier-figure-sm": ["64px", { lineHeight: "1.354", letterSpacing: "0" }],
   // $VULT token-stat figures (Satoshi optical tracking on the green strip)
   "v5-figure-lg": ["41px", { lineHeight: "1.15", letterSpacing: "-0.449px" }],
   "v5-figure-md": ["32px", { lineHeight: "1.35", letterSpacing: "-0.449px" }],
