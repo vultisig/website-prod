@@ -16,6 +16,7 @@ const ProvenProtocols = dynamic(
 const Security = dynamic(() => import("./components/security"))
 const ChainsSection = dynamic(() => import("@/components/chains-section"))
 const Privacy = dynamic(() => import("./components/privacy"))
+const MpcFaq = dynamic(() => import("./components/faq"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
 export default function MpcPage() {
@@ -30,6 +31,7 @@ export default function MpcPage() {
       <Security />
       <ChainsSection captionClassName="text-v5-title2" />
       <Privacy />
+      <MpcFaq />
       <FooterBanner />
     </main>
   )
