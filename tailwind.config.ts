@@ -153,6 +153,10 @@ const config: Config = {
         ],
         "v5-button": ["14px", { lineHeight: "18px", letterSpacing: "0" }],
         "v5-button-sm": ["13px", { lineHeight: "18px", letterSpacing: "0" }],
+        "v5-tile-label": [
+          "8px",
+          { lineHeight: "12px", letterSpacing: "0.08px" },
+        ],
         // V5 display scale — uniform -0.022em tracking
         "v5-display-lg": [
           "64px",
@@ -213,7 +217,7 @@ const config: Config = {
           "radial-gradient(rgba(255,255,255,0.30) 1.5px, transparent 1.5px)",
       },
       backgroundSize: {
-        "v5-dots": "26px 26px",
+        "v5-dots-tile": "26px 26px",
       },
     },
   },
