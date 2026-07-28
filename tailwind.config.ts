@@ -136,6 +136,7 @@ const config: Config = {
             light: "#11284a", // Borders/Light
             normal: "#1b3f73", // Borders/Normal
             faint: "rgba(255,255,255,0.03)", // Borders/Extra Light
+            ring: "rgba(72,121,253,0.27)", // chain-diagram orbit
           },
         },
       },
