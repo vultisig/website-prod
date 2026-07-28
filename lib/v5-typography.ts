@@ -20,7 +20,10 @@ export const v5FontSize = {
   "v5-card-body": ["15px", { lineHeight: "1.35", letterSpacing: "-0.33px" }],
   "v5-card-meta": ["13px", { lineHeight: "1.35", letterSpacing: "-0.286px" }],
   "v5-faq-title": ["76px", { lineHeight: "1.18", letterSpacing: "-1.672px" }],
-  "v5-display-tight": ["48px", { lineHeight: "1.09", letterSpacing: "-1.056px" }],
+  "v5-display-tight": [
+    "48px",
+    { lineHeight: "1.09", letterSpacing: "-1.056px" },
+  ],
   "v5-display-sm-tight": [
     "32px",
     { lineHeight: "1.09", letterSpacing: "-0.704px" },
@@ -28,9 +31,15 @@ export const v5FontSize = {
   "v5-score": ["36px", { lineHeight: "1.09", letterSpacing: "-0.792px" }],
   "v5-quote": ["20px", { lineHeight: "1.29", letterSpacing: "-0.38px" }],
   "v5-card-title": ["32px", { lineHeight: "1.19", letterSpacing: "-0.608px" }],
-  "v5-card-title-sm": ["26px", { lineHeight: "1.19", letterSpacing: "-0.494px" }],
+  "v5-card-title-sm": [
+    "26px",
+    { lineHeight: "1.19", letterSpacing: "-0.494px" },
+  ],
   "v5-body-m-tight": ["16px", { lineHeight: "1.5", letterSpacing: "-0.304px" }],
-  "v5-body-m-relaxed": ["16px", { lineHeight: "1.5", letterSpacing: "-0.352px" }],
+  "v5-body-m-relaxed": [
+    "16px",
+    { lineHeight: "1.5", letterSpacing: "-0.352px" },
+  ],
   "v5-footnote-relaxed": [
     "13px",
     { lineHeight: "1.5", letterSpacing: "-0.247px" },
@@ -41,6 +50,8 @@ export const v5FontSize = {
   "v5-stat-sm": ["31px", { lineHeight: "1.2", letterSpacing: "0" }],
   "v5-display-lg": ["64px", { lineHeight: "0.89", letterSpacing: "-1.408px" }],
   "v5-display": ["48px", { lineHeight: "normal", letterSpacing: "-1.056px" }],
+  "v5-display-md": ["40px", { lineHeight: "normal", letterSpacing: "-0.88px" }],
+  "v5-eyebrow": ["14px", { lineHeight: "1.35", letterSpacing: "-0.308px" }],
   "v5-display-sm": ["32px", { lineHeight: "1.35", letterSpacing: "-0.704px" }],
   "v5-subtitle": ["20px", { lineHeight: "1.35", letterSpacing: "-0.44px" }],
   "v5-label": ["18px", { lineHeight: "1.35", letterSpacing: "-0.396px" }],
