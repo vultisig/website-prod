@@ -10,6 +10,9 @@ const ComparisonTable = dynamic(
   () => import("./components/comparison-table"),
 )
 const HowItWorks = dynamic(() => import("./components/how-it-works"))
+const ProvenProtocols = dynamic(
+  () => import("./components/proven-protocols"),
+)
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
 export default function MpcPage() {
@@ -20,6 +23,7 @@ export default function MpcPage() {
       <WhatIsMpc />
       <ComparisonTable />
       <HowItWorks />
+      <ProvenProtocols />
       <FooterBanner />
     </main>
   )
