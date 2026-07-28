@@ -15,6 +15,8 @@ import {
   toMetaDescription,
 } from "@/lib/articles"
 
+const SHARE_IMAGE_FALLBACK = "https://vultisig.com/thumbnails/home.png"
+
 interface ArticlePageProps {
   params: Promise<{ slug: string }>
 }
@@ -37,20 +39,22 @@ export async function generateMetadata({
   if (!article) return { title: "Article Not Found" }
 
   const url = `https://vultisig.com/articles/${slug}`
-  // Ensure image URLs are absolute for OpenGraph
+  // Ensure image URLs are absolute for OpenGraph; articles without a cover
+  // still need a share card, so fall back to the site image.
   const imageUrl = article.image
     ? article.image.startsWith("http")
       ? article.image
       : `https://vultisig.com${article.image}`
-    : undefined
+    : SHARE_IMAGE_FALLBACK
 
   const metaDescription = toMetaDescription(article.description)
 
   return {
     title: `${article.title} - Vultisig`,
     description: metaDescription,
-    robots:
-      article.status === "draft" ? { index: false, follow: false } : undefined,
+    ...(article.status === "draft"
+      ? { robots: { index: false, follow: false } }
+      : {}),
     alternates: {
       canonical: url,
     },
@@ -58,7 +62,7 @@ export async function generateMetadata({
       title: article.title,
       description: metaDescription,
       url,
-      images: imageUrl ? [imageUrl] : [],
+      images: [imageUrl],
       type: "article",
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt,
@@ -69,7 +73,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: article.title,
       description: metaDescription,
-      images: imageUrl ? [imageUrl] : [],
+      images: [imageUrl],
     },
   }
 }
@@ -90,7 +94,7 @@ function ArticleJsonLd({
       ? article.image.startsWith("http")
         ? article.image
         : `https://vultisig.com${article.image}`
-      : "https://vultisig.com/thumbnails/home.png",
+      : SHARE_IMAGE_FALLBACK,
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
     author: {
