@@ -127,6 +127,9 @@ const config: Config = {
           "info-dark": "#5180fc", // Alerts/Info (dark)
           vult: "#00ff76", // $VULT brand green — hero accent + token-stats strip
           royal: "#104ae1", // "Got an idea?" banner
+          negative: "#fb2c36", // comparison-table "no" pill
+          "negative-mark": "#ff6467", // comparison-table "no" glyph
+          positive: "#33e6bf", // comparison-table "yes" pill + glyph
           // $VULT discount-tier card surfaces
           tier: {
             bronze: "#f05c2f",
