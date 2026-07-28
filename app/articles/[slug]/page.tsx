@@ -90,7 +90,7 @@ function ArticleJsonLd({
       ? article.image.startsWith("http")
         ? article.image
         : `https://vultisig.com${article.image}`
-      : "https://vultisig.com/og-image.png",
+      : "https://vultisig.com/thumbnails/home.png",
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
     author: {

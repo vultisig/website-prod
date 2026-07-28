@@ -12,6 +12,14 @@ export const metadata: Metadata = {
     description:
       "Threshold signatures split signing across your own devices. No seed phrase, no single point of failure, no company holding your keys.",
     url: "https://vultisig.com/mpc",
+    images: [
+      {
+        url: "https://vultisig.com/thumbnails/home.png",
+        width: 1200,
+        height: 630,
+        alt: "Vultisig — the free, open-source MPC wallet with threshold signatures",
+      },
+    ],
   },
 }
 

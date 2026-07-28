@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://vultisig.com/og-image.png",
+        url: "https://vultisig.com/thumbnails/home.png",
         width: 1200,
         height: 630,
         alt: "Vultisig Articles",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vultisig Articles",
     description: "Latest articles, insights, and updates from Vultisig.",
-    images: ["https://vultisig.com/og-image.png"],
+    images: ["https://vultisig.com/thumbnails/home.png"],
   },
 }
 
