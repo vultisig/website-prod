@@ -60,6 +60,10 @@ export const v5FontSize = {
   "v5-display": ["48px", { lineHeight: "normal", letterSpacing: "-1.056px" }],
   "v5-display-md": ["40px", { lineHeight: "normal", letterSpacing: "-0.88px" }],
   "v5-eyebrow": ["14px", { lineHeight: "1.35", letterSpacing: "-0.308px" }],
+  // $VULT token-stat figures (Satoshi optical tracking on the green strip)
+  "v5-figure-lg": ["41px", { lineHeight: "1.15", letterSpacing: "-0.449px" }],
+  "v5-figure-md": ["32px", { lineHeight: "1.35", letterSpacing: "-0.449px" }],
+  "v5-figure-sm": ["24px", { lineHeight: "1.35", letterSpacing: "-0.449px" }],
   "v5-display-sm": ["32px", { lineHeight: "1.35", letterSpacing: "-0.704px" }],
   "v5-subtitle": ["20px", { lineHeight: "1.35", letterSpacing: "-0.44px" }],
   "v5-label": ["18px", { lineHeight: "1.35", letterSpacing: "-0.396px" }],

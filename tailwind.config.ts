@@ -124,6 +124,7 @@ const config: Config = {
           orange: "#ffaa1c", // App Store/Sends Orange
           info: "#5ca7ff", // Alerts/Info (light)
           "info-dark": "#5180fc", // Alerts/Info (dark)
+          vult: "#00ff76", // $VULT brand green — hero accent + token-stats strip
           surface: {
             dark: "#02122b", // Backgrounds/background
             1: "#061b3a", // Backgrounds/surface-1
