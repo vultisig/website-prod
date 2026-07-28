@@ -206,7 +206,7 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       {/* Desktop — logo, centred nav pill, CTA (Figma 79718:62435) */}
-      <div className="relative mx-auto hidden max-w-v5-content items-center justify-between px-[30px] xl:flex">
+      <div className="relative mx-auto hidden max-w-v5-content items-center justify-between px-[30px] pt-9 xl:flex">
         <Logo />
         <nav
           aria-label="Main"
