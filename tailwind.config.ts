@@ -116,6 +116,7 @@ const config: Config = {
           cta: "#0b4eff", // Buttons/CTA (Primary)
           accent: "#4879fd", // Primary/Accent 4
           accent2: "#538bff", // stats / promo panel blue
+          deep: "#063ed4", // "setup for your needs" panel
           success: "#13c89d", // Alerts/Succes
           warning: "#ffc25c", // Alerts/Warning
           purple: "#8f65ff", // App Store/DCA Purple

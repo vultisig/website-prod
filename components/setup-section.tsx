@@ -1,140 +1,166 @@
-import { Button } from "@/components/ui/button"
-import { ArrowUpRight, Zap, Shield } from "lucide-react"
+"use client"
 
-const VAULT_CTA_CLASS =
-  "rounded-xl px-5 py-4 h-[51px] w-full lg:w-auto text-sm gap-1.5 border-white/15"
+import { ArrowRight, Shield, Zap } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useState } from "react"
+
+import SectionHeading from "@/components/ui/section-heading"
+import { LandingButton } from "@/components/ui/landing-button"
+import { cn } from "@/lib/utils"
+
+type VaultId = "fast" | "secure"
+
+type Vault = {
+  id: VaultId
+  tab: string
+  title: string
+  paragraphs: [string, string]
+  href: string
+  image: string
+  imageAlt: string
+  /** Tint of the selected tab pill. */
+  activeClass: string
+}
+
+const VAULTS: Vault[] = [
+  {
+    id: "fast",
+    tab: "Fast Vault",
+    title: "For daily use",
+    paragraphs: [
+      "This is a fast, one-device setup perfect for storing and using smaller amounts every day.",
+      "It requires only one user device, and our Vultiserver co-signs your transactions instantly - giving you speed and simplicity without compromising usability.",
+    ],
+    href: "https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#fast-vaults",
+    image: "/v5/setup-fast-vault.webp",
+    imageAlt:
+      "Single server tray guarded by a shield, next to a phone signing a transaction",
+    activeClass: "border-v5-warning/5 bg-v5-warning/20",
+  },
+  {
+    id: "secure",
+    tab: "Secure Vault",
+    title: "For maximum security",
+    paragraphs: [
+      "Built for maximum protection, the Secure Vault uses multiple devices to sign transactions and safeguard your assets.",
+      "It's always accessible through backups of the devices, making it the most reliable way to secure any amount of assets - even if a device fails.",
+    ],
+    href: "https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#secure-vault",
+    image: "/v5/setup-secure-vault.webp",
+    imageAlt:
+      "Three stacked device trays co-signing a transaction under a shield",
+    activeClass: "border-v5-success/5 bg-v5-success/20",
+  },
+]
+
+const TAB_ICONS: Record<VaultId, typeof Zap> = { fast: Zap, secure: Shield }
+const TAB_ICON_COLOR: Record<VaultId, string> = {
+  fast: "text-v5-warning",
+  secure: "text-v5-success",
+}
+
+function VaultTabs({
+  selected,
+  onSelect,
+}: {
+  selected: VaultId
+  onSelect: (id: VaultId) => void
+}) {
+  return (
+    <div
+      role="tablist"
+      aria-label="Vault type"
+      className="flex w-fit gap-2 rounded-full bg-v5-white p-1.5"
+    >
+      {VAULTS.map((vault) => {
+        const Icon = TAB_ICONS[vault.id]
+        const isSelected = vault.id === selected
+        return (
+          <button
+            key={vault.id}
+            type="button"
+            role="tab"
+            aria-selected={isSelected}
+            onClick={() => onSelect(vault.id)}
+            className={cn(
+              "flex h-[38px] items-center gap-2 rounded-full border-[1.5px] border-transparent px-3.5 py-2 text-v5-body-s font-medium text-v5-text-inverse",
+              isSelected && vault.activeClass,
+            )}
+          >
+            <Icon className={cn("size-4", TAB_ICON_COLOR[vault.id])} aria-hidden />
+            {vault.tab}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
 
 export default function SetupSection() {
+  const [selected, setSelected] = useState<VaultId>("fast")
+  const vault = VAULTS.find((item) => item.id === selected) ?? VAULTS[0]
+
   return (
-    <section className="py-16 container">
-      {/* Header */}
-      <div className="flex flex-col items-start gap-5 mb-12">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-textPrimary tracking-tight">
-          The setup for{" "}
-          <span className="bg-gradient-to-r from-secondaryAccent to-deepBlue bg-clip-text text-transparent">
-            your needs.
-          </span>
-        </h2>
+    <section className="bg-v5-page pt-4 md:px-[30px] md:pt-[30px]">
+      <div className="mx-auto max-w-v5-content">
+        <div className="flex flex-col items-center gap-8 rounded-[20px] bg-v5-deep px-4 pb-5 pt-5 md:gap-[50px] md:rounded-v5-panel md:p-[60px]">
+          <SectionHeading
+            tone="onDark"
+            title="The setup for your needs."
+            subtitle="Fast Vault for daily spending. Secure Vault for maximum protection. Both are keyless and require no seed phrase."
+          />
 
-        <p className="text-lg lg:text-xl text-textSecondary tracking-tight max-w-3xl leading-relaxed">
-          Fast Vault for daily spending. Secure Vault for maximum protection.
-          <br className="hidden sm:block" />
-          Both are keyless and require no seed phrase.
-        </p>
-      </div>
-
-      {/* Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Fast Vault Card */}
-        <div className="border border-borderLight rounded-3xl p-5 lg:p-9 relative overflow-hidden bg-cardSurface/50 flex flex-col gap-3.5 lg:h-[515px]">
-          <div className="relative z-10 flex flex-col gap-5">
-            {/* Vault Type Pill */}
-            <div className="inline-flex items-center gap-2 bg-[rgba(255,194,92,0.05)] border-[1.5px] border-[rgba(255,194,92,0.05)] rounded-full px-3.5 py-2 w-fit">
-              <Zap className="w-4 h-4 text-[#FFC25C]" />
-              <span className="font-medium text-sm text-textPrimary">
-                Fast Vault
-              </span>
+          <div className="flex w-full flex-col rounded-3xl bg-v5-page">
+            <div className="flex flex-col gap-3 p-4 md:flex-row md:p-[30px]">
+              <div className="flex flex-col gap-3 md:w-[476px]">
+                <VaultTabs selected={selected} onSelect={setSelected} />
+                <div className="flex flex-col gap-3 pt-6 text-v5-text-inverse">
+                  <h3 className="text-v5-card-title font-semibold">
+                    {vault.title}
+                  </h3>
+                  {vault.paragraphs.map((paragraph) => (
+                    <p
+                      key={paragraph}
+                      className="text-v5-body-m-tight font-normal md:w-[407px]"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <Image
+                src={vault.image}
+                alt={vault.imageAlt}
+                width={1268}
+                height={796}
+                sizes="(max-width: 767px) 90vw, 634px"
+                className="h-auto w-full rounded-3xl md:w-[634px]"
+              />
             </div>
 
-            <h3 className="text-2xl sm:text-[32px] font-medium text-textPrimary tracking-tight leading-tight">
-              For daily use
-            </h3>
-
-            <p className="text-textSecondary text-base tracking-tight leading-relaxed">
-              This is a fast, one-device setup perfect for storing and using
-              smaller amounts every day.
-            </p>
-
-            <p className="text-textSecondary text-base tracking-tight leading-relaxed max-w-[282px]">
-              It requires only one user device, and our Vultiserver co-signs
-              your transactions instantly - giving you speed and simplicity
-              without compromising usability.
-            </p>
-          </div>
-
-          {/* Image - shown inline on mobile, absolute on desktop */}
-          <div className="relative z-0 lg:absolute lg:bottom-0 lg:right-0">
-            <img
-              src="/images/home-2.svg"
-              alt="Fast Vault setup illustration"
-              width={400}
-              height={300}
-              loading="lazy"
-              className="opacity-80 w-full lg:w-auto lg:max-w-[400px] h-auto object-contain"
-            />
-          </div>
-
-          {/* CTA - shown inline on mobile, absolute on desktop */}
-          <a
-            href="https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#fast-vaults"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative z-10 lg:absolute lg:bottom-9 lg:left-9"
-          >
-            <Button
-              variant="primaryBlue"
-              className={VAULT_CTA_CLASS}
-            >
-              Learn about Fast Vault
-              <ArrowUpRight className="h-5 w-5" />
-            </Button>
-          </a>
-        </div>
-
-        {/* Secure Vault Card */}
-        <div className="border border-borderLight rounded-3xl p-5 lg:p-9 relative overflow-hidden bg-cardSurface/50 flex flex-col gap-3.5 lg:h-[515px]">
-          <div className="relative z-10 flex flex-col gap-5">
-            {/* Vault Type Pill */}
-            <div className="inline-flex items-center gap-2 bg-[rgba(19,200,157,0.05)] border-[1.5px] border-[rgba(19,200,157,0.05)] rounded-full px-3.5 py-2 w-fit">
-              <Shield className="w-4 h-4 text-[#13C89D]" />
-              <span className="font-medium text-sm text-textPrimary">
-                Secure Vault
-              </span>
+            {/* The panel colour bites into the card so the CTA sits in a notch */}
+            <div className="flex items-stretch">
+              <div className="rounded-bl-3xl p-4 md:rounded-tr-3xl md:bg-v5-deep md:py-3 md:pl-[25px] md:pr-6">
+                <LandingButton
+                  asChild
+                  variant="light"
+                  size="sm"
+                  className="h-[50px] w-[190px]"
+                >
+                  <Link
+                    href={vault.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Learn More
+                    <ArrowRight aria-hidden />
+                  </Link>
+                </LandingButton>
+              </div>
+              <div className="flex-1 rounded-br-3xl rounded-tl-3xl bg-v5-deep md:hidden" />
             </div>
-
-            <h3 className="text-2xl sm:text-[32px] font-medium text-textPrimary tracking-tight leading-tight">
-              For maximum security
-            </h3>
-
-            <p className="text-textSecondary text-base tracking-tight leading-relaxed">
-              Built for maximum protection, the Secure Vault uses multiple
-              devices to sign transactions and safeguard your assets.
-            </p>
-
-            <p className="text-textSecondary text-base tracking-tight leading-relaxed max-w-[254px]">
-              It&apos;s always accessible through backups of the devices, making
-              it the most reliable way to secure any amount of assets - even if
-              a device fails.
-            </p>
           </div>
-
-          {/* Image - shown inline on mobile, absolute on desktop */}
-          <div className="relative z-0 lg:absolute lg:bottom-0 lg:right-0">
-            <img
-              src="/images/home-3.svg"
-              alt="Secure Vault setup illustration"
-              width={400}
-              height={300}
-              loading="lazy"
-              className="opacity-80 w-full lg:w-auto lg:max-w-[400px] h-auto object-contain"
-            />
-          </div>
-
-          {/* CTA - shown inline on mobile, absolute on desktop */}
-          <a
-            href="https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#secure-vault"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative z-10 lg:absolute lg:bottom-9 lg:left-9"
-          >
-            <Button
-              variant="primaryBlue"
-              className={VAULT_CTA_CLASS}
-            >
-              Learn about Secure Vault
-              <ArrowUpRight className="h-5 w-5" />
-            </Button>
-          </a>
         </div>
       </div>
     </section>
