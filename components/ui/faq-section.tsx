@@ -16,6 +16,8 @@ type FaqSectionProps = {
   items: FaqItem[]
   title?: ReactNode
   subtitle?: ReactNode
+  /** Heading block rendered beside the list instead of centred above it. */
+  aside?: ReactNode
   className?: string
 }
 
@@ -23,15 +25,25 @@ export default function FaqSection({
   items,
   title,
   subtitle,
+  aside,
   className,
 }: FaqSectionProps) {
   return (
     <section className={cn("bg-v5-page px-4 py-16 md:px-[30px]", className)}>
-      <div className="mx-auto flex max-w-v5-content flex-col gap-10">
+      <div
+        className={cn(
+          "mx-auto flex max-w-v5-content flex-col gap-10",
+          aside && "md:flex-row md:items-start md:justify-center md:gap-[50px]",
+        )}
+      >
         {title && <SectionHeading title={title} subtitle={subtitle} />}
+        {aside}
         <AccordionPrimitive.Root
           type="multiple"
-          className="flex flex-col gap-5"
+          className={cn(
+            "flex flex-col gap-3 md:gap-5",
+            aside && "md:w-[810px] md:shrink-0",
+          )}
         >
           {items.map((item, index) => (
             <AccordionPrimitive.Item

@@ -17,6 +17,7 @@ export const v5FontSize = {
   "v5-button": ["14px", { lineHeight: "18px", letterSpacing: "0" }],
   "v5-button-sm": ["13px", { lineHeight: "18px", letterSpacing: "0" }],
   "v5-tile-label": ["8px", { lineHeight: "12px", letterSpacing: "0.08px" }],
+  "v5-faq-title": ["76px", { lineHeight: "1.18", letterSpacing: "-1.672px" }],
   "v5-display-tight": ["48px", { lineHeight: "1.09", letterSpacing: "-1.056px" }],
   "v5-display-sm-tight": [
     "32px",
