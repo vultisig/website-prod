@@ -15,7 +15,9 @@ export default function Hero() {
             <h1 className="text-v5-hero-sm font-semibold text-v5-text-primary md:w-[546px] md:text-v5-hero">
               Your key was never whole to begin with
             </h1>
-            <p className="text-v5-label font-normal text-v5-text-primary md:w-[478px] md:text-v5-subtitle">
+            {/* Figma sets 478px on Satoshi; Brockmann is wider, so the column
+                widens to the h1's width to keep the design's three lines. */}
+            <p className="text-v5-label font-normal text-v5-text-primary md:w-[546px] md:text-v5-subtitle">
               Vultisig splits your vault across multiple devices using MPC
               threshold signatures. No single device holds the full key.
               There&apos;s nothing to steal, lose, or leak.

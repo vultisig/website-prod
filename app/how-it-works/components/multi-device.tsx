@@ -35,7 +35,7 @@ const BADGE_CLASS =
 
 function ConnectedRow({ name, status, badge, icon }: ConnectedDevice) {
   return (
-    <li className="flex items-center gap-2 rounded-2xl border border-v5-border-light bg-v5-surface-1 p-2.5 md:gap-3 md:rounded-3xl md:p-4">
+    <li className="flex items-center gap-2 rounded-2xl border border-v5-border-light bg-v5-surface-1 p-2.5 md:h-[68px] md:gap-3 md:rounded-3xl md:p-4">
       <Image
         src={icon}
         alt=""
@@ -92,7 +92,7 @@ function DeviceMock() {
         ))}
         <PendingRow />
       </ul>
-      <div className="flex flex-col gap-3 pt-6 md:gap-[18px] md:pt-[37px]">
+      <div className="flex h-[67px] flex-col gap-3 pt-6 md:h-[102px] md:gap-[18px] md:pt-[37px]">
         <div className="flex gap-[9px] pl-[7px] md:gap-[13px] md:pl-[10px]">
           {SHARE_BARS.map((bar) => (
             <span
