@@ -117,6 +117,7 @@ const config: Config = {
           accent: "#4879fd", // Primary/Accent 4
           accent2: "#538bff", // stats / promo panel blue
           deep: "#063ed4", // "setup for your needs" panel
+          sky: "#4d80ff", // MPC hero + "How Vultisig Works" panels
           amber: "#f39c2b", // review carousel card
           success: "#13c89d", // Alerts/Succes
           warning: "#ffc25c", // Alerts/Warning
