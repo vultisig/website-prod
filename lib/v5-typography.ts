@@ -24,6 +24,11 @@ export const v5FontSize = {
     "48px",
     { lineHeight: "1.09", letterSpacing: "-1.056px" },
   ],
+  // MPC "Secured across every chain" green card
+  "v5-display-lg-tight": [
+    "56px",
+    { lineHeight: "1.09", letterSpacing: "-1.232px" },
+  ],
   "v5-display-sm-tight": [
     "32px",
     { lineHeight: "1.09", letterSpacing: "-0.704px" },
