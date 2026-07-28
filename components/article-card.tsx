@@ -1,8 +1,10 @@
 "use client"
 
-import Link from "next/link"
 import Image from "next/image"
-import { Article } from "@/lib/articles"
+import Link from "next/link"
+
+import { formatArticleDate } from "@/lib/article-format"
+import type { Article } from "@/lib/articles"
 
 interface ArticleCardProps {
   article: Article
@@ -12,65 +14,36 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Link
       href={`/articles/${article.slug}`}
-      className="
-        bg-backgroundSecondary
-        border border-primary
-        hover:border-primary
-        hover:shadow-[0_0_4px_2px_hsl(var(--primary)/0.5)]
-        rounded-2xl p-4 sm:p-6
-        transition-all cursor-pointer
-        flex flex-col
-        group
-      "
+      className="group flex h-full flex-col overflow-hidden rounded-[24px] bg-v5-white transition-shadow hover:shadow-v5-menu"
     >
-      {article.image && (
-        <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6 overflow-hidden relative">
+      <div className="relative aspect-[720/396] w-full bg-v5-panel">
+        {article.image && (
           <Image
             src={article.image}
             alt={article.title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = "none"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 440px"
+            className="object-cover"
+            onError={(event) => {
+              event.currentTarget.style.display = "none"
             }}
           />
-        </div>
-      )}
-      <div className="flex flex-col flex-1">
-        {article.tags && article.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-3">
-            {article.tags.slice(0, 3).map((tag, idx) => (
-              <span
-                key={idx}
-                className="text-xs px-2 py-1 bg-blue-900/40 text-blue-300 rounded-md"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
         )}
-        <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 leading-tight group-hover:text-blue-400 transition-colors">
+      </div>
+
+      <div className="flex flex-1 flex-col gap-3.5 px-4 py-5 md:min-h-[206px]">
+        <h3 className="text-v5-subtitle font-semibold text-v5-text-inverse group-hover:text-v5-cta">
           {article.title}
-        </h2>
-        <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
+        </h3>
+        <p className="line-clamp-4 flex-1 text-v5-card-body text-v5-text-inverse">
           {article.description}
         </p>
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
-          <p className="text-gray-300 text-sm">
-            {new Date(article.publishedAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
-          <span
-            aria-hidden="true"
-            className="text-blue-400 text-sm group-hover:translate-x-1 transition-transform inline-block"
-          >
-            Read more →
-          </span>
-        </div>
+        <time
+          dateTime={article.publishedAt}
+          className="text-v5-card-meta italic text-v5-text-tertiary"
+        >
+          {formatArticleDate(article.publishedAt)}
+        </time>
       </div>
     </Link>
   )
