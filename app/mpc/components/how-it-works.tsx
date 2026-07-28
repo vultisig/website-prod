@@ -57,7 +57,9 @@ function StepCard({ title, body, kicker, screen }: Step) {
         className="w-full"
       />
       {/* 6 body lines at 24px — keeps the three kicker lines on one baseline. */}
-      <p className="text-v5-body-m-tight font-normal md:min-h-[144px]">{body}</p>
+      <p className="text-v5-body-m-tight font-normal md:min-h-[144px]">
+        {body}
+      </p>
       <p className="flex min-h-[46px] items-center text-v5-body-m-tight font-semibold text-v5-highlight">
         {kicker}
       </p>
