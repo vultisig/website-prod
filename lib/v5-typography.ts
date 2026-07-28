@@ -30,6 +30,11 @@ export const v5FontSize = {
   "v5-card-title": ["32px", { lineHeight: "1.19", letterSpacing: "-0.608px" }],
   "v5-card-title-sm": ["26px", { lineHeight: "1.19", letterSpacing: "-0.494px" }],
   "v5-body-m-tight": ["16px", { lineHeight: "1.5", letterSpacing: "-0.304px" }],
+  "v5-body-m-relaxed": ["16px", { lineHeight: "1.5", letterSpacing: "-0.352px" }],
+  "v5-footnote-relaxed": [
+    "13px",
+    { lineHeight: "1.5", letterSpacing: "-0.247px" },
+  ],
   "v5-hero": ["60px", { lineHeight: "72px", letterSpacing: "-1.5px" }],
   "v5-hero-sm": ["46px", { lineHeight: "51px", letterSpacing: "-1px" }],
   "v5-stat": ["45px", { lineHeight: "1.2", letterSpacing: "0" }],

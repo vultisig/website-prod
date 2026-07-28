@@ -122,11 +122,14 @@ const config: Config = {
           warning: "#ffc25c", // Alerts/Warning
           purple: "#8f65ff", // App Store/DCA Purple
           orange: "#ffaa1c", // App Store/Sends Orange
+          info: "#5ca7ff", // Alerts/Info (light)
+          "info-dark": "#5180fc", // Alerts/Info (dark)
           surface: {
             dark: "#02122b", // Backgrounds/background
             1: "#061b3a", // Backgrounds/surface-1
             2: "#11284a", // Backgrounds/surface-2 + Buttons/Secondary
             light: "#d8e0ec", // ratings panel
+            disabled: "rgba(11,26,58,0.5)", // Backgrounds/disabled
           },
           text: {
             primary: "#f0f4fc", // Text/Primary
