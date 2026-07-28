@@ -73,7 +73,10 @@ export default function ProvenProtocols() {
             size="sm"
             className="h-[50px] w-full px-4 md:w-[185px]"
           >
-            <Link href="/how-it-works">
+            <Link
+              href="/how-it-works"
+              aria-label="Learn more about how Vultisig works"
+            >
               Learn More
               <ArrowRight aria-hidden />
             </Link>

@@ -113,7 +113,7 @@ export default function Recovery() {
           size="sm"
           className="mt-[112px] h-[50px] w-[300px] md:mt-[50px] md:w-[185px]"
         >
-          <Link href="/mpc">
+          <Link href="/mpc" aria-label="Learn more about MPC wallets">
             Learn More
             <ArrowRight aria-hidden />
           </Link>

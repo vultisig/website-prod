@@ -53,7 +53,7 @@ export default function FeaturedArticle({ article }: { article: Article }) {
         </h2>
 
         <LandingButton asChild className="h-[50px] w-full md:w-[200px]">
-          <Link href={href}>
+          <Link href={href} aria-label={`Read ${article.title}`}>
             Learn More
             <ArrowRight aria-hidden />
           </Link>

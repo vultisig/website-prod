@@ -152,6 +152,7 @@ export default function SetupSection() {
                     href={vault.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Learn more about the ${vault.tab} in the docs`}
                   >
                     Learn More
                     <ArrowRight aria-hidden />
