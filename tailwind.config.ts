@@ -128,6 +128,7 @@ const config: Config = {
           vult: "#00ff76", // $VULT brand green — hero accent + token-stats strip
           royal: "#104ae1", // "Got an idea?" banner
           highlight: "#0439c7", // Primary/Accent 2 — MPC step-card kicker line
+          sapphire: "#2155df", // "Period." in the MPC privacy heading
           negative: "#fb2c36", // comparison-table "no" pill
           "negative-mark": "#ff6467", // comparison-table "no" glyph
           positive: "#33e6bf", // comparison-table "yes" pill + glyph
