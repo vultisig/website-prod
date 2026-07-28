@@ -4,6 +4,7 @@ import Hero from "./components/hero"
 
 const ThreeSteps = dynamic(() => import("./components/three-steps"))
 const MultiDevice = dynamic(() => import("./components/multi-device"))
+const VaultShares = dynamic(() => import("./components/vault-shares"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
 export default function HowItWorks() {
@@ -12,6 +13,7 @@ export default function HowItWorks() {
       <Hero />
       <ThreeSteps />
       <MultiDevice />
+      <VaultShares />
       <FooterBanner />
     </main>
   )
