@@ -131,14 +131,14 @@ export default function Footer() {
             <h2 className="text-v5-display-sm font-semibold uppercase text-v5-text-inverse md:max-w-[595px]">
               Join the Discord to request new features!
             </h2>
-            <LandingButton asChild className="w-full md:w-[176px]">
+            <LandingButton asChild className="w-full md:w-[176px] md:shrink-0">
               <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">
                 Discord
               </a>
             </LandingButton>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:flex md:justify-between md:gap-8 v5wide:gap-[84px]">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:flex md:gap-8 v5wide:gap-[84px]">
             {FOOTER_COLUMNS.map((column) => (
               <div
                 key={column.title}
