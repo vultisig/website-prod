@@ -63,7 +63,10 @@ export const v5FontSize = {
   // Vultisig/Headings/Title1 — Arena step-card titles
   "v5-title1": ["28px", { lineHeight: "34px", letterSpacing: "-0.64px" }],
   // Numbered step badge on the Arena cards
-  "v5-step-badge": ["22.9px", { lineHeight: "1.35", letterSpacing: "-0.504px" }],
+  "v5-step-badge": [
+    "22.9px",
+    { lineHeight: "1.35", letterSpacing: "-0.504px" },
+  ],
   // Vultisig/Headings/Large Title — $VULT tier card names
   "v5-tier-title": ["34px", { lineHeight: "37px", letterSpacing: "-1px" }],
   // Oversized fee-reduction percentage on the tier cards
@@ -77,6 +80,20 @@ export const v5FontSize = {
   "v5-subtitle": ["20px", { lineHeight: "1.35", letterSpacing: "-0.44px" }],
   "v5-label": ["18px", { lineHeight: "1.35", letterSpacing: "-0.396px" }],
   "v5-link": ["16px", { lineHeight: "1.35", letterSpacing: "-0.352px" }],
+  // Vultisig/Body/Body L (Medium) — downloads tab toggle
+  "v5-body-l": ["18px", { lineHeight: "28px", letterSpacing: "-0.09px" }],
+  // Downloads page title on mobile
+  "v5-display-xs": ["30px", { lineHeight: "normal", letterSpacing: "-0.66px" }],
+  // Download tile + SHA checksum tile labels
+  "v5-download-label": ["28px", { lineHeight: "42px", letterSpacing: "-1px" }],
+  "v5-download-label-sm": [
+    "20px",
+    { lineHeight: "42px", letterSpacing: "-1px" },
+  ],
+  "v5-download-heading": [
+    "24px",
+    { lineHeight: "37px", letterSpacing: "-1px" },
+  ],
 } satisfies Record<string, FontSizeToken>
 
 export const v5FontSizeNames = Object.keys(v5FontSize)
