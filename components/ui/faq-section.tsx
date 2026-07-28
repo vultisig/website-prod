@@ -55,7 +55,10 @@ export default function FaqSection({
                 </AccordionPrimitive.Trigger>
               </AccordionPrimitive.Header>
               {/* forceMount keeps every answer in the server HTML — crawlable + AI-citable */}
-              <AccordionPrimitive.Content forceMount>
+              <AccordionPrimitive.Content
+                forceMount
+                className="data-[state=closed]:hidden"
+              >
                 <div className="pt-5 text-v5-body-m font-normal text-v5-text-inverse [&_ul]:ml-6 [&_ul]:list-disc">
                   {item.answer}
                 </div>

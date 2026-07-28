@@ -45,7 +45,7 @@ const NAV_ENTRIES: NavEntry[] = [
 ]
 
 const PILL_ITEM =
-  "flex items-center gap-2 rounded-full px-6 py-5 text-v5-link font-medium text-v5-text-inverse transition-colors"
+  "flex items-center gap-2 whitespace-nowrap rounded-full px-6 py-5 text-v5-link font-medium text-v5-text-inverse transition-colors"
 const MENU_ITEM =
   "flex items-center justify-center rounded-full px-2.5 py-4 text-v5-link font-medium text-v5-text-inverse transition-colors"
 
@@ -210,7 +210,7 @@ export default function Navbar() {
         <Logo />
         <nav
           aria-label="Main"
-          className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2.5 rounded-full bg-v5-white p-2"
+          className="absolute left-1/2 flex w-max -translate-x-1/2 items-center gap-2.5 rounded-full bg-v5-white p-2"
         >
           {NAV_ENTRIES.map((entry) => (
             <DesktopEntry key={entry.label} entry={entry} />
