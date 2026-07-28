@@ -21,7 +21,7 @@ export default function Home() {
       <FeaturesSection />
       <BestFeaturesSection />
       <SetupSection />
-      <ChainsSection />
+      <ChainsSection id="chains" />
       <RatingsSection />
       <LandingFaq />
       <MediumSection />

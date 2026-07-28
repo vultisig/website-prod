@@ -1,5 +1,7 @@
 import Image from "next/image"
 
+import { cn } from "@/lib/utils"
+
 /** Orbit diameter the desktop pill coordinates below are expressed in. */
 const ORBIT = 558
 
@@ -47,10 +49,20 @@ function ChainPill({ name, dot, x, y }: Chain) {
   )
 }
 
-export default function ChainsSection() {
+type ChainsSectionProps = {
+  /** Anchor id — only the landing instance owns "chains". */
+  id?: string
+  /** Figma sets Title2 on /mpc and Body M on the landing page. */
+  captionClassName?: string
+}
+
+export default function ChainsSection({
+  id,
+  captionClassName = "text-v5-body-m",
+}: ChainsSectionProps) {
   return (
     <section
-      id="chains"
+      id={id}
       className="scroll-mt-24 bg-v5-page pt-4 md:px-[30px] md:pt-[30px]"
     >
       <div className="mx-auto max-w-v5-content">
@@ -74,7 +86,12 @@ export default function ChainsSection() {
             </ul>
           </div>
 
-          <p className="text-center text-v5-body-m font-normal text-v5-text-secondary">
+          <p
+            className={cn(
+              "text-center font-normal text-v5-text-secondary",
+              captionClassName,
+            )}
+          >
             Multi-chain support built-in. No additional setup required.
           </p>
         </div>
