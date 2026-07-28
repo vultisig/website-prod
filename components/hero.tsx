@@ -1,77 +1,113 @@
-import { Button } from "@/components/ui/button"
 import { ArrowRight, Download } from "lucide-react"
-import HeroMockup from "@/components/hero-mockup"
+import Image from "next/image"
 import Link from "next/link"
+
+import { LandingButton } from "@/components/ui/landing-button"
+
+/** 19 glyphs laid out on 20 equal slots of the 314px ring — the 20th is the gap. */
+const RING_TEXT_LENGTH = 298
+
+function OpenSourceSeal() {
+  return (
+    <svg
+      viewBox="0 0 128 127"
+      className="size-16 shrink-0 md:size-32"
+      role="img"
+      aria-label="Open-source and audited"
+    >
+      <defs>
+        <path id="hero-seal-ring" fill="none" d="M64 13.5a50 50 0 1 1-0.1 0" />
+      </defs>
+      <text
+        className="fill-v5-text-inverse font-semibold"
+        fontSize="19.75"
+        dominantBaseline="alphabetic"
+      >
+        <textPath
+          href="#hero-seal-ring"
+          textLength={RING_TEXT_LENGTH}
+          lengthAdjust="spacing"
+        >
+          OPEN-SOURCE AUDITED
+        </textPath>
+      </text>
+    </svg>
+  )
+}
 
 export default function Hero() {
   return (
-    <section className="pt-28 md:pt-36 pb-16 px-4 relative overflow-hidden bg-gradient-hero">
-      <div className="container relative z-20">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-8">
-          {/* Left side — text content */}
-          <div className="flex flex-col items-start gap-6 lg:w-[47%]">
-            {/* Heading */}
-            <h1 className="font-medium text-textPrimary text-4xl sm:text-5xl lg:text-[60px] leading-tight tracking-[-1.5px] max-w-[546px]">
-              Vultisig: The Free MPC Wallet that makes seed phrases obsolete
+    <section className="bg-v5-page px-4 pt-[74px] md:px-[30px] md:pt-[134px]">
+      <div className="mx-auto max-w-v5-content">
+        <div className="relative flex flex-col overflow-hidden rounded-[20px] bg-v5-white p-4 md:flex-row md:items-center md:rounded-v5-panel md:p-[60px]">
+          <div className="relative z-10 flex flex-col gap-6 md:w-[582px]">
+            <OpenSourceSeal />
+            <h1 className="text-v5-hero-sm font-semibold text-v5-text-inverse md:w-[546px] md:text-v5-hero">
+              The wallet that made seed phrases obsolete
             </h1>
-
-            {/* Subheading */}
-            <p className="font-satoshi text-textSecondary text-lg lg:text-xl tracking-tight max-w-[478px] leading-normal">
+            <p className="text-v5-label font-normal text-v5-surface-1 md:w-[520px] md:text-v5-subtitle">
               Vultisig uses multi-party computation to achieve native
               multi-factor authentication. No seed phrase, no single key, no
               single target. Available on 30+ chains.
             </p>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-5 w-full max-w-[390px]">
-              <Link href="/downloads" className="flex-1">
-                <Button
-                  variant="primaryBlue"
-                  size="lg"
-                  className="w-full text-xs tracking-wide gap-1"
-                >
-                  <Download className="w-4 h-4" />
-                  Download Free
-                </Button>
-              </Link>
-              <Link href="/how-it-works" className="flex-1">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="w-full text-xs tracking-wide gap-1"
-                >
+            <div className="flex flex-col gap-3 md:flex-row md:gap-5">
+              <LandingButton
+                asChild
+                size="sm"
+                className="h-[50px] w-full md:w-[185px]"
+              >
+                <Link href="/downloads">
+                  <Download aria-hidden />
+                  Download App
+                </Link>
+              </LandingButton>
+              <LandingButton
+                asChild
+                variant="secondary"
+                size="sm"
+                className="h-[50px] w-full md:w-[185px]"
+              >
+                <Link href="/how-it-works">
                   How It Works
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
+                  <ArrowRight aria-hidden />
+                </Link>
+              </LandingButton>
             </div>
-
-            {/* Social Proof */}
-            <div className="flex items-center gap-5">
-              <div className="flex items-center -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 border-2 border-background" />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 border-2 border-background" />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-400 border-2 border-background" />
-              </div>
-              <p className="font-satoshi text-base text-textSecondary tracking-tight">
-                Trusted by{" "}
-                <span className="font-medium text-textPrimary">50,000+</span>{" "}
-                vault creators worldwide
+            <div className="flex items-center gap-3 md:gap-5">
+              <Image
+                src="/v5/hero-avatars.webp"
+                alt=""
+                width={80}
+                height={32}
+                className="h-6 w-auto md:h-8"
+              />
+              <p className="text-v5-body-s font-normal text-v5-text-tertiary md:text-v5-link md:text-v5-text-primary">
+                Trusted by <span className="font-medium">50,000+</span> vault
+                creators worldwide
               </p>
             </div>
           </div>
 
-          {/* Right side — phone mockup */}
-          <div className="w-full max-h-[280px] sm:max-h-[400px] lg:max-h-none lg:w-[53%] relative flex items-center justify-center lg:contents">
-            <HeroMockup />
-          </div>
+          {/* Two crops of the same artwork — full-bleed on mobile, bled off the card edges on desktop */}
+          <picture className="contents">
+            <source
+              media="(min-width: 768px)"
+              srcSet="/v5/hero-vault.webp"
+              width={1380}
+              height={692}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element -- art direction needs <picture> */}
+            <img
+              src="/v5/hero-vault-mobile.webp"
+              alt="Vultisig mobile vault showing a $53,010.77 balance, a Bitcoin receive QR code and two devices co-signing a transaction"
+              width={361}
+              height={331}
+              fetchPriority="high"
+              className="-mx-4 -mb-4 mt-1 block aspect-[361/331] w-[calc(100%+2rem)] max-w-none md:absolute md:left-0 md:top-[31px] md:m-0 md:aspect-[1380/692] md:w-full"
+            />
+          </picture>
         </div>
       </div>
-
-      {/* Bottom glow */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[100vw] h-[40vh] pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center_bottom,rgba(72,121,253,0.15)_0%,transparent_70%)]"
-      />
     </section>
   )
 }
