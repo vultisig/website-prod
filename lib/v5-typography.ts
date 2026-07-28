@@ -108,6 +108,15 @@ export const v5FontSize = {
   ],
   // Articles — h3 inside article prose
   "v5-prose-h3": ["24px", { lineHeight: "1.35", letterSpacing: "-0.528px" }],
+  // Landing bento — iOS notification mock inside the "Secure notifications" card
+  "v5-notification": [
+    "10.24px",
+    { lineHeight: "13.659px", letterSpacing: "-0.23px" },
+  ],
+  "v5-notification-time": [
+    "8.88px",
+    { lineHeight: "13.659px", letterSpacing: "0" },
+  ],
 } satisfies Record<string, FontSizeToken>
 
 export const v5FontSizeNames = Object.keys(v5FontSize)
