@@ -336,7 +336,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What is Vultisig?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     It is a secure, multi-authentication wallet based on MPC
                     technology that is used to manage digital assets.
                     Transactions require approval from multiple devices.
@@ -349,7 +349,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What are the benefits of using Vultisig?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     Vultisig offers enhanced security with multi-device
                     authentication, support for many blockchains, easy recovery
                     options, and no seed phrases or user tracking.
@@ -362,7 +362,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     Can I recover my assets if I lose a device?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     Yes, as long as you saved and have access to your backups
                     when creating the vault. You can import these backups on a
                     new device to regain access to your assets.
@@ -375,7 +375,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How is Vultisig used?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     Vultisig securely stores and manages digital assets. All
                     actions, such as sending or swapping, require the threshold
                     of devices to sign transactions.
@@ -388,7 +388,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What are the fees and costs?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     Vultisig is free to use. Only standard network fees apply to
                     sending. And for swaps and bridges, there's a 0.5% (50 bps)
                     fee.
@@ -401,7 +401,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     What cryptocurrencies are supported by Vultisig?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     Vultisig supports major cryptocurrencies and tokens, with
                     over 30 chains and their tokens, currently available.
                   </AccordionContent>
@@ -413,7 +413,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     Is Vultisig open source and audited?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     Yes, Vultisig is open source and has undergone security
                     audits. Both the audit reports and the source code are
                     accessible.
@@ -426,7 +426,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How does Vultisig handle privacy and data protection?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     Vultisig does not store any user information from its mobile
                     apps.
                   </AccordionContent>
@@ -438,7 +438,7 @@ export default function FAQPage() {
                   <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
                     How does Vultisig compare to other multisig wallets?
                   </AccordionTrigger>
-                  <AccordionContent className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base">
+                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
                     It is built on MPC technology, which eliminates the need for
                     seed phrases and supports multiple blockchains, making
                     Vultisig flexible and chain-agnostic.
