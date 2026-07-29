@@ -1,11 +1,6 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Card } from "@/components/ui/card"
 import type { Metadata } from "next"
+
+import FaqSection from "@/components/ui/faq-section"
 
 export const metadata: Metadata = {
   title: "Vultisig Support - MPC Wallet Help & FAQ",
@@ -21,6 +16,47 @@ export const metadata: Metadata = {
     url: "https://vultisig.com/support",
   },
 }
+
+type SupportCard = {
+  icon: string
+  title: string
+  body: string
+  linkLabel: string
+  href: string
+  external?: boolean
+}
+
+const SUPPORT_CARDS: SupportCard[] = [
+  {
+    icon: "/images/faq-1.svg",
+    title: "Contact support",
+    body: "Please contact us for any inquiries or questions regarding Vultisig.",
+    linkLabel: "support@vultisig.com",
+    href: "mailto:support@vultisig.com",
+  },
+  {
+    icon: "/images/faq-2.svg",
+    title: "User Support",
+    body: "Join our Discord and chat with the team to get direct help.",
+    linkLabel: "Join Discord",
+    href: "https://discord.gg/thq64eaYVN",
+    external: true,
+  },
+  {
+    icon: "/images/faq-3.svg",
+    title: "Read the docs",
+    body: "Get educated and enjoy safer asset management.",
+    linkLabel: "Go to Docs",
+    href: "/docs",
+  },
+  {
+    icon: "/images/faq-4.svg",
+    title: "Vulti Holdings Limited",
+    body: "Intershore Chambers, Road Town, Tortola, British Virgin Islands",
+    linkLabel: "contact@vultisig.com",
+    href: "mailto:contact@vultisig.com",
+  },
+]
 
 const faqs = [
   {
@@ -92,363 +128,68 @@ function FAQPageJsonLd() {
   )
 }
 
+function SupportCardTile({
+  icon,
+  title,
+  body,
+  linkLabel,
+  href,
+  external,
+}: SupportCard) {
+  return (
+    <li className="flex h-full flex-col gap-5 rounded-[20px] bg-v5-white p-5 text-v5-text-inverse md:p-[30px]">
+      <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-v5-page">
+        <img src={icon} alt="" aria-hidden className="size-6 object-contain" />
+      </span>
+      <div className="flex flex-1 flex-col gap-2.5">
+        <h3 className="text-v5-subtitle font-semibold">{title}</h3>
+        <p className="text-v5-card-body font-normal">{body}</p>
+      </div>
+      <a
+        href={href}
+        {...(external
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : undefined)}
+        className="mt-auto break-words text-v5-link font-medium text-v5-cta hover:underline"
+      >
+        {linkLabel}
+      </a>
+    </li>
+  )
+}
+
 export default function FAQPage() {
   return (
-    <>
+    <main className="min-h-screen bg-v5-page">
       <FAQPageJsonLd />
-      <div className="max-w-4xl mx-auto pt-[74px] md:pt-[134px] mb-8 xs:mb-10 sm:mb-12 px-0 xs:px-2">
-        {/* Support Section */}
-        <section className="mb-16 xs:mb-20 sm:mb-24">
-          <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-4 xs:mb-6">
-            SUPPORT
-          </h1>
-          <p className="text-white text-center text-base xs:text-lg mb-8 xs:mb-12 max-w-3xl mx-auto">
-            Need Help? We're Here for You. If you're experiencing issues, have
-            questions, or need help with your Vultisig Producs, our team is
-            ready to assist.
-          </p>
-
-          {/* Desktop Grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1: Contact support */}
-            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                <img
-                  src="/images/faq-1.svg"
-                  className="w-5 h-5 object-contain"
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                  Contact support
-                </h3>
-                <p className="text-gray-400 text-xs mb-3">
-                  Please contact us for any inquiries or questions regarding
-                  Vultisig.
-                </p>
-              </div>
-              <a
-                href="mailto:support@vultisig.com"
-                className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-              >
-                support@vultisig.com
-              </a>
-            </Card>
-
-            {/* Card 2: User Support */}
-            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                <img
-                  src="/images/faq-2.svg"
-                  className="w-5 h-5 object-contain"
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                  User Support
-                </h3>
-                <p className="text-gray-400 text-xs mb-3">
-                  Join our Discord and chat with the team to get direct help.
-                </p>
-              </div>
-              <a
-                href="https://discord.gg/thq64eaYVN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-              >
-                Join Discord
-              </a>
-            </Card>
-
-            {/* Card 3: Read the docs */}
-            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                <img
-                  src="/images/faq-3.svg"
-                  className="w-5 h-5 object-contain"
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                  Read the docs
-                </h3>
-                <p className="text-gray-400 text-xs mb-3">
-                  Get educated and enjoy safer asset management.
-                </p>
-              </div>
-              <a
-                href="/docs"
-                className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-              >
-                Go to Docs
-              </a>
-            </Card>
-
-            {/* Card 4: Vulti Holdings Limited */}
-            <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start h-full">
-              <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                <img
-                  src="/images/faq-4.svg"
-                  className="w-5 h-5 object-contain"
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                  Vulti Holdings Limited
-                </h3>
-                <p className="text-gray-400 text-xs mb-3">
-                  Intershore Chambers, Road Town, Tortola, British Virgin
-                  Islands
-                </p>
-              </div>
-              <a
-                href="mailto:contact@vultisig.com"
-                className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-              >
-                contact@vultisig.com
-              </a>
-            </Card>
+      <section className="px-4 pb-9 pt-[74px] md:px-[30px] md:pb-[60px] md:pt-[134px]">
+        <div className="mx-auto flex max-w-v5-content flex-col gap-8 pt-9 md:gap-[50px] md:pt-[60px]">
+          <div className="flex flex-col items-center gap-3.5 text-center text-v5-text-inverse">
+            <h1 className="text-v5-display-xs font-semibold md:text-v5-display md:font-medium">
+              SUPPORT
+            </h1>
+            <p className="max-w-[720px] text-v5-body-m-relaxed font-normal md:text-v5-subtitle">
+              Need Help? We're Here for You. If you're experiencing issues, have
+              questions, or need help with your Vultisig Producs, our team is
+              ready to assist.
+            </p>
           </div>
 
-          {/* Mobile Carousel */}
-          <div className="md:hidden">
-            <div className="flex overflow-x-auto gap-4 mb-6 xs:mb-7 sm:mb-8 w-full px-1 -mx-1 snap-x snap-mandatory carousel-scrollbar">
-              {/* Card 1: Contact support */}
-              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                  <img
-                    src="/images/faq-1.svg"
-                    className="w-5 h-5 object-contain"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                    Contact support
-                  </h3>
-                  <p className="text-gray-400 text-xs mb-3">
-                    Please contact us for any inquiries or questions regarding
-                    Vultisig.
-                  </p>
-                </div>
-                <a
-                  href="mailto:support@vultisig.com"
-                  className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-                >
-                  support@vultisig.com
-                </a>
-              </Card>
+          <ul className="grid gap-4 sm:grid-cols-2 md:gap-5 xl:grid-cols-4">
+            {SUPPORT_CARDS.map((card) => (
+              <SupportCardTile key={card.title} {...card} />
+            ))}
+          </ul>
+        </div>
+      </section>
 
-              {/* Card 2: User Support */}
-              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                  <img
-                    src="/images/faq-2.svg"
-                    className="w-5 h-5 object-contain"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                    User Support
-                  </h3>
-                  <p className="text-gray-400 text-xs mb-3">
-                    Join our Discord and chat with the team to get direct help.
-                  </p>
-                </div>
-                <a
-                  href="https://discord.gg/thq64eaYVN"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-                >
-                  Join Discord
-                </a>
-              </Card>
-
-              {/* Card 3: Read the docs */}
-              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                  <img
-                    src="/images/faq-3.svg"
-                    className="w-5 h-5 object-contain"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                    Read the docs
-                  </h3>
-                  <p className="text-gray-400 text-xs mb-3">
-                    Get educated and enjoy safer asset management.
-                  </p>
-                </div>
-                <a
-                  href="/docs"
-                  className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-                >
-                  Go to Docs
-                </a>
-              </Card>
-
-              {/* Card 4: Vulti Holdings Limited */}
-              <Card className="bg-cardSurface border border-borderLight rounded-xl px-4 xs:px-5 py-4 xs:py-5 flex flex-col items-start min-w-[80vw] max-w-xs w-full snap-center h-full">
-                <div className="w-8 h-8 bg-iconBg rounded-lg flex items-center justify-center mb-3 xs:mb-4">
-                  <img
-                    src="/images/faq-4.svg"
-                    className="w-5 h-5 object-contain"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-white font-bold text-lg xs:text-xl mb-2">
-                    Vulti Holdings Limited
-                  </h3>
-                  <p className="text-gray-400 text-xs mb-3">
-                    Intershore Chambers, Road Town, Tortola, British Virgin
-                    Islands
-                  </p>
-                </div>
-                <a
-                  href="mailto:contact@vultisig.com"
-                  className="text-blue-500 hover:text-blue-400 text-sm mt-auto"
-                >
-                  contact@vultisig.com
-                </a>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section id="faq">
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-8 xs:mb-10 sm:mb-12">
-            FAQ
-          </h2>
-          <div className="w-full flex justify-center items-center">
-            <div className="w-full">
-              <Accordion
-                type="single"
-                collapsible
-                className="space-y-3 xs:space-y-4"
-              >
-                <AccordionItem
-                  value="faq-1"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    What is Vultisig?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    It is a secure, multi-authentication wallet based on MPC
-                    technology that is used to manage digital assets.
-                    Transactions require approval from multiple devices.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-2"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    What are the benefits of using Vultisig?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    Vultisig offers enhanced security with multi-device
-                    authentication, support for many blockchains, easy recovery
-                    options, and no seed phrases or user tracking.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-3"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    Can I recover my assets if I lose a device?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    Yes, as long as you saved and have access to your backups
-                    when creating the vault. You can import these backups on a
-                    new device to regain access to your assets.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-4"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    How is Vultisig used?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    Vultisig securely stores and manages digital assets. All
-                    actions, such as sending or swapping, require the threshold
-                    of devices to sign transactions.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-5"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    What are the fees and costs?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    Vultisig is free to use. Only standard network fees apply to
-                    sending. And for swaps and bridges, there's a 0.5% (50 bps)
-                    fee.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-6"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    What cryptocurrencies are supported by Vultisig?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    Vultisig supports major cryptocurrencies and tokens, with
-                    over 30 chains and their tokens, currently available.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-7"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    Is Vultisig open source and audited?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    Yes, Vultisig is open source and has undergone security
-                    audits. Both the audit reports and the source code are
-                    accessible.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-8"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    How does Vultisig handle privacy and data protection?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    Vultisig does not store any user information from its mobile
-                    apps.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem
-                  value="faq-9"
-                  className="bg-backgroundSecondary rounded-xl border-none"
-                >
-                  <AccordionTrigger className="text-base xs:text-lg font-bold px-4 xs:px-6 py-3 xs:py-4 text-white [&>svg]:text-white hover:bg-transparent hover:no-underline focus:bg-transparent">
-                    How does Vultisig compare to other multisig wallets?
-                  </AccordionTrigger>
-                  <AccordionContent forceMount className="text-textSecondary px-4 xs:px-6 pb-4 xs:pb-6 pt-0 font-normal text-sm xs:text-base data-[state=closed]:hidden">
-                    It is built on MPC technology, which eliminates the need for
-                    seed phrases and supports multiple blockchains, making
-                    Vultisig flexible and chain-agnostic.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </div>
-        </section>
+      <div id="faq">
+        <FaqSection
+          className="pb-[60px] pt-0 md:pb-[90px]"
+          title="FAQ"
+          items={faqs}
+        />
       </div>
-    </>
+    </main>
   )
 }
