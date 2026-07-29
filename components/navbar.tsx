@@ -4,7 +4,7 @@ import { ChevronDown, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { LandingButton } from "@/components/ui/landing-button"
 import {
@@ -12,7 +12,108 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Wordmark } from "@/components/ui/wordmark"
 import { cn } from "@/lib/utils"
+
+/**
+ * Routes whose first viewport is dark (the not-yet-reskinned V4 pages inherit the
+ * dark `body` background). They need the light wordmark from the very first paint,
+ * before the scroll probe below has run.
+ */
+const DARK_TOP_ROUTES = ["/support", "/docs", "/privacy", "/termofservice"]
+
+/** Luminance of the two wordmark colours: text-inverse #02122b and text-primary #f0f4fc. */
+const INK_LUMINANCE = 0.00752
+const PAPER_LUMINANCE = 0.90671
+
+function relativeLuminance(r: number, g: number, b: number): number {
+  const channel = (v: number) => {
+    const s = v / 255
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4)
+  }
+  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b)
+}
+
+function contrast(a: number, b: number): number {
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+}
+
+/**
+ * Picks whichever wordmark colour contrasts better with the backdrop, rather than
+ * thresholding on "is it dark". Mid-tone brand blues (#538bff) are dark enough to
+ * look dark but still read better with the navy wordmark than the light one.
+ */
+function prefersLightWordmark(backdrop: number): boolean {
+  return contrast(PAPER_LUMINANCE, backdrop) > contrast(INK_LUMINANCE, backdrop)
+}
+
+/** First opaque background colour painted behind `point`, ignoring the header itself. */
+function backdropLuminance(x: number, y: number, header: Element): number | null {
+  for (const hit of document.elementsFromPoint(x, y)) {
+    if (header.contains(hit)) continue
+    for (
+      let node: Element | null = hit;
+      node && node !== document.documentElement;
+      node = node.parentElement
+    ) {
+      const match = getComputedStyle(node).backgroundColor.match(
+        /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/,
+      )
+      if (!match) continue
+      const alpha = match[4] === undefined ? 1 : Number(match[4])
+      if (alpha <= 0.5) continue
+      return relativeLuminance(Number(match[1]), Number(match[2]), Number(match[3]))
+    }
+  }
+  return null
+}
+
+/**
+ * Tracks whether the section scrolled behind the logo is dark, so the wordmark can
+ * flip to white. Figma annotates this on the header ("adaptive color on scroll").
+ * The toggle is instant — no transition — to stay within the static-only rule.
+ */
+function useLogoOnDark(
+  initialOnDark: boolean,
+  pathname: string,
+): [boolean, (el: HTMLElement | null) => void] {
+  const [onDark, setOnDark] = useState(initialOnDark)
+  const logoRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    let frame = 0
+
+    const measure = () => {
+      frame = 0
+      const logo = logoRef.current
+      const header = logo?.closest("header")
+      if (!logo || !header) return
+      const box = logo.getBoundingClientRect()
+      if (box.width === 0) return
+      const luminance = backdropLuminance(
+        box.left + box.width / 2,
+        box.top + box.height / 2,
+        header,
+      )
+      if (luminance !== null) setOnDark(prefersLightWordmark(luminance))
+    }
+
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(measure)
+    }
+
+    measure()
+    window.addEventListener("scroll", schedule, { passive: true })
+    window.addEventListener("resize", schedule)
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", schedule)
+      window.removeEventListener("resize", schedule)
+    }
+  }, [pathname])
+
+  return [onDark, (el) => { logoRef.current = el }]
+}
 
 type NavEntry = {
   label: string
@@ -56,9 +157,23 @@ function isActive(pathname: string, href?: string): boolean {
   return pathname.startsWith(route)
 }
 
-function Logo() {
+function Logo({
+  onDark,
+  innerRef,
+}: {
+  onDark: boolean
+  innerRef: (el: HTMLElement | null) => void
+}) {
   return (
-    <Link href="/" className="flex items-center gap-2.5" title="Vultisig home">
+    <Link
+      ref={innerRef}
+      href="/"
+      className={cn(
+        "flex items-center gap-2.5",
+        onDark ? "text-v5-text-primary" : "text-v5-text-inverse",
+      )}
+      title="Vultisig home"
+    >
       <Image
         src="/v5/vultisig-mark.svg"
         alt=""
@@ -66,13 +181,7 @@ function Logo() {
         height={27}
         priority
       />
-      <Image
-        src="/v5/vultisig-wordmark.svg"
-        alt="Vultisig"
-        width={96}
-        height={29}
-        priority
-      />
+      <Wordmark className="h-[29px] w-24" />
     </Link>
   )
 }
@@ -200,6 +309,10 @@ function MobilePanel() {
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const [onDark, logoRef] = useLogoOnDark(
+    DARK_TOP_ROUTES.includes(pathname),
+    pathname,
+  )
 
   useEffect(() => setIsOpen(false), [pathname])
 
@@ -207,7 +320,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       {/* Desktop — logo, centred nav pill, CTA (Figma 79718:62435) */}
       <div className="relative mx-auto hidden max-w-v5-content items-center justify-between px-[30px] pt-9 xl:flex">
-        <Logo />
+        <Logo onDark={onDark} innerRef={logoRef} />
         <nav
           aria-label="Main"
           className="absolute left-1/2 flex w-max -translate-x-1/2 items-center gap-2.5 rounded-full bg-v5-white p-2"
