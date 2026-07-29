@@ -164,6 +164,24 @@ const config: Config = {
             faint: "rgba(255,255,255,0.03)", // Borders/Extra Light
             ring: "rgba(72,121,253,0.27)", // chain-diagram orbit
           },
+          // Header "liquid glass" bar. Two materials so the surface always
+          // separates from what scrolls under it: a white frost over light
+          // sections, a lifted light frost over the navy ones. The `-solid`
+          // pair is the fallback for browsers without backdrop-filter, where a
+          // low-alpha fill would leave the bar unreadable.
+          glass: {
+            light: "rgba(255,255,255,0.62)",
+            "light-solid": "rgba(255,255,255,0.92)",
+            "light-edge": "rgba(255,255,255,0.85)",
+            "light-chip": "rgba(255,255,255,0.72)",
+            // Tinted rather than a plain white lift: a bright card sliding under
+            // one end of the bar has to stay behind enough scrim for the light
+            // ink to hold (worst measured case #4879fd -> 6.8:1).
+            dark: "rgba(17,40,74,0.50)", // Backgrounds/surface-2 @ 50%
+            "dark-solid": "rgba(17,40,74,0.92)",
+            "dark-edge": "rgba(240,244,252,0.22)",
+            "dark-chip": "rgba(240,244,252,0.14)",
+          },
         },
       },
       fontSize: v5FontSize,
@@ -177,6 +195,10 @@ const config: Config = {
         "v5-button":
           "inset 0px -1px 1.6px 0px rgba(15,28,62,0.48), inset 0px 1px 1.9px 0px rgba(255,255,255,0.24)",
         "v5-menu": "0px 2px 8.35px 0px rgba(76,120,183,0.17)",
+        "v5-glass":
+          "0px 10px 30px -12px rgba(2,18,43,0.28), inset 0px 1px 0px 0px rgba(255,255,255,0.75)",
+        "v5-glass-dark":
+          "0px 10px 30px -12px rgba(2,18,43,0.55), inset 0px 1px 0px 0px rgba(240,244,252,0.24)",
       },
       maxWidth: {
         "v5-content": "1380px",
@@ -190,10 +212,34 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        // Header dropdowns. The X translation is baked into the keyframe
+        // because the panel is centred with a transform of its own.
+        "v5-menu-in": {
+          from: {
+            opacity: "0",
+            transform: "translateX(-50%) translateY(-6px) scale(0.97)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateX(-50%) translateY(0) scale(1)",
+          },
+        },
+        "v5-menu-out": {
+          from: {
+            opacity: "1",
+            transform: "translateX(-50%) translateY(0) scale(1)",
+          },
+          to: {
+            opacity: "0",
+            transform: "translateX(-50%) translateY(-6px) scale(0.97)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "v5-menu-in": "v5-menu-in 180ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "v5-menu-out": "v5-menu-out 140ms cubic-bezier(0.4, 0, 1, 1)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
