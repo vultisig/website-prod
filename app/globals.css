@@ -16,12 +16,11 @@ body::-webkit-scrollbar {
 
 @layer base {
   :root {
+    /* Dark surfaces retained for the shadcn primitives used by /articles/admin */
     /* --background: #02122b */
     --background: 217 91% 9%;
     /* backgroundSecondary - #061b3a - rgba(6,27,58) - surface-1 */
     --background-secondary: 216 81% 13%;
-    /* #001f73 */
-    --light-blob: 224 100% 23%;
     --foreground: 0 0% 100%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 100%;
@@ -62,6 +61,9 @@ body::-webkit-scrollbar {
     --border-color-rgb: 33, 85, 223;
     --border-light: #11284a;
     --border-normal: #1b3f73;
+  }
+  .terms-content p {
+    margin-bottom: 1.25rem;
   }
   .terms-content ol,
   .terms-content ul {
@@ -104,68 +106,6 @@ body::-webkit-scrollbar {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-v5-page text-v5-text-inverse;
   }
-}
-.bowl-glow {
-  /* background: radial-gradient(ellipse 50% 120% at 50% 0%, rgba(59,130,246,0.4) 0%, rgba(59,130,246,0.1) 60%, transparent 100%); */
-  background: radial-gradient(
-    ellipse 50% 120% at 50% 0%,
-    var(--light-blob) 0%,
-    rgba(59, 130, 246, 0.1) 60%,
-    transparent 100%
-  );
-  /* filter: blur(8px); */
-}
-.glow-blob {
-  position: absolute;
-  width: 40rem; /* w-96 */
-  height: 40rem; /* h-96 */
-  border-radius: 9999px;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  background: radial-gradient(circle, var(--light-blob) 0%, transparent 70%);
-  opacity: 0.5;
-  filter: blur(24px);
-}
-
-.feature-description-wrapper {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition:
-    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.feature-description-wrapper.expanded {
-  max-height: 200px; /* adjust as needed */
-  opacity: 1;
-}
-.feature-description {
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-}
-.feature-description.visible {
-  opacity: 1;
-}
-
-.carousel-scrollbar::-webkit-scrollbar {
-  height: 8px;
-  background: transparent;
-}
-.carousel-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
-}
-.carousel-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Firefox */
-.carousel-scrollbar {
-  scrollbar-color: var(--border-color) transparent;
-  scrollbar-width: thin;
 }

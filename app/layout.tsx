@@ -169,7 +169,7 @@ export default function RootLayout({
         className={cn(
           brockmann.className,
           brockmann.variable,
-          "antialiased bg-background text-textPrimary",
+          "antialiased bg-v5-page text-v5-text-inverse",
         )}
       >
         <GoogleAnalyticsWrapper />
