@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 export default function PrivacyPolicy() {
   return (
     <main
-      className="terms-content"
-      style={{ maxWidth: 1080, margin: "4vw auto 0 auto", padding: "2rem" }}
+      className="terms-content mx-auto max-w-[1080px] px-8 pb-8 pt-[74px] md:pt-[134px]"
     >
       <h1 className="heading text-center font-extrabold text-4xl pb-4 pt-0 xs:pt-8">
         PRIVACY POLICY
