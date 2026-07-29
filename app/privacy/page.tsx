@@ -11,10 +11,9 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <main
-      className="terms-content mx-auto max-w-[1080px] px-8 pb-8 pt-[74px] md:pt-[134px]"
-    >
-      <h1 className="heading text-center font-extrabold text-4xl pb-4 pt-0 xs:pt-8">
+    <main className="min-h-screen bg-v5-page px-4 pb-9 pt-[74px] md:px-[30px] md:pb-[60px] md:pt-[134px]">
+      <article className="terms-content mx-auto mt-9 max-w-[1080px] rounded-[20px] bg-v5-white px-5 py-9 text-v5-body-m-relaxed text-v5-text-inverse md:mt-[60px] md:rounded-v5-panel md:p-[60px]">
+        <h1 className="pb-8 text-center text-v5-display-xs font-semibold md:pb-10 md:text-v5-display md:font-medium">
         PRIVACY POLICY
       </h1>
       <ol type="1">
@@ -488,6 +487,7 @@ export default function PrivacyPolicy() {
         </li>{" "}
         <br />
       </ol>
+      </article>
     </main>
   )
 }
