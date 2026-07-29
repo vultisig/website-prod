@@ -96,12 +96,12 @@ export default function FAQPage() {
   return (
     <>
       <FAQPageJsonLd />
-      <div className="max-w-4xl mx-auto mt-16 xs:mt-20 sm:mt-24 mb-8 xs:mb-10 sm:mb-12 px-0 xs:px-2">
+      <div className="max-w-4xl mx-auto pt-[74px] md:pt-[134px] mb-8 xs:mb-10 sm:mb-12 px-0 xs:px-2">
         {/* Support Section */}
         <section className="mb-16 xs:mb-20 sm:mb-24">
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-4 xs:mb-6">
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-4 xs:mb-6">
             SUPPORT
-          </h2>
+          </h1>
           <p className="text-white text-center text-base xs:text-lg mb-8 xs:mb-12 max-w-3xl mx-auto">
             Need Help? We're Here for You. If you're experiencing issues, have
             questions, or need help with your Vultisig Producs, our team is
