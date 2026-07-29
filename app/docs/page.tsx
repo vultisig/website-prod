@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 
+import { LandingButton } from "@/components/ui/landing-button"
+
 export const metadata: Metadata = {
   title: "Vultisig Documentation - MPC Wallet Guides & API",
   description:
@@ -16,67 +18,79 @@ export const metadata: Metadata = {
   },
 }
 
+const PANEL =
+  "flex flex-col items-center gap-8 rounded-[20px] bg-v5-white px-4 py-9 text-v5-text-inverse md:gap-[50px] md:rounded-v5-panel md:p-[60px]"
+// The isometric art ships with a soft dark halo, so it sits on the page tint
+// rather than pure white — otherwise the halo reads as a grey smudge.
+const MEDIA =
+  "relative aspect-square w-full max-w-[320px] shrink-0 overflow-hidden rounded-3xl bg-v5-page md:w-[380px] md:max-w-none v5wide:w-[440px]"
+
 export default function DocsPage() {
   return (
-    <main className="flex flex-col items-center w-full min-h-screen py-16 px-4">
-      <section className="relative flex flex-col md:flex-row items-center justify-between w-full container gap-8 md:gap-12 mt-16 md:mt-0 min-h-[400px] md:min-h-[500px]">
-        <div className="flex-1 text-left relative z-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            READ THE DOCS
-          </h1>
-          <p className="text-base sm:text-lg text-textSecondary/90 mb-6">
-            Vultisig is different. Get educated and enjoy safer asset
-            management.
-          </p>
-          <a
-            href="https://docs.vultisig.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 sm:px-20 rounded-lg transition">
-              DOCS
-            </button>
-          </a>
-        </div>
-        <div className="absolute sm:right-0 right-1/2 sm:top-1/2 top-1/2 transform -translate-y-1/2 sm:translate-x-0 translate-x-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] opacity-20 lg:opacity-100">
-          <Image
-            src="/images/docs-1.png"
-            alt="Docs Placeholder"
-            fill
-            className="object-contain rounded-xl"
-          />
-        </div>
-      </section>
+    <main className="min-h-screen bg-v5-page px-4 pb-9 pt-[74px] md:px-[30px] md:pb-[60px] md:pt-[134px]">
+      <div className="mx-auto flex max-w-v5-content flex-col gap-4 pt-9 md:gap-[30px] md:pt-[60px]">
+        <section className={`${PANEL} md:flex-row`}>
+          <div className="flex flex-1 flex-col items-start gap-5 md:gap-6">
+            <h1 className="text-v5-display-xs font-semibold md:text-v5-display md:font-medium">
+              READ THE DOCS
+            </h1>
+            <p className="text-v5-body-m-relaxed font-normal md:max-w-[531px] md:text-v5-subtitle">
+              Vultisig is different. Get educated and enjoy safer asset
+              management.
+            </p>
+            <LandingButton asChild>
+              <a
+                href="https://docs.vultisig.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                DOCS
+              </a>
+            </LandingButton>
+          </div>
+          <div className={MEDIA}>
+            <Image
+              src="/images/docs-1.png"
+              alt="Docs Placeholder"
+              fill
+              sizes="(max-width: 768px) 320px, 440px"
+              className="object-contain"
+              priority
+            />
+          </div>
+        </section>
 
-      <section className="relative flex flex-col md:flex-row-reverse items-center justify-between w-full container md:gap-12 min-h-[400px] md:min-h-[500px]">
-        <div className="flex-1 text-left md:text-right relative z-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            INTEGRATE VULTISIG
-          </h2>
-          <p className="text-base sm:text-lg text-textSecondary/90 mb-6 ml-0 md:ml-[30vw]">
-            Any DeFi app, chrome extension or wallet can integrate the Vultisig
-            SDK - safely let your users generate/upload vault shares and co-sign
-            transactions.
-          </p>
-          <a
-            href="https://docs.vultisig.com/developer-docs/vultisig-extension-integration-guide"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 sm:px-20 rounded-lg transition">
-              LEARN MORE
-            </button>
-          </a>
-        </div>
-        <div className="absolute sm:left-0 left-1/2 sm:top-1/2 top-1/2 transform -translate-y-1/2 sm:translate-x-0 -translate-x-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] opacity-20 lg:opacity-100">
-          <Image
-            src="/images/docs-2.png"
-            alt="Integrate Placeholder"
-            fill
-            className="object-contain rounded-xl"
-          />
-        </div>
-      </section>
+        <section className={`${PANEL} md:flex-row-reverse`}>
+          <div className="flex flex-1 flex-col items-start gap-5 md:gap-6">
+            <h2 className="text-v5-display-xs font-semibold md:text-v5-display md:font-medium">
+              INTEGRATE VULTISIG
+            </h2>
+            <p className="text-v5-body-m-relaxed font-normal md:max-w-[531px] md:text-v5-subtitle">
+              Any DeFi app, chrome extension or wallet can integrate the
+              Vultisig SDK - safely let your users generate/upload vault shares
+              and co-sign transactions.
+            </p>
+            <LandingButton asChild>
+              <a
+                href="https://docs.vultisig.com/developer-docs/vultisig-extension-integration-guide"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LEARN MORE
+              </a>
+            </LandingButton>
+          </div>
+          <div className={MEDIA}>
+            <Image
+              src="/images/docs-2.png"
+              alt="Integrate Placeholder"
+              fill
+              sizes="(max-width: 768px) 320px, 440px"
+              className="object-contain"
+            />
+          </div>
+        </section>
+      </div>
     </main>
   )
 }
