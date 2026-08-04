@@ -5,17 +5,17 @@ import { Search } from "lucide-react"
 
 import ArticleCard from "@/components/article-card"
 import type { CategorySlug } from "@/lib/article-categories"
-import type { Article } from "@/lib/articles"
+import type { ArticleSummary } from "@/lib/articles"
 
 type ArticleSearchGridProps = {
-  articles: Article[]
+  articles: ArticleSummary[]
   category: CategorySlug
   initialQuery: string
   /** Server-rendered category pills — they share the row with the search box. */
   tabs: ReactNode
 }
 
-function matches(article: Article, query: string): boolean {
+function matches(article: ArticleSummary, query: string): boolean {
   const haystack = `${article.title} ${article.description}`.toLowerCase()
   return haystack.includes(query)
 }

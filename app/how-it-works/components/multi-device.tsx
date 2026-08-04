@@ -2,11 +2,7 @@ import Image from "next/image"
 
 import DarkSplit from "./dark-split"
 
-const SHARE_BARS = [
-  { className: "bg-v5-cta" },
-  { className: "bg-v5-info-dark" },
-  { className: "bg-v5-info" },
-]
+const SHARE_BARS = ["bg-v5-cta", "bg-v5-info-dark", "bg-v5-info"]
 
 type ConnectedDevice = {
   name: string
@@ -96,8 +92,8 @@ function DeviceMock() {
         <div className="flex gap-[9px] pl-[7px] md:gap-[13px] md:pl-[10px]">
           {SHARE_BARS.map((bar) => (
             <span
-              key={bar.className}
-              className={`h-1.5 flex-1 rounded-2xl md:h-[9px] ${bar.className}`}
+              key={bar}
+              className={`h-1.5 flex-1 rounded-2xl md:h-[9px] ${bar}`}
             />
           ))}
         </div>

@@ -1,5 +1,3 @@
-"use client"
-
 import type { ReactNode } from "react"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
@@ -45,29 +43,23 @@ export default function MarkdownRenderer({
     headingCounts.set(base, seen + 1)
     return seen === 0 ? base : `${base}-${seen}`
   }
+  // Shared by h1 and h2 — h1 is demoted since the page title owns the only h1.
+  const sectionHeading = ({ children }: { children?: ReactNode }) => (
+    <h2
+      id={nextHeadingId(children)}
+      className="scroll-mt-[120px] text-v5-display-xs font-medium md:text-v5-display-sm"
+    >
+      {children}
+    </h2>
+  )
 
   return (
     <div className="max-w-none font-sans text-v5-body-m-relaxed text-v5-text-inverse md:text-v5-subtitle">
       <ReactMarkdown
         remarkPlugins={[remarkBreaks, articleAutoLinks(currentPath)]}
         components={{
-          // Demoted to h2 — the page title already owns the only h1.
-          h1: ({ children }) => (
-            <h2
-              id={nextHeadingId(children)}
-              className="scroll-mt-[120px] text-v5-display-xs font-medium md:text-v5-display-sm"
-            >
-              {children}
-            </h2>
-          ),
-          h2: ({ children }) => (
-            <h2
-              id={nextHeadingId(children)}
-              className="scroll-mt-[120px] text-v5-display-xs font-medium md:text-v5-display-sm"
-            >
-              {children}
-            </h2>
-          ),
+          h1: sectionHeading,
+          h2: sectionHeading,
           h3: ({ children }) => (
             <h3
               id={nextHeadingId(children)}

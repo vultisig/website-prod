@@ -264,16 +264,17 @@ function DesktopEntry({ entry, onDark }: { entry: NavEntry; onDark: boolean }) {
   const pathname = usePathname()
 
   if (!entry.children) {
+    const active = isActive(pathname, entry.href)
     return (
       <NavigationMenu.Item>
-        <NavigationMenu.Link asChild active={isActive(pathname, entry.href)}>
+        <NavigationMenu.Link asChild active={active}>
           <Link
             href={entry.href ?? "#"}
             className={cn(
               PILL_ITEM,
               FOCUS_RING,
               chipHover(onDark),
-              isActive(pathname, entry.href) && chipActive(onDark),
+              active && chipActive(onDark),
             )}
           >
             {entry.label}

@@ -9,7 +9,7 @@ import {
   filterByCategory,
   resolveCategory,
 } from "@/lib/article-categories"
-import { getAllArticles, type Article } from "@/lib/articles"
+import { getAllArticles, toArticleSummary, type Article } from "@/lib/articles"
 
 // Make articles page dynamic - articles change frequently
 export const dynamic = "force-dynamic"
@@ -127,7 +127,10 @@ export default async function ArticlesPage({
   const tabs = buildCategoryTabs(articles)
   const inCategory = filterByCategory(articles, category)
   const featured = pickFeatured(inCategory)
-  const rest = inCategory.filter((article) => article.slug !== featured?.slug)
+  // Summaries only — full bodies would otherwise ship in the client payload.
+  const rest = inCategory
+    .filter((article) => article.slug !== featured?.slug)
+    .map(toArticleSummary)
 
   return (
     <>

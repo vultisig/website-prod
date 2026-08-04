@@ -4,10 +4,10 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { formatArticleDate } from "@/lib/article-format"
-import type { Article } from "@/lib/articles"
+import type { ArticleSummary } from "@/lib/articles"
 
 interface ArticleCardProps {
-  article: Article
+  article: ArticleSummary
 }
 
 export default function ArticleCard({ article }: ArticleCardProps) {

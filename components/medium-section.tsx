@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { formatArticleDate } from "@/lib/article-format"
 import { getAllArticles } from "@/lib/articles"
 
 interface Article {
@@ -103,14 +104,6 @@ function ArticleCard({ article }: { article: Article }) {
   )
 }
 
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
-
 async function getServerArticles(): Promise<Article[]> {
   if (process.env.MONGODB_URI) {
     try {
@@ -124,7 +117,7 @@ async function getServerArticles(): Promise<Article[]> {
               article.description.length > 150
                 ? article.description.substring(0, 150) + "..."
                 : article.description,
-            date: formatDate(article.publishedAt),
+            date: formatArticleDate(article.publishedAt),
             image: article.image || "",
             link: `/articles/${article.slug}`,
             isInternal: true,
@@ -154,7 +147,7 @@ async function getServerArticles(): Promise<Article[]> {
           title: item.title,
           description:
             item.description.replace(/<[^>]*>/g, "").substring(0, 150) + "...",
-          date: formatDate(item.pubDate),
+          date: formatArticleDate(item.pubDate),
           image: imgMatch?.[1] || item.thumbnail || "",
           link: item.link,
           isInternal: false,

@@ -5,9 +5,11 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 /**
- * Download URLs live here and nowhere else — release bumps edit `href` (and the
- * matching `hashes` entry in ./page.tsx). `macos-appstore` shares the iOS App
- * Store listing, so the V5 layout links macOS to the GitHub build instead.
+ * Release bumps edit `href` here and the matching `hashes` entry in ./page.tsx.
+ * Store-listing URLs also appear in components/footer-banner.tsx and the
+ * SoftwareApplication schema in app/layout.tsx — keep them in sync.
+ * `macos-appstore` shares the iOS App Store listing, so the V5 layout links
+ * macOS to the GitHub build instead.
  */
 export const channels = {
   "ios-appstore": {
