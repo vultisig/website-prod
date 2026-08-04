@@ -25,7 +25,7 @@ export const channels = {
     label: "macOS",
   },
   "macos-github": {
-    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.42.67",
+    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.43.69",
     platform: "macos github",
     icon: "/v5/download-macos.webp",
     iconWidth: 54,
@@ -39,21 +39,21 @@ export const channels = {
     label: "Android",
   },
   windows: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.68/Vultisig-amd64-installer-v1.0.68.exe",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.69/Vultisig-amd64-installer-v1.0.69.exe",
     platform: "windows",
     icon: "/v5/download-windows.svg",
     iconWidth: 54,
     label: "Windows",
   },
   linux: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.68/vultisig_1.0.68_amd64.deb",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.69/vultisig_1.0.69_amd64.deb",
     platform: "linux",
     icon: "/v5/download-linux.webp",
     iconWidth: 54,
     label: "Linux",
   },
   "android-github": {
-    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.115",
+    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.116",
     platform: "android github",
     icon: "/v5/download-android-apk.svg",
     iconWidth: 45,
