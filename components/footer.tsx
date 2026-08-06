@@ -37,7 +37,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "How It Works", href: "/how-it-works" },
       { label: "MPC", href: "/mpc" },
       { label: "Articles", href: "/articles" },
-      { label: "Backed By", href: "/#backed-by" },
+      { label: "Backed By", href: "/backed-by" },
       { label: "$VULT", href: "/vult" },
     ],
   },
@@ -118,13 +118,14 @@ export default function Footer() {
   return (
     <footer className="flex flex-col gap-[30px] bg-v5-page px-4 pb-4 md:px-[30px] md:pb-[30px]">
       <div className="mx-auto w-full max-w-v5-content rounded-v5-panel bg-v5-panel p-6 md:flex md:items-start md:justify-between md:p-[60px]">
-        <Image
-          src="/v5/vultisig-mark.svg"
-          alt="Vultisig"
-          width={84}
-          height={84}
-          className="hidden md:block"
-        />
+        <Link href="/" title="Vultisig home" className="hidden md:block">
+          <Image
+            src="/v5/vultisig-mark.svg"
+            alt="Vultisig"
+            width={84}
+            height={84}
+          />
+        </Link>
 
         <div className="flex w-full min-w-0 flex-col gap-10 md:max-w-[793px] md:gap-[86px]">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-end md:gap-[27px]">
@@ -155,7 +156,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-3 md:hidden">
+        <Link
+          href="/"
+          title="Vultisig home"
+          className="mt-10 flex items-center justify-center gap-3 md:hidden"
+        >
           <Image src="/v5/vultisig-mark.svg" alt="" width={48} height={48} />
           <Image
             src="/v5/vultisig-wordmark.svg"
@@ -163,7 +168,7 @@ export default function Footer() {
             width={144}
             height={43}
           />
-        </div>
+        </Link>
       </div>
 
       <p className="mx-auto w-full max-w-v5-content text-v5-caption font-semibold text-v5-text-inverse">
