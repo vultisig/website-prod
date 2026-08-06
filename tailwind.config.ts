@@ -122,6 +122,13 @@ const config: Config = {
           accent2: "#538bff", // stats / promo panel blue
           deep: "#063ed4", // "setup for your needs" panel
           sky: "#4d80ff", // MPC hero + "How Vultisig Works" panels
+          // Agent hero cards. These match the flat backdrop baked into each
+          // hero render exactly — a near-miss token seams visibly where the
+          // image meets the card.
+          agent: {
+            deep: "#0642e2", // Agent > For Agents hero
+            sky: "#5287ff", // Agent > For Builders hero
+          },
           amber: "#f39c2b", // review carousel card
           success: "#13c89d", // Alerts/Succes
           warning: "#ffc25c", // Alerts/Warning

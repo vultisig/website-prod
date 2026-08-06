@@ -18,6 +18,8 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/how-it-works", changefreq: "monthly", priority: 0.8 },
   { path: "/docs", changefreq: "monthly", priority: 0.8 },
   { path: "/vult", changefreq: "weekly", priority: 0.8 },
+  { path: "/agent/for-agents", changefreq: "monthly", priority: 0.8 },
+  { path: "/agent/for-builders", changefreq: "monthly", priority: 0.8 },
   { path: "/support", changefreq: "monthly", priority: 0.7 },
   { path: "/privacy", changefreq: "yearly", priority: 0.5 },
   { path: "/termofservice", changefreq: "yearly", priority: 0.5 },

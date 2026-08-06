@@ -139,9 +139,10 @@ const NAV_ENTRIES: NavEntry[] = [
   {
     label: "Agent",
     children: [
+      // "For Users" has no page in the V5 design yet, so it stays unlinked.
       { label: "For Users" },
-      { label: "For Agents" },
-      { label: "For Builders" },
+      { label: "For Agents", href: "/agent/for-agents" },
+      { label: "For Builders", href: "/agent/for-builders" },
     ],
   },
   { label: "$VULT", href: "/vult" },
@@ -427,13 +428,16 @@ export default function Navbar() {
       className="pointer-events-none fixed inset-x-0 top-0 z-50"
     >
       {/* Desktop — one glass bar spanning logo, nav and CTA (Figma 79718:62435) */}
-      <div className="mx-auto hidden max-w-v5-content px-[30px] pt-8 xl:block">
+      {/* Gutter sits on the wrapper and max-width on the bar itself, so the bar
+          measures the same 1380px as every page's content container — putting
+          both on one element would subtract the padding from the max-width. */}
+      <div className="hidden px-[30px] pt-8 xl:block">
         <div
           data-glass-bar
           className={cn(
             GLASS_BAR,
             glassTone(onDark),
-            "pointer-events-auto relative flex items-center justify-between py-2 pl-7 pr-2",
+            "pointer-events-auto relative mx-auto flex max-w-v5-content items-center justify-between py-2 pl-7 pr-2",
           )}
         >
           <Link
@@ -465,7 +469,9 @@ export default function Navbar() {
       </div>
 
       {/* Mobile / tablet (Figma 79740:297806) */}
-      <div className="px-4 pb-3 pt-3 xl:hidden">
+      {/* Gutter tracks the pages' own `px-4 md:px-[30px]`, so the bar stays
+          flush with content through the tablet range too. */}
+      <div className="px-4 pb-3 pt-3 md:px-[30px] xl:hidden">
         <div
           data-glass-bar
           className={cn(
