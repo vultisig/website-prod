@@ -1,20 +1,13 @@
-import {
-  ArrowRight,
-  CircleDollarSign,
-  Clock,
-  Fuel,
-  Repeat,
-  Send,
-  Wallet,
-  type LucideIcon,
-} from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 import { LandingButton } from "@/components/ui/landing-button"
 import { cn } from "@/lib/utils"
 
 type Strategy = {
-  icon: LucideIcon
+  /** Figma badge: the dark disc, hairline ring and blue glyph are baked into the SVG. */
+  icon: string
   title: string
   body: string
   live: boolean
@@ -22,37 +15,37 @@ type Strategy = {
 
 const STRATEGIES: Strategy[] = [
   {
-    icon: CircleDollarSign,
+    icon: "/v5/agent-strategy-dca.svg",
     title: "Dollar-Cost Averaging",
     body: "Automatically buy BTC, ETH, or any token on a schedule you define. Daily, weekly, or custom intervals. Agent executes via THORChain without emotional decisions.",
     live: true,
   },
   {
-    icon: Wallet,
+    icon: "/v5/agent-strategy-yield.svg",
     title: "Yield Collection",
     body: "Auto-claim rewards from liquidity pools, staking positions, and DeFi protocols on a schedule. Never leave yield unclaimed due to gas timing or missed windows.",
     live: true,
   },
   {
-    icon: Repeat,
+    icon: "/v5/agent-strategy-rebalancing.svg",
     title: "Portfolio Rebalancing",
     body: "Maintain your target allocation automatically. Agent rebalances on schedule or when drift exceeds your threshold with conditional logic like gas price checks.",
     live: true,
   },
   {
-    icon: Send,
+    icon: "/v5/agent-strategy-recurring.svg",
     title: "Recurring Payments",
     body: "Schedule automatic sends to any address on any chain. Payroll, subscriptions, regular transfers - set once, agent handles every future transaction with MPC security.",
     live: false,
   },
   {
-    icon: Fuel,
+    icon: "/v5/agent-strategy-gas.svg",
     title: "Gas Monitoring",
     body: "Agents watch network conditions and alert you or trigger pending transactions when gas drops to your target. Never overpay on Ethereum again.",
     live: false,
   },
   {
-    icon: Clock,
+    icon: "/v5/agent-strategy-conditional.svg",
     title: "Conditional Execution",
     body: 'Run transactions only when conditions are met. "Buy $50 extra BTC if it drops below $60k." "Rebalance only when gas is under 15 gwei." Real strategy logic, automated.',
     live: false,
@@ -107,18 +100,20 @@ export default function Strategies() {
           </div>
 
           <ul className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {STRATEGIES.map(({ icon: Icon, title, body, live }) => (
+            {STRATEGIES.map(({ icon, title, body, live }) => (
               <li
                 key={title}
                 className="flex flex-col gap-6 rounded-[20px] bg-v5-white p-[30px] md:gap-[35px]"
               >
                 <div className="flex items-center justify-between gap-4">
-                  <span
-                    className="inline-flex size-10 items-center justify-center rounded-full border-[1.5px] border-v5-white bg-v5-surface-dark"
-                    aria-hidden
-                  >
-                    <Icon className="size-[22px] text-v5-info" />
-                  </span>
+                  {/* Decorative — the heading below already names the strategy. */}
+                  <Image
+                    src={icon}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="size-10 shrink-0"
+                  />
                   <StatusPill live={live} />
                 </div>
                 <div className="flex flex-col gap-1.5">

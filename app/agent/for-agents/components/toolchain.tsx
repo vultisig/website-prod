@@ -1,5 +1,11 @@
 import CopyButton from "@/components/ui/copy-button"
 import SectionHeading from "@/components/ui/section-heading"
+import { highlightShell } from "@/lib/highlight-shell"
+import {
+  type CodeToken,
+  type CodeTokenKind,
+  highlightTypeScript,
+} from "@/lib/highlight-ts"
 
 const SDK_SNIPPET = `import { Vultisig, MemoryStorage } from '@vultisig/sdk'
 
@@ -53,6 +59,19 @@ const CARD =
 const CODE_SURFACE =
   "rounded-[20px] border border-v5-border-light bg-v5-surface-dark"
 
+/** Figma paints each token class from the V5 palette. */
+const TOKEN_CLASS: Record<CodeTokenKind, string> = {
+  plain: "text-v5-text-secondary",
+  keyword: "text-v5-accent",
+  function: "text-v5-info",
+  string: "text-v5-positive",
+  number: "text-v5-warning",
+  comment: "text-v5-text-tertiary",
+}
+
+const SDK_TOKENS = highlightTypeScript(SDK_SNIPPET)
+const CLI_TOKENS = highlightShell(CLI_SNIPPET)
+
 /** Install line — the one bit of a card meant to be copied in a single click. */
 function InstallLine({ command }: { command: string }) {
   return (
@@ -72,12 +91,24 @@ function InstallLine({ command }: { command: string }) {
  * snippet length, matching the equal-height code panels in Figma. The copy
  * button is taken out of flow so it cannot squeeze the code column.
  */
-function CodeBlock({ code, label }: { code: string; label: string }) {
+function CodeBlock({
+  code,
+  tokens,
+  label,
+}: {
+  code: string
+  tokens: CodeToken[]
+  label: string
+}) {
   return (
     <div className={`${CODE_SURFACE} relative`}>
       <pre className="max-h-[338px] overflow-auto p-5 pr-16 md:p-6 md:pr-16">
-        <code className="font-mono text-v5-footnote leading-6 text-v5-text-tertiary">
-          {code}
+        <code className="font-mono text-v5-footnote leading-6 text-v5-text-secondary">
+          {tokens.map((token, index) => (
+            <span key={index} className={TOKEN_CLASS[token.kind]}>
+              {token.value}
+            </span>
+          ))}
         </code>
       </pre>
       <CopyButton
@@ -112,7 +143,11 @@ export default function Toolchain() {
               <p className="text-v5-body-m font-normal text-v5-text-primary">
                 {"// Initialize → Create vault → Verify → Use"}
               </p>
-              <CodeBlock code={SDK_SNIPPET} label="SDK example" />
+              <CodeBlock
+                code={SDK_SNIPPET}
+                tokens={SDK_TOKENS}
+                label="SDK example"
+              />
               <p className="text-v5-body-m font-normal text-v5-text-primary">
                 Fast Vault = full autonomy, no human in the loop. Secure Vault =
                 human co-signs every transaction.
@@ -127,7 +162,11 @@ export default function Toolchain() {
                 Mirrors the full SDK. Built for scripting and pipelines.
               </p>
               <InstallLine command="npm install -g @vultisig/cli" />
-              <CodeBlock code={CLI_SNIPPET} label="CLI examples" />
+              <CodeBlock
+                code={CLI_SNIPPET}
+                tokens={CLI_TOKENS}
+                label="CLI examples"
+              />
               <p className="text-v5-body-m font-normal text-v5-text-primary">
                 Non-interactive mode auto-detected. Use{" "}
                 <code className="font-mono">--ci</code> for full automation:

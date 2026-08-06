@@ -36,7 +36,7 @@ export default function Sovereignty() {
                 key={step.number}
                 className="flex flex-col gap-3.5 rounded-[24px] bg-v5-white p-[30px]"
               >
-                <span className="font-mono text-v5-score font-medium text-v5-cta md:text-[48px] md:leading-[1.32]">
+                <span className="text-v5-score font-medium text-v5-cta md:text-[48px] md:leading-[1.32]">
                   {step.number}
                 </span>
                 <div className="flex flex-col gap-3.5">

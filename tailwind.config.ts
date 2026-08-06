@@ -139,6 +139,10 @@ const config: Config = {
           vult: "#00ff76", // $VULT brand green — hero accent + token-stats strip
           royal: "#104ae1", // "Got an idea?" banner
           highlight: "#0439c7", // Primary/Accent 2 — MPC step-card kicker line
+          // Tinted "Vultisig" column on the Agent > For Builders comparison
+          // table. Reads as a highlight against the near-white rows while
+          // staying light enough for the navy body ink.
+          "highlight-soft": "#dfe8fd",
           sapphire: "#2155df", // "Period." in the MPC privacy heading
           negative: "#fb2c36", // comparison-table "no" pill
           "negative-mark": "#ff6467", // comparison-table "no" glyph

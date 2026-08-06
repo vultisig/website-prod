@@ -1,4 +1,4 @@
-import { Bot } from "lucide-react"
+import Image from "next/image"
 
 /**
  * The files an agent should fetch instead of scraping this page. Hrefs are
@@ -48,8 +48,13 @@ export default function MachineReadable() {
 
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-5 rounded-[24px] bg-gradient-to-r from-[#2f63ec] to-v5-highlight p-6 md:gap-7">
-            <Bot
-              className="size-10 shrink-0 text-v5-text-primary md:size-[62px]"
+            {/* Decorative — the sentence beside it carries the whole message */}
+            <Image
+              src="/v5/agent-structured-index.svg"
+              alt=""
+              width={62}
+              height={62}
+              className="size-10 shrink-0 md:size-[62px]"
               aria-hidden
             />
             <p className="text-v5-body-m font-medium text-v5-text-primary md:text-v5-body-l-relaxed">

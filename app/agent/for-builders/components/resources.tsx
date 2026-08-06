@@ -1,26 +1,26 @@
-import { BookOpen, Braces, FileText, Github } from "lucide-react"
+import Image from "next/image"
 
 const RESOURCES = [
   {
-    icon: BookOpen,
+    icon: "/v5/agent-resource-docs.svg",
     label: "SDK Docs",
     href: "https://docs.vultisig.com",
     external: true,
   },
   {
-    icon: Github,
+    icon: "/v5/agent-resource-github.svg",
     label: "GitHub",
     href: "https://github.com/vultisig",
     external: true,
   },
   {
-    icon: FileText,
+    icon: "/v5/agent-resource-llms.svg",
     label: "llms-full.txt",
     href: "/llms-full.txt",
     external: false,
   },
   {
-    icon: Braces,
+    icon: "/v5/agent-resource-agent-json.svg",
     label: "agent.json",
     href: "/.well-known/agent.json",
     external: false,
@@ -37,7 +37,7 @@ export default function Resources() {
           </h2>
 
           <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:justify-center">
-            {RESOURCES.map(({ icon: Icon, label, href, external }) => (
+            {RESOURCES.map(({ icon, label, href, external }) => (
               <li key={label} className="lg:w-[280px]">
                 <a
                   href={href}
@@ -46,9 +46,13 @@ export default function Resources() {
                     : {})}
                   className="flex h-full flex-col items-center justify-center gap-6 rounded-[20px] bg-v5-white px-5 py-6 transition-shadow hover:shadow-v5-menu"
                 >
-                  <Icon
-                    className="size-[62px] text-v5-cta"
-                    strokeWidth={1.25}
+                  {/* Decorative — the label below names the resource */}
+                  <Image
+                    src={icon}
+                    alt=""
+                    width={62}
+                    height={62}
+                    className="size-[62px] object-contain"
                     aria-hidden
                   />
                   <span className="text-v5-body-m font-semibold text-v5-text-inverse">
