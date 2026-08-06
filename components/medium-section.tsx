@@ -133,6 +133,11 @@ async function getServerArticles(): Promise<Article[]> {
       "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@vultisig",
       {
         next: { revalidate: 3600 },
+        // Without a deadline an unreachable or slow upstream never settles, and
+        // because this is an async Server Component the whole page's RSC stream
+        // hangs with it — the homepage stops responding instead of degrading.
+        // The catch below already falls back to shipped content.
+        signal: AbortSignal.timeout(5000),
       },
     )
 
