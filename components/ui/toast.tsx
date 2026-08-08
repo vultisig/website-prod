@@ -16,7 +16,10 @@ const ToastViewport = React.forwardRef<
   <ToastPrimitives.Viewport
     ref={ref}
     className={cn(
-      "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
+      // Empty, the viewport is still a 32px-tall (p-4) strip pinned above the
+      // header at z-100 — below `sm` that swallowed taps on the top of the logo
+      // and the menu button. Toasts themselves re-enable pointer events.
+      "pointer-events-none fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
       className
     )}
     {...props}
