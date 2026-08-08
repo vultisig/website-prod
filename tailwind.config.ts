@@ -214,6 +214,10 @@ const config: Config = {
       maxWidth: {
         "v5-content": "1380px",
       },
+      transitionTimingFunction: {
+        // Bento-card hover motion, taken from the Figma/Lottie source.
+        "v5-drift": "cubic-bezier(0.5, 0, 0, 1)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -245,12 +249,19 @@ const config: Config = {
             transform: "translateX(-50%) translateY(-6px) scale(0.97)",
           },
         },
+        // Hero "OPEN-SOURCE AUDITED" seal, turning clockwise on its own axis.
+        "v5-seal-spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "v5-menu-in": "v5-menu-in 180ms cubic-bezier(0.16, 1, 0.3, 1)",
         "v5-menu-out": "v5-menu-out 140ms cubic-bezier(0.4, 0, 1, 1)",
+        // Slow enough that the wordmark stays readable while it turns.
+        "v5-seal-spin": "v5-seal-spin 20s linear infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
