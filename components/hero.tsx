@@ -11,7 +11,7 @@ function OpenSourceSeal() {
   return (
     <svg
       viewBox="0 0 128 127"
-      className="size-16 shrink-0 md:size-32"
+      className="size-16 shrink-0 origin-center animate-v5-seal-spin md:size-32 motion-reduce:animate-none"
       role="img"
       aria-label="Open-source and audited"
     >
