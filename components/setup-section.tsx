@@ -111,8 +111,8 @@ export default function SetupSection() {
             subtitle="Fast Vault for daily spending. Secure Vault for maximum protection. Both are keyless and require no seed phrase."
           />
 
-          <div className="flex w-full flex-col rounded-3xl bg-v5-page">
-            <div className="flex flex-col gap-3 p-4 md:flex-row md:p-[30px]">
+          <div className="flex w-full flex-col">
+            <div className="flex flex-col gap-3 rounded-t-3xl rounded-bl-3xl bg-v5-page p-4 md:flex-row md:p-[30px]">
               <div className="flex min-w-0 flex-col gap-3 md:w-[476px]">
                 <VaultTabs selected={selected} onSelect={setSelected} />
                 <div className="flex flex-col gap-3 pt-6 text-v5-text-inverse">
@@ -139,27 +139,36 @@ export default function SetupSection() {
               />
             </div>
 
-            {/* The panel colour bites into the card so the CTA sits in a notch */}
+            {/* The panel colour bites into the card's bottom-left corner so the
+                CTA sits in a notch, which exposes three corners. Two are
+                ordinary radii on the card itself: the body above the bite and
+                the strip beside it. The third is the inverse corner where those
+                two meet — the notch keeps a light backdrop and paints the bite
+                on top of it, so the bite's own radius uncovers that backdrop
+                and the card reads as curving into the notch instead of squaring
+                off. */}
             <div className="flex items-stretch">
-              <div className="rounded-bl-3xl p-4 md:rounded-tr-3xl md:bg-v5-deep md:py-3 md:pl-[25px] md:pr-6">
-                <LandingButton
-                  asChild
-                  variant="light"
-                  size="sm"
-                  className="h-[50px] w-[190px]"
-                >
-                  <Link
-                    href={vault.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Learn more about the ${vault.tab} in the docs`}
+              <div className="bg-v5-page">
+                <div className="rounded-tr-3xl bg-v5-deep p-4 md:p-[25px]">
+                  <LandingButton
+                    asChild
+                    variant="light"
+                    size="sm"
+                    className="h-[50px] w-[190px]"
                   >
-                    Learn More
-                    <ArrowRight aria-hidden />
-                  </Link>
-                </LandingButton>
+                    <Link
+                      href={vault.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Learn more about the ${vault.tab} in the docs`}
+                    >
+                      Learn More
+                      <ArrowRight aria-hidden />
+                    </Link>
+                  </LandingButton>
+                </div>
               </div>
-              <div className="flex-1 rounded-br-3xl rounded-tl-3xl bg-v5-deep md:hidden" />
+              <div className="flex-1 rounded-b-3xl bg-v5-page" />
             </div>
           </div>
         </div>
