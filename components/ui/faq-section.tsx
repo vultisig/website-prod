@@ -19,6 +19,11 @@ type FaqSectionProps = {
   /** Heading block rendered beside the list instead of centred above it. */
   aside?: ReactNode
   className?: string
+  /**
+   * Turns the content block into a tinted panel. The chain-family pages sit the
+   * FAQ on a coloured card rather than the page surface.
+   */
+  panelClassName?: string
 }
 
 export default function FaqSection({
@@ -27,6 +32,7 @@ export default function FaqSection({
   subtitle,
   aside,
   className,
+  panelClassName,
 }: FaqSectionProps) {
   return (
     <section className={cn("bg-v5-page px-4 py-16 md:px-[30px]", className)}>
@@ -35,6 +41,7 @@ export default function FaqSection({
           "mx-auto flex max-w-v5-content flex-col gap-10",
           aside &&
             "v5wide:flex-row v5wide:items-start v5wide:justify-center v5wide:gap-[50px]",
+          panelClassName,
         )}
       >
         {title && <SectionHeading title={title} subtitle={subtitle} />}
