@@ -182,7 +182,10 @@ export default async function ChainFamilyPage({ params }: PageProps) {
             up front — which chains am I getting? Swap in the artwork when it
             lands.
           */}
-          <div className="flex min-h-[300px] flex-1 items-center justify-center rounded-v5-panel bg-v5-white p-8 md:min-h-[400px]">
+          <div
+            style={{ backgroundColor: family.accent.heroTint }}
+            className="flex min-h-[300px] flex-1 items-center justify-center rounded-v5-panel p-8 md:min-h-[400px]"
+          >
             <ul className="grid grid-cols-3 gap-x-6 gap-y-7 sm:grid-cols-4">
               {chains.map((chain) => (
                 <li
@@ -235,6 +238,15 @@ export default async function ChainFamilyPage({ params }: PageProps) {
                   key={feature.title}
                   className="flex flex-1 flex-col justify-center gap-3.5 rounded-[20px] bg-v5-page p-5"
                 >
+                  {feature.icon && (
+                    <Image
+                      src={`/v5/chains/${feature.icon}.svg`}
+                      alt=""
+                      width={36}
+                      height={36}
+                      className="size-9 max-w-none object-contain"
+                    />
+                  )}
                   <h3 className="text-v5-prose-h3 font-semibold text-v5-text-inverse">
                     {feature.title}
                   </h3>
@@ -276,44 +288,13 @@ export default async function ChainFamilyPage({ params }: PageProps) {
             })}
           </ul>
         </section>
-
-        {/*
-          The three pages point at each other so each one has an inbound link
-          from within the site. The chains index deliberately stays as designed,
-          so this is the only crawl path between them — see the note in the
-          commit about giving them a proper entry point later.
-        */}
-        <nav
-          aria-label="Other chain families"
-          className="flex flex-wrap items-center gap-x-6 gap-y-2"
-        >
-          <span className="text-v5-body-m text-v5-text-tertiary">
-            Other chain families:
-          </span>
-          {CHAIN_FAMILIES.filter((other) => other.slug !== family.slug).map(
-            (other) => (
-              <Link
-                key={other.slug}
-                href={`/chains/${other.slug}`}
-                className="text-v5-body-m font-medium text-v5-cta underline-offset-4 hover:underline"
-              >
-                {other.name}
-              </Link>
-            ),
-          )}
-          <Link
-            href="/chains"
-            className="text-v5-body-m font-medium text-v5-cta underline-offset-4 hover:underline"
-          >
-            All 38 chains
-          </Link>
-        </nav>
       </div>
 
       {/* FAQ — force-mounted answers keep every one in the server HTML */}
       <FaqSection
         className="bg-transparent px-0 py-[30px] md:px-0"
-        panelClassName={`${PANEL} bg-v5-success`}
+        panelStyle={{ backgroundColor: family.accent.panel }}
+        panelClassName={PANEL}
         aside={
           <h2 className="text-v5-display-sm font-medium text-v5-text-inverse v5wide:w-[476px] v5wide:shrink-0 v5wide:text-v5-faq-title">
             {family.faq.title}

@@ -3,6 +3,12 @@ import { CHAINS, type Chain, type ChainCategory } from "./chains"
 export type Feature = {
   title: string
   body: string
+  /**
+   * `public/v5/chains/<icon>.svg`. The three illustrations are positional
+   * rather than per-feature — Figma reuses the same trio down every family's
+   * column — and have no export yet, so the slot renders empty until they land.
+   */
+  icon?: string
 }
 
 export type FaqEntry = {
@@ -25,6 +31,14 @@ export type ChainFamily = {
   meta: { title: string; description: string }
   /** Matched against article titles and tags for the closing rail. */
   articleTerms: string[]
+  /**
+   * Each family carries its own accent, taken from the chain the Figma frame
+   * was drawn around: `panel` fills the FAQ card, `heroTint` the wash behind
+   * the hero device. Only Cosmos is measured — its frame is the one the API
+   * returned before the file endpoint rate-limited. The other two are matched
+   * to the hero art and want confirming against Figma.
+   */
+  accent: { panel: string; heroTint: string }
 }
 
 /**
@@ -107,6 +121,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         "Hold ETH, ERC-20 tokens and every EVM chain in one MPC vault. Smart contract calls and swaps approved by your device threshold — no seed phrase, no single private key.",
     },
     articleTerms: ["ethereum", "evm", "erc-20", "arbitrum", "base", "layer 2"],
+    accent: { panel: "#4879FD", heroTint: "#DEE5FF" },
   },
   {
     slug: "utxo",
@@ -172,6 +187,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         "Hold Bitcoin and every UTXO chain in one MPC vault. Native SegWit addresses, standard on-chain transactions, and no seed phrase — your key is split across devices you already own.",
     },
     articleTerms: ["bitcoin", "btc", "utxo", "segwit", "litecoin"],
+    accent: { panel: "#F7931A", heroTint: "#FCEBD8" },
   },
   {
     slug: "cosmos",
@@ -237,6 +253,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         "Hold Cosmos SDK chains in one MPC vault. Stake, transfer over IBC and settle native cross-chain swaps through THORChain — every action approved by your device threshold.",
     },
     articleTerms: ["cosmos", "thorchain", "rune", "osmosis", "atom", "ibc"],
+    accent: { panel: "#13C89D", heroTint: "#D6F5EC" },
   },
 ]
 
