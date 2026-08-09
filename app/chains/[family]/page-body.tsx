@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import FooterBanner from "@/components/footer-banner"
 import FaqSection from "@/components/ui/faq-section"
 import {
   fill,
@@ -202,65 +203,11 @@ export default function ChainPageBody({
             })}
           </ul>
         </section>
-
-        {/*
-          The rail is how every chain page is reachable without a crawler having
-          to guess a slug, and it puts each one link from its siblings.
-        */}
-        {chains.length > 1 && (
-          <section
-            className={`${PANEL} flex flex-col gap-8 bg-v5-white md:gap-10`}
-          >
-            {/* `name` is already plural — "EVM chains", "independent L1s". */}
-            <h2 className="text-v5-display-sm font-medium text-v5-text-inverse first-letter:uppercase">
-              All {family.name}, in one vault
-            </h2>
-            <ul className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
-              {chains.map((chain) => {
-                const current = chain.slug === currentSlug
-                const inner = (
-                  <>
-                    <Image
-                      src={`/v5/chains/chain-${chain.icon}.svg`}
-                      alt=""
-                      width={32}
-                      height={32}
-                      className="size-8 max-w-none object-contain"
-                    />
-                    <span className="text-v5-body-s font-medium">
-                      {chain.name}
-                    </span>
-                  </>
-                )
-                return (
-                  <li key={chain.slug}>
-                    {current ? (
-                      <span
-                        aria-current="page"
-                        className="flex flex-col items-center gap-2 text-center text-v5-text-tertiary"
-                      >
-                        {inner}
-                      </span>
-                    ) : (
-                      <Link
-                        href={`/chains/${family.slug}/${chain.slug}`}
-                        className="flex flex-col items-center gap-2 text-center text-v5-text-inverse transition-opacity hover:opacity-70"
-                      >
-                        {inner}
-                      </Link>
-                    )}
-                  </li>
-                )
-              })}
-            </ul>
-          </section>
-        )}
       </div>
 
       {/* FAQ — force-mounted answers keep every one in the server HTML */}
       <FaqSection
-        className="bg-transparent px-0 py-[30px] md:px-0"
-        panelClassName={`${PANEL} bg-v5-success`}
+        className="bg-transparent px-0 py-10 md:px-0 md:py-[60px]"
         aside={
           <h2 className="text-v5-display-sm font-medium text-v5-text-inverse v5wide:w-[476px] v5wide:shrink-0 v5wide:text-v5-faq-title">
             {t(family.faq.title)}
@@ -275,7 +222,8 @@ export default function ChainPageBody({
       {/*
         Figma's closing rail. Card is 440x448 over a 242px image, then title,
         standfirst and date at 20/15/13 — the three sizes land on Subtitle,
-        Card Body and Card Meta exactly.
+        Card Body and Card Meta exactly. No tint behind it: the cards read as
+        white on the page, the same as the FAQ above them.
       */}
       <div className="mx-auto max-w-v5-content">
         {/*
@@ -283,8 +231,8 @@ export default function ChainPageBody({
           spans the full 1380 so three 440px cards and two 30px gaps fill it
           exactly. Padding it like the others narrows every card by 40px.
         */}
-        <section className="flex flex-col gap-10 rounded-[20px] bg-v5-accent px-5 py-10 md:gap-[50px] md:rounded-v5-panel md:px-0 md:py-[60px]">
-          <h2 className="px-0 text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-display">
+        <section className="flex flex-col gap-10 pb-10 md:gap-[50px] md:pb-[60px]">
+          <h2 className="text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-display">
             More on {subject.name} and Vultisig
           </h2>
           <ul className="grid grid-cols-1 gap-[30px] md:grid-cols-2 lg:grid-cols-3">
@@ -317,6 +265,10 @@ export default function ChainPageBody({
             ))}
           </ul>
         </section>
+      </div>
+
+      <div className="-mx-4 md:-mx-[30px]">
+        <FooterBanner />
       </div>
     </>
   )
