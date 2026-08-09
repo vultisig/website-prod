@@ -7,8 +7,9 @@ type Subject = Pick<Chain, "name" | "ticker">
 
 /**
  * FAQPage lets the answers surface as rich results, and BreadcrumbList gives
- * search engines the Chains -> family -> chain hierarchy the URL already
- * implies. The same answers are in the markup — the accordion force-mounts them
+ * search engines the Chains -> chain hierarchy. The family sits in the URL but
+ * has no page, so it is not a breadcrumb step — every entry in the list has to
+ * resolve to something. The same answers are in the markup — the accordion force-mounts them
  * — so this describes visible content rather than adding hidden text.
  */
 export function familyJsonLd({

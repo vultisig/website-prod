@@ -73,7 +73,6 @@ export default async function ChainPage({ params }: PageProps) {
               family,
               subject: chain,
               trail: [
-                { name: family.name, item: `${SITE}/chains/${family.slug}` },
                 {
                   name: chain.name,
                   item: `${SITE}/chains/${family.slug}/${chain.slug}`,
@@ -89,10 +88,7 @@ export default async function ChainPage({ params }: PageProps) {
         subject={chain}
         headline={chain.name}
         heroArt={`hero-${chain.slug}`}
-        breadcrumb={{
-          label: chain.name,
-          familyHref: `/chains/${family.slug}`,
-        }}
+        breadcrumb={{ label: chain.name }}
         chains={chainsInFamily(family)}
         currentSlug={chain.slug}
       />

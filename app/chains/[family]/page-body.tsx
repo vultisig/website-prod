@@ -38,7 +38,7 @@ export type PageBodyProps = {
   headline: string
   heroArt: string
   /** Trailing breadcrumb label, after Chains / family. */
-  breadcrumb: { label: string; familyHref?: string }
+  breadcrumb: { label: string }
   /** Rail of sibling chains; the current one is rendered as plain text. */
   chains: Chain[]
   currentSlug?: string
@@ -73,19 +73,13 @@ export default function ChainPageBody({
               </Link>
             </li>
             <li aria-hidden>/</li>
-            {breadcrumb.familyHref ? (
-              <>
-                <li>
-                  <Link
-                    href={breadcrumb.familyHref}
-                    className="hover:text-v5-text-inverse"
-                  >
-                    {family.name}
-                  </Link>
-                </li>
-                <li aria-hidden>/</li>
-              </>
-            ) : null}
+            {/*
+              The family names the group but is not a page — there is nothing
+              at /chains/evm — so it reads as a label between the index and the
+              chain rather than a link.
+            */}
+            <li>{family.name}</li>
+            <li aria-hidden>/</li>
             <li className="text-v5-text-inverse">{breadcrumb.label}</li>
           </ol>
         </nav>

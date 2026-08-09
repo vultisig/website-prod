@@ -1,4 +1,3 @@
-import { CHAIN_FAMILIES } from "@/content/chain-families"
 import { CHAINS } from "@/content/chains"
 
 // Shared helpers for the split sitemap (index + pages + posts).
@@ -28,14 +27,10 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/support", changefreq: "monthly", priority: 0.7 },
   { path: "/privacy", changefreq: "yearly", priority: 0.5 },
   { path: "/termofservice", changefreq: "yearly", priority: 0.5 },
-  // The chain family hubs and the 38 chain pages under them are derived rather
-  // than listed, so a chain added to content/chains.ts is in the sitemap the
-  // same day rather than whenever someone remembers this file.
-  ...CHAIN_FAMILIES.map((family): StaticPage => ({
-    path: `/chains/${family.slug}`,
-    changefreq: "monthly",
-    priority: 0.7,
-  })),
+  // Derived rather than listed, so a chain added to content/chains.ts is in the
+  // sitemap the same day rather than whenever someone remembers this file. The
+  // family is a path segment only — /chains/evm is not a page — so nothing
+  // between the index and the chain is listed.
   ...CHAINS.map((chain): StaticPage => ({
     path: `/chains/${chain.family}/${chain.slug}`,
     changefreq: "monthly",
