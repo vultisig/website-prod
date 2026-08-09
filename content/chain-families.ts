@@ -4,11 +4,10 @@ export type Feature = {
   title: string
   body: string
   /**
-   * `public/v5/chains/<icon>.svg`. The three illustrations are positional
-   * rather than per-feature — Figma reuses the same trio down every family's
-   * column — and have no export yet, so the slot renders empty until they land.
+   * `public/v5/chains/<icon>.svg`. The illustrations are positional rather than
+   * per-feature — Figma reuses the same trio down every family's column.
    */
-  icon?: string
+  icon: string
 }
 
 export type FaqEntry = {
@@ -23,6 +22,8 @@ export type ChainFamily = {
   category: ChainCategory
   /** Reads inside headings — "EVM chains", "UTXO chains". */
   name: string
+  /** The chain the Figma frame was drawn around, for the closing heading. */
+  chainLabel: string
   /** The asset the shared action copy speaks about. */
   asset: string
   hero: { title: string; body: string; cta: string }
@@ -32,23 +33,29 @@ export type ChainFamily = {
   /** Matched against article titles and tags for the closing rail. */
   articleTerms: string[]
   /**
-   * Each family carries its own accent, taken from the chain the Figma frame
-   * was drawn around: `panel` fills the FAQ card, `heroTint` the wash behind
-   * the hero device. Only Cosmos is measured — its frame is the one the API
-   * returned before the file endpoint rate-limited. The other two are matched
-   * to the hero art and want confirming against Figma.
+   * `public/v5/chains/hero-<slug>.webp`, exported from the frame's hero group.
+   * The wash behind the device is part of the artwork — the card under it is
+   * plain white on all three frames — so the family's colour arrives with the
+   * image rather than as a fill.
    */
-  accent: { panel: string; heroTint: string }
+  heroArt: string
 }
 
 /**
  * The three families the chains index filters to, each with its own page.
  *
- * Figma draws this template per chain — its frames are Bitcoin, Ethereum and
- * THORChain, and the copy names RUNE and ETH directly. These pages cover a
- * family instead, so the chain-specific lines are widened to the family and the
- * feature cards keep the ones that hold for every chain in it. Worth a
- * copywriter's pass before launch; the structure is Figma's, the wording is not.
+ * Copy is Figma's, read from the Ethereum, Bitcoin and THORChain frames. Two
+ * places depart from it deliberately:
+ *
+ * - Every frame's second and third FAQ answers are the same two paragraphs of
+ *   unrelated boilerplate ("Vultisig offers enhanced security with…"), left
+ *   over from another accordion. The questions are real, so they are kept and
+ *   answered properly. The last two questions on each page are additions.
+ * - Its Ethereum button reads "Add Etherium to your Vault".
+ *
+ * Each frame speaks for one chain while these pages cover its family, which
+ * mostly reads fine — ETH for EVM, BTC for UTXO — but leaves the Cosmos page
+ * talking about RUNE specifically. Worth a copywriter's pass.
  *
  * L2s stay a filter on the index rather than a fourth page. Every L2 Vultisig
  * supports is also an EVM chain and signs identically — same curve, same
@@ -60,37 +67,42 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     slug: "evm",
     category: "evm",
     name: "EVM chains",
+    chainLabel: "Ethereum",
     asset: "ETH",
+    heroArt: "hero-evm",
     hero: {
       title: "Hold EVM chains without holding a single key",
-      body: "Send ETH, swap tokens, and call smart contracts across every EVM network Vultisig supports. Every transaction needs your device threshold to approve it, not one exposed private key.",
-      cta: "Add an EVM chain to your vault",
+      body: "Send ETH, swap tokens, and call smart contracts. Every transaction requires your device threshold to approve it, not one exposed private key.",
+      cta: "Add Ethereum to your Vault",
     },
     vaultView: {
       title: "Your ETH and tokens, in one vault view",
-      body: "ERC-20 balances sit alongside native ETH in the same vault. No separate wallet needed for tokens, and no separate key to protect.",
+      body: "ERC-20 balances sit alongside native ETH in the same vault. No separate wallet needed for tokens.",
       features: [
         {
           title: "EVM signing",
           body: "Standard secp256k1 transaction signing, compatible with every EVM tool and explorer.",
+          icon: "feature-1",
         },
         {
           title: "Smart contract calls",
           body: "Approve, stake, or interact with dApps directly, with the same threshold approval as a send.",
+          icon: "feature-2",
         },
         {
           title: "Token support",
           body: "ERC-20 balances display natively alongside ETH, no separate import step.",
+          icon: "feature-3",
         },
       ],
     },
     faq: {
-      title: "EVM chains on Vultisig, answered",
+      title: "Ethereum on Vultisig, answered",
       items: [
         {
           question: "Can I use Vultisig to interact with dApps on Ethereum?",
           answer:
-            "Yes. Vultisig supports smart contract calls, so you can approve, stake, or interact with supported dApps directly from your vault. The call is approved by your device threshold, exactly like a transfer.",
+            "Yes. Vultisig supports smart contract calls, so you can approve, stake, or interact with supported dApps directly from your vault.",
         },
         {
           question: "Do ERC-20 tokens show up automatically?",
@@ -110,7 +122,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         {
           question: "Do I need to bridge to use an L2?",
           answer:
-            "Not to hold or receive. Every supported L2 is a chain in the same vault, so you can receive and send on it directly. Bridging is only relevant when you want to move funds between chains, and Vultisig's swap can often do that without a separate bridge app.",
+            "Not to hold or receive. Every supported L2 is a chain in the same vault, so you can receive and send on it directly. Bridging only matters when moving funds between chains, and Vultisig's swap can often do that without a separate bridge app.",
         },
       ],
     },
@@ -121,33 +133,37 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         "Hold ETH, ERC-20 tokens and every EVM chain in one MPC vault. Smart contract calls and swaps approved by your device threshold — no seed phrase, no single private key.",
     },
     articleTerms: ["ethereum", "evm", "erc-20", "arbitrum", "base", "layer 2"],
-    accent: { panel: "#4879FD", heroTint: "#DEE5FF" },
   },
   {
     slug: "utxo",
     category: "utxo",
     name: "UTXO chains",
+    chainLabel: "Bitcoin",
     asset: "BTC",
+    heroArt: "hero-utxo",
     hero: {
       title: "Hold UTXO chains without holding a single key",
       body: "No seed phrase. No custodian. Your BTC is split across your own devices using MPC, and it takes your threshold to move a single sat.",
-      cta: "Add Bitcoin to your vault",
+      cta: "Add Bitcoin to your Vault",
     },
     vaultView: {
       title: "Your BTC, in one vault view",
-      body: "The same interface as every other asset in Vultisig. Balance, address and history, backed by your device threshold instead of a private key sitting on one phone.",
+      body: "Same interface as every other asset in Vultisig. Balance, address, and history, backed by your device threshold instead of a private key sitting on one phone.",
       features: [
         {
           title: "Native SegWit addresses",
-          body: "Lower fees, and standard compatibility with every BTC service you already use.",
+          body: "Lower fees, standard compatibility with every BTC service you already use.",
+          icon: "feature-1",
         },
         {
           title: "UTXO-aware signing",
           body: "Vultisig selects and signs inputs the same way a single-key wallet would. Nothing about the chain logic changes.",
+          icon: "feature-2",
         },
         {
           title: "Fast Vault & Secure Vault",
-          body: "Use 1-of-2 for daily spending, or 2-of-3 for cold storage of larger holdings.",
+          body: "Use 1-of-2 for daily spending or 2-of-3 for cold storage of larger holdings.",
+          icon: "feature-3",
         },
       ],
     },
@@ -160,19 +176,20 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
             "No. Vultisig splits your key across the devices you already own — phone, laptop, tablet. A hardware wallet is optional, not required.",
         },
         {
-          question: "Is my Bitcoin address a normal Bitcoin address?",
+          question: "What address format does Vultisig use for Bitcoin?",
           answer:
-            "Yes. Vultisig produces standard native SegWit addresses. Anyone can send to it from any wallet or exchange, and it appears on every block explorer like any other address.",
+            "Native SegWit. Anyone can send to it from any wallet or exchange, fees are lower than legacy formats, and it appears on every block explorer like any other address.",
+        },
+        {
+          question:
+            "Can I hold Bitcoin in a Secure Vault instead of a Fast Vault?",
+          answer:
+            "Yes. A Fast Vault is 1-of-2 for day-to-day spending; a Secure Vault is 2-of-3 and better suited to larger holdings. The same Bitcoin can live in either, and you choose per vault.",
         },
         {
           question: "What happens to my Bitcoin if I lose a device?",
           answer:
             "Nothing, as long as you can still meet your threshold. A 2-of-3 vault keeps working with two devices, and you can re-share to a replacement device without moving funds or restoring a seed phrase.",
-        },
-        {
-          question: "Which UTXO chains does Vultisig support?",
-          answer:
-            "Bitcoin, Bitcoin Cash, Litecoin, Dogecoin, Dash, Zcash and Cardano are all held in the same vault, alongside every other chain Vultisig supports.",
         },
         {
           question: "Does MPC change how Bitcoin transactions work on-chain?",
@@ -187,48 +204,57 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         "Hold Bitcoin and every UTXO chain in one MPC vault. Native SegWit addresses, standard on-chain transactions, and no seed phrase — your key is split across devices you already own.",
     },
     articleTerms: ["bitcoin", "btc", "utxo", "segwit", "litecoin"],
-    accent: { panel: "#F7931A", heroTint: "#FCEBD8" },
   },
   {
     slug: "cosmos",
     category: "cosmos",
     name: "Cosmos chains",
-    asset: "ATOM",
+    chainLabel: "THORChain",
+    asset: "RUNE",
+    heroArt: "hero-cosmos",
     hero: {
       title: "Hold Cosmos chains without holding a single key",
-      body: "ATOM, RUNE, OSMO and the rest of the Cosmos SDK chains live in one vault. Stake, transfer over IBC, or settle a native cross-chain swap, each approved by your device threshold.",
-      cta: "Add a Cosmos chain to your vault",
+      body: "RUNE settles every native cross-chain swap in Vultisig. Hold it, send it, or let it work quietly in the background every time you swap.",
+      cta: "Add THORChain to your Vault",
     },
     vaultView: {
-      title: "Your Cosmos assets, in one vault view",
-      body: "Cosmos chains behave like any other asset in your vault — and THORChain and MayaChain double as the settlement layer for every native swap you run through Vultisig.",
+      title: "Your RUNE, in one vault view",
+      body: "RUNE behaves like any other asset in your vault, but it's also the settlement layer for every swap you run through Vultisig.",
       features: [
         {
-          title: "Native cross-chain swaps",
-          body: "THORChain and MayaChain settle swaps between chains natively, with no bridge and no wrapped assets.",
+          title: "Native swap routing",
+          body: "Every cross-chain swap in Vultisig: BTC to ETH, SOL to RUNE, settles through THORChain's liquidity.",
+          icon: "feature-1",
         },
         {
-          title: "Staking and delegation",
-          body: "Delegate to validators and manage rewards from the vault, approved by the same threshold as a send.",
+          title: "No bridging step",
+          body: "Swaps are routed natively, so there's no wrapped-asset or bridge-contract risk in the middle.",
+          icon: "feature-2",
         },
         {
-          title: "IBC-ready accounts",
-          body: "Standard Cosmos SDK accounts and bech32 addresses, compatible with the explorers and services you already use.",
+          title: "RUNE as an asset",
+          body: "Hold and send RUNE directly, independent of its role in swap routing.",
+          icon: "feature-3",
         },
       ],
     },
     faq: {
-      title: "Cosmos chains on Vultisig, answered",
+      title: "THORChain on Vultisig, answered",
       items: [
         {
-          question: "Can I stake my Cosmos assets from Vultisig?",
+          question: "Why does Vultisig use THORChain for swaps?",
           answer:
-            "Yes. Delegation and reward management run from the vault, and each action is approved by your device threshold rather than a single private key.",
+            "THORChain enables native cross-chain swaps without wrapping assets or routing through a bridge contract, which removes a common attack surface.",
         },
         {
-          question: "How do native swaps work without a bridge?",
+          question: "Do I need RUNE to swap on Vultisig?",
           answer:
-            "THORChain and MayaChain hold liquidity on each chain and settle between them natively, so a swap moves real assets rather than minting a wrapped token. Vultisig routes swaps through them directly from your vault.",
+            "No. RUNE is the settlement asset THORChain uses under the hood, but you do not have to hold it. You choose the assets on each side and Vultisig handles the route.",
+        },
+        {
+          question: "Can I stake RUNE from my vault?",
+          answer:
+            "Yes. Staking and delegation run from the vault, and each action is approved by your device threshold rather than a single private key.",
         },
         {
           question: "Which Cosmos SDK chains does Vultisig support?",
@@ -240,11 +266,6 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
           answer:
             "Yes. Vultisig derives ordinary bech32 accounts for each chain, so your address works with every Cosmos explorer, IBC transfer and service as normal.",
         },
-        {
-          question: "Is RUNE needed to swap through Vultisig?",
-          answer:
-            "No. RUNE is the settlement asset THORChain uses under the hood, but you do not have to hold it to swap. You choose the assets on each side and Vultisig handles the route.",
-        },
       ],
     },
     meta: {
@@ -253,7 +274,6 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         "Hold Cosmos SDK chains in one MPC vault. Stake, transfer over IBC and settle native cross-chain swaps through THORChain — every action approved by your device threshold.",
     },
     articleTerms: ["cosmos", "thorchain", "rune", "osmosis", "atom", "ibc"],
-    accent: { panel: "#13C89D", heroTint: "#D6F5EC" },
   },
 ]
 

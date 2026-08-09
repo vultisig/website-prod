@@ -2,7 +2,7 @@
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { Minus, Plus } from "lucide-react"
-import type { CSSProperties, ReactNode } from "react"
+import type { ReactNode } from "react"
 
 import SectionHeading from "@/components/ui/section-heading"
 import { cn } from "@/lib/utils"
@@ -24,8 +24,6 @@ type FaqSectionProps = {
    * FAQ on a coloured card rather than the page surface.
    */
   panelClassName?: string
-  /** Panel fill, when it is data rather than a theme token. */
-  panelStyle?: CSSProperties
 }
 
 export default function FaqSection({
@@ -35,12 +33,10 @@ export default function FaqSection({
   aside,
   className,
   panelClassName,
-  panelStyle,
 }: FaqSectionProps) {
   return (
     <section className={cn("bg-v5-page px-4 py-16 md:px-[30px]", className)}>
       <div
-        style={panelStyle}
         className={cn(
           "mx-auto flex max-w-v5-content flex-col gap-10",
           aside &&

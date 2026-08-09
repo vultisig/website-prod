@@ -176,36 +176,18 @@ export default async function ChainFamilyPage({ params }: PageProps) {
           </div>
 
           {/*
-            Figma fills this card with a device render and floating coin art
-            that has no export yet. The marks of the chains this page covers say
-            the same thing and are the one question a family page has to answer
-            up front — which chains am I getting? Swap in the artwork when it
-            lands.
+            The device and coins overhang the tinted card below them, which is
+            why the group exports taller than the 400px card and is not clipped
+            to it. `priority` because it is the LCP element on all three pages.
           */}
-          <div
-            style={{ backgroundColor: family.accent.heroTint }}
-            className="flex min-h-[300px] flex-1 items-center justify-center rounded-v5-panel p-8 md:min-h-[400px]"
-          >
-            <ul className="grid grid-cols-3 gap-x-6 gap-y-7 sm:grid-cols-4">
-              {chains.map((chain) => (
-                <li
-                  key={`${chain.name}-${chain.ticker}`}
-                  className="flex flex-col items-center gap-2 text-center"
-                >
-                  <Image
-                    src={`/v5/chains/chain-${chain.icon}.svg`}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="size-10 max-w-none object-contain"
-                  />
-                  <span className="text-v5-caption text-v5-text-inverse">
-                    {chain.name}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Image
+            src={`/v5/chains/${family.heroArt}.webp`}
+            alt={`The Vultisig vault open on ${family.chainLabel}, with its balance and actions`}
+            width={1308}
+            height={1036}
+            priority
+            className="w-full lg:w-[654px] lg:shrink-0"
+          />
         </section>
 
         {/* One vault view */}
@@ -238,15 +220,13 @@ export default async function ChainFamilyPage({ params }: PageProps) {
                   key={feature.title}
                   className="flex flex-1 flex-col justify-center gap-3.5 rounded-[20px] bg-v5-page p-5"
                 >
-                  {feature.icon && (
-                    <Image
-                      src={`/v5/chains/${feature.icon}.svg`}
-                      alt=""
-                      width={36}
-                      height={36}
-                      className="size-9 max-w-none object-contain"
-                    />
-                  )}
+                  <Image
+                    src={`/v5/chains/${feature.icon}.svg`}
+                    alt=""
+                    width={42}
+                    height={42}
+                    className="size-[42px] max-w-none object-contain"
+                  />
                   <h3 className="text-v5-prose-h3 font-semibold text-v5-text-inverse">
                     {feature.title}
                   </h3>
@@ -293,8 +273,7 @@ export default async function ChainFamilyPage({ params }: PageProps) {
       {/* FAQ — force-mounted answers keep every one in the server HTML */}
       <FaqSection
         className="bg-transparent px-0 py-[30px] md:px-0"
-        panelStyle={{ backgroundColor: family.accent.panel }}
-        panelClassName={PANEL}
+        panelClassName={`${PANEL} bg-v5-success`}
         aside={
           <h2 className="text-v5-display-sm font-medium text-v5-text-inverse v5wide:w-[476px] v5wide:shrink-0 v5wide:text-v5-faq-title">
             {family.faq.title}
@@ -309,7 +288,7 @@ export default async function ChainFamilyPage({ params }: PageProps) {
             className={`${PANEL} flex flex-col gap-10 bg-v5-accent md:gap-[50px]`}
           >
             <h2 className="text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-display">
-              More on {family.name} and Vultisig
+              More on {family.chainLabel} and Vultisig
             </h2>
             <ul className="grid grid-cols-1 gap-[30px] md:grid-cols-2 lg:grid-cols-3">
               {articles.map((article) => (
