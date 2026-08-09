@@ -2,7 +2,7 @@
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { Minus, Plus } from "lucide-react"
-import type { ReactNode } from "react"
+import { Fragment, type ReactNode } from "react"
 
 import SectionHeading from "@/components/ui/section-heading"
 import { cn } from "@/lib/utils"
@@ -79,7 +79,15 @@ export default function FaqSection({
         )}
       >
         {title && <SectionHeading title={title} subtitle={subtitle} />}
-        {aside}
+        {/*
+          Keyed because `aside` is built by the caller and lands here in a
+          children array. React only marks elements validated where they are
+          written, so one arriving through a prop is flagged as a keyless list
+          child. The fragment adds the key without adding a DOM node, which
+          matters — the heading has to stay a direct flex child to keep its
+          width.
+        */}
+        {aside ? <Fragment key="faq-aside">{aside}</Fragment> : null}
         <AccordionPrimitive.Root
           type="multiple"
           className={cn(
