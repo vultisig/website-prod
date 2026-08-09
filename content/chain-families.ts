@@ -1,4 +1,4 @@
-import { CHAINS, type Chain, type ChainCategory } from "./chains"
+import { CHAINS, type Chain, type ChainFamilySlug } from "./chains"
 
 export type Feature = {
   title: string
@@ -18,8 +18,8 @@ export type FaqEntry = {
 export type ChainFamily = {
   /** URL segment: /chains/<slug>. */
   slug: string
-  /** Ties the page to the chips on the chains index. */
-  category: ChainCategory
+  /** Every chain whose `family` is this value publishes under this page. */
+  category: ChainFamilySlug
   /** Reads inside headings — "EVM chains", "UTXO chains". */
   name: string
   /** The chain the Figma frame was drawn around, for the closing heading. */
@@ -30,6 +30,13 @@ export type ChainFamily = {
   vaultView: { title: string; body: string; features: Feature[] }
   faq: { title: string; items: FaqEntry[] }
   meta: { title: string; description: string }
+  /**
+   * Used by the chain pages under this family. Without it all 13 EVM chains
+   * would carry the family's title verbatim, and 13 identical titles compete
+   * with each other instead of ranking. `l1` has none because its own meta is
+   * already per chain.
+   */
+  chainMeta?: { title: string; description: string }
   /** Matched against article titles and tags for the closing rail. */
   articleTerms: string[]
   /**
@@ -69,15 +76,15 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     name: "EVM chains",
     chainLabel: "Ethereum",
     asset: "ETH",
-    heroArt: "hero-evm",
+    heroArt: "hero-eth",
     hero: {
-      title: "Hold EVM chains without holding a single key",
-      body: "Send ETH, swap tokens, and call smart contracts. Every transaction requires your device threshold to approve it, not one exposed private key.",
-      cta: "Add Ethereum to your Vault",
+      title: "Hold {chain} without holding a single key",
+      body: "Send {asset}, swap tokens, and call smart contracts. Every transaction requires your device threshold to approve it, not one exposed private key.",
+      cta: "Add {chain} to your Vault",
     },
     vaultView: {
-      title: "Your ETH and tokens, in one vault view",
-      body: "ERC-20 balances sit alongside native ETH in the same vault. No separate wallet needed for tokens.",
+      title: "Your {asset} and tokens, in one vault view",
+      body: "ERC-20 balances sit alongside native {asset} in the same vault. No separate wallet needed for tokens.",
       features: [
         {
           title: "EVM signing",
@@ -97,10 +104,10 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       ],
     },
     faq: {
-      title: "Ethereum on Vultisig, answered",
+      title: "{chain} on Vultisig, answered",
       items: [
         {
-          question: "Can I use Vultisig to interact with dApps on Ethereum?",
+          question: "Can I use Vultisig to interact with dApps on {chain}?",
           answer:
             "Yes. Vultisig supports smart contract calls, so you can approve, stake, or interact with supported dApps directly from your vault.",
         },
@@ -132,6 +139,11 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       description:
         "Hold ETH, ERC-20 tokens and every EVM chain in one MPC vault. Smart contract calls and swaps approved by your device threshold — no seed phrase, no single private key.",
     },
+    chainMeta: {
+      title: "{chain} Wallet — Hold {asset} and ERC-20s Without a Seed Phrase",
+      description:
+        "Hold {chain} in a Vultisig MPC vault. Send {asset}, swap tokens and call smart contracts, each approved by your device threshold — no seed phrase, no single private key.",
+    },
     articleTerms: ["ethereum", "evm", "erc-20", "arbitrum", "base", "layer 2"],
   },
   {
@@ -140,14 +152,14 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     name: "UTXO chains",
     chainLabel: "Bitcoin",
     asset: "BTC",
-    heroArt: "hero-utxo",
+    heroArt: "hero-btc",
     hero: {
-      title: "Hold UTXO chains without holding a single key",
-      body: "No seed phrase. No custodian. Your BTC is split across your own devices using MPC, and it takes your threshold to move a single sat.",
-      cta: "Add Bitcoin to your Vault",
+      title: "Hold {chain} without holding a single key",
+      body: "No seed phrase. No custodian. Your {asset} is split across your own devices using MPC, and it takes your threshold to move any of it.",
+      cta: "Add {chain} to your Vault",
     },
     vaultView: {
-      title: "Your BTC, in one vault view",
+      title: "Your {asset}, in one vault view",
       body: "Same interface as every other asset in Vultisig. Balance, address, and history, backed by your device threshold instead of a private key sitting on one phone.",
       features: [
         {
@@ -168,31 +180,31 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       ],
     },
     faq: {
-      title: "Bitcoin on Vultisig, answered",
+      title: "{chain} on Vultisig, answered",
       items: [
         {
-          question: "Do I need a hardware wallet to hold Bitcoin on Vultisig?",
+          question: "Do I need a hardware wallet to hold {chain} on Vultisig?",
           answer:
             "No. Vultisig splits your key across the devices you already own — phone, laptop, tablet. A hardware wallet is optional, not required.",
         },
         {
-          question: "What address format does Vultisig use for Bitcoin?",
+          question: "What address format does Vultisig use for {chain}?",
           answer:
             "Native SegWit. Anyone can send to it from any wallet or exchange, fees are lower than legacy formats, and it appears on every block explorer like any other address.",
         },
         {
           question:
-            "Can I hold Bitcoin in a Secure Vault instead of a Fast Vault?",
+            "Can I hold {chain} in a Secure Vault instead of a Fast Vault?",
           answer:
             "Yes. A Fast Vault is 1-of-2 for day-to-day spending; a Secure Vault is 2-of-3 and better suited to larger holdings. The same Bitcoin can live in either, and you choose per vault.",
         },
         {
-          question: "What happens to my Bitcoin if I lose a device?",
+          question: "What happens to my {chain} if I lose a device?",
           answer:
             "Nothing, as long as you can still meet your threshold. A 2-of-3 vault keeps working with two devices, and you can re-share to a replacement device without moving funds or restoring a seed phrase.",
         },
         {
-          question: "Does MPC change how Bitcoin transactions work on-chain?",
+          question: "Does MPC change how {chain} transactions work on-chain?",
           answer:
             "No. Threshold signing produces one ordinary signature, so the transaction is indistinguishable on-chain from a single-key one. There is no multisig script, no extra fee, and no on-chain trace of your security setup.",
         },
@@ -203,6 +215,11 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       description:
         "Hold Bitcoin and every UTXO chain in one MPC vault. Native SegWit addresses, standard on-chain transactions, and no seed phrase — your key is split across devices you already own.",
     },
+    chainMeta: {
+      title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
+      description:
+        "Hold {chain} in a Vultisig MPC vault. Native SegWit addresses, ordinary on-chain transactions and no seed phrase — your key is split across devices you already own.",
+    },
     articleTerms: ["bitcoin", "btc", "utxo", "segwit", "litecoin"],
   },
   {
@@ -211,14 +228,14 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     name: "Cosmos chains",
     chainLabel: "THORChain",
     asset: "RUNE",
-    heroArt: "hero-cosmos",
+    heroArt: "hero-rune",
     hero: {
-      title: "Hold Cosmos chains without holding a single key",
+      title: "Hold {chain} without holding a single key",
       body: "RUNE settles every native cross-chain swap in Vultisig. Hold it, send it, or let it work quietly in the background every time you swap.",
-      cta: "Add THORChain to your Vault",
+      cta: "Add {chain} to your Vault",
     },
     vaultView: {
-      title: "Your RUNE, in one vault view",
+      title: "Your {asset}, in one vault view",
       body: "RUNE behaves like any other asset in your vault, but it's also the settlement layer for every swap you run through Vultisig.",
       features: [
         {
@@ -239,7 +256,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       ],
     },
     faq: {
-      title: "THORChain on Vultisig, answered",
+      title: "{chain} on Vultisig, answered",
       items: [
         {
           question: "Why does Vultisig use THORChain for swaps?",
@@ -273,7 +290,77 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       description:
         "Hold Cosmos SDK chains in one MPC vault. Stake, transfer over IBC and settle native cross-chain swaps through THORChain — every action approved by your device threshold.",
     },
+    chainMeta: {
+      title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
+      description:
+        "Hold {chain} in a Vultisig MPC vault. Stake, transfer over IBC and settle native cross-chain swaps, each approved by your device threshold — no seed phrase, no custodian.",
+    },
     articleTerms: ["cosmos", "thorchain", "rune", "osmosis", "atom", "ibc"],
+  },
+  {
+    slug: "l1",
+    category: "l1",
+    name: "independent L1s",
+    chainLabel: "Solana",
+    asset: "SOL",
+    heroArt: "hero-sol",
+    hero: {
+      title: "Hold {chain} without holding a single key",
+      body: "{chain} runs on its own architecture, with its own accounts and its own signature scheme. Vultisig holds it in the same vault as everything else, and it still takes your device threshold to move any of it.",
+      cta: "Add {chain} to your Vault",
+    },
+    vaultView: {
+      title: "Your {asset}, in one vault view",
+      body: "Balance, address and history sit beside every other asset you hold. The chain keeps its own rules; what changes is that no single device can spend on it alone.",
+      features: [
+        {
+          title: "Its own signature scheme",
+          body: "Threshold signing covers Ed25519 chains as well as secp256k1 ones, so the vault is not limited to one curve.",
+          icon: "feature-1",
+        },
+        {
+          title: "Ordinary addresses",
+          body: "Vultisig derives the chain's standard address format, so every explorer, exchange and service treats it normally.",
+          icon: "feature-2",
+        },
+        {
+          title: "One vault, every chain",
+          body: "No separate wallet and no second seed phrase for a chain that works differently underneath.",
+          icon: "feature-3",
+        },
+      ],
+    },
+    faq: {
+      title: "{chain} on Vultisig, answered",
+      items: [
+        {
+          question: "Does Vultisig support {chain} natively?",
+          answer:
+            "Yes. It is a chain in the same vault as Bitcoin and Ethereum, with its own address and balance, not a wrapped or bridged representation of one.",
+        },
+        {
+          question: "Does MPC work on chains that do not use secp256k1?",
+          answer:
+            "Yes. Vultisig implements threshold signing for Ed25519 as well as ECDSA, which is what lets one vault cover chains built on different curves.",
+        },
+        {
+          question: "Is my {chain} address a standard address?",
+          answer:
+            "Yes. The vault derives the chain's normal address format, so anyone can send to it from any wallet or exchange and it appears on explorers like any other.",
+        },
+        {
+          question: "What happens if I lose a device?",
+          answer:
+            "Nothing, as long as you can still meet your threshold. A 2-of-3 vault keeps working with two devices, and you can re-share to a replacement without moving funds or restoring a seed phrase.",
+        },
+      ],
+    },
+    meta: {
+      title: "{chain} Wallet — Hold {asset} With No Seed Phrase | Vultisig",
+      description:
+        "Hold {chain} in an MPC vault alongside every other chain Vultisig supports. Your key is split across devices you already own, and it takes your threshold to move {asset}.",
+    },
+    articleTerms: ["solana", "sui", "ton", "tron", "xrp", "polkadot"],
   },
 ]
 
@@ -316,5 +403,30 @@ export function getChainFamily(slug: string): ChainFamily | undefined {
 
 /** The chains this family covers, in the index's alphabetical order. */
 export function chainsInFamily(family: ChainFamily): Chain[] {
-  return CHAINS.filter((chain) => chain.categories.includes(family.category))
+  return CHAINS.filter((chain) => chain.family === family.category)
+}
+
+/** Resolves a /chains/<family>/<chain> pair, rejecting mismatched pairs. */
+export function getChainInFamily(
+  familySlug: string,
+  chainSlug: string,
+): { family: ChainFamily; chain: Chain } | undefined {
+  const family = getChainFamily(familySlug)
+  if (!family) return undefined
+  const chain = CHAINS.find(
+    (c) => c.slug === chainSlug && c.family === family.category,
+  )
+  return chain ? { family, chain } : undefined
+}
+
+/**
+ * Fills the family template for one chain. Figma leaves `[Chain]` in its
+ * headline for exactly this, and the rest of the copy names an asset the same
+ * way, so both are placeholders the page substitutes rather than prose repeated
+ * 38 times.
+ */
+export function fill(text: string, chain: Pick<Chain, "name" | "ticker">) {
+  return text
+    .replaceAll("{chain}", chain.name)
+    .replaceAll("{asset}", chain.ticker)
 }

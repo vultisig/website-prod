@@ -1,3 +1,6 @@
+import { CHAIN_FAMILIES } from "@/content/chain-families"
+import { CHAINS } from "@/content/chains"
+
 // Shared helpers for the split sitemap (index + pages + posts).
 // Only indexable HTML routes belong here — non-HTML assets such as llms.txt,
 // llms-full.txt and SKILL.md are intentionally excluded from the sitemap.
@@ -17,9 +20,6 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/mpc", changefreq: "monthly", priority: 0.8 },
   { path: "/how-it-works", changefreq: "monthly", priority: 0.8 },
   { path: "/chains", changefreq: "monthly", priority: 0.8 },
-  { path: "/chains/evm", changefreq: "monthly", priority: 0.7 },
-  { path: "/chains/utxo", changefreq: "monthly", priority: 0.7 },
-  { path: "/chains/cosmos", changefreq: "monthly", priority: 0.7 },
   { path: "/docs", changefreq: "monthly", priority: 0.8 },
   { path: "/vult", changefreq: "weekly", priority: 0.8 },
   { path: "/agent/for-agents", changefreq: "monthly", priority: 0.8 },
@@ -28,6 +28,19 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/support", changefreq: "monthly", priority: 0.7 },
   { path: "/privacy", changefreq: "yearly", priority: 0.5 },
   { path: "/termofservice", changefreq: "yearly", priority: 0.5 },
+  // The chain family hubs and the 38 chain pages under them are derived rather
+  // than listed, so a chain added to content/chains.ts is in the sitemap the
+  // same day rather than whenever someone remembers this file.
+  ...CHAIN_FAMILIES.map((family): StaticPage => ({
+    path: `/chains/${family.slug}`,
+    changefreq: "monthly",
+    priority: 0.7,
+  })),
+  ...CHAINS.map((chain): StaticPage => ({
+    path: `/chains/${chain.family}/${chain.slug}`,
+    changefreq: "monthly",
+    priority: 0.6,
+  })),
 ]
 
 export function escapeXml(value: string): string {

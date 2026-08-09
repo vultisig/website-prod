@@ -12,9 +12,26 @@ export type ChainCategory = Exclude<
   "all"
 >
 
+/** Routing bucket. Every chain has exactly one, unlike `categories`. */
+export type ChainFamilySlug = "utxo" | "evm" | "cosmos" | "l1"
+
 export type Chain = {
   /** Display name, and the search key alongside `ticker`. */
   name: string
+  /**
+   * URL segment under its family: /chains/evm/arb. Ticker-derived, except where
+   * tickers collide — Base, Optimism and zkSync all report ETH, and QBTC
+   * reports BTC — so those take their own name.
+   */
+  slug: string
+  /**
+   * The one family this chain is published under. `categories` can hold several
+   * and drives the index's filter chips; this picks the single canonical URL,
+   * so a chain never answers on two paths. EVM wins for the rollups and for the
+   * Cosmos chains that execute EVM (Cronos, Sei), and `l1` collects the chains
+   * that are their own architecture.
+   */
+  family: ChainFamilySlug
   /** Asset ticker shown under the name. */
   ticker: string
   /** `public/v5/chains/chain-<icon>.svg`, exported from the Figma logo set. */
@@ -40,6 +57,8 @@ export type Chain = {
 export const CHAINS: Chain[] = [
   {
     name: "Akash",
+    slug: "akt",
+    family: "cosmos",
     ticker: "AKT",
     icon: "akash",
     glow: "#FF414C",
@@ -47,6 +66,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Arbitrum",
+    slug: "arb",
+    family: "evm",
     ticker: "ARB",
     icon: "arbitrum",
     glow: "#5C6C85",
@@ -54,6 +75,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Avalanche",
+    slug: "avax",
+    family: "evm",
     ticker: "AVAX",
     icon: "avalanche",
     glow: "#FF394A",
@@ -61,6 +84,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "BSC",
+    slug: "bnb",
+    family: "evm",
     ticker: "BNB",
     icon: "bsc",
     glow: "#F0B90B",
@@ -68,6 +93,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Base",
+    slug: "base",
+    family: "evm",
     ticker: "ETH",
     icon: "base",
     glow: "#0000FF",
@@ -75,6 +102,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Bitcoin",
+    slug: "btc",
+    family: "utxo",
     ticker: "BTC",
     icon: "bitcoin",
     glow: "#F7931A",
@@ -82,6 +111,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Bitcoin-Cash",
+    slug: "bch",
+    family: "utxo",
     ticker: "BCH",
     icon: "bitcoin-cash",
     glow: "#0AC18E",
@@ -89,6 +120,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Bittensor",
+    slug: "tao",
+    family: "l1",
     ticker: "TAO",
     icon: "bittensor",
     glow: "#536C93",
@@ -96,6 +129,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Blast",
+    slug: "blast",
+    family: "evm",
     ticker: "BLAST",
     icon: "blast",
     glow: "#ADAD00",
@@ -103,6 +138,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Cardano",
+    slug: "ada",
+    family: "utxo",
     ticker: "ADA",
     icon: "cardano",
     glow: "#2359DC",
@@ -110,6 +147,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Cosmos",
+    slug: "atom",
+    family: "cosmos",
     ticker: "ATOM",
     icon: "cosmos",
     glow: "#525672",
@@ -117,6 +156,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "CronosChain",
+    slug: "cro",
+    family: "evm",
     ticker: "CRO",
     icon: "cronoschain",
     glow: "#536C93",
@@ -124,6 +165,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Dash",
+    slug: "dash",
+    family: "utxo",
     ticker: "DASH",
     icon: "dash",
     glow: "#008DE4",
@@ -131,6 +174,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Dogecoin",
+    slug: "doge",
+    family: "utxo",
     ticker: "DOGE",
     icon: "dogecoin",
     glow: "#D8C173",
@@ -138,6 +183,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Dydx",
+    slug: "dydx",
+    family: "cosmos",
     ticker: "DYDX",
     icon: "dydx",
     glow: "#9293FB",
@@ -145,6 +192,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Ethereum",
+    slug: "eth",
+    family: "evm",
     ticker: "ETH",
     icon: "ethereum",
     glow: "#8C8C8C",
@@ -152,6 +201,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Hyperliquid",
+    slug: "hype",
+    family: "evm",
     ticker: "HYPE",
     icon: "hyperliquid",
     glow: "#2CFFAB",
@@ -159,6 +210,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Kujira",
+    slug: "kuji",
+    family: "cosmos",
     ticker: "KUJI",
     icon: "kujira",
     glow: "#E53935",
@@ -166,6 +219,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Litecoin",
+    slug: "ltc",
+    family: "utxo",
     ticker: "LTC",
     icon: "litecoin",
     glow: "#345D9D",
@@ -173,6 +228,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Mantle",
+    slug: "mantle",
+    family: "evm",
     ticker: "MNT",
     icon: "mantle",
     glow: "#536C93",
@@ -180,6 +237,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "MayaChain",
+    slug: "cacao",
+    family: "cosmos",
     ticker: "CACAO",
     icon: "mayachain",
     glow: "#35DFE8",
@@ -187,6 +246,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Noble",
+    slug: "noble",
+    family: "cosmos",
     ticker: "USDC",
     icon: "noble",
     glow: "#8DABFF",
@@ -194,6 +255,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Optimism",
+    slug: "op",
+    family: "evm",
     ticker: "ETH",
     icon: "optimism",
     glow: "#FF0420",
@@ -201,6 +264,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Osmosis",
+    slug: "osmo",
+    family: "cosmos",
     ticker: "OSMO",
     icon: "osmosis",
     glow: "#A24A9C",
@@ -208,6 +273,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Polkadot",
+    slug: "dot",
+    family: "l1",
     ticker: "DOT",
     icon: "polkadot",
     glow: "#FF2670",
@@ -215,6 +282,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Polygon",
+    slug: "pol",
+    family: "evm",
     ticker: "POL",
     icon: "polygon",
     glow: "#6600FF",
@@ -222,6 +291,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "QBTC",
+    slug: "qbtc",
+    family: "l1",
     ticker: "BTC",
     icon: "qbtc",
     glow: "#DBAF54",
@@ -229,6 +300,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Ripple",
+    slug: "xrp",
+    family: "l1",
     ticker: "XRP",
     icon: "ripple",
     glow: "#536C93",
@@ -236,6 +309,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Sei",
+    slug: "sei",
+    family: "evm",
     ticker: "SEI",
     icon: "sei",
     glow: "#9D201A",
@@ -243,14 +318,26 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Solana",
+    slug: "sol",
+    family: "l1",
     ticker: "SOL",
     icon: "solana",
     glow: "#A25AE7",
     categories: [],
   },
-  { name: "Sui", ticker: "SUI", icon: "sui", glow: "#536C93", categories: [] },
+  {
+    name: "Sui",
+    slug: "sui",
+    family: "l1",
+    ticker: "SUI",
+    icon: "sui",
+    glow: "#536C93",
+    categories: [],
+  },
   {
     name: "THORChain",
+    slug: "rune",
+    family: "cosmos",
     ticker: "RUNE",
     icon: "thorchain",
     glow: "#15E1D6",
@@ -258,6 +345,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Terra",
+    slug: "luna",
+    family: "cosmos",
     ticker: "LUNA",
     icon: "terra",
     glow: "#56B2A1",
@@ -265,14 +354,26 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "TerraClassic",
+    slug: "lunc",
+    family: "cosmos",
     ticker: "LUNC",
     icon: "terraclassic",
     glow: "#5494F8",
     categories: ["cosmos"],
   },
-  { name: "Ton", ticker: "TON", icon: "ton", glow: "#0098EA", categories: [] },
+  {
+    name: "Ton",
+    slug: "ton",
+    family: "l1",
+    ticker: "TON",
+    icon: "ton",
+    glow: "#0098EA",
+    categories: [],
+  },
   {
     name: "Tron",
+    slug: "trx",
+    family: "l1",
     ticker: "TRX",
     icon: "tron",
     glow: "#FF060A",
@@ -280,6 +381,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Zcash",
+    slug: "zec",
+    family: "utxo",
     ticker: "ZEC",
     icon: "zcash",
     glow: "#F3B724",
@@ -287,6 +390,8 @@ export const CHAINS: Chain[] = [
   },
   {
     name: "Zksync",
+    slug: "zksync",
+    family: "evm",
     ticker: "ETH",
     icon: "zksync",
     glow: "#536C93",
