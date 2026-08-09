@@ -1,4 +1,7 @@
 import type { Metadata } from "next"
+import Link from "next/link"
+
+import { CHAIN_FAMILIES } from "@/content/chain-families"
 
 import ChainsExplorer from "./components/chains-explorer"
 
@@ -33,6 +36,30 @@ export default function ChainsPage() {
         </header>
 
         <ChainsExplorer />
+
+        {/*
+          The only route into the family pages, so it sits here rather than
+          inside the explorer: the grid's filter lives in client state, and a
+          link that appears only once a chip is picked is a link a crawler never
+          reaches. Rendered on the server, it is in the HTML for every visit.
+        */}
+        <nav
+          aria-label="Chain families"
+          className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2"
+        >
+          <span className="text-v5-body-m text-v5-text-tertiary">
+            How Vultisig handles each family:
+          </span>
+          {CHAIN_FAMILIES.map((family) => (
+            <Link
+              key={family.slug}
+              href={`/chains/${family.slug}`}
+              className="text-v5-body-m font-medium text-v5-cta underline-offset-4 hover:underline"
+            >
+              {family.name}
+            </Link>
+          ))}
+        </nav>
       </div>
     </main>
   )
