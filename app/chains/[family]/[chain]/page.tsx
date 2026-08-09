@@ -9,9 +9,7 @@ import {
 import { CHAINS } from "@/content/chains"
 
 import ChainPageBody from "../page-body"
-import { familyJsonLd, relatedArticles, SITE } from "../seo"
-
-export const revalidate = 3600
+import { familyJsonLd, SITE } from "../seo"
 
 /** Only the 38 real pairs resolve; a chain under the wrong family is a 404. */
 export const dynamicParams = false
@@ -63,10 +61,6 @@ export default async function ChainPage({ params }: PageProps) {
   if (!found) notFound()
 
   const { family, chain } = found
-  const articles = await relatedArticles([
-    chain.name.toLowerCase(),
-    chain.ticker.toLowerCase(),
-  ])
 
   return (
     <main className="min-h-screen bg-v5-page px-4 pb-[112px] pt-[126px] md:px-[30px] md:pb-[30px] md:pt-[216px]">
@@ -101,7 +95,6 @@ export default async function ChainPage({ params }: PageProps) {
         }}
         chains={chainsInFamily(family)}
         currentSlug={chain.slug}
-        articles={articles}
       />
     </main>
   )

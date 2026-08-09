@@ -7,8 +7,8 @@ import {
   FAMILY_ACTIONS,
   type ChainFamily,
 } from "@/content/chain-families"
+import { CHAIN_ARTICLES } from "@/content/chain-articles"
 import type { Chain } from "@/content/chains"
-import type { Article } from "@/lib/articles"
 
 import {
   BuyIcon,
@@ -41,7 +41,6 @@ export type PageBodyProps = {
   /** Rail of sibling chains; the current one is rendered as plain text. */
   chains: Chain[]
   currentSlug?: string
-  articles: Article[]
 }
 
 /**
@@ -59,7 +58,6 @@ export default function ChainPageBody({
   breadcrumb,
   chains,
   currentSlug,
-  articles,
 }: PageBodyProps) {
   const t = (text: string) => fill(text, subject)
 
@@ -274,45 +272,52 @@ export default function ChainPageBody({
         }))}
       />
 
-      {articles.length > 0 && (
-        <div className="mx-auto max-w-v5-content">
-          <section
-            className={`${PANEL} flex flex-col gap-10 bg-v5-accent md:gap-[50px]`}
-          >
-            <h2 className="text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-display">
-              More on {subject.name} and Vultisig
-            </h2>
-            <ul className="grid grid-cols-1 gap-[30px] md:grid-cols-2 lg:grid-cols-3">
-              {articles.map((article) => (
-                <li key={article.slug}>
-                  <Link
-                    href={`/articles/${article.slug}`}
-                    className="flex h-full flex-col overflow-hidden rounded-3xl bg-v5-white transition-opacity hover:opacity-90"
-                  >
-                    {article.image && (
-                      <Image
-                        src={article.image}
-                        alt=""
-                        width={440}
-                        height={242}
-                        className="h-[242px] w-full object-cover"
-                      />
-                    )}
-                    <span className="flex flex-1 flex-col gap-3.5 p-5">
-                      <span className="text-v5-title2 font-medium text-v5-text-inverse">
-                        {article.title}
-                      </span>
-                      <span className="line-clamp-3 text-v5-body-s text-v5-text-inverse/70">
-                        {article.description}
-                      </span>
+      {/*
+        Figma's closing rail. Card is 440x448 over a 242px image, then title,
+        standfirst and date at 20/15/13 — the three sizes land on Subtitle,
+        Card Body and Card Meta exactly.
+      */}
+      <div className="mx-auto max-w-v5-content">
+        {/*
+          The only panel Figma insets vertically but not horizontally: the row
+          spans the full 1380 so three 440px cards and two 30px gaps fill it
+          exactly. Padding it like the others narrows every card by 40px.
+        */}
+        <section className="flex flex-col gap-10 rounded-[20px] bg-v5-accent px-5 py-10 md:gap-[50px] md:rounded-v5-panel md:px-0 md:py-[60px]">
+          <h2 className="px-0 text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-display">
+            More on {subject.name} and Vultisig
+          </h2>
+          <ul className="grid grid-cols-1 gap-[30px] md:grid-cols-2 lg:grid-cols-3">
+            {CHAIN_ARTICLES.map((article) => (
+              <li key={article.slug}>
+                <Link
+                  href={`/articles/${article.slug}`}
+                  className="flex h-full flex-col overflow-hidden rounded-3xl bg-v5-white transition-opacity hover:opacity-90"
+                >
+                  <Image
+                    src={`/v5/chains/${article.image}.webp`}
+                    alt=""
+                    width={880}
+                    height={484}
+                    className="aspect-[440/242] w-full object-cover"
+                  />
+                  <span className="flex flex-1 flex-col gap-3.5 px-5 py-4">
+                    <span className="text-v5-subtitle font-semibold text-v5-text-inverse">
+                      {article.title}
                     </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      )}
+                    <span className="flex-1 text-v5-card-body font-normal text-v5-text-inverse">
+                      {article.description}
+                    </span>
+                    <span className="text-v5-card-meta text-v5-text-tertiary">
+                      {article.date}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
     </>
   )
 }

@@ -1,33 +1,9 @@
 import { fill, type ChainFamily } from "@/content/chain-families"
 import type { Chain } from "@/content/chains"
-import { getAllArticles, type Article } from "@/lib/articles"
 
 export const SITE = "https://vultisig.com"
 
 type Subject = Pick<Chain, "name" | "ticker">
-
-/**
- * Pulls the closing rail from the blog rather than a hand-kept list, so the
- * links stay alive as articles are published. `getAllArticles` returns an empty
- * array when the database is unreachable, which drops the section rather than
- * failing the build.
- */
-export async function relatedArticles(terms: string[]): Promise<Article[]> {
-  const all = await getAllArticles()
-  return all
-    .map((article) => {
-      const haystack =
-        `${article.title} ${article.description} ${(article.tags ?? []).join(" ")}`.toLowerCase()
-      return {
-        article,
-        hits: terms.filter((term) => haystack.includes(term)).length,
-      }
-    })
-    .filter(({ hits }) => hits > 0)
-    .sort((a, b) => b.hits - a.hits)
-    .slice(0, 3)
-    .map(({ article }) => article)
-}
 
 /**
  * FAQPage lets the answers surface as rich results, and BreadcrumbList gives

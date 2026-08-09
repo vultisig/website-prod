@@ -8,11 +8,8 @@ import {
   getChainFamily,
 } from "@/content/chain-families"
 
-import { familyJsonLd, relatedArticles, SITE } from "./seo"
+import { familyJsonLd, SITE } from "./seo"
 import ChainPageBody from "./page-body"
-
-/** Articles are the only part of the page that changes without a deploy. */
-export const revalidate = 3600
 
 /** Only the four families resolve; anything else under /chains/ is a 404. */
 export const dynamicParams = false
@@ -61,7 +58,6 @@ export default async function ChainFamilyPage({ params }: PageProps) {
 
   const chains = chainsInFamily(family)
   const subject = { name: family.chainLabel, ticker: family.asset }
-  const articles = await relatedArticles(family.articleTerms)
 
   return (
     <main className="min-h-screen bg-v5-page px-4 pb-[112px] pt-[126px] md:px-[30px] md:pb-[30px] md:pt-[216px]">
@@ -88,7 +84,6 @@ export default async function ChainFamilyPage({ params }: PageProps) {
         heroArt={family.heroArt}
         breadcrumb={{ label: family.name }}
         chains={chains}
-        articles={articles}
       />
     </main>
   )
