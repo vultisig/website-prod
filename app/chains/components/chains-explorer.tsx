@@ -6,6 +6,50 @@ import { useMemo, useState } from "react"
 import { CHAIN_CATEGORIES, CHAINS, type Chain } from "@/content/chains"
 import { cn } from "@/lib/utils"
 
+import {
+  BuyIcon,
+  FunctionIcon,
+  ReceiveIcon,
+  SendIcon,
+  SwapIcon,
+} from "./action-icons"
+
+/** The wallet's main-view actions, in the order it renders them. */
+const ACTIONS = [
+  { label: "Swap", Icon: SwapIcon },
+  { label: "Send", Icon: SendIcon },
+  { label: "Buy", Icon: BuyIcon },
+  { label: "Function", Icon: FunctionIcon },
+  { label: "Receive", Icon: ReceiveIcon },
+]
+
+/**
+ * Hovering a card shows what the vault can do on that chain.
+ *
+ * The reference recording holds the whole change to one run: the fill lifts off
+ * the slate to white, the brand glow blooms, the mark and its label climb, and
+ * the action row arrives already at its resting height — it fades, it does not
+ * slide. Measured on the recording, entry covers 0 to 45.5px in ~500ms passing
+ * half way at about 48% of the run, which is what `v5-drift` traces. Leaving is
+ * a different curve: it snaps back in ~200ms, so the run length is set on hover
+ * and the shorter one is what applies on the way out.
+ *
+ * Nothing here is interactive. The row illustrates the app rather than linking
+ * into it, so it stays inert and only the labels reach the accessibility tree.
+ */
+const RUN =
+  "duration-200 ease-v5-drift [@media(hover:hover)]:group-hover:duration-500"
+
+/**
+ * The lift is exactly what the layout would do on its own. Card padding is 43
+ * over 30, and stacking mark, label and action row inside it — 72 + 20 + 72 +
+ * 20 + 71 — fills the 328px card to the pixel. Without the row the remaining
+ * pair centres 45.5px lower, so hovering translates by that difference instead
+ * of animating the row into flow, which would thrash layout on 38 cards.
+ */
+const LIFT =
+  "[@media(hover:hover)]:group-hover:-translate-y-[45.5px] motion-reduce:!translate-y-0"
+
 /**
  * Each card hides a 152px brand-coloured circle under a 115px blur, centred
  * 45px above the mark, and fades it in on hover — Figma ships it on every card
@@ -18,36 +62,85 @@ import { cn } from "@/lib/utils"
  * The circle is its own layer so the filter cannot reach the mark above it, and
  * the radius halves on the way out: Figma's layer-blur radius is a diameter
  * where CSS `blur()` takes a standard deviation, so 115 lands at 57.5px.
+ *
+ * It settles at 28% rather than Figma's opaque fill. Sampled across the
+ * recording the wash falls off on the same curve as this layer but reaches only
+ * about a quarter of its strength, so the blur is right and the alpha is not —
+ * at full strength the card reads as tinted rather than lit.
  */
 const GLOW =
-  "pointer-events-none absolute left-1/2 top-[3px] size-[152px] -translate-x-1/2 rounded-full opacity-0 transition-opacity duration-300 [@media(hover:hover)]:group-hover:opacity-100 motion-reduce:transition-none"
+  "pointer-events-none absolute left-1/2 top-[3px] size-[152px] -translate-x-1/2 rounded-full opacity-0 transition-opacity [@media(hover:hover)]:group-hover:opacity-[0.28] motion-reduce:transition-none"
 
 /**
  * One chain tile: mark over name over ticker, centred in the space left by the
  * card's uneven 43/30 padding — which is what puts the mark 88.5px down from
  * the card's top edge on the Figma frame.
+ *
+ * The card carries `hover:` rather than `group-hover:` for its own fill: it is
+ * the element holding `group`, and an element is not its own group ancestor.
  */
 function ChainCard({ name, ticker, icon, glow }: Chain) {
   return (
-    <li className="group relative flex flex-col items-center justify-center gap-5 overflow-hidden rounded-3xl bg-v5-panel px-4 pb-[30px] pt-[43px] md:h-[328px]">
+    <li
+      className={cn(
+        "group relative flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-v5-panel px-4 pb-[30px] pt-[43px] transition-colors md:h-[328px]",
+        RUN,
+        "[@media(hover:hover)]:hover:bg-v5-white",
+      )}
+    >
       <span
         aria-hidden
         style={{ backgroundColor: glow, filter: "blur(57.5px)" }}
-        className={GLOW}
+        className={cn(GLOW, RUN)}
       />
 
-      <Image
-        src={`/v5/chains/chain-${icon}.svg`}
-        alt=""
-        width={72}
-        height={72}
-        className="relative size-[72px] max-w-none object-contain"
-      />
+      <div
+        className={cn(
+          "relative flex flex-col items-center gap-5 transition-transform",
+          RUN,
+          LIFT,
+        )}
+      >
+        {/*
+          The slot is 72px because that is what the card's stack measures
+          against, but Figma fits the mark itself into 54 inside it — its
+          Ethereum lands at exactly 33x54 there. Rendering at the full 72 makes
+          every mark a third too big.
+        */}
+        <span className="flex size-[72px] items-center justify-center">
+          <Image
+            src={`/v5/chains/chain-${icon}.svg`}
+            alt=""
+            width={54}
+            height={54}
+            className="size-[54px] max-w-none object-contain"
+          />
+        </span>
 
-      <span className="relative flex flex-col items-center gap-1.5 pb-3 text-center text-v5-text-inverse">
-        <span className="text-v5-title1 font-medium">{name}</span>
-        <span className="text-v5-card-body font-normal">{ticker}</span>
-      </span>
+        <span className="flex flex-col items-center gap-1.5 pb-3 text-center text-v5-text-inverse">
+          <span className="text-v5-title1 font-medium">{name}</span>
+          <span className="text-v5-card-body font-normal">{ticker}</span>
+        </span>
+      </div>
+
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-x-0 bottom-[30px] flex justify-center gap-[11px] opacity-0 transition-opacity",
+          RUN,
+          "[@media(hover:hover)]:group-hover:opacity-100",
+        )}
+      >
+        {ACTIONS.map(({ label, Icon }) => (
+          <span key={label} className="flex flex-col items-center gap-2">
+            <span className="flex size-12 items-center justify-center rounded-xl bg-v5-page text-v5-text-inverse">
+              <Icon aria-hidden className="size-[18px]" />
+            </span>
+            <span className="text-v5-caption text-v5-text-tertiary">
+              {label}
+            </span>
+          </span>
+        ))}
+      </div>
     </li>
   )
 }
