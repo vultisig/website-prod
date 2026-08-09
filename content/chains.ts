@@ -398,3 +398,14 @@ export const CHAINS: Chain[] = [
     categories: ["evm", "l2"],
   },
 ]
+
+/**
+ * Where a chain is published. Callers hold the slug rather than the family, so
+ * a chain that moves between families — Cronos or Sei, if EVM ever stops being
+ * the right home — only has to change here.
+ */
+export function chainHref(slug: string): string {
+  const chain = CHAINS.find((c) => c.slug === slug)
+  if (!chain) throw new Error(`chainHref: no chain with slug "${slug}"`)
+  return `/chains/${chain.family}/${chain.slug}`
+}

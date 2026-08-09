@@ -1,9 +1,15 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { useMemo, useRef, useState } from "react"
 
-import { CHAIN_CATEGORIES, CHAINS, type Chain } from "@/content/chains"
+import {
+  chainHref,
+  CHAIN_CATEGORIES,
+  CHAINS,
+  type Chain,
+} from "@/content/chains"
 import { cn } from "@/lib/utils"
 
 import {
@@ -79,68 +85,72 @@ const GLOW =
  * The card carries `hover:` rather than `group-hover:` for its own fill: it is
  * the element holding `group`, and an element is not its own group ancestor.
  */
-function ChainCard({ name, ticker, icon, glow }: Chain) {
+function ChainCard({ name, ticker, icon, glow, slug }: Chain) {
   return (
-    <li
-      className={cn(
-        "group relative flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-v5-panel px-4 pb-[30px] pt-[43px] transition-colors md:h-[328px]",
-        RUN,
-        "[@media(hover:hover)]:hover:bg-v5-white",
-      )}
-    >
-      <span
-        aria-hidden
-        style={{ backgroundColor: glow, filter: "blur(57.5px)" }}
-        className={cn(GLOW, RUN)}
-      />
-
-      <div
+    <li>
+      <Link
+        href={chainHref(slug)}
         className={cn(
-          "relative flex flex-col items-center gap-5 transition-transform",
+          "group relative flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-v5-panel px-4 pb-[30px] pt-[43px] transition-colors md:h-[328px]",
           RUN,
-          LIFT,
+          "[@media(hover:hover)]:hover:bg-v5-white",
         )}
       >
-        {/*
+        <span
+          aria-hidden
+          style={{ backgroundColor: glow, filter: "blur(57.5px)" }}
+          className={cn(GLOW, RUN)}
+        />
+
+        <div
+          className={cn(
+            "relative flex flex-col items-center gap-5 transition-transform",
+            RUN,
+            LIFT,
+          )}
+        >
+          {/*
           The slot is 72px because that is what the card's stack measures
           against, but Figma fits the mark itself into 54 inside it — its
           Ethereum lands at exactly 33x54 there. Rendering at the full 72 makes
           every mark a third too big.
         */}
-        <span className="flex size-[72px] items-center justify-center">
-          <Image
-            src={`/v5/chains/chain-${icon}.svg`}
-            alt=""
-            width={54}
-            height={54}
-            className="size-[54px] max-w-none object-contain"
-          />
-        </span>
-
-        <span className="flex flex-col items-center gap-1.5 pb-3 text-center text-v5-text-inverse">
-          <span className="text-v5-title1 font-medium">{name}</span>
-          <span className="text-v5-card-body font-normal">{ticker}</span>
-        </span>
-      </div>
-
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-x-0 bottom-[30px] flex justify-center gap-[11px] opacity-0 transition-opacity",
-          RUN,
-          "[@media(hover:hover)]:group-hover:opacity-100",
-        )}
-      >
-        {ACTIONS.map(({ label, Icon }) => (
-          <span key={label} className="flex flex-col items-center gap-2">
-            <span className="flex size-12 items-center justify-center rounded-xl bg-v5-page text-v5-text-inverse">
-              <Icon aria-hidden className="size-[18px]" />
-            </span>
-            <span className="text-v5-caption text-v5-text-tertiary">
-              {label}
-            </span>
+          <span className="flex size-[72px] items-center justify-center">
+            <Image
+              src={`/v5/chains/chain-${icon}.svg`}
+              alt=""
+              width={54}
+              height={54}
+              className="size-[54px] max-w-none object-contain"
+            />
           </span>
-        ))}
-      </div>
+
+          <span className="flex flex-col items-center gap-1.5 pb-3 text-center text-v5-text-inverse">
+            <span className="text-v5-title1 font-medium">{name}</span>
+            <span className="text-v5-card-body font-normal">{ticker}</span>
+          </span>
+        </div>
+
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-x-0 bottom-[30px] flex justify-center gap-[11px] opacity-0 transition-opacity",
+            RUN,
+            "[@media(hover:hover)]:group-hover:opacity-100",
+          )}
+        >
+          {ACTIONS.map(({ label, Icon }) => (
+            <span key={label} className="flex flex-col items-center gap-2">
+              <span className="flex size-12 items-center justify-center rounded-xl bg-v5-page text-v5-text-inverse">
+                <Icon aria-hidden className="size-[18px]" />
+              </span>
+              <span className="text-v5-caption text-v5-text-tertiary">
+                {label}
+              </span>
+            </span>
+          ))}
+        </div>
+      </Link>
     </li>
   )
 }
