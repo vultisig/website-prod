@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 
 import { CHAIN_CATEGORIES, CHAINS, type Chain } from "@/content/chains"
 import { cn } from "@/lib/utils"
@@ -165,6 +165,20 @@ function SearchIcon() {
   )
 }
 
+/** Matches the magnifier's weight so the two ends of the field agree. */
+function ClearIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden className="size-4">
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 const PILL =
   "flex h-10 items-center rounded-full px-[26px] text-v5-card-body transition-colors"
 
@@ -176,6 +190,8 @@ const PILL =
 export default function ChainsExplorer() {
   const [category, setCategory] = useState<string>("all")
   const [query, setQuery] = useState("")
+  /** Clearing returns focus to the field rather than dropping it on the body. */
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -215,18 +231,47 @@ export default function ChainsExplorer() {
           ))}
         </div>
 
-        <label className="flex h-11 w-full items-center gap-2.5 rounded-[20px] border border-v5-text-secondary bg-v5-white pl-4 pr-[60px] md:w-[509px]">
+        {/*
+          Figma leaves 60px clear on the right of the field. That is the room
+          for the clear control, so the input's text stops there and the button
+          sits 16px in from the edge, mirroring the magnifier's inset.
+
+          `type="search"` keeps the semantics and the Escape-to-clear the
+          platform gives for free, but WebKit's own cancel button is dropped:
+          it renders at the input's right edge, which the 60px padding strands
+          in the middle of the field.
+        */}
+        <label className="relative flex h-11 w-full items-center gap-2.5 rounded-[20px] border border-v5-text-secondary bg-v5-white pl-4 pr-[60px] transition-colors focus-within:border-v5-cta md:w-[509px]">
           <SearchIcon />
           <span className="sr-only">Search chains</span>
           <input
+            ref={inputRef}
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search chains..."
-            className="w-full bg-transparent text-v5-card-body font-medium text-v5-text-inverse outline-none placeholder:text-v5-text-tertiary"
+            className="w-full bg-transparent text-v5-card-body font-medium text-v5-text-inverse outline-none placeholder:text-v5-text-tertiary [&::-webkit-search-cancel-button]:appearance-none"
           />
+          {query !== "" && (
+            <button
+              type="button"
+              onClick={() => {
+                setQuery("")
+                inputRef.current?.focus()
+              }}
+              aria-label="Clear search"
+              className="absolute right-4 flex size-6 items-center justify-center rounded-full text-v5-text-tertiary transition-colors hover:text-v5-text-inverse focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-v5-cta"
+            >
+              <ClearIcon />
+            </button>
+          )}
         </label>
       </div>
+
+      {/* Results change without focus moving, so they are announced instead. */}
+      <p aria-live="polite" className="sr-only">
+        {visible.length} of {CHAINS.length} chains shown
+      </p>
 
       {visible.length > 0 ? (
         <ul className="grid grid-cols-2 gap-x-5 gap-y-[30px] md:grid-cols-3 lg:grid-cols-4">
