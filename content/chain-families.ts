@@ -60,9 +60,18 @@ export type ChainFamily = {
  *   answered properly. The last two questions on each page are additions.
  * - Its Ethereum button reads "Add Etherium to your Vault".
  *
- * Each frame speaks for one chain while these pages cover its family, which
- * mostly reads fine — ETH for EVM, BTC for UTXO — but leaves the Cosmos page
- * talking about RUNE specifically. Worth a copywriter's pass.
+ * Each frame speaks for one chain — ETH, BTC, RUNE — while these pages cover a
+ * whole family, so anything the frame said about its own asset is written as
+ * `{asset}` / `{chain}` and filled per chain. The THORChain frame was the one
+ * that leaned on this hardest: its copy named RUNE throughout, which read as
+ * RUNE on the ATOM, OSMO and dYdX pages. THORChain is still named where the
+ * claim is genuinely about it — it settles the swaps for every Cosmos chain.
+ *
+ * The same care applies to claims that only hold for the frame's chain. The
+ * Bitcoin frame promised "Native SegWit addresses", which is true of BTC and
+ * LTC and of nothing else in the family — BCH uses CashAddr, DOGE, DASH and
+ * transparent ZEC are base58, and Cardano is eUTXO with Shelley addresses. It
+ * now promises the chain's own format and names SegWit as the example.
  *
  * L2s stay a filter on the index rather than a fourth page. Every L2 Vultisig
  * supports is also an EVM chain and signs identically — same curve, same
@@ -163,8 +172,8 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       body: "Same interface as every other asset in Vultisig. Balance, address, and history, backed by your device threshold instead of a private key sitting on one phone.",
       features: [
         {
-          title: "Native SegWit addresses",
-          body: "Lower fees, standard compatibility with every BTC service you already use.",
+          title: "Native {chain} addresses",
+          body: "Vultisig derives the format the chain itself uses — Native SegWit on Bitcoin and Litecoin — so every wallet, exchange and explorer treats your address normally.",
           icon: "feature-1",
         },
         {
@@ -190,13 +199,13 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         {
           question: "What address format does Vultisig use for {chain}?",
           answer:
-            "Native SegWit. Anyone can send to it from any wallet or exchange, fees are lower than legacy formats, and it appears on every block explorer like any other address.",
+            "Whatever the chain's own standard is — Native SegWit (bech32) on Bitcoin and Litecoin, CashAddr on Bitcoin Cash, a Shelley address on Cardano, and the ordinary base58 format elsewhere. Anyone can send to it from any wallet or exchange, and it appears on every block explorer like any other address.",
         },
         {
           question:
             "Can I hold {chain} in a Secure Vault instead of a Fast Vault?",
           answer:
-            "Yes. A Fast Vault is 1-of-2 for day-to-day spending; a Secure Vault is 2-of-3 and better suited to larger holdings. The same Bitcoin can live in either, and you choose per vault.",
+            "Yes. A Fast Vault is 1-of-2 for day-to-day spending; a Secure Vault is 2-of-3 and better suited to larger holdings. The same {asset} can live in either, and you choose per vault.",
         },
         {
           question: "What happens to my {chain} if I lose a device?",
@@ -213,12 +222,12 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     meta: {
       title: "Bitcoin MPC Wallet — Hold BTC, LTC & DOGE Without a Seed Phrase",
       description:
-        "Hold Bitcoin and every UTXO chain in one MPC vault. Native SegWit addresses, standard on-chain transactions, and no seed phrase — your key is split across devices you already own.",
+        "Hold Bitcoin and every UTXO chain in one MPC vault. Each chain's own address format, standard on-chain transactions, and no seed phrase — your key is split across devices you already own.",
     },
     chainMeta: {
       title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
       description:
-        "Hold {chain} in a Vultisig MPC vault. Native SegWit addresses, ordinary on-chain transactions and no seed phrase — your key is split across devices you already own.",
+        "Hold {chain} in a Vultisig MPC vault. Standard {chain} addresses, ordinary on-chain transactions and no seed phrase — your key is split across devices you already own.",
     },
     articleTerms: ["bitcoin", "btc", "utxo", "segwit", "litecoin"],
   },
@@ -231,16 +240,16 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     heroArt: "hero-rune",
     hero: {
       title: "Hold {chain} without holding a single key",
-      body: "RUNE settles every native cross-chain swap in Vultisig. Hold it, send it, or let it work quietly in the background every time you swap.",
+      body: "Hold and send {asset}, stake it, and transfer over IBC. Every transaction requires your device threshold to approve it, not one exposed private key.",
       cta: "Add {chain} to your Vault",
     },
     vaultView: {
       title: "Your {asset}, in one vault view",
-      body: "RUNE behaves like any other asset in your vault, but it's also the settlement layer for every swap you run through Vultisig.",
+      body: "Balance, address and history sit beside every other asset you hold, with staking and IBC transfers from the same view.",
       features: [
         {
           title: "Native swap routing",
-          body: "Every cross-chain swap in Vultisig: BTC to ETH, SOL to RUNE, settles through THORChain's liquidity.",
+          body: "Cross-chain swaps in Vultisig settle through THORChain's liquidity, so {asset} trades for BTC or ETH without leaving the vault.",
           icon: "feature-1",
         },
         {
@@ -249,8 +258,8 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
           icon: "feature-2",
         },
         {
-          title: "RUNE as an asset",
-          body: "Hold and send RUNE directly, independent of its role in swap routing.",
+          title: "Hold and send {asset}",
+          body: "Hold, send and stake {asset} directly, each action approved by your device threshold.",
           icon: "feature-3",
         },
       ],
@@ -269,7 +278,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
             "No. RUNE is the settlement asset THORChain uses under the hood, but you do not have to hold it. You choose the assets on each side and Vultisig handles the route.",
         },
         {
-          question: "Can I stake RUNE from my vault?",
+          question: "Can I stake {asset} from my vault?",
           answer:
             "Yes. Staking and delegation run from the vault, and each action is approved by your device threshold rather than a single private key.",
         },
