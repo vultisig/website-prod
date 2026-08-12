@@ -147,7 +147,7 @@ const NAV_ENTRIES: NavEntry[] = [
   },
   { label: "$VULT", href: "/vult" },
   { label: "Articles", href: "/articles" },
-  { label: "Chains", href: "/#chains" },
+  { label: "Chains", href: "/chains" },
 ]
 
 /**
