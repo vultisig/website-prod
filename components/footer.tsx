@@ -37,7 +37,8 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "How It Works", href: "/how-it-works" },
       { label: "MPC", href: "/mpc" },
       { label: "Articles", href: "/articles" },
-      { label: "Backed By", href: "/backed-by" },
+      // Hidden for now: /backed-by still carries unverified handles and affiliations.
+      // { label: "Backed By", href: "/backed-by" },
       { label: "$VULT", href: "/vult" },
     ],
   },

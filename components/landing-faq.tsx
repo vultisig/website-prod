@@ -43,11 +43,11 @@ const FAQ_ITEMS: LandingFaqItem[] = [
         <p className="pt-6">You only pay:</p>
         <ul>
           <li>Standard network fees when sending</li>
-          <li>0.05% fee for swaps and bridges</li>
+          <li>0.5% (50 bps) fee for swaps and bridges, reduced by $VULT tier</li>
         </ul>
       </>
     ),
-    text: "Vultisig is free to use. You only pay: standard network fees when sending, and a 0.05% fee for swaps and bridges.",
+    text: "Vultisig is free to use. You only pay: standard network fees when sending, and a 0.5% (50 bps) fee for swaps and bridges, reduced by your $VULT tier.",
   },
   {
     question: "Which chains and tokens does Vultisig currently support?",

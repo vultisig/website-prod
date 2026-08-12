@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
+  // Unlinked and noindexed until the handles and affiliations are verified.
+  robots: { index: false, follow: false },
   title: "Backed By: The Funds and Builders Behind Vultisig",
   description:
     "Vultisig is backed by funds who bet on self-custody first, industry-leading investors, and the builders crypto actually listens to.",

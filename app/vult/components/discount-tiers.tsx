@@ -56,8 +56,8 @@ const TIERS: Tier[] = [
     discount: "Discount: 20bps",
     threshold: "7,500 $VULT",
     reduction: "40%",
-    feeWithoutReferral: "35 bps",
-    feeWithReferral: "30 bps (-5 bps)",
+    feeWithoutReferral: "30 bps",
+    feeWithReferral: "25 bps (-5 bps)",
     art: {
       src: "/v5/vult-tier-gold.webp",
       alt: "A stack of 3D gold bars",
