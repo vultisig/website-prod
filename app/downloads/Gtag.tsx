@@ -26,7 +26,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   "macos-github": {
-    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.43.69",
+    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.44.70",
     platform: "macos github",
     icon: "/images/macOS.svg",
     iconAlt: "MacOS Github",
@@ -44,7 +44,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   windows: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.69/Vultisig-amd64-installer-v1.0.69.exe",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.70/Vultisig-amd64-installer-v1.0.70.exe",
     platform: "windows",
     icon: "/images/windows.svg",
     iconAlt: "Windows",
@@ -53,7 +53,7 @@ export const channels = {
     labelClass: "text-xs",
   },
   linux: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.69/vultisig_1.0.69_amd64.deb",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.70/vultisig_1.0.70_amd64.deb",
     platform: "linux",
     icon: "/images/linux.svg",
     iconAlt: "Linux",
