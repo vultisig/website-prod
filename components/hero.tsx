@@ -4,8 +4,10 @@ import Link from "next/link"
 
 import { LandingButton } from "@/components/ui/landing-button"
 
-/** 19 glyphs laid out on 20 equal slots of the 314px ring — the 20th is the gap. */
-const RING_TEXT_LENGTH = 298
+/** The phrase repeats twice around the full 314px ring, so the closing "·" doubles as the seam. */
+const RING_TEXT_LENGTH = 314
+/* The trailing no-break space keeps the seam gap — SVG collapses an ordinary trailing space. */
+const RING_TEXT = "OPEN-SOURCE · OPEN-SOURCE · "
 
 function OpenSourceSeal() {
   return (
@@ -13,14 +15,14 @@ function OpenSourceSeal() {
       viewBox="0 0 128 127"
       className="size-16 shrink-0 origin-center animate-v5-seal-spin md:size-32 motion-reduce:animate-none"
       role="img"
-      aria-label="Open-source and audited"
+      aria-label="Open-source"
     >
       <defs>
         <path id="hero-seal-ring" fill="none" d="M64 13.5a50 50 0 1 1-0.1 0" />
       </defs>
       <text
         className="fill-v5-text-inverse font-semibold"
-        fontSize="19.75"
+        fontSize="15.5"
         dominantBaseline="alphabetic"
       >
         <textPath
@@ -28,7 +30,7 @@ function OpenSourceSeal() {
           textLength={RING_TEXT_LENGTH}
           lengthAdjust="spacing"
         >
-          OPEN-SOURCE AUDITED
+          {RING_TEXT}
         </textPath>
       </text>
     </svg>
