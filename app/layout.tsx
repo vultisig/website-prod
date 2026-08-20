@@ -7,7 +7,7 @@ import CookieAnalytics from "@/components/cookie-analytics"
 import { Toaster } from "@/components/ui/sonner"
 import localFont from "next/font/local"
 import { cn } from "@/lib/utils"
-import LoadTailwindIntersect from "@/components/sections/LoadTailwindIntersect"
+import ScrollReveal from "@/components/scroll-reveal"
 import TwitterAnalytics from "@/components/twitter-analytics"
 import Script from "next/script"
 
@@ -326,7 +326,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <Toaster />
-        <LoadTailwindIntersect />
+        <ScrollReveal />
       </body>
       <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
     </html>

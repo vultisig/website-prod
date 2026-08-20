@@ -72,3 +72,16 @@ body::-webkit-scrollbar {
     @apply bg-v5-page text-v5-text-inverse;
   }
 }
+
+/* Section reveal — armed by components/scroll-reveal.tsx; inert without JS. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal] main > section:not(:first-of-type) {
+    transition:
+      opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  html[data-reveal] main > section:not(:first-of-type):not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
