@@ -17,12 +17,7 @@ export default function IdeaBanner() {
           className="pointer-events-none absolute inset-0 bg-v5-dots bg-v5-dots-tile opacity-20"
         />
 
-        {/*
-          Layered like the design: the white beam sits over the dotted blue,
-          and the chips are clipped to the same beam polygon so nothing spills
-          onto the blue. Inside the beam the chips file's white ground blends
-          into the beam's white.
-        */}
+        {/* White beam over the dotted blue; chips clipped to the same beam polygon. */}
         <div className="relative order-last aspect-[781/495] w-full md:absolute md:right-0 md:top-0 md:aspect-auto md:h-full md:w-[56.59%]">
           <svg
             aria-hidden

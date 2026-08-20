@@ -35,10 +35,8 @@ function OsIcon({ os }: { os: string }) {
 }
 
 /**
- * Tiles toggle which checksum is open; the panel under the row grows from
- * 0fr to 1fr so the reveal animates without measuring content height.
- * Clicking the hash itself copies the bare hex (no "sha256:" prefix), which
- * is what a `shasum -a 256` comparison needs.
+ * The panel animates 0fr -> 1fr so no content height is measured. Copying
+ * strips the "sha256:" prefix — bare hex is what `shasum -a 256` prints.
  */
 export function HashSection({ hashes }: { hashes: HashEntry[] }) {
   const [openOs, setOpenOs] = useState<string | null>(null)
@@ -52,8 +50,12 @@ export function HashSection({ hashes }: { hashes: HashEntry[] }) {
 
   const toggle = (os: string) => {
     setCopied(false)
-    setOpenOs((current) => (current === os ? null : os))
-    if (openOs !== os) setDisplayOs(os)
+    if (openOs === os) {
+      setOpenOs(null)
+      return
+    }
+    setOpenOs(os)
+    setDisplayOs(os)
   }
 
   const copy = async () => {
