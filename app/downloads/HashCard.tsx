@@ -110,7 +110,8 @@ export function HashSection({ hashes }: { hashes: HashEntry[] }) {
               className="mt-3.5 flex w-full flex-col items-center gap-[15px] rounded-3xl bg-v5-white p-[30px] md:mt-5"
             >
               <OsIcon os={display.os} />
-              <span className="break-all text-center font-mono text-sm font-semibold text-v5-text-inverse md:text-base">
+              {/* 64 mono chars at ~0.6em advance; the calc keeps them on one line at any width. */}
+              <span className="whitespace-nowrap text-center font-mono text-[length:min(15px,calc((100vw-92px)/39.5))] font-semibold text-v5-text-inverse md:text-[length:min(15px,calc((100vw-210px)/79))]">
                 {copied ? "Copied!" : hex}
               </span>
             </button>

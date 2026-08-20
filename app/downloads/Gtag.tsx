@@ -82,10 +82,12 @@ function trackDownload(platform: string) {
   })
 }
 
+const FACE_CLASS =
+  "absolute inset-0 flex flex-col items-center justify-center gap-[22px] rounded-3xl bg-v5-white p-[30px] md:[backface-visibility:hidden]"
+
 /**
- * Figma shows the label only on hover at 1440px, but always on mobile where
- * there is no hover — so it stays in the DOM and the link keeps a name in
- * every state.
+ * At 1440px the card flips on hover — icon-only front, icon + name back.
+ * Mobile has no hover, so it renders the back face alone, unrotated.
  */
 export default function DownloadCard({
   channelKey,
@@ -96,6 +98,16 @@ export default function DownloadCard({
 }) {
   const channel = channels[channelKey]
 
+  const icon = (
+    <Image
+      src={channel.icon}
+      alt=""
+      width={channel.iconWidth}
+      height={54}
+      className="h-[54px] w-auto"
+    />
+  )
+
   return (
     <a
       href={channel.href}
@@ -104,19 +116,18 @@ export default function DownloadCard({
       aria-label={`Download Vultisig for ${channel.label}`}
       onClick={() => trackDownload(channel.platform)}
       className={cn(
-        "group flex h-[203.5px] flex-col items-center justify-center gap-[22px] rounded-3xl bg-v5-white p-[30px]",
+        "group relative block h-[203.5px] rounded-3xl [perspective:1000px]",
         className,
       )}
     >
-      <Image
-        src={channel.icon}
-        alt=""
-        width={channel.iconWidth}
-        height={54}
-        className="h-[54px] w-auto"
-      />
-      <span className="whitespace-nowrap text-v5-download-label-sm font-semibold text-v5-text-inverse md:hidden md:text-v5-download-label md:group-hover:block">
-        {channel.label}
+      <span className="absolute inset-0 block md:transition-transform md:duration-500 md:[transform-style:preserve-3d] md:group-hover:[transform:rotateY(180deg)] md:group-focus-visible:[transform:rotateY(180deg)] md:motion-reduce:transition-none">
+        <span className={cn(FACE_CLASS, "hidden md:flex")}>{icon}</span>
+        <span className={cn(FACE_CLASS, "md:[transform:rotateY(180deg)]")}>
+          {icon}
+          <span className="whitespace-nowrap text-v5-download-label-sm font-semibold text-v5-text-inverse md:text-v5-download-label">
+            {channel.label}
+          </span>
+        </span>
       </span>
     </a>
   )
