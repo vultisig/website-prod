@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+import { useEffect, useRef } from "react"
 
 import { LandingButton } from "@/components/ui/landing-button"
 
@@ -164,43 +167,120 @@ function TierCard({ tier }: { tier: Tier }) {
   )
 }
 
+/**
+ * Desktop pins the card for the strip's overflow distance and maps vertical
+ * scroll onto a horizontal translate — all six tiers pass before the page
+ * moves on. The strip stays a real scroll container underneath, so mobile,
+ * reduced-motion, and no-JS all keep the manual swipe.
+ */
 export default function DiscountTiers() {
+  const wrapRef = useRef<HTMLElement>(null)
+  const clipRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    const wrap = wrapRef.current
+    const clip = clipRef.current
+    const track = trackRef.current
+    if (!wrap || !clip || !track) return
+
+    const desktop = window.matchMedia("(min-width: 768px)")
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let dist = 0
+    let raf = 0
+
+    const apply = () => {
+      if (!dist) return
+      const progress = Math.min(
+        1,
+        Math.max(0, -wrap.getBoundingClientRect().top / dist),
+      )
+      track.style.transform = `translateX(${-progress * dist}px)`
+    }
+
+    const measure = () => {
+      if (!desktop.matches || reduced.matches) {
+        dist = 0
+        wrap.style.removeProperty("--tiers-scroll")
+        clip.style.removeProperty("overflow-x")
+        track.style.removeProperty("transform")
+        return
+      }
+      dist = clip.scrollWidth - clip.clientWidth
+      wrap.style.setProperty("--tiers-scroll", `${dist}px`)
+      clip.style.overflowX = "hidden"
+      apply()
+    }
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(apply)
+    }
+
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(clip)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    desktop.addEventListener("change", measure)
+    reduced.addEventListener("change", measure)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener("scroll", onScroll)
+      desktop.removeEventListener("change", measure)
+      reduced.removeEventListener("change", measure)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
-    <section className="bg-v5-page pt-8 md:px-[30px] md:pt-[30px]">
-      <div className="mx-auto max-w-v5-content">
-        <div className="overflow-hidden rounded-[20px] bg-v5-white py-9 md:rounded-v5-panel md:py-[60px]">
-          <div className="flex flex-col items-center gap-3.5 px-4 text-center text-v5-text-inverse md:flex-row md:items-start md:justify-between md:gap-6 md:px-[60px] md:text-left">
-            <div className="flex flex-col gap-3.5 md:gap-[14px]">
-              <h2 className="text-v5-display-sm font-medium md:text-v5-display">
-                $VULT Discount Tiers
-              </h2>
-              <p className="text-v5-body-m font-normal md:text-v5-subtitle">
-                Hold $VULT to unlock lower trading fees.
-              </p>
+    <section
+      ref={wrapRef}
+      className="bg-v5-page pt-8 md:h-[calc(100vh+var(--tiers-scroll,0px))] md:px-[30px] md:pt-0"
+    >
+      <div className="md:sticky md:top-0 md:flex md:h-screen md:flex-col md:justify-center">
+        <div className="mx-auto w-full max-w-v5-content">
+          <div className="overflow-hidden rounded-[20px] bg-v5-white py-9 md:rounded-v5-panel md:py-[60px]">
+            <div className="flex flex-col items-center gap-3.5 px-4 text-center text-v5-text-inverse md:flex-row md:items-start md:justify-between md:gap-6 md:px-[60px] md:text-left">
+              <div className="flex flex-col gap-3.5 md:gap-[14px]">
+                <h2 className="text-v5-display-sm font-medium md:text-v5-display">
+                  $VULT Discount Tiers
+                </h2>
+                <p className="text-v5-body-m font-normal md:text-v5-subtitle">
+                  Hold $VULT to unlock lower trading fees.
+                </p>
+              </div>
+              <LandingButton
+                asChild
+                size="sm"
+                className="hidden h-[50px] w-[185px] shrink-0 md:inline-flex"
+              >
+                <a href={VULT_BUY_URL} target="_blank" rel="noopener noreferrer">
+                  Buy $VULT
+                </a>
+              </LandingButton>
             </div>
-            <LandingButton
-              asChild
-              size="sm"
-              className="hidden h-[50px] w-[185px] shrink-0 md:inline-flex"
+
+            <div
+              ref={clipRef}
+              className="mt-8 snap-x snap-mandatory scroll-pl-4 overflow-x-auto px-4 [scrollbar-width:none] md:mt-[50px] md:scroll-pl-[60px] md:px-[60px] [&::-webkit-scrollbar]:hidden"
             >
-              <a href={VULT_BUY_URL} target="_blank" rel="noopener noreferrer">
-                Buy $VULT
-              </a>
-            </LandingButton>
-          </div>
+              <ul
+                ref={trackRef}
+                className="flex w-max gap-5 will-change-transform md:gap-[30px]"
+              >
+                {TIERS.map((tier) => (
+                  <TierCard key={tier.name} tier={tier} />
+                ))}
+              </ul>
+            </div>
 
-          <ul className="mt-8 flex snap-x snap-mandatory scroll-pl-4 gap-5 overflow-x-auto px-4 [scrollbar-width:none] md:mt-[50px] md:scroll-pl-[60px] md:gap-[30px] md:px-[60px] [&::-webkit-scrollbar]:hidden">
-            {TIERS.map((tier) => (
-              <TierCard key={tier.name} tier={tier} />
-            ))}
-          </ul>
-
-          <div className="mt-8 flex justify-center px-4 md:hidden">
-            <LandingButton asChild size="sm" className="h-[50px] w-[300px]">
-              <a href={VULT_BUY_URL} target="_blank" rel="noopener noreferrer">
-                Buy $VULT
-              </a>
-            </LandingButton>
+            <div className="mt-8 flex justify-center px-4 md:hidden">
+              <LandingButton asChild size="sm" className="h-[50px] w-[300px]">
+                <a href={VULT_BUY_URL} target="_blank" rel="noopener noreferrer">
+                  Buy $VULT
+                </a>
+              </LandingButton>
+            </div>
           </div>
         </div>
       </div>
