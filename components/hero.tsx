@@ -2,6 +2,7 @@ import { ArrowRight, Download } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
+import StatsBar from "@/components/stats-bar"
 import { LandingButton } from "@/components/ui/landing-button"
 
 /** The phrase repeats twice around the full 314px ring, so the closing "·" doubles as the seam. */
@@ -41,7 +42,7 @@ export default function Hero() {
   return (
     <section className="bg-v5-page px-4 pt-[74px] md:px-[30px] md:pt-[134px]">
       <div className="mx-auto max-w-v5-content">
-        <div className="relative flex flex-col overflow-hidden rounded-[20px] bg-v5-white p-4 md:flex-row md:items-center md:rounded-v5-panel md:p-[60px]">
+        <div className="relative flex flex-col overflow-hidden rounded-[20px] bg-v5-white p-4 md:flex-row md:items-center md:rounded-v5-panel md:p-[60px] md:pb-[265px]">
           <div className="relative z-10 flex flex-col gap-6 md:w-[582px]">
             <OpenSourceSeal />
             <h1 className="text-v5-hero-sm font-semibold text-v5-text-inverse md:w-[546px] md:text-v5-hero">
@@ -105,9 +106,10 @@ export default function Hero() {
               width={361}
               height={331}
               fetchPriority="high"
-              className="-mx-4 -mb-4 mt-1 block aspect-[361/331] w-[calc(100%+2rem)] max-w-none md:absolute md:left-0 md:top-[31px] md:m-0 md:aspect-[1380/692] md:w-full"
+              className="-mx-4 mt-1 block aspect-[361/331] w-[calc(100%+2rem)] max-w-none md:absolute md:left-0 md:top-[31px] md:m-0 md:aspect-[1380/692] md:w-full"
             />
           </picture>
+          <StatsBar />
         </div>
       </div>
     </section>

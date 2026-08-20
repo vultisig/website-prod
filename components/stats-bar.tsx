@@ -34,16 +34,16 @@ function StatRow({ left, right }: { left: Stat; right: Stat }) {
   )
 }
 
+/**
+ * Lives inside the hero card: the artwork's platform blue runs straight into
+ * this row, so it carries no rounding or section wrapper of its own.
+ */
 export default function StatsBar() {
   return (
-    <section className="bg-v5-page px-4 md:px-[30px]">
-      <div className="mx-auto max-w-v5-content">
-        <div className="relative z-10 -mt-9 flex flex-col gap-2 rounded-[20px] bg-v5-accent2 px-4 pb-5 pt-[30px] md:-mt-[53px] md:h-[258px] md:flex-row md:items-center md:gap-3 md:rounded-v5-panel md:px-[30px] md:pb-[30px] md:pt-[102px]">
-          <StatRow left={STATS[0]} right={STATS[1]} />
-          <div className={cn(DIVIDER_CLASS, "hidden md:block")} />
-          <StatRow left={STATS[2]} right={STATS[3]} />
-        </div>
-      </div>
-    </section>
+    <div className="order-3 -mx-4 -mb-4 flex w-[calc(100%+2rem)] flex-col gap-2 bg-v5-accent2 px-4 pb-5 pt-6 md:absolute md:inset-x-0 md:bottom-0 md:m-0 md:h-[205px] md:w-full md:flex-row md:items-center md:gap-3 md:px-[30px] md:py-0">
+      <StatRow left={STATS[0]} right={STATS[1]} />
+      <div className={cn(DIVIDER_CLASS, "hidden md:block")} />
+      <StatRow left={STATS[2]} right={STATS[3]} />
+    </div>
   )
 }

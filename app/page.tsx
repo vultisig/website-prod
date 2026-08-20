@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic"
 import Hero from "@/components/hero"
-import StatsBar from "@/components/stats-bar"
 
 const FeaturesSection = dynamic(() => import("@/components/features-section"))
 const BestFeaturesSection = dynamic(
@@ -17,7 +16,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-v5-page">
       <Hero />
-      <StatsBar />
       <FeaturesSection />
       <BestFeaturesSection />
       <SetupSection />
