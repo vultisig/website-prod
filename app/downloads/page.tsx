@@ -3,7 +3,7 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 import DownloadCard from "./Gtag"
-import { HashCard } from "./HashCard"
+import { HashSection } from "./HashCard"
 import TabToggle from "./tab-toggle"
 import { resolveTab, TAB_CONTENT } from "./tabs"
 
@@ -72,11 +72,7 @@ export default async function DownloadsPage({
               <h2 className="text-v5-title2 font-medium text-v5-text-inverse md:text-v5-download-heading md:font-semibold">
                 SHA Checksums
               </h2>
-              <div className="grid grid-cols-2 gap-3.5 md:grid-cols-4 md:gap-5">
-                {hashes.map((entry) => (
-                  <HashCard key={entry.os} {...entry} />
-                ))}
-              </div>
+              <HashSection hashes={hashes} />
             </div>
           </div>
 

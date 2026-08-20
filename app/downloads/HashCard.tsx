@@ -1,7 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useRef, useState } from "react"
+
+import { cn } from "@/lib/utils"
 
 const ICONS: Record<string, { src: string; width: number }> = {
   ios: { src: "/v5/download-ios.webp", width: 42 },
@@ -17,39 +19,104 @@ const OS_NAMES: Record<string, string> = {
   windows: "Windows",
 }
 
-export function HashCard({ hash, os }: { hash: string; os: string }) {
-  const [copied, setCopied] = useState(false)
-  const icon = ICONS[os]
-  const osName = OS_NAMES[os] ?? os
+type HashEntry = { os: string; hash: string }
 
-  const handleCopy = async () => {
+function OsIcon({ os }: { os: string }) {
+  const icon = ICONS[os]
+  return (
+    <Image
+      src={icon.src}
+      alt=""
+      width={icon.width}
+      height={42}
+      className="h-[42px] w-auto"
+    />
+  )
+}
+
+/**
+ * Tiles toggle which checksum is open; the panel under the row grows from
+ * 0fr to 1fr so the reveal animates without measuring content height.
+ * Clicking the hash itself copies the bare hex (no "sha256:" prefix), which
+ * is what a `shasum -a 256` comparison needs.
+ */
+export function HashSection({ hashes }: { hashes: HashEntry[] }) {
+  const [openOs, setOpenOs] = useState<string | null>(null)
+  // Kept after close so the panel's content stays mounted while it shrinks.
+  const [displayOs, setDisplayOs] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+  const copiedTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+  const display = hashes.find((entry) => entry.os === displayOs)
+  const hex = display ? display.hash.replace(/^sha256:/, "") : ""
+
+  const toggle = (os: string) => {
+    setCopied(false)
+    setOpenOs((current) => (current === os ? null : os))
+    if (openOs !== os) setDisplayOs(os)
+  }
+
+  const copy = async () => {
     try {
-      await navigator.clipboard.writeText(hash)
+      await navigator.clipboard.writeText(hex)
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      clearTimeout(copiedTimer.current)
+      copiedTimer.current = setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       console.error("Failed to copy: ", err)
     }
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      title={hash}
-      aria-label={`Copy the ${osName} build SHA256 checksum`}
-      className="flex h-[153px] flex-col items-center gap-[15px] rounded-3xl bg-v5-white p-[30px]"
-    >
-      <Image
-        src={icon.src}
-        alt=""
-        width={icon.width}
-        height={42}
-        className="h-[42px] w-auto"
-      />
-      <span className="text-v5-download-label-sm font-semibold text-v5-text-inverse">
-        {copied ? "Copied!" : "SHA256"}
-      </span>
-    </button>
+    <div className="flex flex-col">
+      <div className="grid grid-cols-2 gap-3.5 md:grid-cols-4 md:gap-5">
+        {hashes.map(({ os }) => (
+          <button
+            key={os}
+            type="button"
+            onClick={() => toggle(os)}
+            aria-expanded={openOs === os}
+            aria-controls="sha-panel"
+            aria-label={`Show the ${OS_NAMES[os] ?? os} build SHA256 checksum`}
+            className={cn(
+              "flex h-[153px] flex-col items-center gap-[15px] rounded-3xl bg-v5-white p-[30px] transition-shadow",
+              openOs === os && "ring-2 ring-inset ring-v5-cta",
+            )}
+          >
+            <OsIcon os={os} />
+            <span className="text-v5-download-label-sm font-semibold text-v5-text-inverse">
+              SHA256
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <div
+        id="sha-panel"
+        className={cn(
+          "grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none",
+          openOs ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+        )}
+      >
+        <div className="overflow-hidden">
+          {display && (
+            <button
+              type="button"
+              onClick={copy}
+              title="Click to copy"
+              tabIndex={openOs ? 0 : -1}
+              aria-hidden={!openOs}
+              aria-label={`Copy the ${OS_NAMES[display.os] ?? display.os} build SHA256 checksum`}
+              className="mt-3.5 flex w-full flex-col items-center gap-[15px] rounded-3xl bg-v5-white p-[30px] md:mt-5"
+            >
+              <OsIcon os={display.os} />
+              <span className="break-all text-center font-mono text-sm font-semibold text-v5-text-inverse md:text-base">
+                {copied ? "Copied!" : hex}
+              </span>
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
