@@ -28,7 +28,7 @@ const TIERS: Tier[] = [
   {
     name: "Bronze",
     surface: "bg-v5-tier-bronze",
-    discount: "Discount: 5bps",
+    discount: "Swap Discount: 5bps",
     threshold: "1,500 $VULT",
     reduction: "10%",
     feeWithoutReferral: "45 bps",
@@ -42,7 +42,7 @@ const TIERS: Tier[] = [
   {
     name: "Silver",
     surface: "bg-v5-tier-silver",
-    discount: "Discount: 10bps",
+    discount: "Swap Discount: 10bps",
     threshold: "3,000 $VULT",
     reduction: "20%",
     feeWithoutReferral: "40 bps",
@@ -56,7 +56,7 @@ const TIERS: Tier[] = [
   {
     name: "Gold",
     surface: "bg-v5-tier-gold",
-    discount: "Discount: 20bps",
+    discount: "Swap Discount: 20bps",
     threshold: "7,500 $VULT",
     reduction: "40%",
     feeWithoutReferral: "30 bps",
@@ -70,7 +70,7 @@ const TIERS: Tier[] = [
   {
     name: "Platinum",
     surface: "bg-v5-tier-platinum",
-    discount: "Discount: 25bps",
+    discount: "Swap Discount: 25bps",
     threshold: "15,000 $VULT",
     reduction: "50%",
     feeWithoutReferral: "25 bps",
@@ -84,7 +84,7 @@ const TIERS: Tier[] = [
   {
     name: "Diamond",
     surface: "bg-v5-tier-diamond",
-    discount: "Discount: 35bps",
+    discount: "Swap Discount: 35bps",
     threshold: "100,000 $VULT",
     reduction: "70%",
     feeWithoutReferral: "15 bps",
@@ -98,7 +98,7 @@ const TIERS: Tier[] = [
   {
     name: "Ultimate",
     surface: "bg-v5-tier-ultimate",
-    discount: "Complete fee waiver",
+    discount: "No Fee",
     threshold: "1,000,000 $VULT",
     reduction: "100%",
     feeWithoutReferral: "0 bps",
