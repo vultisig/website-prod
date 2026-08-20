@@ -74,7 +74,7 @@ function PlatformTile({ label, href, icon }: Platform) {
 
 export default function FooterBanner() {
   return (
-    <section className="bg-v5-page px-4 pt-4 md:px-[30px] md:pt-[30px]">
+    <section className="bg-v5-page px-4 py-4 md:px-[30px] md:py-[30px]">
       <div className="relative mx-auto flex max-w-v5-content flex-col overflow-hidden rounded-v5-panel bg-v5-accent md:block md:h-[391px]">
         <div
           aria-hidden
