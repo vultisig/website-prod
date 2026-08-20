@@ -23,7 +23,7 @@ type Step = {
 const STEPS: Step[] = [
   {
     title: "Lose device",
-    body: "Don't panic. Your vault remains safe even if a device is lost, stolen, or broken.",
+    body: "Don't panic. Your vault remains safe with your backups even if a device is lost, stolen, or broken.",
     art: {
       src: "/v5/hiw-recovery-lose-device.webp",
       alt: "A phone lying face up with a warning sign floating above it",
