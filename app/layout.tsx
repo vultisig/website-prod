@@ -232,6 +232,7 @@ export default function RootLayout({
                 "https://apps.apple.com/app/apple-store/id6503023896",
                 "https://play.google.com/store/apps/details?id=com.vultisig.wallet",
                 "https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb",
+                "https://addons.mozilla.org/en-US/firefox/addon/vultisig-extension/",
                 "https://www.npmjs.com/package/@vultisig/sdk",
                 "https://en.wikipedia.org/wiki/Threshold_cryptosystem",
               ],

@@ -48,8 +48,8 @@ export const TAB_CONTENT = {
     title: "Download Extension",
     description:
       "Your gateway to web3 and DeFi. Connect your Vultisig to your favourite Interface without moving your funds.",
-    channels: ["chrome"],
-    cardGrid: "grid-cols-1",
+    channels: ["chrome", "firefox"],
+    cardGrid: "grid-cols-2",
     cardClass: "h-[178px]",
     mockup: {
       src: "/v5/download-extension-mockup.webp",

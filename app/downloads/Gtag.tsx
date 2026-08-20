@@ -68,6 +68,13 @@ export const channels = {
     iconWidth: 54,
     label: "Chrome extension",
   },
+  firefox: {
+    href: "https://addons.mozilla.org/en-US/firefox/addon/vultisig-extension/",
+    platform: "firefox extension",
+    icon: "/v5/download-firefox.webp",
+    iconWidth: 54,
+    label: "Firefox extension",
+  },
 } as const
 
 export type ChannelKey = keyof typeof channels
