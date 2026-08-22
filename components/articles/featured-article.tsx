@@ -4,7 +4,7 @@ import Link from "next/link"
 
 import { LandingButton } from "@/components/ui/landing-button"
 import { formatArticleDate } from "@/lib/article-format"
-import type { Article } from "@/lib/articles"
+import type { ArticleSummary } from "@/lib/articles"
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +14,11 @@ function Pill({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default function FeaturedArticle({ article }: { article: Article }) {
+export default function FeaturedArticle({
+  article,
+}: {
+  article: ArticleSummary
+}) {
   const href = `/articles/${article.slug}`
 
   return (
@@ -52,7 +56,12 @@ export default function FeaturedArticle({ article }: { article: Article }) {
           </Link>
         </h2>
 
-        <LandingButton asChild className="h-[50px] w-full lg:w-[200px]">
+        {/* Same fill/ink inversion the "Get Started" CTAs run on hover. */}
+        <LandingButton
+          asChild
+          invertOnHover
+          className="h-[50px] w-full lg:w-[200px]"
+        >
           <Link href={href} aria-label={`Read ${article.title}`}>
             Learn More
             <ArrowRight aria-hidden />

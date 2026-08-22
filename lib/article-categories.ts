@@ -1,4 +1,4 @@
-import type { Article } from "@/lib/articles"
+import type { Article, ArticleSummary } from "@/lib/articles"
 
 /**
  * Articles carry no category field — only free-form `tags` plus the title.
@@ -41,7 +41,7 @@ const RULES: CategoryRule[] = [
 
 const DEFAULT_SLUG: CategorySlug = "explainers"
 
-export function categoryOf(article: Article): CategorySlug {
+export function categoryOf(article: ArticleSummary): CategorySlug {
   const tags = (article.tags || []).map((tag) => tag.toLowerCase())
   const rule = RULES.find(
     (r) => r.title.test(article.title) || r.tags.some((t) => tags.includes(t)),
@@ -62,7 +62,7 @@ export type CategoryTab = {
   href: string
 }
 
-export function buildCategoryTabs(articles: Article[]): CategoryTab[] {
+export function buildCategoryTabs(articles: ArticleSummary[]): CategoryTab[] {
   const counts = new Map<CategorySlug, number>()
   for (const article of articles) {
     const slug = categoryOf(article)
@@ -77,10 +77,10 @@ export function buildCategoryTabs(articles: Article[]): CategoryTab[] {
   }))
 }
 
-export function filterByCategory(
-  articles: Article[],
+export function filterByCategory<T extends ArticleSummary>(
+  articles: T[],
   category: CategorySlug,
-): Article[] {
+): T[] {
   if (category === "all") return articles
   return articles.filter((article) => categoryOf(article) === category)
 }
