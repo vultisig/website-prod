@@ -1,12 +1,11 @@
 "use client"
 
-import { ArrowRight, Shield, Zap } from "lucide-react"
+import { Shield, Zap } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import SectionHeading from "@/components/ui/section-heading"
-import { LandingButton } from "@/components/ui/landing-button"
+import { LearnMoreButton } from "@/components/ui/learn-more-button"
 import { cn } from "@/lib/utils"
 
 type VaultId = "fast" | "secure"
@@ -54,6 +53,18 @@ const VAULTS: Vault[] = [
   },
 ]
 
+/**
+ * Switching tabs swaps the copy and the art on a fade-out/fade-in rather than a
+ * cross-fade: the panel drops to 0, the content is swapped while it is invisible,
+ * then it comes back. Written out in full because the animation plugins shadow
+ * core's arbitrary `duration-*`/`ease-*`, as noted in learn-more-button.
+ */
+const PANEL_MOTION =
+  "[transition:opacity_200ms_ease-out] motion-reduce:!transition-none"
+
+/** Must match PANEL_MOTION's duration - it times the swap at the panel's floor. */
+const PANEL_FADE_MS = 200
+
 const TAB_ICONS: Record<VaultId, typeof Zap> = { fast: Zap, secure: Shield }
 const TAB_ICON_COLOR: Record<VaultId, string> = {
   fast: "text-v5-warning",
@@ -99,7 +110,20 @@ function VaultTabs({
 
 export default function SetupSection() {
   const [selected, setSelected] = useState<VaultId>("fast")
-  const vault = VAULTS.find((item) => item.id === selected) ?? VAULTS[0]
+  // What the panel is painting, which trails `selected` by the fade-out.
+  const [shown, setShown] = useState<VaultId>("fast")
+  const swapping = shown !== selected
+  const vault = VAULTS.find((item) => item.id === shown) ?? VAULTS[0]
+
+  useEffect(() => {
+    if (!swapping) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShown(selected)
+      return
+    }
+    const timer = setTimeout(() => setShown(selected), PANEL_FADE_MS)
+    return () => clearTimeout(timer)
+  }, [swapping, selected])
 
   return (
     <section className="bg-v5-page pt-4 md:px-[30px] md:pt-[30px]">
@@ -115,7 +139,13 @@ export default function SetupSection() {
             <div className="flex flex-col gap-3 rounded-t-3xl rounded-bl-3xl bg-v5-page p-4 md:flex-row md:p-[30px]">
               <div className="flex min-w-0 flex-col gap-3 md:w-[476px]">
                 <VaultTabs selected={selected} onSelect={setSelected} />
-                <div className="flex flex-col gap-3 pt-6 text-v5-text-inverse">
+                <div
+                  className={cn(
+                    "flex flex-col gap-3 pt-6 text-v5-text-inverse",
+                    PANEL_MOTION,
+                    swapping ? "opacity-0" : "opacity-100",
+                  )}
+                >
                   <h3 className="text-v5-card-title font-semibold">
                     {vault.title}
                   </h3>
@@ -129,14 +159,28 @@ export default function SetupSection() {
                   ))}
                 </div>
               </div>
-              <Image
-                src={vault.image}
-                alt={vault.imageAlt}
-                width={1268}
-                height={796}
-                sizes="(max-width: 767px) 90vw, 634px"
-                className="h-auto w-full min-w-0 rounded-3xl md:w-[634px]"
-              />
+              {/* Both plates stay mounted so the incoming one is already
+                  decoded when it fades in; only one is ever above 0 opacity,
+                  since `shown` moves after the outgoing plate has faded. */}
+              <div className="relative aspect-[1268/796] w-full min-w-0 md:w-[634px]">
+                {VAULTS.map((item) => (
+                  <Image
+                    key={item.id}
+                    src={item.image}
+                    alt={item.imageAlt}
+                    fill
+                    sizes="(max-width: 767px) 90vw, 634px"
+                    aria-hidden={item.id !== shown || undefined}
+                    className={cn(
+                      "rounded-3xl object-contain",
+                      PANEL_MOTION,
+                      item.id === shown && !swapping
+                        ? "opacity-100"
+                        : "opacity-0",
+                    )}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* The panel colour bites into the card's bottom-left corner so the
@@ -150,22 +194,12 @@ export default function SetupSection() {
             <div className="flex items-stretch">
               <div className="bg-v5-page">
                 <div className="rounded-tr-3xl bg-v5-deep p-4 md:p-[25px]">
-                  <LandingButton
-                    asChild
-                    variant="light"
-                    size="sm"
+                  <LearnMoreButton
+                    href={vault.href}
+                    external
+                    ariaLabel={`Learn more about the ${vault.tab} in the docs`}
                     className="h-[50px] w-[190px]"
-                  >
-                    <Link
-                      href={vault.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Learn more about the ${vault.tab} in the docs`}
-                    >
-                      Learn More
-                      <ArrowRight aria-hidden />
-                    </Link>
-                  </LandingButton>
+                  />
                 </div>
               </div>
               <div className="flex-1 rounded-b-3xl bg-v5-page" />
