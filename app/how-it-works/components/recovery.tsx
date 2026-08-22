@@ -1,9 +1,7 @@
-import { ArrowRight } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 
 import SectionHeading from "@/components/ui/section-heading"
-import { LandingButton } from "@/components/ui/landing-button"
+import { LearnMoreButton } from "@/components/ui/learn-more-button"
 
 type Step = {
   title: string
@@ -87,7 +85,7 @@ function StepCard({ title, body, art }: Step) {
         width={art.width}
         height={art.height}
         sizes="(max-width: 767px) 72vw, 300px"
-        className={`absolute left-1/2 h-auto max-w-none -translate-x-1/2 group-hover:-rotate-[11.4deg] group-hover:scale-[1.134] md:left-0 md:translate-x-0 ${art.widthClass} ${art.topClass}`}
+        className={`absolute left-1/2 h-auto max-w-none -translate-x-1/2 transition-transform duration-500 ease-v5-drift md:left-0 md:translate-x-0 [@media(hover:hover)]:group-hover:-rotate-[11.4deg] [@media(hover:hover)]:group-hover:scale-[1.134] motion-reduce:!rotate-0 motion-reduce:!scale-100 motion-reduce:transition-none ${art.widthClass} ${art.topClass}`}
       />
     </li>
   )
@@ -107,17 +105,11 @@ export default function Recovery() {
             <StepCard key={step.title} {...step} />
           ))}
         </ul>
-        <LandingButton
-          asChild
-          variant="light"
-          size="sm"
+        <LearnMoreButton
+          href="/mpc"
+          ariaLabel="Learn more about MPC wallets"
           className="mt-[112px] h-[50px] w-[300px] md:mt-[50px] md:w-[185px]"
-        >
-          <Link href="/mpc" aria-label="Learn more about MPC wallets">
-            Learn More
-            <ArrowRight aria-hidden />
-          </Link>
-        </LandingButton>
+        />
       </div>
     </section>
   )

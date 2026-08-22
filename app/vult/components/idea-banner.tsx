@@ -1,7 +1,6 @@
-import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 
-import { LandingButton } from "@/components/ui/landing-button"
+import { LearnMoreButton } from "@/components/ui/learn-more-button"
 
 import { FEATURE_REQUEST_URL } from "../token"
 
@@ -47,21 +46,14 @@ export default function IdeaBanner() {
           <p className="text-v5-link font-normal text-v5-text-primary">
             Hold VULT, submit a request, and vote on what ships next.
           </p>
-          <LandingButton
-            asChild
-            variant="light"
-            size="sm"
+          <LearnMoreButton
+            href={FEATURE_REQUEST_URL}
+            external
+            ariaLabel="Submit a feature request on the Vultisig community forum"
             className="h-[50px] w-full md:w-[212px]"
           >
-            <a
-              href={FEATURE_REQUEST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Submit a Request
-              <ArrowRight aria-hidden />
-            </a>
-          </LandingButton>
+            Submit a Request
+          </LearnMoreButton>
         </div>
       </div>
     </section>
