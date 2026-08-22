@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 import {
   chainHref,
@@ -192,23 +192,55 @@ function ClearIcon() {
 const PILL =
   "flex h-10 items-center rounded-full px-[26px] text-v5-card-body transition-colors"
 
+/** Kept in step with the v5-fade-out animation in tailwind.config.ts. */
+const FADE_OUT_MS = 220
+
+/** No animation in the `rest` state, so the first paint doesn't fade in. */
+const GRID =
+  "data-[state=in]:animate-v5-fade-in data-[state=out]:animate-v5-fade-out motion-reduce:!animate-none"
+
 /**
  * Filter chips and the search field narrow the same grid, so they compose: a
  * query inside "EVM" searches only EVM chains. Matching runs over name and
  * ticker because the ticker is the half most people type ("BTC", not "Bitcoin").
+ *
+ * Only the chips cross-fade. A chip is one deliberate switch between two whole
+ * sets, which is worth a beat; the search field narrows the same set on every
+ * keystroke, so fading it would strobe.
  */
 export default function ChainsExplorer() {
+  // `category` flips on click so the chip reacts at once; `shown` trails it by
+  // one fade, and `entering` is what keeps the first paint animation-free.
   const [category, setCategory] = useState<string>("all")
+  const [shown, setShown] = useState<string>("all")
+  const [entering, setEntering] = useState(false)
   const [query, setQuery] = useState("")
   /** Clearing returns focus to the field rather than dropping it on the body. */
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (category === shown) return
+
+    const swap = () => {
+      setShown(category)
+      setEntering(true)
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      swap()
+      return
+    }
+
+    const timer = window.setTimeout(swap, FADE_OUT_MS)
+    return () => window.clearTimeout(timer)
+  }, [category, shown])
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase()
     return CHAINS.filter((chain) => {
       const inCategory =
-        category === "all" ||
-        chain.categories.includes(category as (typeof chain.categories)[number])
+        shown === "all" ||
+        chain.categories.includes(shown as (typeof chain.categories)[number])
       if (!inCategory) return false
       if (!q) return true
       return (
@@ -216,7 +248,9 @@ export default function ChainsExplorer() {
         chain.ticker.toLowerCase().includes(q)
       )
     })
-  }, [category, query])
+  }, [shown, query])
+
+  const state = category === shown ? (entering ? "in" : "rest") : "out"
 
   return (
     <>
@@ -283,17 +317,22 @@ export default function ChainsExplorer() {
         {visible.length} of {CHAINS.length} chains shown
       </p>
 
-      {visible.length > 0 ? (
-        <ul className="grid grid-cols-2 gap-x-5 gap-y-[30px] md:grid-cols-3 lg:grid-cols-4">
-          {visible.map((chain) => (
-            <ChainCard key={`${chain.name}-${chain.ticker}`} {...chain} />
-          ))}
-        </ul>
-      ) : (
-        <p className="py-20 text-center text-v5-subtitle text-v5-text-inverse">
-          No chains match <span className="font-medium">“{query.trim()}”</span>.
-        </p>
-      )}
+      {/* Grid and empty state share one fading wrapper so a chip that empties
+          the grid still hands over on the same beat. */}
+      <div data-state={state} className={GRID}>
+        {visible.length > 0 ? (
+          <ul className="grid grid-cols-2 gap-x-5 gap-y-[30px] md:grid-cols-3 lg:grid-cols-4">
+            {visible.map((chain) => (
+              <ChainCard key={`${chain.name}-${chain.ticker}`} {...chain} />
+            ))}
+          </ul>
+        ) : (
+          <p className="py-20 text-center text-v5-subtitle text-v5-text-inverse">
+            No chains match{" "}
+            <span className="font-medium">“{query.trim()}”</span>.
+          </p>
+        )}
+      </div>
     </>
   )
 }

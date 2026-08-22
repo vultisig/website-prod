@@ -249,6 +249,15 @@ const config: Config = {
             transform: "translateX(-50%) translateY(-6px) scale(0.97)",
           },
         },
+        // Downloads tab panels: the outgoing one clears before the next arrives.
+        "v5-fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "v5-fade-out": {
+          from: { opacity: "1" },
+          to: { opacity: "0" },
+        },
         // Hero "OPEN-SOURCE AUDITED" seal, turning clockwise on its own axis.
         "v5-seal-spin": {
           from: { transform: "rotate(0deg)" },
@@ -260,6 +269,9 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "v5-menu-in": "v5-menu-in 180ms cubic-bezier(0.16, 1, 0.3, 1)",
         "v5-menu-out": "v5-menu-out 140ms cubic-bezier(0.4, 0, 1, 1)",
+        // `both` holds the end opacity so a faded-out panel stays gone.
+        "v5-fade-in": "v5-fade-in 340ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "v5-fade-out": "v5-fade-out 220ms cubic-bezier(0.4, 0, 1, 1) both",
         // Slow enough that the wordmark stays readable while it turns.
         "v5-seal-spin": "v5-seal-spin 20s linear infinite",
       },
