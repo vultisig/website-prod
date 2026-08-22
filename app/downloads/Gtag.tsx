@@ -89,12 +89,37 @@ function trackDownload(platform: string) {
   })
 }
 
-const FACE_CLASS =
-  "absolute inset-0 flex flex-col items-center justify-center gap-[22px] rounded-3xl bg-v5-white p-[30px] md:[backface-visibility:hidden]"
+/**
+ * Icon travel and name fade share one clock, both ways, measured off the
+ * reference recording: 375ms on the CSS `ease-out` curve. Hovering in and out
+ * reached 37%/73%/90% and 37%/69%/90% of the way at a quarter/half/three
+ * quarters, against the curve's 38/68/91. Note this is not Tailwind's
+ * `ease-out`, a snappier cubic-bezier(0,0,.2,1).
+ *
+ * `duration-[375ms] ease-[...]` cannot be used: tailwindcss-animate and
+ * tailwindcss-motion both redefine `duration-*` and `ease-*` and shadow core's
+ * arbitrary values, so these go through arbitrary properties.
+ */
+const MOTION =
+  "[transition-duration:375ms] [transition-timing-function:ease-out] motion-reduce:transition-none"
 
 /**
- * At 1440px the card flips on hover — icon-only front, icon + name back.
- * Mobile has no hover, so it renders the back face alone, unrotated.
+ * At rest the icon carries half of what the name costs below it — the name's
+ * 42px line box plus the 22px gap — which leaves it dead-centre in the card.
+ * Hover hands that space back, so the icon rises by exactly the 32px the
+ * reference travels.
+ */
+const ICON_TRAVEL =
+  "md:[@media(hover:hover)]:translate-y-8 md:[@media(hover:hover)]:group-hover:translate-y-0 md:[@media(hover:hover)]:group-focus-visible:translate-y-0"
+
+/** The name holds its place throughout and only fades, as in the reference. */
+const NAME_FADE =
+  "md:[@media(hover:hover)]:opacity-0 md:[@media(hover:hover)]:group-hover:opacity-100 md:[@media(hover:hover)]:group-focus-visible:opacity-100"
+
+/**
+ * The card rests as a bare centred icon; hovering slides the icon up to make
+ * room for the channel name, which fades in below it. Touch has no hover, so it
+ * shows both from the start.
  */
 export default function DownloadCard({
   channelKey,
@@ -105,16 +130,6 @@ export default function DownloadCard({
 }) {
   const channel = channels[channelKey]
 
-  const icon = (
-    <Image
-      src={channel.icon}
-      alt=""
-      width={channel.iconWidth}
-      height={54}
-      className="h-[54px] w-auto"
-    />
-  )
-
   return (
     <a
       href={channel.href}
@@ -123,18 +138,29 @@ export default function DownloadCard({
       aria-label={`Download Vultisig for ${channel.label}`}
       onClick={() => trackDownload(channel.platform)}
       className={cn(
-        "group relative block h-[203.5px] rounded-3xl [perspective:1000px]",
+        "group flex h-[203.5px] flex-col items-center justify-center gap-[22px] rounded-3xl bg-v5-white p-[30px]",
         className,
       )}
     >
-      <span className="absolute inset-0 block md:transition-transform md:duration-500 md:[transform-style:preserve-3d] md:group-hover:[transform:rotateY(180deg)] md:group-focus-visible:[transform:rotateY(180deg)] md:motion-reduce:transition-none">
-        <span className={cn(FACE_CLASS, "hidden md:flex")}>{icon}</span>
-        <span className={cn(FACE_CLASS, "md:[transform:rotateY(180deg)]")}>
-          {icon}
-          <span className="whitespace-nowrap text-v5-download-label-sm font-semibold text-v5-text-inverse md:text-v5-download-label">
-            {channel.label}
-          </span>
-        </span>
+      <Image
+        src={channel.icon}
+        alt=""
+        width={channel.iconWidth}
+        height={54}
+        className={cn(
+          "h-[54px] w-auto transition-transform",
+          MOTION,
+          ICON_TRAVEL,
+        )}
+      />
+      <span
+        className={cn(
+          "whitespace-nowrap text-v5-download-label-sm font-semibold text-v5-text-inverse transition-opacity md:text-v5-download-label",
+          MOTION,
+          NAME_FADE,
+        )}
+      >
+        {channel.label}
       </span>
     </a>
   )
