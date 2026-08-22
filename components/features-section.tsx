@@ -1,4 +1,6 @@
+import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 import SectionHeading from "@/components/ui/section-heading"
 
@@ -64,6 +66,51 @@ function FeatureCard({ title, body, image, imageClass }: Feature) {
   )
 }
 
+/**
+ * Landing Page Button / Secondary, per Figma's Default and Hover variants.
+ * Hovering fills the pill with the CTA blue, flips the label to white and pulls
+ * the padding in from 24px to 16px. The arrow keeps the CTA blue rather than
+ * turning white, so it dissolves into the new fill as its own slot collapses.
+ * The reference instead holds the arrow still and lets the closing right edge
+ * clip it, which no content-sized box can do — the fade reads the same and this
+ * way the pill still hugs whatever the label says.
+ *
+ * Timings come off the reference clip: in, everything rides one ~360ms ease-out
+ * (measured 0.24 / 0.56 / 0.88 of the travel at a quarter, half and three
+ * quarters). Out is slower and springs ~7% past the resting width around 80% of
+ * the way through, which the bezier below approximates; the colours land first
+ * on a plain ease-out because overshooting them flashes the fill past #f0f4fc
+ * to near-white.
+ *
+ * The transitions are written out in full because tailwindcss-animate and
+ * tailwindcss-motion both redefine `duration-*` and `ease-*`, which shadows
+ * core's arbitrary values — the same trap noted in chains-section.
+ */
+const AUDIT_MOTION =
+  "[transition:padding_520ms_cubic-bezier(0.3,0.6,0.4,1.22),background-color_380ms_ease-out,border-color_380ms_ease-out,color_380ms_ease-out,box-shadow_380ms_ease-out] hover:[transition:all_360ms_ease-out] motion-reduce:!transition-none"
+
+/** Matches AUDIT_MOTION so the slot and the padding close on the same curve. */
+const AUDIT_ARROW_MOTION =
+  "[transition:width_520ms_cubic-bezier(0.3,0.6,0.4,1.22),margin_520ms_cubic-bezier(0.3,0.6,0.4,1.22)] group-hover:[transition:all_360ms_ease-out] motion-reduce:!transition-none"
+
+function AuditLink() {
+  return (
+    <Link
+      href="https://docs.vultisig.com/other/security"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group inline-flex h-[50px] items-center whitespace-nowrap rounded-xl border border-v5-white bg-v5-page px-6 py-3.5 text-v5-button-sm font-medium text-v5-cta shadow-v5-button hover:border-transparent hover:bg-v5-cta hover:px-4 hover:text-v5-white hover:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-v5-white focus-visible:ring-offset-2 focus-visible:ring-offset-v5-purple ${AUDIT_MOTION}`}
+    >
+      Audited by Trail of Bits
+      <span
+        className={`ml-2 w-4 overflow-hidden text-v5-cta group-hover:ml-0 group-hover:w-0 ${AUDIT_ARROW_MOTION}`}
+      >
+        <ArrowRight className="size-4 max-w-none" aria-hidden />
+      </span>
+    </Link>
+  )
+}
+
 export default function FeaturesSection() {
   return (
     <section className="bg-v5-page pt-4 md:px-[30px] md:pt-[30px]">
@@ -79,6 +126,7 @@ export default function FeaturesSection() {
               <FeatureCard key={feature.title} {...feature} />
             ))}
           </ul>
+          <AuditLink />
         </div>
       </div>
     </section>
