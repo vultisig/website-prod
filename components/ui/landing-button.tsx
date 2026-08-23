@@ -22,10 +22,41 @@ const landingButtonVariants = cva(
         md: "h-12 px-8 text-v5-button",
         lg: "rounded-full px-9 py-[19px] text-v5-body-m",
       },
+      // Hero-CTA hover: the fill and the ink trade places rather than the fill
+      // nudging a shade. The reference recording fits an ease-out-family curve,
+      // but its compression keeps refining the pixels that just moved, so the
+      // tail cannot date the end of the run: `ease` at ~480ms and `ease-out` at
+      // ~340ms fit it equally well (rms 0.024 vs 0.026). 400ms on `ease` sits
+      // between the two.
+      //
+      // `duration-[400ms] ease-[ease]` cannot be used: tailwindcss-animate and
+      // tailwindcss-motion both redefine `duration-*` and `ease-*` and shadow
+      // core's arbitrary values, so these go through arbitrary properties.
+      invertOnHover: {
+        true: "[transition-duration:400ms] [transition-timing-function:ease]",
+        false: "",
+      },
     },
+    compoundVariants: [
+      // Both dark fills land on the same light state, so a primary/secondary
+      // pair reads as one control on hover.
+      {
+        variant: ["primary", "secondary"],
+        invertOnHover: true,
+        className: "hover:border-v5-panel hover:bg-v5-page hover:text-v5-cta",
+      },
+      // light is already the hover state above, so it runs the swap in reverse.
+      {
+        variant: "light",
+        invertOnHover: true,
+        className:
+          "hover:border-v5-accent hover:bg-v5-cta hover:text-v5-text-primary",
+      },
+    ],
     defaultVariants: {
       variant: "primary",
       size: "md",
+      invertOnHover: false,
     },
   },
 )
@@ -34,11 +65,16 @@ export type LandingButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof landingButtonVariants> & { asChild?: boolean }
 
 const LandingButton = React.forwardRef<HTMLButtonElement, LandingButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { className, variant, size, invertOnHover, asChild = false, ...props },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(landingButtonVariants({ variant, size, className }))}
+        className={cn(
+          landingButtonVariants({ variant, size, invertOnHover, className }),
+        )}
         ref={ref}
         {...props}
       />

@@ -252,6 +252,7 @@ export default function DiscountTiers() {
               <LandingButton
                 asChild
                 size="sm"
+                invertOnHover
                 className="hidden h-[50px] w-[185px] shrink-0 md:inline-flex"
               >
                 <a href={VULT_BUY_URL} target="_blank" rel="noopener noreferrer">
@@ -275,7 +276,12 @@ export default function DiscountTiers() {
             </div>
 
             <div className="mt-8 flex justify-center px-4 md:hidden">
-              <LandingButton asChild size="sm" className="h-[50px] w-[300px]">
+              <LandingButton
+                asChild
+                size="sm"
+                invertOnHover
+                className="h-[50px] w-[300px]"
+              >
                 <a href={VULT_BUY_URL} target="_blank" rel="noopener noreferrer">
                   Buy $VULT
                 </a>

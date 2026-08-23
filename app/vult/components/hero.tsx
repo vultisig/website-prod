@@ -22,6 +22,7 @@ export default function Hero() {
             <LandingButton
               asChild
               size="sm"
+              invertOnHover
               className="h-[50px] w-full md:w-[185px]"
             >
               <a href={VULT_BUY_URL} target="_blank" rel="noopener noreferrer">

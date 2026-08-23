@@ -27,6 +27,7 @@ export default function Hero() {
                 asChild
                 variant="light"
                 size="sm"
+                invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
                 <Link href="/downloads">
@@ -38,6 +39,7 @@ export default function Hero() {
                 asChild
                 variant="secondary"
                 size="sm"
+                invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
                 <Link href="#three-steps">

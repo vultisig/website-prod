@@ -82,6 +82,7 @@ export default function HowItWorks() {
             asChild
             variant="light"
             size="sm"
+            invertOnHover
             className="h-[50px] w-full md:w-[185px]"
           >
             <Link href="/downloads">

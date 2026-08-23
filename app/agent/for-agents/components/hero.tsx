@@ -1,6 +1,7 @@
 import { ArrowRight, Rocket } from "lucide-react"
 import Link from "next/link"
 
+import AudienceToggle from "@/app/agent/components/audience-toggle"
 import { LandingButton } from "@/components/ui/landing-button"
 
 const ILLUSTRATION_ALT =
@@ -12,6 +13,7 @@ export default function Hero() {
       <div className="mx-auto max-w-v5-content">
         <div className="relative flex flex-col overflow-hidden rounded-[20px] bg-v5-agent-deep px-4 pb-8 pt-[60px] md:flex-row md:items-center md:rounded-v5-panel md:px-[60px] md:py-[120px]">
           <div className="relative z-10 flex flex-col justify-center gap-6 md:w-[582px]">
+            <AudienceToggle active="agents" />
             <h1 className="text-v5-hero-sm font-semibold text-v5-text-primary md:w-[546px] md:text-v5-hero">
               Automation that never holds your keys.
             </h1>
@@ -25,6 +27,7 @@ export default function Hero() {
                 asChild
                 variant="light"
                 size="sm"
+                invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
                 <Link href="/downloads">
@@ -36,6 +39,7 @@ export default function Hero() {
                 asChild
                 variant="secondary"
                 size="sm"
+                invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
                 <Link href="/how-it-works">

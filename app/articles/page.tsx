@@ -1,15 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
-import ArticleSearchGrid from "@/components/articles/article-search-grid"
-import CategoryTabs from "@/components/articles/category-tabs"
-import FeaturedArticle from "@/components/articles/featured-article"
-import {
-  buildCategoryTabs,
-  filterByCategory,
-  resolveCategory,
-} from "@/lib/article-categories"
-import { getAllArticles, toArticleSummary, type Article } from "@/lib/articles"
+import ArticlesExplorer from "@/components/articles/articles-explorer"
+import { buildCategoryTabs, resolveCategory } from "@/lib/article-categories"
+import { getAllArticles, toArticleSummary } from "@/lib/articles"
 
 // Make articles page dynamic - articles change frequently
 export const dynamic = "force-dynamic"
@@ -96,11 +90,6 @@ function BreadcrumbJsonLd() {
   )
 }
 
-/** The promoted article: an explicit `featured` flag, else the most recent. */
-function pickFeatured(articles: Article[]): Article | undefined {
-  return articles.find((article) => article.featured) || articles[0]
-}
-
 function EmptyState() {
   return (
     <div className="py-16 text-center">
@@ -124,13 +113,10 @@ export default async function ArticlesPage({
   const rawQuery = Array.isArray(params?.q) ? params?.q[0] : params?.q
 
   const articles = await getAllArticles()
-  const tabs = buildCategoryTabs(articles)
-  const inCategory = filterByCategory(articles, category)
-  const featured = pickFeatured(inCategory)
   // Summaries only — full bodies would otherwise ship in the client payload.
-  const rest = inCategory
-    .filter((article) => article.slug !== featured?.slug)
-    .map(toArticleSummary)
+  // Every category goes down, so switching one filters in place and can fade.
+  const summaries = articles.map(toArticleSummary)
+  const tabs = buildCategoryTabs(summaries)
 
   return (
     <>
@@ -151,15 +137,12 @@ export default async function ArticlesPage({
           {articles.length === 0 ? (
             <EmptyState />
           ) : (
-            <>
-              {featured && <FeaturedArticle article={featured} />}
-              <ArticleSearchGrid
-                articles={rest}
-                category={category}
-                initialQuery={rawQuery || ""}
-                tabs={<CategoryTabs tabs={tabs} active={category} />}
-              />
-            </>
+            <ArticlesExplorer
+              articles={summaries}
+              tabs={tabs}
+              initialCategory={category}
+              initialQuery={rawQuery || ""}
+            />
           )}
         </div>
       </main>

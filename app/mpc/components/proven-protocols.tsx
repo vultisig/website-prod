@@ -71,6 +71,7 @@ export default function ProvenProtocols() {
           <LandingButton
             asChild
             size="sm"
+            invertOnHover
             className="h-[50px] w-full px-4 md:w-[185px]"
           >
             <Link

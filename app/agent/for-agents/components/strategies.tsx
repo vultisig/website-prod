@@ -36,7 +36,7 @@ const STRATEGIES: Strategy[] = [
     icon: "/v5/agent-strategy-recurring.svg",
     title: "Recurring Payments",
     body: "Schedule automatic sends to any address on any chain. Payroll, subscriptions, regular transfers - set once, agent handles every future transaction with MPC security.",
-    live: false,
+    live: true,
   },
   {
     icon: "/v5/agent-strategy-gas.svg",
@@ -52,21 +52,29 @@ const STRATEGIES: Strategy[] = [
   },
 ]
 
+/**
+ * Hovering lifts the fill 15% toward the white card behind it, which is what
+ * dropping the alpha to 85% composites to - the same lift for both pills, with
+ * the hue left alone, and no hover-only token to keep in step with the base.
+ *
+ * `duration-*` and `ease-*` are redefined by tailwindcss-animate and
+ * tailwindcss-motion, which shadows core's arbitrary values, so the timing goes
+ * through arbitrary properties - the same trap noted in landing-button.
+ */
+const PILL_MOTION =
+  "transition-colors [transition-duration:250ms] [transition-timing-function:ease-out] motion-reduce:!transition-none"
+
 function StatusPill({ live }: { live: boolean }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full px-4 py-2 text-v5-body-s font-medium text-v5-text-primary",
-        live ? "bg-v5-info-dark" : "bg-v5-text-tertiary",
+        "inline-flex cursor-pointer items-center rounded-full px-4 py-2 text-v5-body-s font-medium text-v5-text-primary",
+        PILL_MOTION,
+        live
+          ? "bg-v5-info-dark hover:bg-v5-info-dark/85"
+          : "bg-v5-text-tertiary hover:bg-v5-text-tertiary/85",
       )}
     >
-      <span
-        className={cn(
-          "size-2 rounded-full",
-          live ? "bg-v5-positive" : "bg-v5-warning",
-        )}
-        aria-hidden
-      />
       {live ? "Live now" : "Coming soon"}
     </span>
   )
@@ -90,6 +98,7 @@ export default function Strategies() {
             <LandingButton
               asChild
               size="sm"
+              invertOnHover
               className="h-[50px] w-full shrink-0 md:w-[185px]"
             >
               <Link href="/downloads">

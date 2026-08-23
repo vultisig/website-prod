@@ -57,6 +57,7 @@ export default function Hero() {
               <LandingButton
                 asChild
                 size="sm"
+                invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
                 <Link href="/downloads">
@@ -68,6 +69,7 @@ export default function Hero() {
                 asChild
                 variant="secondary"
                 size="sm"
+                invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
                 <Link href="/how-it-works">
@@ -90,6 +92,9 @@ export default function Hero() {
               </p>
             </div>
           </div>
+
+          {/* The artwork is aspect-locked but the card height is not, so below 1440 it stops short of the stats row — this backs that gap in the same blue as its bottom edge */}
+          <div className="hidden md:absolute md:inset-x-0 md:bottom-0 md:top-[31px] md:block md:bg-v5-accent2" />
 
           {/* Two crops of the same artwork — full-bleed on mobile, bled off the card edges on desktop */}
           <picture className="contents">
