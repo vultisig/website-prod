@@ -10,6 +10,14 @@ export const metadata: Metadata = {
     title: 'Download Vultisig - Free MPC Wallet',
     description: 'Get the leading MPC wallet. Available on iOS, Android, Mac, and Windows. Free and open-source.',
     url: 'https://vultisig.com/downloads',
+    images: [
+      {
+        url: 'https://vultisig.com/thumbnails/home.png',
+        width: 1200,
+        height: 630,
+        alt: 'Download Vultisig — the free MPC wallet for iOS, Android, macOS and Windows',
+      },
+    ],
   },
 }
 

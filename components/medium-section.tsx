@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { formatArticleDate } from "@/lib/article-format"
 import { getAllArticles } from "@/lib/articles"
 
 interface Article {
@@ -56,73 +57,51 @@ const FALLBACK_ARTICLES: Article[] = [
   },
 ]
 
-function ArticleCard({
-  article,
-  index,
-}: {
-  article: Article
-  index: number
-}) {
-  const cardContent = (
+function ArticleCard({ article }: { article: Article }) {
+  const linkClass =
+    "flex flex-col overflow-hidden rounded-3xl bg-v5-white transition-shadow hover:shadow-v5-menu"
+  const content = (
     <>
-      <div className="aspect-video bg-slate-700 rounded-xl mb-4 sm:mb-6 overflow-hidden">
-        <img
-          src={article.image || "/images/home-5.svg"}
-          alt={article.title}
-          width="800"
-          height="450"
-          className="w-full h-full max-w-full object-cover"
-        />
-      </div>
-      <div className="flex flex-col flex-1">
-        <h3 className="text-lg sm:text-xl font-bold text-white mb-3 leading-tight">
+      {/* eslint-disable-next-line @next/next/no-img-element -- covers remote Medium thumbnails */}
+      <img
+        src={article.image || "/images/home-5.svg"}
+        alt={`Cover image for ${article.title}`}
+        width={720}
+        height={396}
+        className="aspect-[720/396] w-full object-cover"
+      />
+      <div className="flex flex-1 flex-col gap-3.5 px-4 py-5 md:min-h-[206px]">
+        <h3 className="text-v5-subtitle font-semibold text-v5-text-inverse">
           {article.title}
         </h3>
-        <p className="text-textSecondary text-sm leading-relaxed mb-4 flex-1">
+        <p className="flex-1 text-v5-card-body font-normal text-v5-text-inverse">
           {article.description}
         </p>
-        <p className="text-gray-300 text-sm italic mt-auto">{article.date}</p>
+        <p className="text-v5-card-meta font-normal italic text-v5-text-tertiary">
+          {article.date}
+        </p>
       </div>
     </>
   )
 
-  const cardClasses = `
-    bg-backgroundSecondary
-    border border-borderLight
-    hover:border-primary
-    rounded-2xl p-4 sm:p-6
-    transition-colors cursor-pointer
-    flex flex-col
-    block
-  `
-
   if (article.isInternal) {
     return (
-      <Link key={index} href={article.link} className={cardClasses}>
-        {cardContent}
+      <Link href={article.link} className={linkClass}>
+        {content}
       </Link>
     )
   }
 
   return (
     <a
-      key={index}
       href={article.link}
       target="_blank"
       rel="noopener noreferrer"
-      className={cardClasses}
+      className={linkClass}
     >
-      {cardContent}
+      {content}
     </a>
   )
-}
-
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
 }
 
 async function getServerArticles(): Promise<Article[]> {
@@ -138,7 +117,7 @@ async function getServerArticles(): Promise<Article[]> {
               article.description.length > 150
                 ? article.description.substring(0, 150) + "..."
                 : article.description,
-            date: formatDate(article.publishedAt),
+            date: formatArticleDate(article.publishedAt),
             image: article.image || "",
             link: `/articles/${article.slug}`,
             isInternal: true,
@@ -154,6 +133,11 @@ async function getServerArticles(): Promise<Article[]> {
       "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@vultisig",
       {
         next: { revalidate: 3600 },
+        // Without a deadline an unreachable or slow upstream never settles, and
+        // because this is an async Server Component the whole page's RSC stream
+        // hangs with it — the homepage stops responding instead of degrading.
+        // The catch below already falls back to shipped content.
+        signal: AbortSignal.timeout(5000),
       },
     )
 
@@ -168,7 +152,7 @@ async function getServerArticles(): Promise<Article[]> {
           title: item.title,
           description:
             item.description.replace(/<[^>]*>/g, "").substring(0, 150) + "...",
-          date: formatDate(item.pubDate),
+          date: formatArticleDate(item.pubDate),
           image: imgMatch?.[1] || item.thumbnail || "",
           link: item.link,
           isInternal: false,
@@ -187,51 +171,28 @@ export default async function MediumSection() {
   const hasInternalArticles = articles.some((article) => article.isInternal)
 
   return (
-    <section className="py-10 container">
-      <div className="mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-          Explore More on{" "}
-          <span
-            className="bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(64deg, #33E6BF, #0439C7)",
-            }}
-          >
-            Medium
-          </span>
+    <section className="bg-v5-page px-4 py-9 md:px-[30px] md:pb-[60px] md:pt-[90px]">
+      <div className="mx-auto flex max-w-v5-content flex-col gap-[30px]">
+        <h2 className="text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-display">
+          Explore More on Medium
         </h2>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-        {articles.map((article, index) => (
-          <ArticleCard key={index} article={article} index={index} />
-        ))}
-      </div>
+        <div className="grid grid-cols-1 gap-[30px] md:grid-cols-3">
+          {articles.map((article) => (
+            <ArticleCard key={article.link} article={article} />
+          ))}
+        </div>
 
-      {hasInternalArticles && (
-        <div className="text-center mt-10">
+        {hasInternalArticles && (
           <Link
             href="/articles"
-            className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+            className="inline-flex items-center gap-2 self-start text-v5-link font-medium text-v5-cta hover:underline"
           >
             View all articles
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
+            <span aria-hidden>&rarr;</span>
           </Link>
-        </div>
-      )}
+        )}
+      </div>
     </section>
   )
 }

@@ -1,3 +1,5 @@
+import { cache } from 'react'
+
 import connectDB from './mongodb'
 import Article, { IArticle } from './models/Article'
 
@@ -13,6 +15,13 @@ export interface Article {
   tags?: string[]
   featured?: boolean
   status: 'draft' | 'published'
+}
+
+/** Everything a listing card needs — omits the full markdown body. */
+export type ArticleSummary = Omit<Article, 'content'>
+
+export function toArticleSummary({ content: _, ...summary }: Article): ArticleSummary {
+  return summary
 }
 
 // Strip markdown, collapse whitespace, and truncate at a word boundary
@@ -79,14 +88,15 @@ export async function getAllArticles(includeDrafts = false): Promise<Article[]> 
   }
 }
 
-export async function getArticleBySlug(slug: string): Promise<Article | null> {
+// cache() dedupes the generateMetadata + page calls into one query per request.
+export const getArticleBySlug = cache(async (slug: string): Promise<Article | null> => {
   try {
     const validation = validateSlug(slug)
     if (!validation.valid) return null
 
     await connectDB()
     const article = await Article.findOne({ slug }).lean()
-    
+
     if (!article) return null
 
     return toArticleInterface(article)
@@ -94,7 +104,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     console.error('Error fetching article:', error)
     return null
   }
-}
+})
 
 // Rank published articles by shared-tag overlap with the current one, so every
 // article links out to its closest neighbours. Falls back to most-recent when

@@ -16,12 +16,11 @@ body::-webkit-scrollbar {
 
 @layer base {
   :root {
+    /* Dark surfaces retained for the shadcn primitives used by /articles/admin */
     /* --background: #02122b */
     --background: 217 91% 9%;
     /* backgroundSecondary - #061b3a - rgba(6,27,58) - surface-1 */
     --background-secondary: 216 81% 13%;
-    /* #001f73 */
-    --light-blob: 224 100% 23%;
     --foreground: 0 0% 100%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 100%;
@@ -63,40 +62,6 @@ body::-webkit-scrollbar {
     --border-light: #11284a;
     --border-normal: #1b3f73;
   }
-  .terms-content ol,
-  .terms-content ul {
-    list-style-position: inside;
-    margin-left: 2rem;
-    padding-left: 1.5rem;
-  }
-  .terms-content li {
-    list-style-position: outside;
-  }
-  .terms-content ol ol,
-  .terms-content ul ul,
-  .terms-content ol ul,
-  .terms-content ul ol {
-    margin-left: 2rem;
-    padding-left: 1.5rem;
-  }
-  .terms-content ol {
-    list-style-type: decimal;
-  }
-  .terms-content ul {
-    list-style-type: disc;
-  }
-  .terms-content ol ol {
-    list-style-type: lower-alpha;
-  }
-  .terms-content ol ol ol {
-    list-style-type: lower-roman;
-  }
-  .terms-content ul ul {
-    list-style-type: circle;
-  }
-  .terms-content ul ul ul {
-    list-style-type: square;
-  }
 }
 
 @layer base {
@@ -104,187 +69,19 @@ body::-webkit-scrollbar {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-v5-page text-v5-text-inverse;
   }
 }
-.bowl-glow {
-  /* background: radial-gradient(ellipse 50% 120% at 50% 0%, rgba(59,130,246,0.4) 0%, rgba(59,130,246,0.1) 60%, transparent 100%); */
-  background: radial-gradient(
-    ellipse 50% 120% at 50% 0%,
-    var(--light-blob) 0%,
-    rgba(59, 130, 246, 0.1) 60%,
-    transparent 100%
-  );
-  /* filter: blur(8px); */
-}
-.glow-blob {
-  position: absolute;
-  width: 40rem; /* w-96 */
-  height: 40rem; /* h-96 */
-  border-radius: 9999px;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  background: radial-gradient(circle, var(--light-blob) 0%, transparent 70%);
-  opacity: 0.5;
-  filter: blur(24px);
-}
 
-.feature-description-wrapper {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition:
-    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.feature-description-wrapper.expanded {
-  max-height: 200px; /* adjust as needed */
-  opacity: 1;
-}
-.feature-description {
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-}
-.feature-description.visible {
-  opacity: 1;
-}
-
-.carousel-scrollbar::-webkit-scrollbar {
-  height: 8px;
-  background: transparent;
-}
-.carousel-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
-}
-.carousel-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Firefox */
-.carousel-scrollbar {
-  scrollbar-color: var(--border-color) transparent;
-  scrollbar-width: thin;
-}
-
-/* Navbar logo — lighthouse sweep (spec: .motion-direction.md)
-   Light overlays masked by the bare mark asset (/logo.svg); artwork untouched. */
-.vlogo {
-  position: relative;
-  display: inline-block;
-  line-height: 0;
-  width: 31px;
-  height: 31px;
-}
-/* Oversampled stage: laid out at 200% and scaled to 0.5 so the pop
-   (0.5 -> 0.525) only downsamples the texture — no raster blur at icon size. */
-.vlogo-inner {
-  position: absolute;
-  left: -50%;
-  top: -50%;
-  width: 200%;
-  height: 200%;
-  transform: scale(0.5);
-  transform-origin: 50% 50%;
-}
-.vlogo-inner > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.vlogo-beam,
-.vlogo-stem {
-  position: absolute;
-  left: 16.67%;
-  top: 18.19%;
-  width: 67.02%;
-  height: 64.54%;
-  pointer-events: none;
-}
-.vlogo-beam {
-  overflow: hidden;
-  -webkit-mask: url("/logo.svg") 0 0 / 100% 100% no-repeat;
-  mask: url("/logo.svg") 0 0 / 100% 100% no-repeat;
-}
-.vlogo-beam::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: -10%;
-  width: 60%;
-  height: 120%;
-  background: linear-gradient(
-    105deg,
-    rgba(51, 230, 191, 0) 30%,
-    rgba(51, 230, 191, 0.8) 50%,
-    rgba(51, 230, 191, 0) 70%
-  );
-  transform: translateX(-110%);
-}
-.vlogo-stem {
-  background: #33e6bf;
-  opacity: 0;
-  -webkit-mask-image: url("/logo.svg"),
-    linear-gradient(90deg, transparent 28%, #000 42%, #000 58%, transparent 72%),
-    linear-gradient(180deg, #000 0%, #000 52%, transparent 78%);
-  -webkit-mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-composite: source-in, source-in;
-  mask-image: url("/logo.svg"),
-    linear-gradient(90deg, transparent 28%, #000 42%, #000 58%, transparent 72%),
-    linear-gradient(180deg, #000 0%, #000 52%, transparent 78%);
-  mask-size: 100% 100%;
-  mask-repeat: no-repeat;
-  mask-composite: intersect;
-}
-
-/* lint-allow: linear (true beam — constant-motion exemption; pop/stem tracks linear, per-keyframe curves carry easing) */
-.vlogo-sweeping .vlogo-inner {
-  /* hint compositor to raster at the animation's peak scale (anti-blur) */
-  will-change: transform;
-  animation: vlogo-pop 1250ms linear both;
-}
-.vlogo-sweeping .vlogo-beam::before {
-  /* lint-allow: linear (true beam — constant-motion exemption) */
-  animation: vlogo-beam 1100ms linear both;
-}
-.vlogo-sweeping .vlogo-stem {
-  /* lint-allow: linear (track only; per-keyframe curves carry easing) */
-  animation: vlogo-stem 1250ms linear both;
-}
-
-@keyframes vlogo-beam {
-  from { transform: translateX(-110%); }
-  to   { transform: translateX(180%); }
-}
-@keyframes vlogo-pop {
-  0%   { transform: scale(0.5); }
-  24%  { transform: scale(0.5); animation-timing-function: cubic-bezier(0, 0, 0.38, 0.9); }
-  48%  { transform: scale(0.525); animation-timing-function: linear; } /* lint-allow: linear (flat hold) */
-  56%  { transform: scale(0.525); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  100% { transform: scale(0.5); }
-}
-@keyframes vlogo-stem {
-  0%   { opacity: 0; }
-  36%  { opacity: 0; animation-timing-function: ease-out; }
-  44%  { opacity: 0.45; animation-timing-function: linear; } /* lint-allow: linear (flat hold) */
-  56%  { opacity: 0.45; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  100% { opacity: 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vlogo-sweeping .vlogo-inner,
-  .vlogo-sweeping .vlogo-beam::before,
-  .vlogo-sweeping .vlogo-stem {
-    animation: none;
+/* Section reveal — armed by components/scroll-reveal.tsx; inert without JS. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal] main > section:not(:first-of-type) {
+    transition:
+      opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
-  .vlogo img {
-    transition: filter 150ms cubic-bezier(0, 0, 0.38, 0.9);
-  }
-  a:hover .vlogo img {
-    filter: brightness(1.08);
+  html[data-reveal] main > section:not(:first-of-type):not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(28px);
   }
 }

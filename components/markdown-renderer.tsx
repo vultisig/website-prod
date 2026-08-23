@@ -1,159 +1,164 @@
-"use client"
-
+import type { ReactNode } from "react"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
 import remarkBreaks from "remark-breaks"
+
 import { articleAutoLinks, getInternalHref } from "@/lib/article-auto-links"
+import { slugifyHeading } from "@/lib/article-toc"
 
 interface MarkdownRendererProps {
   content: string
   currentPath?: string
 }
 
+function toText(children: ReactNode): string {
+  if (typeof children === "string" || typeof children === "number") {
+    return String(children)
+  }
+  if (Array.isArray(children)) return children.map(toText).join("")
+  if (children && typeof children === "object" && "props" in children) {
+    const props = (children as { props?: { children?: ReactNode } }).props
+    return toText(props?.children)
+  }
+  return ""
+}
+
+/** Blank lines become spacer paragraphs so tiptap-authored prose keeps its rhythm. */
+function withSpacingMarkers(content: string): string {
+  return content
+    .split("\n")
+    .map((line) => (line.trim() === "" ? "\n\n&nbsp;\n\n" : line))
+    .join("\n")
+}
+
 export default function MarkdownRenderer({
   content,
   currentPath,
 }: MarkdownRendererProps) {
-  // ULTIMATE SIMPLE FIX: Replace empty lines with a marker that creates visible spacing
-  // Process line by line and inject spacing markers
-
-  const lines = content.split("\n")
-  const processed: string[] = []
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-
-    if (line.trim() === "") {
-      // Empty line - inject spacing marker
-      processed.push("<!-- SPACING -->")
-    } else {
-      processed.push(line)
-    }
+  // Fresh per render so heading ids follow document order and match the TOC.
+  const headingCounts = new Map<string, number>()
+  const nextHeadingId = (children: ReactNode) => {
+    const base = slugifyHeading(toText(children))
+    const seen = headingCounts.get(base) || 0
+    headingCounts.set(base, seen + 1)
+    return seen === 0 ? base : `${base}-${seen}`
   }
-
-  let processedContent = processed.join("\n")
-
-  // Replace spacing markers with actual content that will render
-  processedContent = processedContent.replace(
-    /<!-- SPACING -->/g,
-    "\n\n&nbsp;\n\n",
+  // Shared by h1 and h2 — h1 is demoted since the page title owns the only h1.
+  const sectionHeading = ({ children }: { children?: ReactNode }) => (
+    <h2
+      id={nextHeadingId(children)}
+      className="scroll-mt-[120px] text-v5-display-xs font-medium md:text-v5-display-sm"
+    >
+      {children}
+    </h2>
   )
 
   return (
-    <div className="max-w-none font-sans">
-      <div className="text-textSecondary leading-relaxed">
-        <ReactMarkdown
-          remarkPlugins={[remarkBreaks, articleAutoLinks(currentPath)]}
-          components={{
-            h1: ({ children }) => (
-              <h1 className="text-3xl font-bold text-white mt-8 mb-4">
+    <div className="max-w-none font-sans text-v5-body-m-relaxed text-v5-text-inverse md:text-v5-subtitle">
+      <ReactMarkdown
+        remarkPlugins={[remarkBreaks, articleAutoLinks(currentPath)]}
+        components={{
+          h1: sectionHeading,
+          h2: sectionHeading,
+          h3: ({ children }) => (
+            <h3
+              id={nextHeadingId(children)}
+              className="scroll-mt-[120px] text-v5-label font-medium md:text-v5-prose-h3"
+            >
+              {children}
+            </h3>
+          ),
+          h4: ({ children }) => (
+            <h4 className="text-v5-body-l-relaxed font-medium md:text-v5-label">
+              {children}
+            </h4>
+          ),
+          p: ({ children, ...props }) => {
+            if (toText(children).trim() === "") {
+              return <div aria-hidden="true" className="h-[1.35em]" />
+            }
+            return (
+              <p className="leading-[1.35]" {...props}>
                 {children}
-              </h1>
-            ),
-            h2: ({ children }) => (
-              <h2 className="text-2xl font-bold text-white mt-6 mb-3">
-                {children}
-              </h2>
-            ),
-            h3: ({ children }) => (
-              <h3 className="text-xl font-bold text-white mt-4 mb-2">
-                {children}
-              </h3>
-            ),
-            h4: ({ children }) => (
-              <h4 className="text-lg font-bold text-white mt-3 mb-2">
-                {children}
-              </h4>
-            ),
-            p: ({ children, ...props }) => {
-              // Check if this paragraph only contains &nbsp; (spacing marker)
-              const text =
-                typeof children === "string"
-                  ? children
-                  : Array.isArray(children)
-                    ? children.join("")
-                    : ""
+              </p>
+            )
+          },
+          ul: ({ children }) => (
+            <ul className="list-disc space-y-1 ps-[30px]">{children}</ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="list-decimal space-y-1 ps-[30px]">{children}</ol>
+          ),
+          li: ({ children }) => (
+            <li className="leading-[1.78] tracking-[-0.32px]">{children}</li>
+          ),
+          a: ({ href = "", children }) => {
+            const internalHref = getInternalHref(href)
+            const className = "underline underline-offset-2 hover:text-v5-cta"
 
-              if (text.trim() === "\u00A0" || text.trim() === "") {
-                // This is a spacing paragraph - render as visible div
-                return (
-                  <div
-                    className="h-6 mb-0"
-                    style={{ minHeight: "1.5rem", display: "block" }}
-                    aria-hidden="true"
-                  ></div>
-                )
-              }
-
-              return (
-                <p
-                  className="mb-4 text-textSecondary leading-relaxed"
-                  {...props}
-                >
-                  {children}
-                </p>
-              )
-            },
-            ul: ({ children }) => (
-              <ul className="list-disc list-inside mb-4 space-y-2 text-textSecondary ml-4">
+            return internalHref ? (
+              <Link href={internalHref} className={className}>
                 {children}
-              </ul>
-            ),
-            ol: ({ children }) => (
-              <ol className="list-decimal list-inside mb-4 space-y-2 text-textSecondary ml-4">
+              </Link>
+            ) : (
+              <a
+                href={href}
+                className={className}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {children}
-              </ol>
-            ),
-            li: ({ children }) => (
-              <li className="text-textSecondary mb-1">{children}</li>
-            ),
-            a: ({ href = "", children }) => {
-              const internalHref = getInternalHref(href)
-              const className = "text-blue-400 hover:text-blue-300 underline"
-
-              return internalHref ? (
-                <Link href={internalHref} className={className}>
-                  {children}
-                </Link>
-              ) : (
-                <a
-                  href={href}
-                  className={className}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {children}
-                </a>
-              )
-            },
-            code: ({ children }) => (
-              <code className="bg-slate-800 px-2 py-1 rounded text-sm text-blue-300 font-mono">
+              </a>
+            )
+          },
+          strong: ({ children }) => (
+            <strong className="font-semibold">{children}</strong>
+          ),
+          code: ({ children }) => (
+            <code className="rounded-md bg-v5-panel px-2 py-1 font-mono text-v5-card-body text-v5-cta">
+              {children}
+            </code>
+          ),
+          pre: ({ children }) => (
+            <pre className="overflow-x-auto rounded-xl bg-v5-panel p-4 text-v5-card-body">
+              {children}
+            </pre>
+          ),
+          blockquote: ({ children }) => (
+            <blockquote className="border-l-2 border-v5-highlight ps-4 italic text-v5-text-tertiary">
+              {children}
+            </blockquote>
+          ),
+          img: ({ src, alt }) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt || ""}
+              className="h-auto max-w-full rounded-[20px]"
+            />
+          ),
+          hr: () => <hr className="border-v5-text-secondary" />,
+          table: ({ children }) => (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-v5-card-body">
                 {children}
-              </code>
-            ),
-            pre: ({ children }) => (
-              <pre className="bg-slate-900 p-4 rounded-lg overflow-x-auto mb-4 text-sm">
-                {children}
-              </pre>
-            ),
-            blockquote: ({ children }) => (
-              <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-400 my-4">
-                {children}
-              </blockquote>
-            ),
-            img: ({ src, alt }) => (
-              <img
-                src={src}
-                alt={alt || ""}
-                className="rounded-lg my-4 max-w-full h-auto"
-              />
-            ),
-            hr: () => <hr className="my-8 border-slate-700" />,
-          }}
-        >
-          {processedContent}
-        </ReactMarkdown>
-      </div>
+              </table>
+            </div>
+          ),
+          th: ({ children }) => (
+            <th className="border-b border-v5-text-secondary p-3 font-semibold">
+              {children}
+            </th>
+          ),
+          td: ({ children }) => (
+            <td className="border-b border-v5-text-secondary/50 p-3">
+              {children}
+            </td>
+          ),
+        }}
+      >
+        {withSpacingMarkers(content)}
+      </ReactMarkdown>
     </div>
   )
 }

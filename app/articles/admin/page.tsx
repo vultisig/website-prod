@@ -268,7 +268,7 @@ export default function AdminPage() {
 
   if (checkingAuth) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-4">
+      <main className="min-h-screen flex items-center justify-center px-4 bg-background text-textPrimary">
         <div className="max-w-md w-full bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-8">
           <p className="text-gray-400 text-center">Checking authentication...</p>
         </div>
@@ -278,7 +278,7 @@ export default function AdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-4">
+      <main className="min-h-screen flex items-center justify-center px-4 bg-background text-textPrimary">
         <div className="max-w-md w-full bg-backgroundSecondary border border-[var(--border-color)] rounded-2xl p-8">
           <h1 className="text-3xl font-bold text-white mb-2">Admin Access</h1>
           <p className="text-gray-400 mb-6">
@@ -314,7 +314,7 @@ export default function AdminPage() {
     formData.content !== ""
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-4">
+    <main className="min-h-screen pt-32 pb-20 px-4 bg-background text-textPrimary">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12 flex items-center justify-between">
           <div>

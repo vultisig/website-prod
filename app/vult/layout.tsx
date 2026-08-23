@@ -10,6 +10,14 @@ export const metadata: Metadata = {
     title: '$VULT Token - Vultisig Utility Token',
     description: 'The utility token powering the leading MPC wallet. Tokenomics and ecosystem benefits.',
     url: 'https://vultisig.com/vult',
+    images: [
+      {
+        url: 'https://vultisig.com/thumbnails/home.png',
+        width: 1200,
+        height: 630,
+        alt: '$VULT — the utility token powering the Vultisig MPC wallet',
+      },
+    ],
   },
 }
 

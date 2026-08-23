@@ -1,3 +1,5 @@
+import { CHAINS } from "@/content/chains"
+
 // Shared helpers for the split sitemap (index + pages + posts).
 // Only indexable HTML routes belong here — non-HTML assets such as llms.txt,
 // llms-full.txt and SKILL.md are intentionally excluded from the sitemap.
@@ -16,11 +18,24 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/downloads", changefreq: "monthly", priority: 0.9 },
   { path: "/mpc", changefreq: "monthly", priority: 0.8 },
   { path: "/how-it-works", changefreq: "monthly", priority: 0.8 },
+  { path: "/chains", changefreq: "monthly", priority: 0.8 },
   { path: "/docs", changefreq: "monthly", priority: 0.8 },
   { path: "/vult", changefreq: "weekly", priority: 0.8 },
+  { path: "/agent/for-agents", changefreq: "monthly", priority: 0.8 },
+  { path: "/agent/for-builders", changefreq: "monthly", priority: 0.8 },
+  // Hidden for now: /backed-by is unlinked and noindexed until its data is verified.
   { path: "/support", changefreq: "monthly", priority: 0.7 },
   { path: "/privacy", changefreq: "yearly", priority: 0.5 },
   { path: "/termofservice", changefreq: "yearly", priority: 0.5 },
+  // Derived rather than listed, so a chain added to content/chains.ts is in the
+  // sitemap the same day rather than whenever someone remembers this file. The
+  // family is a path segment only — /chains/evm is not a page — so nothing
+  // between the index and the chain is listed.
+  ...CHAINS.map((chain): StaticPage => ({
+    path: `/chains/${chain.family}/${chain.slug}`,
+    changefreq: "monthly",
+    priority: 0.6,
+  })),
 ]
 
 export function escapeXml(value: string): string {

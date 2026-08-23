@@ -1,6 +1,27 @@
 /** @type {import('next').NextConfig} */
 const cacheOneYear = [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }]
 
+const isDev = process.env.NODE_ENV !== 'production'
+
+/**
+ * `script-src` for the site CSP. The dev server wraps every module in `eval()`
+ * (for HMR and cheap source maps), so without `'unsafe-eval'` the whole client
+ * bundle is blocked and nothing hydrates — every dropdown, toggle and menu
+ * silently does nothing. Production bundles never eval, so the allowance is
+ * scoped to development only and the shipped header is unchanged.
+ */
+const scriptSrc = [
+  "script-src 'self' 'unsafe-inline'",
+  isDev ? "'unsafe-eval'" : null,
+  'https://www.googletagmanager.com',
+  'https://static.ads-twitter.com',
+  'https://cdn.markfi.xyz',
+  'https://static.cloudflareinsights.com',
+  'https://scripts.simpleanalyticscdn.com',
+]
+  .filter(Boolean)
+  .join(' ')
+
 const securityHeaders = [
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -12,7 +33,7 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.ads-twitter.com https://cdn.markfi.xyz https://static.cloudflareinsights.com https://scripts.simpleanalyticscdn.com",
+      scriptSrc,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https: blob:",
       "font-src 'self'",

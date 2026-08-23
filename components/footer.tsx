@@ -1,147 +1,180 @@
 import Image from "next/image"
-import { FaGithub, FaTelegramPlane } from "react-icons/fa"
-import { FaDiscord, FaInstagram, FaXTwitter } from "react-icons/fa6"
+import Link from "next/link"
+import type { ReactNode } from "react"
+import {
+  FaDiscord,
+  FaGithub,
+  FaInstagram,
+  FaTelegram,
+  FaXTwitter,
+} from "react-icons/fa6"
+
+import { LandingButton } from "@/components/ui/landing-button"
+import { cn } from "@/lib/utils"
+
+const DISCORD_URL = "https://discord.gg/thq64eaYVN"
+const ICON = "size-4 shrink-0"
+
+type FooterLink = {
+  label: string
+  href: string
+  icon?: ReactNode
+}
+
+type FooterColumn = {
+  title: string
+  /** Figma stacks the columns Vultisig / About / Socials / Legal on mobile. */
+  mobileOrder: string
+  links: FooterLink[]
+}
+
+const FOOTER_COLUMNS: FooterColumn[] = [
+  {
+    title: "Vultisig",
+    mobileOrder: "max-md:order-1",
+    links: [
+      { label: "Products", href: "/downloads" },
+      { label: "How It Works", href: "/how-it-works" },
+      { label: "MPC", href: "/mpc" },
+      { label: "Articles", href: "/articles" },
+      // Hidden for now: /backed-by still carries unverified handles and affiliations.
+      // { label: "Backed By", href: "/backed-by" },
+      { label: "$VULT", href: "/vult" },
+    ],
+  },
+  {
+    title: "About",
+    mobileOrder: "max-md:order-2",
+    links: [
+      { label: "FAQs", href: "/support" },
+      { label: "Docs", href: "/docs" },
+      {
+        label: "Integrate Vultisig",
+        href: "https://docs.vultisig.com/developer-docs/vultisig-extension-integration-guide",
+      },
+      { label: "Audits", href: "https://docs.vultisig.com/other/security" },
+      { label: "Contact Us", href: "/support" },
+    ],
+  },
+  {
+    title: "Legal",
+    mobileOrder: "max-md:order-4",
+    links: [
+      { label: "Terms of Service", href: "/termofservice" },
+      { label: "Privacy Policy", href: "/privacy" },
+    ],
+  },
+  {
+    title: "Socials",
+    mobileOrder: "max-md:order-3",
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/vultisig",
+        icon: <FaGithub className={ICON} aria-hidden />,
+      },
+      {
+        label: "Discord",
+        href: DISCORD_URL,
+        icon: <FaDiscord className={ICON} aria-hidden />,
+      },
+      {
+        label: "X.com",
+        href: "https://x.com/vultisig",
+        icon: <FaXTwitter className={ICON} aria-hidden />,
+      },
+      {
+        label: "Telegram",
+        href: "https://t.me/vultisig",
+        icon: <FaTelegram className={ICON} aria-hidden />,
+      },
+      {
+        label: "Instagram",
+        href: "https://www.instagram.com/vultisig",
+        icon: <FaInstagram className={ICON} aria-hidden />,
+      },
+    ],
+  },
+]
+
+function FooterLinkItem({ label, href, icon }: FooterLink) {
+  const isExternal = href.startsWith("http")
+
+  return (
+    <Link
+      href={href}
+      title={label}
+      {...(isExternal
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : undefined)}
+      className="flex items-center gap-1.5 text-v5-link font-medium text-v5-text-inverse hover:text-v5-cta"
+    >
+      {icon}
+      {label}
+    </Link>
+  )
+}
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800 py-16 px-4">
-      <div className="container">
-        <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-0">
-          {/* Left side - Logo and socials */}
-          <div className="flex-shrink-0">
-            <div className="flex items-center gap-3 mb-6">
-              <Image
-                src={"/images/vultisig-logo.svg"}
-                alt="Vultisig logo"
-                width={35}
-                height={35}
-              />
-              <span className="text-white text-2xl sm:text-3xl font-bold">
-                Vultisig
-              </span>
-            </div>
+    <footer className="flex flex-col gap-[30px] bg-v5-page px-4 pb-4 md:px-[30px] md:pb-[30px]">
+      <div className="mx-auto w-full max-w-v5-content rounded-v5-panel bg-v5-panel p-6 md:flex md:items-start md:justify-between md:p-[60px]">
+        <Link href="/" title="Vultisig home" className="hidden md:block">
+          <Image
+            src="/v5/vultisig-mark.svg"
+            alt="Vultisig"
+            width={84}
+            height={84}
+          />
+        </Link>
 
-            <div className="flex divide-x divide-foreground/20 mb-6">
-              {[
-                {
-                  href: "https://github.com/vultisig",
-                  icon: <FaGithub />,
-                  label: "GitHub",
-                },
-                {
-                  href: "https://discord.gg/thq64eaYVN",
-                  icon: <FaDiscord />,
-                  label: "Discord",
-                },
-                {
-                  href: "https://x.com/vultisig",
-                  icon: <FaXTwitter />,
-                  label: "X",
-                },
-                {
-                  href: "https://t.me/vultisig",
-                  icon: <FaTelegramPlane />,
-                  label: "Telegram",
-                },
-                {
-                  href: "https://www.instagram.com/vultisig",
-                  icon: <FaInstagram />,
-                  label: "Instagram",
-                },
-              ].map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mr-2 pl-2 p-2.5 text-textSecondary hover:text-foreground min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
-                  aria-label={item.label}
-                  title={item.label}
-                >
-                  {item.icon}
-                </a>
-              ))}
-            </div>
-
-            <p className="text-gray-300 text-sm">© Copyright 2025 - Vultisig</p>
+        <div className="flex w-full min-w-0 flex-col gap-10 md:max-w-[793px] md:gap-[86px]">
+          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-end md:gap-[27px]">
+            <h2 className="text-v5-display-sm font-semibold uppercase text-v5-text-inverse md:max-w-[595px]">
+              Join the Discord to request new features!
+            </h2>
+            <LandingButton asChild className="w-full md:w-[176px] md:shrink-0">
+              <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">
+                Discord
+              </a>
+            </LandingButton>
           </div>
 
-          {/* Right side - Link columns */}
-          <div className="grid grid-cols-3 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16">
-            <div>
-              <h4 className="text-white font-semibold mb-4">VULTISIG</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a
-                    href="/how-it-works"
-                    title="How Vultisig Works"
-                    className="text-gray-300 hover:text-white"
-                  >
-                    How It Works
-                  </a>
-                </li>
-                <li>
-                  <a href="/docs" title="Vultisig Documentation" className="text-gray-300 hover:text-white">
-                    Docs
-                  </a>
-                </li>
-                <li>
-                  <a href="/vult" title="$VULT Token Information" className="text-gray-300 hover:text-white">
-                    $VULT
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">SUPPORT</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="/support" title="Vultisig Support & FAQs" className="text-gray-300 hover:text-white">
-                    FAQs
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.vultisig.com/other/security"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Security Audits"
-                    className="text-gray-300 hover:text-white"
-                  >
-                    Audits
-                  </a>
-                </li>
-                <li>
-                  <a href="/support" title="Vultisig Support & FAQs" className="text-gray-300 hover:text-white">
-                    Contact Us
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">LEGAL</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a
-                    href="/termofservice"
-                    title="Terms of Service"
-                    className="text-gray-300 hover:text-white"
-                  >
-                    Terms of Service
-                  </a>
-                </li>
-                <li>
-                  <a href="/privacy" title="Privacy Policy" className="text-gray-300 hover:text-white">
-                    Privacy Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:flex md:gap-8 v5wide:gap-[84px]">
+            {FOOTER_COLUMNS.map((column) => (
+              <div
+                key={column.title}
+                className={cn("flex flex-col gap-3", column.mobileOrder)}
+              >
+                <p className="text-v5-label font-semibold uppercase text-v5-text-inverse">
+                  {column.title}
+                </p>
+                {column.links.map((link) => (
+                  <FooterLinkItem key={link.label} {...link} />
+                ))}
+              </div>
+            ))}
           </div>
         </div>
+
+        <Link
+          href="/"
+          title="Vultisig home"
+          className="mt-10 flex items-center justify-center gap-3 md:hidden"
+        >
+          <Image src="/v5/vultisig-mark.svg" alt="" width={48} height={48} />
+          <Image
+            src="/v5/vultisig-wordmark.svg"
+            alt="Vultisig"
+            width={144}
+            height={43}
+          />
+        </Link>
       </div>
+
+      <p className="mx-auto w-full max-w-v5-content text-v5-caption font-semibold text-v5-text-inverse">
+        @ Copyright {new Date().getFullYear()} - Vultisig
+      </p>
     </footer>
   )
 }
