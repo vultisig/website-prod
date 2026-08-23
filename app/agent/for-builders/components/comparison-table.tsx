@@ -1,5 +1,7 @@
 import { Check } from "lucide-react"
 
+import { supportedChainCountLabel } from "@/content/chain-count"
+
 type ComparisonRow = {
   feature: string
   /** One entry per competitor column, in COMPETITORS order. */
@@ -44,7 +46,7 @@ const ROWS: ComparisonRow[] = [
   {
     feature: "Multi-chain",
     others: ["Base, EVM, Solana", "EVM, Solana, Bitcoin", "Chain-agnostic"],
-    vultisig: "30+ native chains",
+    vultisig: `${supportedChainCountLabel} native chains`,
   },
   {
     feature: "Open source",

@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
+import { supportedChainCountLabel } from "@/content/chain-count"
 import SectionHeading from "@/components/ui/section-heading"
 
 type Feature = {
@@ -37,7 +38,7 @@ const FEATURES: Feature[] = [
   },
   {
     title: "Truly omni-chain",
-    body: "Our Vault system works across over 30 chains already, while staying flexible and dynamic - enabling a truly seamless user experience.",
+    body: `Our Vault system works across ${supportedChainCountLabel} chains already, while staying flexible and dynamic - enabling a truly seamless user experience.`,
     image: {
       src: "/v5/feature-omnichain.webp",
       alt: "Safe beside a stack of coins from different blockchains",

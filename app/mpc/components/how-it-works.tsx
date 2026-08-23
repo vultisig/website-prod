@@ -2,6 +2,7 @@ import { Download } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
+import { supportedChainCountLabel } from "@/content/chain-count"
 import { LandingButton } from "@/components/ui/landing-button"
 import SectionHeading from "@/components/ui/section-heading"
 
@@ -25,7 +26,7 @@ const STEPS: Step[] = [
   {
     title: "Sign Together",
     body: "When you send crypto, your devices communicate directly to co-sign the transaction. Each device contributes its key share without ever revealing it. The result is a standard blockchain transaction: No one can tell it was signed by MPC.",
-    kicker: "For Bitcoin, Ethereum, Solana, and 30+ chains",
+    kicker: `For Bitcoin, Ethereum, Solana, and ${supportedChainCountLabel} chains`,
     screen: {
       src: "/v5/mpc-step-sign-together.webp",
       alt: "Vultisig on iPhone showing a pairing QR code while it waits for the second device to join",

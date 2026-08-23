@@ -1,3 +1,4 @@
+import { supportedChainCountLabel } from "@/content/chain-count"
 import FaqSection from "@/components/ui/faq-section"
 
 type MpcFaqItem = {
@@ -12,7 +13,7 @@ const FAQ_ITEMS: MpcFaqItem[] = [
       "Your vault uses a threshold model (e.g., 2-of-3), meaning you only need a subset of your devices to recover full access. If you lose one device, your remaining devices can re-share the vault to a new replacement device. No seed phrase needed, no company to contact. As long as you meet the threshold, your funds are safe.",
   },
   {
-    question: "What is an MPC wallet",
+    question: "What is an MPC wallet?",
     answer:
       "An MPC (Multi-Party Computation) wallet is a crypto wallet that splits your private key into multiple shares distributed across separate devices. When you sign a transaction, these devices compute the signature together without ever combining the key shares into a single private key. This eliminates the single point of failure that makes traditional wallets vulnerable to theft, phishing, and human error.",
   },
@@ -39,7 +40,7 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   {
     question: "Which blockchains does Vultisig support?",
     answer:
-      "Vultisig supports 30+ blockchains including Bitcoin, Ethereum, Solana, THORChain, Cosmos, Polygon, Avalanche, Arbitrum, Optimism, BNB Chain, Polkadot, Cardano, and more. All chains are supported from a single vault. No need to create separate wallets or manage multiple seed phrases for different networks.",
+      `Vultisig supports ${supportedChainCountLabel} blockchains including Bitcoin, Ethereum, Solana, THORChain, Cosmos, Polygon, Avalanche, Arbitrum, Optimism, BNB Chain, Polkadot, Cardano, and more. All chains are supported from a single vault. No need to create separate wallets or manage multiple seed phrases for different networks.`,
   },
   {
     question: "Is an MPC wallet safe?",
@@ -69,7 +70,7 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   {
     question: "How is Vultisig different from ZenGo?",
     answer:
-      "Both are MPC wallets without seed phrases, but the architectures differ. ZenGo holds one key share on their servers: If ZenGo goes down, recovery depends on their infrastructure. Vultisig is fully self-custodial: all key shares live on your devices with zero server dependency. Vultisig is also free, open source, and supports 30+ chains compared to ZenGo's more limited selection.",
+      `Both are MPC wallets without seed phrases, but the architectures differ. ZenGo holds one key share on their servers: If ZenGo goes down, recovery depends on their infrastructure. Vultisig is fully self-custodial: all key shares live on your devices with zero server dependency. Vultisig is also free, open source, and supports ${supportedChainCountLabel} chains compared to ZenGo's more limited selection.`,
   },
   {
     question: "Is Vultisig really free? What's the catch?",

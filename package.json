@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "assert-copy": "node scripts/assert-copy-invariants.mjs",
+    "build": "node scripts/assert-copy-invariants.mjs && next build",
     "dev": "next dev --webpack",
     "lint": "next lint",
     "start": "next start"

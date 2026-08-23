@@ -1,48 +1,38 @@
+import {
+  faqPageJsonLd,
+  productFaqItems,
+  type ProductFaqId,
+} from "@/content/product-faq"
 import FaqSection from "@/components/ui/faq-section"
 
-type VultFaqItem = {
-  question: string
-  answer: string
-}
+const VULT_FAQ_IDS: ProductFaqId[] = ["what", "whyMpc", "lostDevice"]
 
-const FAQ_ITEMS: VultFaqItem[] = [
-  {
-    question: "What is Vultisig?",
-    answer:
-      "It is a secure, multi-authentication wallet based on MPC technology that is used to manage digital assets. Transactions require approval from multiple devices.",
-  },
-  {
-    question: "Why should I use Vultisig over a standard wallet?",
-    answer:
-      "Vultisig offers enhanced security with multi-device authentication, support for many blockchains, easy recovery options, and no seed phrases or user tracking.",
-  },
-  {
-    question: "What happens if I lose one of my devices?",
-    answer:
-      "Yes, as long as you saved and have access to your backups when creating the vault. You can import these backups on a new device to regain access to your assets.",
-  },
-]
-
-const FAQ_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
-}
+const FAQ_ITEMS = productFaqItems.filter((item) =>
+  VULT_FAQ_IDS.includes(item.id),
+)
 
 export default function VultFaq() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            faqPageJsonLd(
+              FAQ_ITEMS.map((item) => ({
+                question: item.question,
+                text: item.text,
+              })),
+            ),
+          ),
+        }}
       />
       <FaqSection
         className="py-9 md:py-[60px]"
-        items={FAQ_ITEMS}
+        items={FAQ_ITEMS.map((item) => ({
+          question: item.question,
+          answer: item.text,
+        }))}
         aside={
           <h2
             id="faq"

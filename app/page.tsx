@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import dynamic from "next/dynamic"
 import Hero from "@/components/hero"
 
@@ -11,6 +12,18 @@ const RatingsSection = dynamic(() => import("@/components/ratings-section"))
 const LandingFaq = dynamic(() => import("@/components/landing-faq"))
 const MediumSection = dynamic(() => import("@/components/medium-section"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://vultisig.com",
+    languages: {
+      "en-US": "https://vultisig.com",
+    },
+  },
+  openGraph: {
+    url: "https://vultisig.com",
+  },
+}
 
 export default function Home() {
   return (

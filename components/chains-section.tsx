@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { supportedChainCountLabel } from "@/content/chain-count"
 import { chainHref } from "@/content/chains"
 import { cn } from "@/lib/utils"
 
@@ -196,7 +197,10 @@ export default function ChainsSection({
       <div className="mx-auto max-w-v5-content">
         <div className="flex flex-col items-center gap-8 rounded-[20px] bg-v5-surface-dark px-4 pb-12 pt-5 md:gap-[60px] md:rounded-v5-panel md:p-[60px]">
           <h2 className="text-center text-v5-display-sm font-medium text-v5-text-primary md:text-v5-headline">
-            One Vault. <span className="text-v5-accent">30+ Blockchains.</span>
+            One Vault.{" "}
+            <span className="text-v5-accent">
+              {supportedChainCountLabel} Blockchains.
+            </span>
           </h2>
 
           <div className="flex flex-col items-center gap-8 md:relative md:size-[558px] md:rounded-full md:border md:border-v5-border-ring">

@@ -73,7 +73,7 @@ Vultisig was built with MPC/TSS (Threshold Signature Schemes) at its core. Not a
 
 **No seed phrases. Ever.** Traditional wallets force you to write down 12 or 24 words and hope you never lose them. Vultisig replaces this with Vault Shares that can be securely backed up and recovered.
 
-**30+ chains with one vault.** Most MPC solutions support a handful of networks. Vultisig covers all major chains — Ethereum, Bitcoin, Solana, Cosmos ecosystem, and more — with a single setup.
+**36+ chains with one vault.** Most MPC solutions support a handful of networks. Vultisig covers all major chains — Ethereum, Bitcoin, Solana, Cosmos ecosystem, and more — with a single setup.
 
 **Works everywhere.** Mobile, desktop, browser, and critically for AI agents: server environments. WASM-compatible architecture means Vultisig runs anywhere code runs.
 
