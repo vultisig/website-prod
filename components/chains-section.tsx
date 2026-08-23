@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import StarField from "@/components/star-field"
 import { supportedChainCountLabel } from "@/content/chain-count"
 import { chainHref } from "@/content/chains"
 import { cn } from "@/lib/utils"
@@ -195,7 +196,8 @@ export default function ChainsSection({
       className="scroll-mt-24 bg-v5-page pt-4 md:px-[30px] md:pt-[30px]"
     >
       <div className="mx-auto max-w-v5-content">
-        <div className="flex flex-col items-center gap-8 rounded-[20px] bg-v5-surface-dark px-4 pb-12 pt-5 md:gap-[60px] md:rounded-v5-panel md:p-[60px]">
+        <div className="relative isolate flex flex-col items-center gap-8 overflow-hidden rounded-[20px] bg-v5-surface-dark px-4 pb-12 pt-5 md:gap-[60px] md:rounded-v5-panel md:p-[60px]">
+          <StarField />
           <h2 className="text-center text-v5-display-sm font-medium text-v5-text-primary md:text-v5-headline">
             One Vault.{" "}
             <span className="text-v5-accent">
