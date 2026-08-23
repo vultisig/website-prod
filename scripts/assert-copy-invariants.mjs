@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-// Fails if marketing copy regresses to 30+/35+, or if "36+" is hardcoded
-// outside content/chain-count.ts (the public claim must have one owner).
-// Also pins the /mpc canonical so it cannot leak to the homepage again.
+// One owner for the public chain-count claim; also pins /mpc canonical.
 
 import fs from "node:fs"
 import path from "node:path"

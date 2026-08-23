@@ -17,14 +17,7 @@ export default function VultFaq() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            faqPageJsonLd(
-              FAQ_ITEMS.map((item) => ({
-                question: item.question,
-                text: item.text,
-              })),
-            ),
-          ),
+          __html: JSON.stringify(faqPageJsonLd(FAQ_ITEMS)),
         }}
       />
       <FaqSection

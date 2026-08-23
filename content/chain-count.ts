@@ -1,5 +1,2 @@
-/**
- * Public chain-count claim for UI, metadata, and schema.
- * Floor, not catalog size — `CHAINS` in `content/chains.ts` can be longer.
- */
+/** Public chain-count claim. Floor, not `CHAINS.length`. */
 export const supportedChainCountLabel = "36+"

@@ -1,6 +1,6 @@
 import { supportedChainCountLabel } from "@/content/chain-count"
 
-/** Stable id so pages can override one answer (JSX cost copy) without forking the list. */
+/** Lets one page swap the cost answer for JSX without forking the list. */
 export type ProductFaqId =
   | "what"
   | "whyMpc"
@@ -19,10 +19,7 @@ export type ProductFaqItem = {
   text: string
 }
 
-/**
- * Shared product FAQ. Homepage, support, and $VULT all render from this list
- * so the answers cannot drift.
- */
+/** Shared product FAQ — homepage, support, and $VULT. */
 export const productFaqItems: ProductFaqItem[] = [
   {
     id: "what",
