@@ -21,6 +21,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "MPC Wallet: Free & Open-Source Multi-Party Computation Wallet",
+    description:
+      "Vultisig is a free, open-source MPC wallet. Threshold signatures split signing across your own devices - no seed phrase, no single point of failure, no custodian.",
+  },
 }
 
 export default function MpcLayout({ children }: { children: React.ReactNode }) {

@@ -1,7 +1,7 @@
 {
   "name": "Vultisig",
   "short_name": "Vultisig",
-  "description": "Vultisig is a free, secure MPC wallet with TSS technology. Manage Bitcoin, Ethereum & 30+ chains without seed phrases.",
+  "description": "Vultisig is a free, secure MPC wallet with TSS technology. Manage Bitcoin, Ethereum & 36+ chains without seed phrases.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

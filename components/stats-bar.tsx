@@ -1,10 +1,11 @@
+import { supportedChainCountLabel } from "@/content/chain-count"
 import { cn } from "@/lib/utils"
 
 type Stat = { value: string; label: string }
 
 const STATS: Stat[] = [
   { value: "$500M+", label: "Assets secured" },
-  { value: "30+", label: "Chains supported" },
+  { value: supportedChainCountLabel, label: "Chains supported" },
   { value: "50K+", label: "Active vaults" },
   { value: "0", label: "Security incidents" },
 ]

@@ -1,5 +1,7 @@
 import { Check, X } from "lucide-react"
 
+import { supportedChainCountLabel } from "@/content/chain-count"
+
 type ComparisonRow = {
   feature: string
   others: string
@@ -25,12 +27,12 @@ const ROWS: ComparisonRow[] = [
   {
     feature: "Cost",
     others: "Subscription fees",
-    vultisig: "Free forever",
+    vultisig: "Free",
   },
   {
     feature: "Chains",
     others: "Limited selection",
-    vultisig: "30+ blockchains",
+    vultisig: `${supportedChainCountLabel} blockchains`,
   },
   {
     feature: "Recovery Model",

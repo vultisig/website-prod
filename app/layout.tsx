@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { supportedChainCountLabel } from "@/content/chain-count"
 import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
@@ -19,10 +20,11 @@ const brockmann = localFont({
   display: "swap",
 })
 
+const siteDescription = `The self-custody MPC wallet for Bitcoin, Ethereum, Solana & ${supportedChainCountLabel} chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.`
+
 export const metadata: Metadata = {
   title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
-  description:
-    "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.",
+  description: siteDescription,
   metadataBase: new URL("https://vultisig.com"),
   authors: [
     { name: "Vultisig" },
@@ -47,21 +49,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: "https://vultisig.com",
-    languages: {
-      "en-US": "https://vultisig.com",
-    },
-  },
   category: "Cryptocurrency & Blockchain",
   classification: "Financial Technology",
   referrer: "origin-when-cross-origin",
   openGraph: {
     siteName: "Vultisig",
     title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
-    description:
-      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.",
-    url: "https://vultisig.com",
+    description: siteDescription,
     type: "website",
     locale: "en_US",
     images: [
@@ -69,7 +63,7 @@ export const metadata: Metadata = {
         url: "https://vultisig.com/thumbnails/home.png",
         width: 1200,
         height: 630,
-        alt: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
+        alt: "Vultisig: the free MPC wallet that made seed phrases obsolete",
         type: "image/png",
       },
     ],
@@ -80,12 +74,11 @@ export const metadata: Metadata = {
     creator: "@vultisig",
     card: "summary_large_image",
     title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
-    description:
-      "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.",
+    description: siteDescription,
     images: [
       {
         url: "https://vultisig.com/thumbnails/home.png",
-        alt: "Vultisig - The Safest Crypto Wallet | Seedless Security Made Simple",
+        alt: "Vultisig: the free MPC wallet that made seed phrases obsolete",
       },
     ],
   },
@@ -276,8 +269,7 @@ export default function RootLayout({
               "@type": "SoftwareApplication",
               "@id": "https://vultisig.com/#app",
               name: "Vultisig",
-              description:
-                "The self-custody MPC wallet for Bitcoin, Ethereum, Solana & 36+ chains. Seedless DKLS23 threshold signatures. No single point of failure. TypeScript SDK for AI agents.",
+              description: `The self-custody MPC wallet for Bitcoin, Ethereum, Solana & ${supportedChainCountLabel} chains. Seedless DKLS23 threshold signatures. No single point of failure. TypeScript SDK for AI agents.`,
               url: "https://vultisig.com",
               applicationCategory: "FinanceApplication",
               applicationSubCategory: "Cryptocurrency Wallet",
@@ -306,7 +298,7 @@ export default function RootLayout({
               featureList: [
                 "MPC (Multi-Party Computation) security via DKLS23 Threshold Signature Scheme",
                 "Seedless — no 12 or 24 word recovery phrase to store",
-                "36+ blockchains including Bitcoin, Ethereum, Solana, THORChain, Cosmos, TON, Cardano, Tron, XRP",
+                `${supportedChainCountLabel} blockchains including Bitcoin, Ethereum, Solana, THORChain, Cosmos, TON, Cardano, Tron, XRP`,
                 "Fast Vault (2-of-2 server-assisted) for instant signing",
                 "Secure Vault (m-of-n, multi-device) for human co-signing",
                 "TypeScript SDK on npm (@vultisig/sdk) for programmatic and AI-agent integration",

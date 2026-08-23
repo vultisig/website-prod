@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import StatsBar from "@/components/stats-bar"
 import { LandingButton } from "@/components/ui/landing-button"
+import { supportedChainCountLabel } from "@/content/chain-count"
 
 /** The phrase repeats twice around the full 314px ring, so the closing "·" doubles as the seam. */
 const RING_TEXT_LENGTH = 314
@@ -46,12 +47,12 @@ export default function Hero() {
           <div className="relative z-10 flex flex-col gap-6 md:w-[582px]">
             <OpenSourceSeal />
             <h1 className="text-v5-hero-sm font-semibold text-v5-text-inverse md:w-[546px] md:text-v5-hero">
-              The wallet that made seed phrases obsolete
+              The Free MPC Wallet that made seed phrases obsolete
             </h1>
             <p className="text-v5-label font-normal text-v5-surface-1 md:w-[520px] md:text-v5-subtitle">
               Vultisig uses multi-party computation to achieve native
               multi-factor authentication. No seed phrase, no single key, no
-              single target. Available on 30+ chains.
+              single target. Available on {supportedChainCountLabel} chains.
             </p>
             <div className="flex flex-col gap-3 md:flex-row md:gap-5">
               <LandingButton

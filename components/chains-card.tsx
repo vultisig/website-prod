@@ -1,6 +1,7 @@
 import Image from "next/image"
 
 import BentoCard, { BentoCopy } from "@/components/ui/bento-card"
+import { supportedChainCountLabel } from "@/content/chain-count"
 import { cn } from "@/lib/utils"
 
 /**
@@ -65,7 +66,7 @@ export default function ChainsCard() {
       <BentoCopy
         title={
           <>
-            30+ chains.
+            {supportedChainCountLabel} chains.
             <br />
             One vault.
           </>
