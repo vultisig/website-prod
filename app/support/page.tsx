@@ -3,10 +3,8 @@ import type { ReactNode } from "react"
 
 import FaqSection from "@/components/ui/faq-section"
 import { LandingButton } from "@/components/ui/landing-button"
-import {
-  faqPageJsonLd,
-  productFaqItems,
-} from "@/content/product-faq"
+import { faqPageJsonLd, productFaqItems } from "@/content/product-faq"
+import { OPEN_GRAPH_DEFAULTS } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Vultisig Support - MPC Wallet Help & FAQ",
@@ -16,6 +14,7 @@ export const metadata: Metadata = {
     canonical: "https://vultisig.com/support",
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: "Vultisig MPC Wallet Support",
     description:
       "Help center for the leading MPC wallet. FAQs, guides, and troubleshooting.",

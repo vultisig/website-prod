@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import dynamic from "next/dynamic"
 import Hero from "@/components/hero"
+import { OPEN_GRAPH_DEFAULTS, SITE_URL } from "@/lib/site"
 
 const FeaturesSection = dynamic(() => import("@/components/features-section"))
 const BestFeaturesSection = dynamic(
@@ -14,15 +15,8 @@ const MediumSection = dynamic(() => import("@/components/medium-section"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
 export const metadata: Metadata = {
-  alternates: {
-    canonical: "https://vultisig.com",
-    languages: {
-      "en-US": "https://vultisig.com",
-    },
-  },
-  openGraph: {
-    url: "https://vultisig.com",
-  },
+  alternates: { canonical: SITE_URL },
+  openGraph: { ...OPEN_GRAPH_DEFAULTS, url: SITE_URL },
 }
 
 export default function Home() {

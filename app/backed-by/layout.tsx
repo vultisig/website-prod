@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE } from "@/lib/site"
 
 export const metadata: Metadata = {
   // Unlinked and noindexed until the handles and affiliations are verified.
@@ -10,17 +11,13 @@ export const metadata: Metadata = {
     canonical: "https://vultisig.com/backed-by",
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: "Backed by funds who bet on self-custody first",
     description:
       "The funds, investors, and builders backing Vultisig's seedless MPC wallet.",
     url: "https://vultisig.com/backed-by",
     images: [
-      {
-        url: "https://vultisig.com/thumbnails/home.png",
-        width: 1200,
-        height: 630,
-        alt: "The funds and investors backing Vultisig",
-      },
+      { ...SHARE_IMAGE, alt: "The funds and investors backing Vultisig" },
     ],
   },
 }

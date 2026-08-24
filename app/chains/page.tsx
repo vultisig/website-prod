@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { supportedChainCountLabel } from "@/content/chain-count"
 import ChainsExplorer from "./components/chains-explorer"
+import { OPEN_GRAPH_DEFAULTS } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Supported Chains - Vultisig MPC Wallet",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
     canonical: "https://vultisig.com/chains",
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: "All your chains. One vault.",
     description: `${supportedChainCountLabel} chains with the same MPC threshold security on every one. No seed phrase, no single point of failure.`,
     url: "https://vultisig.com/chains",
@@ -25,8 +27,8 @@ export default function ChainsPage() {
           </h1>
           <p className="max-w-[856px] text-v5-subtitle font-normal text-v5-text-inverse">
             Vultisig supports {supportedChainCountLabel} chains with the same
-            MPC threshold security on every one. No seed phrase, no single
-            point of failure, no matter which chain you&rsquo;re holding.
+            MPC threshold security on every one. No seed phrase, no single point
+            of failure, no matter which chain you&rsquo;re holding.
           </p>
         </header>
 

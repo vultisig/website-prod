@@ -4,39 +4,32 @@ import Link from "next/link"
 import ArticlesExplorer from "@/components/articles/articles-explorer"
 import { buildCategoryTabs, resolveCategory } from "@/lib/article-categories"
 import { getAllArticles, toArticleSummary } from "@/lib/articles"
+import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE, SITE_URL } from "@/lib/site"
 
 // Make articles page dynamic - articles change frequently
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 
+const ARTICLES_URL = `${SITE_URL}/articles`
+const collectionName = "Vultisig Articles"
+const collectionDescription =
+  "Latest articles, insights, and updates from Vultisig."
+
 export const metadata: Metadata = {
   title: "Articles - Vultisig Blog",
   description: "Read the latest articles, insights, and updates from Vultisig.",
   alternates: {
-    canonical: "https://vultisig.com/articles",
+    canonical: ARTICLES_URL,
     types: {
-      "application/rss+xml": "https://vultisig.com/articles/feed.xml",
+      "application/rss+xml": `${ARTICLES_URL}/feed.xml`,
     },
   },
   openGraph: {
-    title: "Vultisig Articles",
-    description: "Latest articles, insights, and updates from Vultisig.",
-    url: "https://vultisig.com/articles",
-    type: "website",
-    images: [
-      {
-        url: "https://vultisig.com/thumbnails/home.png",
-        width: 1200,
-        height: 630,
-        alt: "Vultisig Articles",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Vultisig Articles",
-    description: "Latest articles, insights, and updates from Vultisig.",
-    images: ["https://vultisig.com/thumbnails/home.png"],
+    ...OPEN_GRAPH_DEFAULTS,
+    title: collectionName,
+    description: collectionDescription,
+    url: ARTICLES_URL,
+    images: [{ ...SHARE_IMAGE, alt: collectionName }],
   },
 }
 
@@ -44,13 +37,13 @@ function CollectionPageJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Vultisig Articles",
-    description: "Latest articles, insights, and updates from Vultisig.",
-    url: "https://vultisig.com/articles",
+    name: collectionName,
+    description: collectionDescription,
+    url: ARTICLES_URL,
     isPartOf: {
       "@type": "WebSite",
       name: "Vultisig",
-      url: "https://vultisig.com",
+      url: SITE_URL,
     },
   }
 
@@ -71,13 +64,13 @@ function BreadcrumbJsonLd() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://vultisig.com",
+        item: SITE_URL,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Articles",
-        item: "https://vultisig.com/articles",
+        item: ARTICLES_URL,
       },
     ],
   }
