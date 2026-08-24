@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa6"
 
 import { LandingButton } from "@/components/ui/landing-button"
+import { externalLinkAttrs } from "@/lib/external-link"
 import { cn } from "@/lib/utils"
 
 const DISCORD_URL = "https://discord.gg/thq64eaYVN"
@@ -46,6 +47,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     title: "About",
     mobileOrder: "max-md:order-2",
     links: [
+      { label: "About Vultisig", href: "/about" },
       { label: "FAQs", href: "/support" },
       { label: "Docs", href: "/docs" },
       {
@@ -98,15 +100,11 @@ const FOOTER_COLUMNS: FooterColumn[] = [
 ]
 
 function FooterLinkItem({ label, href, icon }: FooterLink) {
-  const isExternal = href.startsWith("http")
-
   return (
     <Link
       href={href}
       title={label}
-      {...(isExternal
-        ? { target: "_blank", rel: "noopener noreferrer" }
-        : undefined)}
+      {...externalLinkAttrs(href)}
       className="flex items-center gap-1.5 text-v5-link font-medium text-v5-text-inverse hover:text-v5-cta"
     >
       {icon}
