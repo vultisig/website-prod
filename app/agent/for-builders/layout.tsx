@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Builders: Give Any Agent a Self-Custodial Wallet",
@@ -8,15 +9,14 @@ export const metadata: Metadata = {
     canonical: "https://vultisig.com/agent/for-builders",
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: "Give any agent a self-custodial wallet",
     description:
       "TypeScript SDK for integrating MPC vault signing into any AI agent, bot, or automated workflow.",
     url: "https://vultisig.com/agent/for-builders",
     images: [
       {
-        url: "https://vultisig.com/thumbnails/home.png",
-        width: 1200,
-        height: 630,
+        ...SHARE_IMAGE,
         alt: "Vultisig SDK - build agents with MPC-grade security",
       },
     ],

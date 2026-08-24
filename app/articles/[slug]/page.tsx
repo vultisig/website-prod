@@ -14,8 +14,12 @@ import {
   getArticleBySlug,
   toMetaDescription,
 } from "@/lib/articles"
-
-const SHARE_IMAGE_FALLBACK = "https://vultisig.com/thumbnails/home.png"
+import {
+  OPEN_GRAPH_DEFAULTS,
+  ORGANIZATION_ID,
+  SHARE_IMAGE,
+  SITE_URL,
+} from "@/lib/site"
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>
@@ -26,9 +30,18 @@ export const dynamic = "force-dynamic"
 export const revalidate = 0
 
 export async function generateStaticParams() {
-  // Return empty array to disable static generation
-  // Articles will be fetched dynamically at request time
   return []
+}
+
+function articleUrl(slug: string): string {
+  return `${SITE_URL}/articles/${slug}`
+}
+
+// Absolute URL for OG/JSON-LD; articles without a cover fall back to the site card.
+function shareImageUrl(image: string | undefined): string {
+  if (!image) return SHARE_IMAGE.url
+  if (image.startsWith("http")) return image
+  return `${SITE_URL}${image}`
 }
 
 export async function generateMetadata({
@@ -38,15 +51,8 @@ export async function generateMetadata({
   const article = await getArticleBySlug(slug)
   if (!article) return { title: "Article Not Found" }
 
-  const url = `https://vultisig.com/articles/${slug}`
-  // Ensure image URLs are absolute for OpenGraph; articles without a cover
-  // still need a share card, so fall back to the site image.
-  const imageUrl = article.image
-    ? article.image.startsWith("http")
-      ? article.image
-      : `https://vultisig.com${article.image}`
-    : SHARE_IMAGE_FALLBACK
-
+  const url = articleUrl(slug)
+  const imageUrl = shareImageUrl(article.image)
   const metaDescription = toMetaDescription(article.description)
 
   return {
@@ -59,6 +65,7 @@ export async function generateMetadata({
       canonical: url,
     },
     openGraph: {
+      ...OPEN_GRAPH_DEFAULTS,
       title: article.title,
       description: metaDescription,
       url,
@@ -68,12 +75,6 @@ export async function generateMetadata({
       modifiedTime: article.updatedAt,
       authors: [article.author],
       tags: article.tags,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: article.title,
-      description: metaDescription,
-      images: [imageUrl],
     },
   }
 }
@@ -90,29 +91,18 @@ function ArticleJsonLd({
     "@type": "Article",
     headline: article.title,
     description: toMetaDescription(article.description),
-    image: article.image
-      ? article.image.startsWith("http")
-        ? article.image
-        : `https://vultisig.com${article.image}`
-      : SHARE_IMAGE_FALLBACK,
+    image: shareImageUrl(article.image),
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
     author: {
       "@type": "Organization",
       name: article.author,
-      url: "https://vultisig.com",
+      url: SITE_URL,
     },
-    publisher: {
-      "@type": "Organization",
-      name: "Vultisig",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://vultisig.com/vultisig-logo.svg",
-      },
-    },
+    publisher: { "@id": ORGANIZATION_ID },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://vultisig.com/articles/${slug}`,
+      "@id": articleUrl(slug),
     },
     keywords: article.tags?.join(", "),
   }
@@ -140,19 +130,19 @@ function BreadcrumbJsonLd({
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://vultisig.com",
+        item: SITE_URL,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Articles",
-        item: "https://vultisig.com/articles",
+        item: `${SITE_URL}/articles`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: article.title,
-        item: `https://vultisig.com/articles/${slug}`,
+        item: articleUrl(slug),
       },
     ],
   }

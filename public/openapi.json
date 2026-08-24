@@ -1,0 +1,304 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Vultisig Website API",
+    "version": "1.0.0",
+    "summary": "Public read endpoints on vultisig.com: editorial articles and app-store reviews.",
+    "description": "The marketing site exposes a small read-only JSON API. Wallet operations (vault creation, signing, swaps, balances) are not HTTP endpoints here \u2014 use the TypeScript SDK (`npm install @vultisig/sdk`) or the CLI (`npm install -g @vultisig/cli`); see https://vultisig.com/llms.txt for the agent guide. No authentication is required for the operations below. Errors are JSON objects with a `message` field.",
+    "contact": {
+      "name": "Vultisig",
+      "url": "https://vultisig.com/support",
+      "email": "support@vultisig.com"
+    },
+    "license": {
+      "name": "Apache-2.0",
+      "url": "https://github.com/vultisig/website-prod/blob/main/LICENSE"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://vultisig.com"
+    }
+  ],
+  "externalDocs": {
+    "description": "Vultisig docs",
+    "url": "https://docs.vultisig.com"
+  },
+  "tags": [
+    {
+      "name": "articles",
+      "description": "Editorial content published on vultisig.com/articles"
+    },
+    {
+      "name": "reviews",
+      "description": "App Store and Google Play reviews shown on the landing page"
+    }
+  ],
+  "paths": {
+    "/api/articles": {
+      "get": {
+        "operationId": "listArticles",
+        "tags": [
+          "articles"
+        ],
+        "summary": "List published articles",
+        "description": "Returns every published article, newest first, including the full markdown body. Use `slug` to build the canonical URL `https://vultisig.com/articles/{slug}`. For a lighter feed use `/articles/feed.xml` (RSS).",
+        "responses": {
+          "200": {
+            "description": "Published articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "articles"
+                  ],
+                  "properties": {
+                    "articles": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Article"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/articles/image/{id}": {
+      "get": {
+        "operationId": "getArticleImage",
+        "tags": [
+          "articles"
+        ],
+        "summary": "Fetch an article image",
+        "description": "Returns the binary image referenced by an article's `image` field (`/api/articles/image/{id}`). Only images referenced by a published article resolve.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "24-character hex image id from an article's `image` path",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{24}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image bytes",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/webp": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/gif": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/api/reviews": {
+      "get": {
+        "operationId": "listStoreReviews",
+        "tags": [
+          "reviews"
+        ],
+        "summary": "List recent app-store reviews",
+        "description": "Recent four- and five-star reviews pulled from the Apple App Store and Google Play listings, cached server-side for 30 minutes. If the stores cannot be reached a built-in fallback set is returned with `cached: false`. Individual reviews only \u2014 store-level aggregate ratings are not exposed.",
+        "responses": {
+          "200": {
+            "description": "Cached reviews",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "testimonials",
+                    "cached",
+                    "lastUpdated"
+                  ],
+                  "properties": {
+                    "testimonials": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/StoreReview"
+                      }
+                    },
+                    "cached": {
+                      "type": "boolean",
+                      "description": "True when served from the server cache"
+                    },
+                    "lastUpdated": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Article": {
+        "type": "object",
+        "required": [
+          "slug",
+          "title",
+          "description",
+          "content",
+          "author",
+          "publishedAt",
+          "status"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "URL segment under /articles/"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "description": "Summary, may contain markdown"
+          },
+          "content": {
+            "type": "string",
+            "description": "Full body in markdown"
+          },
+          "author": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "image": {
+            "type": "string",
+            "description": "Cover image path, usually `/api/articles/image/{id}`"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "published"
+            ]
+          }
+        }
+      },
+      "StoreReview": {
+        "type": "object",
+        "required": [
+          "name",
+          "text",
+          "label",
+          "store",
+          "date",
+          "score"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Reviewer display name"
+          },
+          "text": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string",
+            "description": "Source label (e.g. \"App Store Review\") or the review title"
+          },
+          "store": {
+            "type": "string",
+            "enum": [
+              "apple",
+              "google"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "hint": {
+            "type": "string",
+            "description": "Where to look next"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Error": {
+        "description": "Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}

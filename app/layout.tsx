@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { supportedChainCountLabel } from "@/content/chain-count"
 import "./globals.css"
 import Navbar from "@/components/navbar"
@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import ScrollReveal from "@/components/scroll-reveal"
 import TwitterAnalytics from "@/components/twitter-analytics"
 import Script from "next/script"
+import { ORGANIZATION_ID, SHARE_IMAGE, SITE_URL } from "@/lib/site"
 
 const brockmann = localFont({
   style: "normal",
@@ -20,17 +21,17 @@ const brockmann = localFont({
   display: "swap",
 })
 
-const siteDescription = `The self-custody MPC wallet for Bitcoin, Ethereum, Solana & ${supportedChainCountLabel} chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.`
+/** Mirrors `v5.page` in tailwind.config.ts; the browser chrome tints to the page surface. */
+const V5_PAGE_BACKGROUND = "#f0f4fc"
+
+const SITE_TITLE = "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault"
+const SITE_DESCRIPTION = `The self-custody MPC wallet for Bitcoin, Ethereum, Solana & ${supportedChainCountLabel} chains. Seedless via DKLS23. Free, open-source. TypeScript SDK for AI agents.`
 
 export const metadata: Metadata = {
-  title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
-  description: siteDescription,
-  metadataBase: new URL("https://vultisig.com"),
-  authors: [
-    { name: "Vultisig" },
-    { name: "Vultisig", url: "https://vultisig.com" },
-    { name: "Vulti Holdings Limited" },
-  ],
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  authors: [{ name: "Vultisig", url: SITE_URL }],
   creator: "Vultisig",
   publisher: "Vulti Holdings Limited",
   formatDetection: {
@@ -54,99 +55,153 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
   openGraph: {
     siteName: "Vultisig",
-    title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
-    description: siteDescription,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: "https://vultisig.com/thumbnails/home.png",
-        width: 1200,
-        height: 630,
-        alt: "Vultisig: the free MPC wallet that made seed phrases obsolete",
-        type: "image/png",
-      },
-    ],
-    countryName: "British Virgin Islands",
+    images: [SHARE_IMAGE],
   },
+  // Title, description and image fill in from each page's openGraph.
   twitter: {
     site: "@vultisig",
     creator: "@vultisig",
     card: "summary_large_image",
-    title: "Vultisig: Free MPC Wallet - Secure Multi-Chain Crypto Vault",
-    description: siteDescription,
-    images: [
-      {
-        url: "https://vultisig.com/thumbnails/home.png",
-        alt: "Vultisig: the free MPC wallet that made seed phrases obsolete",
-      },
-    ],
   },
   other: {
     "application-name": "Vultisig",
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
     "apple-mobile-web-app-title": "Vultisig",
-    "format-detection": "telephone=no",
     "mobile-web-app-capable": "yes",
-    "msapplication-config": "/browserconfig.xml",
-    "msapplication-TileColor": "#000000",
-    "msapplication-tap-highlight": "no",
-    "theme-color": "#000000",
-    "apple-mobile-web-app-orientations": "portrait",
-    "msapplication-TileImage": "/logo.svg",
-    "msapplication-square70x70logo": "/logo.svg",
-    "msapplication-square150x150logo": "/logo.svg",
-    "msapplication-wide310x150logo": "/logo.svg",
-    "msapplication-square310x310logo": "/logo.svg",
-    //"google-site-verification": "your-google-verification-code",
-    //"msvalidate.01": "your-bing-verification-code",
-    //"yandex-verification": "your-yandex-verification-code",
-    //"norton-safeweb-site-verification": "your-norton-verification-code",
-    //"facebook-domain-verification": "your-facebook-verification-code",
-    //"p:domain_verify": "your-pinterest-verification-code",
-    "twitter:site": "@vultisig",
-    "twitter:creator": "@vultisig",
-    "twitter:card": "summary_large_image",
-    "og:site_name": "Vultisig",
-    "og:type": "website",
-    "og:locale": "en_US",
-    "og:locale:alternate": "en_GB",
-    "article:author": "Vultisig",
-    "article:publisher": "https://vultisig.com",
-    "article:section": "Cryptocurrency",
-    "article:tag": "crypto wallet,multisig,TSS,blockchain,security",
-    "profile:first_name": "Vultisig",
-    "profile:last_name": "Crypto Wallet",
-    "profile:username": "vultisig",
-    "profile:gender": "neutral",
   },
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/logo.svg", type: "image/svg+xml" },
     ],
-    shortcut: "/icon.svg",
-    apple: [{ url: "/icon.svg", sizes: "180x180", type: "image/svg+xml" }],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
     other: [
+      { rel: "mask-icon", url: "/icon.svg", color: "#000000" },
+      { rel: "llms-txt", url: `${SITE_URL}/llms.txt`, type: "text/plain" },
       {
-        rel: "mask-icon",
-        url: "/icon.svg",
-        color: "#000000",
-      },
-      {
-        rel: "llms-txt",
-        url: "https://vultisig.com/llms.txt",
+        rel: "service-desc",
+        url: `${SITE_URL}/openapi.json`,
+        type: "application/openapi+json",
       },
     ],
   },
   manifest: "/site.webmanifest",
 }
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: V5_PAGE_BACKGROUND,
 }
+
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": ORGANIZATION_ID,
+  name: "Vultisig",
+  legalName: "Vulti Holdings Limited",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.svg`,
+  description:
+    "Vultisig is a seedless, multi-chain MPC wallet built for secure self-custody. Founded by the creators of THORChain.",
+  foundingDate: "2024",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Intershore Chambers",
+    addressLocality: "Road Town",
+    addressRegion: "Tortola",
+    addressCountry: "VG",
+  },
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      email: "support@vultisig.com",
+      availableLanguage: "English",
+    },
+    {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: "contact@vultisig.com",
+      availableLanguage: "English",
+    },
+  ],
+  sameAs: [
+    "https://x.com/vultisig",
+    "https://twitter.com/vultisig",
+    "https://discord.gg/thq64eaYVN",
+    "https://github.com/vultisig",
+    "https://t.me/vultisig",
+    "https://www.youtube.com/@Vultisig",
+    "https://apps.apple.com/app/apple-store/id6503023896",
+    "https://play.google.com/store/apps/details?id=com.vultisig.wallet",
+    "https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb",
+    "https://addons.mozilla.org/en-US/firefox/addon/vultisig-extension/",
+    "https://www.npmjs.com/package/@vultisig/sdk",
+  ],
+}
+
+const WEBSITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  name: "Vultisig",
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  publisher: { "@id": ORGANIZATION_ID },
+  inLanguage: "en-US",
+}
+
+const SOFTWARE_APPLICATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": `${SITE_URL}/#app`,
+  name: "Vultisig",
+  description: SITE_DESCRIPTION,
+  url: SITE_URL,
+  applicationCategory: "FinanceApplication",
+  applicationSubCategory: "Cryptocurrency Wallet",
+  operatingSystem: "Android, iOS, Windows, macOS, Linux, Web",
+  keywords:
+    "MPC wallet, MPC wallet for AI agents, self-custody wallet for AI agents, threshold signature wallet, TSS wallet, DKLS23, seedless crypto wallet, multi-chain wallet, THORChain wallet, Cosmos wallet, Bitcoin wallet, Ethereum wallet, Solana wallet, multi-party computation, non-custodial MPC wallet, open-source crypto wallet, agentic wallet alternative, Fordefi alternative, multisig wallet",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+  },
+  author: { "@id": ORGANIZATION_ID },
+  publisher: { "@id": ORGANIZATION_ID },
+  featureList: [
+    "MPC (Multi-Party Computation) security via DKLS23 Threshold Signature Scheme",
+    "Seedless — no 12 or 24 word recovery phrase to store",
+    `${supportedChainCountLabel} blockchains including Bitcoin, Ethereum, Solana, THORChain, Cosmos, TON, Cardano, Tron, XRP`,
+    "Fast Vault (2-of-2 server-assisted) for instant signing",
+    "Secure Vault (m-of-n, multi-device) for human co-signing",
+    "TypeScript SDK on npm (@vultisig/sdk) for programmatic and AI-agent integration",
+    "Cross-chain swaps via THORChain, MayaChain, 1inch, LiFi, KyberSwap",
+    "Plugin Marketplace for self-custodial automation (DCA, recurring payments, trading)",
+    "Open-source on GitHub — audited TSS/MPC implementation co-developed with Silence Laboratories",
+    "iOS, Android, Windows, macOS, Linux, and Chrome browser extension",
+  ],
+  downloadUrl: `${SITE_URL}/downloads`,
+  installUrl: `${SITE_URL}/downloads`,
+  screenshot: SHARE_IMAGE.url,
+  releaseNotes: "https://github.com/vultisig/vultisig-ios/releases",
+}
+
+const JSON_LD_SCHEMAS = [
+  ORGANIZATION_JSON_LD,
+  WEBSITE_JSON_LD,
+  SOFTWARE_APPLICATION_JSON_LD,
+]
 
 export default function RootLayout({
   children,
@@ -168,153 +223,13 @@ export default function RootLayout({
         <GoogleAnalyticsWrapper />
         <CookieAnalytics />
         <TwitterAnalytics />
-        {/* Organization Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "@id": "https://vultisig.com/#organization",
-              name: "Vultisig",
-              legalName: "Vulti Holdings Limited",
-              url: "https://vultisig.com",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://vultisig.com/vultisig-logo.svg",
-                width: 512,
-                height: 512,
-              },
-              description:
-                "Vultisig is a seedless, multi-chain MPC wallet built for secure self-custody. Founded by the creators of THORChain.",
-              foundingDate: "2024",
-              founders: [
-                {
-                  "@type": "Person",
-                  name: "THORChain Founders",
-                },
-              ],
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Intershore Chambers",
-                addressLocality: "Road Town",
-                addressRegion: "Tortola",
-                addressCountry: "VG",
-              },
-              contactPoint: [
-                {
-                  "@type": "ContactPoint",
-                  contactType: "customer service",
-                  email: "support@vultisig.com",
-                  availableLanguage: "English",
-                },
-                {
-                  "@type": "ContactPoint",
-                  contactType: "sales",
-                  email: "contact@vultisig.com",
-                  availableLanguage: "English",
-                },
-              ],
-              sameAs: [
-                "https://x.com/vultisig",
-                "https://twitter.com/vultisig",
-                "https://discord.gg/thq64eaYVN",
-                "https://github.com/vultisig",
-                "https://t.me/vultisig",
-                "https://www.youtube.com/@Vultisig",
-                "https://apps.apple.com/app/apple-store/id6503023896",
-                "https://play.google.com/store/apps/details?id=com.vultisig.wallet",
-                "https://chromewebstore.google.com/detail/vulticonnect/ggafhcdaplkhmmnlbfjpnnkepdfjaelb",
-                "https://addons.mozilla.org/en-US/firefox/addon/vultisig-extension/",
-                "https://www.npmjs.com/package/@vultisig/sdk",
-                "https://en.wikipedia.org/wiki/Threshold_cryptosystem",
-              ],
-            }),
-          }}
-        />
-        {/* WebSite Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "@id": "https://vultisig.com/#website",
-              name: "Vultisig",
-              url: "https://vultisig.com",
-              description:
-                "The leading MPC wallet with multi-signature security and TSS technology.",
-              publisher: {
-                "@id": "https://vultisig.com/#organization",
-              },
-              potentialAction: {
-                "@type": "SearchAction",
-                target: {
-                  "@type": "EntryPoint",
-                  urlTemplate:
-                    "https://docs.vultisig.com/search?ask={search_term_string}",
-                },
-                "query-input": "required name=search_term_string",
-              },
-              inLanguage: "en-US",
-            }),
-          }}
-        />
-        {/* SoftwareApplication Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "@id": "https://vultisig.com/#app",
-              name: "Vultisig",
-              description: `The self-custody MPC wallet for Bitcoin, Ethereum, Solana & ${supportedChainCountLabel} chains. Seedless DKLS23 threshold signatures. No single point of failure. TypeScript SDK for AI agents.`,
-              url: "https://vultisig.com",
-              applicationCategory: "FinanceApplication",
-              applicationSubCategory: "Cryptocurrency Wallet",
-              operatingSystem: "Android, iOS, Windows, macOS, Linux, Web",
-              keywords:
-                "MPC wallet, MPC wallet for AI agents, self-custody wallet for AI agents, threshold signature wallet, TSS wallet, DKLS23, seedless crypto wallet, multi-chain wallet, THORChain wallet, Cosmos wallet, Bitcoin wallet, Ethereum wallet, Solana wallet, multi-party computation, non-custodial MPC wallet, open-source crypto wallet, agentic wallet alternative, Fordefi alternative, multisig wallet",
-              offers: {
-                "@type": "Offer",
-                price: "0",
-                priceCurrency: "USD",
-                availability: "https://schema.org/InStock",
-              },
-              author: {
-                "@id": "https://vultisig.com/#organization",
-              },
-              publisher: {
-                "@id": "https://vultisig.com/#organization",
-              },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.8",
-                ratingCount: "1250",
-                bestRating: "5",
-                worstRating: "1",
-              },
-              featureList: [
-                "MPC (Multi-Party Computation) security via DKLS23 Threshold Signature Scheme",
-                "Seedless — no 12 or 24 word recovery phrase to store",
-                `${supportedChainCountLabel} blockchains including Bitcoin, Ethereum, Solana, THORChain, Cosmos, TON, Cardano, Tron, XRP`,
-                "Fast Vault (2-of-2 server-assisted) for instant signing",
-                "Secure Vault (m-of-n, multi-device) for human co-signing",
-                "TypeScript SDK on npm (@vultisig/sdk) for programmatic and AI-agent integration",
-                "Cross-chain swaps via THORChain, MayaChain, 1inch, LiFi, KyberSwap",
-                "Plugin Marketplace for self-custodial automation (DCA, recurring payments, trading)",
-                "Open-source on GitHub — audited TSS/MPC implementation co-developed with Silence Laboratories",
-                "iOS, Android, Windows, macOS, Linux, and Chrome browser extension",
-              ],
-              downloadUrl: "https://vultisig.com/downloads",
-              installUrl: "https://vultisig.com/downloads",
-              screenshot: "https://vultisig.com/thumbnails/home.png",
-              softwareVersion: "1.0",
-              releaseNotes: "https://github.com/vultisig/vultisig-ios/releases",
-            }),
-          }}
-        />
+        {JSON_LD_SCHEMAS.map((schema) => (
+          <script
+            key={schema["@id"]}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
         <Navbar />
         {children}
         <Footer />

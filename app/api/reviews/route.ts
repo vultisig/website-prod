@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching reviews:', error)
     return NextResponse.json(
-      { testimonials: fallbackTestimonials, cached: false },
+      { testimonials: fallbackTestimonials, cached: false, lastUpdated: new Date().toISOString() },
       { headers: ERROR_CACHE_HEADERS }
     )
   }

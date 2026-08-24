@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 
 import { LandingButton } from "@/components/ui/landing-button"
+import { OPEN_GRAPH_DEFAULTS } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Vultisig Documentation - MPC Wallet Guides & API",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
     canonical: "https://vultisig.com/docs",
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: "Vultisig MPC Wallet Documentation",
     description:
       "Complete documentation for the leading MPC wallet. Setup guides, API reference, and developer resources.",

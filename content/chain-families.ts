@@ -365,7 +365,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       ],
     },
     meta: {
-      title: "{chain} Wallet — Hold {asset} With No Seed Phrase | Vultisig",
+      title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
       description:
         "Hold {chain} in an MPC vault alongside every other chain Vultisig supports. Your key is split across devices you already own, and it takes your threshold to move {asset}.",
     },

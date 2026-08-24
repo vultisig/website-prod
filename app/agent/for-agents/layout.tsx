@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Agents: Automation That Never Holds Your Keys",
@@ -8,15 +9,14 @@ export const metadata: Metadata = {
     canonical: "https://vultisig.com/agent/for-agents",
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: "Automation that never holds your keys",
     description:
       "Vultisig uses threshold signatures so agents can co-sign transactions without ever holding a complete private key.",
     url: "https://vultisig.com/agent/for-agents",
     images: [
       {
-        url: "https://vultisig.com/thumbnails/home.png",
-        width: 1200,
-        height: 630,
+        ...SHARE_IMAGE,
         alt: "Vultisig agents - autonomous execution with human sovereignty",
       },
     ],

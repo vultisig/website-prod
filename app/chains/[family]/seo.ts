@@ -1,7 +1,6 @@
 import { fill, type ChainFamily } from "@/content/chain-families"
 import type { Chain } from "@/content/chains"
-
-export const SITE = "https://vultisig.com"
+import { SITE_URL } from "@/lib/site"
 
 type Subject = Pick<Chain, "name" | "ticker">
 
@@ -42,12 +41,12 @@ export function familyJsonLd({
         "@type": "BreadcrumbList",
         "@id": `${url}#breadcrumb`,
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: SITE },
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
           {
             "@type": "ListItem",
             position: 2,
             name: "Chains",
-            item: `${SITE}/chains`,
+            item: `${SITE_URL}/chains`,
           },
           ...trail.map((step, index) => ({
             "@type": "ListItem",

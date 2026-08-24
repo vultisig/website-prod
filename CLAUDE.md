@@ -65,6 +65,9 @@ public/             → Public static files
 - React Hook Form for forms
 - npm as package manager (`package-lock.json`)
 - JSDoc (`/** ... */`) on all exported functions, classes, and type definitions
+- Internal app routes use `next/link`; bare `<a>` only for files served from `public/` (`/llms.txt`, `/sitemap.xml`) and off-site URLs — spread `externalLinkAttrs(href)` from `lib/external-link.ts` on those
+- Module-level constants are `SCREAMING_SNAKE_CASE`, including extracted metadata strings and JSON-LD objects
+- Page-level `metadata.openGraph` spreads `OPEN_GRAPH_DEFAULTS` from `lib/site.ts` first — Next replaces the root object, it does not merge it
 
 ## Knowledge Base
 

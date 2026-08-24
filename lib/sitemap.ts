@@ -1,10 +1,9 @@
 import { CHAINS } from "@/content/chains"
+import { SITE_URL } from "@/lib/site"
 
 // Shared helpers for the split sitemap (index + pages + posts).
 // Only indexable HTML routes belong here — non-HTML assets such as llms.txt,
 // llms-full.txt and SKILL.md are intentionally excluded from the sitemap.
-
-export const SITE_URL = "https://vultisig.com"
 
 export interface StaticPage {
   path: string
@@ -25,6 +24,7 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/agent/for-builders", changefreq: "monthly", priority: 0.8 },
   // Hidden for now: /backed-by is unlinked and noindexed until its data is verified.
   { path: "/support", changefreq: "monthly", priority: 0.7 },
+  { path: "/about", changefreq: "yearly", priority: 0.6 },
   { path: "/privacy", changefreq: "yearly", priority: 0.5 },
   { path: "/termofservice", changefreq: "yearly", priority: 0.5 },
   // Derived rather than listed, so a chain added to content/chains.ts is in the

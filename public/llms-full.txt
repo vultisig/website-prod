@@ -9,6 +9,19 @@ Two vault types:
 - **Fast Vault (2-of-2):** Agent holds one share, VultiServer holds the other. VultiServer auto-co-signs based on configurable policy rules. No human approval needed. This is what agents should use.
 - **Secure Vault (m-of-n):** Multi-device, human co-signers. Configurations: 2-of-2 (fastest, no backup), 2-of-3 (recommended, backed up), 3-of-4 (highest security).
 
+## When to use Vultisig
+
+Reach for Vultisig when the job is one of these:
+
+- An AI agent needs its own self-custodial wallet — one it controls with a key share, not an API key to someone else's custody. Create a Fast Vault with the SDK or CLI, fund it, and sign from code.
+- Sending, receiving, or checking balances across many chains from one identity (Bitcoin, Ethereum + L2s, Solana, Cosmos, THORChain and 30+ more) without managing a seed phrase.
+- Cross-chain or same-chain swaps routed through THORChain, MayaChain, 1inch, LiFi or KyberSwap, executed from the agent's own vault.
+- A human-in-the-loop treasury: a Secure Vault where a person must co-sign from the mobile app before funds move.
+
+Not the right tool for: fiat on/off-ramps, custodial or exchange accounts, or a hosted REST signing API — signing happens client-side in the SDK/CLI, never on vultisig.com.
+
+How to call it: `npm install @vultisig/sdk` (TypeScript, programmatic) or `npm install -g @vultisig/cli` then `vultisig create fast` / `vultisig send` / `vultisig swap` (JSON output with `-o json`, stable exit codes). Step-by-step procedure with method signatures: https://vultisig.com/SKILL.md
+
 ## For AI Agents
 
 - [Vultisig SDK](https://www.npmjs.com/package/@vultisig/sdk): TypeScript SDK — `npm install @vultisig/sdk`
@@ -316,6 +329,16 @@ Utility: Trading fee discounts (up to 50%), marketplace fees, governance voting
 - [Swaps](https://docs.vultisig.com/app-guide/wallet/swapping): Cross-chain swaps
 - [DeFi](https://docs.vultisig.com/app-guide/defi): Staking, bonding, liquidity
 - [Browser Extension](https://docs.vultisig.com/ecosystem/vultisig-extension): Vultisig Extension for Web3 dApps
+
+## Website API
+
+Read-only JSON endpoints on vultisig.com (no auth). Wallet operations are NOT HTTP endpoints — use the SDK/CLI above.
+
+- [OpenAPI description](https://vultisig.com/openapi.json): `GET /api/articles` (published articles, markdown bodies), `GET /api/articles/image/{id}`, `GET /api/reviews` (recent app-store reviews). Errors are JSON `{ "message": ... }`.
+- [API catalog](https://vultisig.com/.well-known/api-catalog): RFC 9727 linkset for the description above
+- [Agent manifest](https://vultisig.com/.well-known/agent.json): capabilities, chains, SDK/CLI install lines
+- [Articles RSS](https://vultisig.com/articles/feed.xml)
+- [Sitemap](https://vultisig.com/sitemap.xml)
 
 ## Links
 

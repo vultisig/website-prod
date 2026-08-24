@@ -31,6 +31,10 @@ function getGridFsContentType(file: { contentType?: string; metadata?: { content
   return getSafeImageContentType(file.metadata?.contentType || file.contentType)
 }
 
+function imageNotFound(): NextResponse {
+  return NextResponse.json({ message: 'Image not found' }, { status: 404 })
+}
+
 async function isReferencedByPublishedArticle(imagePath: string): Promise<boolean> {
   const escapedImagePath = imagePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const publishedArticleQuery = {
@@ -53,25 +57,23 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await connectDB()
     const { id } = await params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return imageNotFound()
+    }
 
+    await connectDB()
     const db = mongoose.connection.db
     if (!db) {
-      return new NextResponse('Database connection error', { status: 500 })
+      return NextResponse.json({ message: 'Database connection error' }, { status: 500 })
     }
 
     const bucket = new GridFSBucket(db, { bucketName: 'article-images' })
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new NextResponse('Image not found', { status: 404 })
-    }
-
     const objectId = new mongoose.Types.ObjectId(id)
-    
-    // First, check if file exists and get metadata
+
     const files = await bucket.find({ _id: objectId }).toArray()
     if (files.length === 0) {
-      return new NextResponse('Image not found', { status: 404 })
+      return imageNotFound()
     }
 
     const file = files[0]
@@ -79,9 +81,9 @@ export async function GET(
     const imagePath = `/api/articles/image/${id}`
 
     if (!(await canReadPrivateArticleImages(req)) && !(await isReferencedByPublishedArticle(imagePath))) {
-      return new NextResponse('Image not found', { status: 404 })
+      return imageNotFound()
     }
-    
+
     const downloadStream = bucket.openDownloadStream(objectId)
 
     return new Promise<NextResponse>((resolve) => {
@@ -93,7 +95,7 @@ export async function GET(
 
       downloadStream.on('end', () => {
         const buffer = Buffer.concat(chunks)
-        
+
         resolve(new NextResponse(buffer, {
           headers: {
             'Content-Type': contentType,
@@ -106,11 +108,11 @@ export async function GET(
 
       downloadStream.on('error', (err) => {
         console.error('GridFS download error:', err)
-        resolve(new NextResponse('Image not found', { status: 404 }))
+        resolve(imageNotFound())
       })
     })
   } catch (err) {
     console.error('Image retrieval error:', err)
-    return new NextResponse('Failed to retrieve image', { status: 500 })
+    return NextResponse.json({ message: 'Failed to retrieve image' }, { status: 500 })
   }
 }

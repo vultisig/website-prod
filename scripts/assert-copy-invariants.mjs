@@ -47,9 +47,9 @@ for (const dir of scanDirs) {
 }
 
 const rootLayout = fs.readFileSync(path.join(root, "app/layout.tsx"), "utf8")
-if (/canonical:\s*"https:\/\/vultisig\.com"/.test(rootLayout)) {
+if (/canonical:\s*(SITE_URL\b|[`"']https:\/\/vultisig\.com)/.test(rootLayout)) {
   errors.push(
-    'app/layout.tsx sets homepage canonical — that leaks onto every child route (live /mpc bug)',
+    "app/layout.tsx sets homepage canonical — that leaks onto every child route (live /mpc bug)",
   )
 }
 
