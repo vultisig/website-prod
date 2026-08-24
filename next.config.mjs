@@ -62,6 +62,12 @@ const nextConfig = {
       { source: '/_next/static/:path*', headers: cacheOneYear },
     ]
   },
+  async rewrites() {
+    return [
+      // /api/v1/* is the documented path; the unversioned handlers serve it.
+      { source: '/api/v1/:path*', destination: '/api/:path*' },
+    ]
+  },
   async redirects() {
     return [
       {

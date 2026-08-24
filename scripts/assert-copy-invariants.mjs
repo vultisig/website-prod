@@ -53,6 +53,29 @@ if (/canonical:\s*(SITE_URL\b|[`"']https:\/\/vultisig\.com)/.test(rootLayout)) {
   )
 }
 
+// Every top-level page tree must be visible to proxy.ts, or agents (non-HTML
+// Accept) get a markdown 404 on a real page while browsers see it fine.
+const proxySource = fs.readFileSync(path.join(root, "proxy.ts"), "utf8")
+const sitemapSource = fs.readFileSync(path.join(root, "lib/sitemap.ts"), "utf8")
+const topLevelPageDirs = fs
+  .readdirSync(path.join(root, "app"), { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+  .filter(
+    (name) => name !== "api" && !name.includes(".") && !name.startsWith("("),
+  )
+for (const dir of topLevelPageDirs) {
+  const inSitemap =
+    sitemapSource.includes(`path: "/${dir}"`) ||
+    sitemapSource.includes(`path: "/${dir}/`)
+  const inProxy = proxySource.includes(`"${dir}"`)
+  if (!inSitemap && !inProxy) {
+    errors.push(
+      `app/${dir} is unknown to proxy.ts KNOWN_FIRST_SEGMENTS — agents would get a markdown 404 on a live page (add it to STATIC_PAGES or the proxy allowlist)`,
+    )
+  }
+}
+
 const home = fs.readFileSync(path.join(root, "app/page.tsx"), "utf8")
 if (!/canonical:/.test(home)) {
   errors.push("app/page.tsx must set the homepage canonical")
