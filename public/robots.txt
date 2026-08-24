@@ -53,4 +53,3 @@ User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://vultisig.com/sitemap.xml
-Llms-Txt: https://vultisig.com/llms.txt

@@ -110,7 +110,7 @@ export const CHAINS: Chain[] = [
     categories: ["utxo"],
   },
   {
-    name: "Bitcoin-Cash",
+    name: "Bitcoin Cash",
     slug: "bch",
     family: "utxo",
     ticker: "BCH",
@@ -155,7 +155,7 @@ export const CHAINS: Chain[] = [
     categories: ["cosmos"],
   },
   {
-    name: "CronosChain",
+    name: "Cronos",
     slug: "cro",
     family: "evm",
     ticker: "CRO",
@@ -182,7 +182,7 @@ export const CHAINS: Chain[] = [
     categories: ["utxo"],
   },
   {
-    name: "Dydx",
+    name: "dYdX",
     slug: "dydx",
     family: "cosmos",
     ticker: "DYDX",
@@ -353,7 +353,7 @@ export const CHAINS: Chain[] = [
     categories: ["cosmos"],
   },
   {
-    name: "TerraClassic",
+    name: "Terra Classic",
     slug: "lunc",
     family: "cosmos",
     ticker: "LUNC",
@@ -362,7 +362,7 @@ export const CHAINS: Chain[] = [
     categories: ["cosmos"],
   },
   {
-    name: "Ton",
+    name: "TON",
     slug: "ton",
     family: "l1",
     ticker: "TON",
@@ -389,7 +389,7 @@ export const CHAINS: Chain[] = [
     categories: ["utxo"],
   },
   {
-    name: "Zksync",
+    name: "zkSync",
     slug: "zksync",
     family: "evm",
     ticker: "ETH",

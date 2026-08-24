@@ -1,5 +1,6 @@
 import { getAllArticles } from "@/lib/articles"
-import { SITE_URL, absoluteUrl, escapeXml, xmlResponse } from "@/lib/sitemap"
+import { SITE_URL } from "@/lib/site"
+import { absoluteUrl, escapeXml, xmlResponse } from "@/lib/sitemap"
 
 // Always reflect the live article DB — never serve a build-time empty snapshot.
 export const dynamic = "force-dynamic"
