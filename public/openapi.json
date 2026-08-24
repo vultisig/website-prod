@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Vultisig Website API",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "summary": "Public read endpoints on vultisig.com: editorial articles and app-store reviews.",
-    "description": "The marketing site exposes a small read-only JSON API. Wallet operations (vault creation, signing, swaps, balances) are not HTTP endpoints here \u2014 use the TypeScript SDK (`npm install @vultisig/sdk`) or the CLI (`npm install -g @vultisig/cli`); see https://vultisig.com/llms.txt for the agent guide. No authentication is required for the operations below. Errors are JSON objects with a `message` field.",
+    "description": "The marketing site exposes a small read-only JSON API. Wallet operations (vault creation, signing, swaps, balances) are not HTTP endpoints here \u2014 use the TypeScript SDK (`npm install @vultisig/sdk`) or the CLI (`npm install -g @vultisig/cli`); see https://vultisig.com/llms.txt for the agent guide. The API is versioned in the URL path: /api/v1/ is current, and breaking changes will ship as /api/v2/. The unversioned /api/* paths are stable aliases for v1. No authentication is required for the operations below. Errors are JSON objects with a `message` field.",
     "contact": {
       "name": "Vultisig",
       "url": "https://vultisig.com/support",
@@ -35,7 +35,7 @@
     }
   ],
   "paths": {
-    "/api/articles": {
+    "/api/v1/articles": {
       "get": {
         "operationId": "listArticles",
         "tags": [
@@ -64,18 +64,21 @@
                 }
               }
             }
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
     },
-    "/api/articles/image/{id}": {
+    "/api/v1/articles/image/{id}": {
       "get": {
         "operationId": "getArticleImage",
         "tags": [
           "articles"
         ],
         "summary": "Fetch an article image",
-        "description": "Returns the binary image referenced by an article's `image` field (`/api/articles/image/{id}`). Only images referenced by a published article resolve.",
+        "description": "Returns the binary image referenced by an article's `image` field (`/api/v1/articles/image/{id}`). Only images referenced by a published article resolve.",
         "parameters": [
           {
             "name": "id",
@@ -123,11 +126,14 @@
           },
           "500": {
             "$ref": "#/components/responses/Error"
+          },
+          "default": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
     },
-    "/api/reviews": {
+    "/api/v1/reviews": {
       "get": {
         "operationId": "listStoreReviews",
         "tags": [

@@ -334,7 +334,7 @@ Utility: Trading fee discounts (up to 50%), marketplace fees, governance voting
 
 Read-only JSON endpoints on vultisig.com (no auth). Wallet operations are NOT HTTP endpoints — use the SDK/CLI above.
 
-- [OpenAPI description](https://vultisig.com/openapi.json): `GET /api/articles` (published articles, markdown bodies), `GET /api/articles/image/{id}`, `GET /api/reviews` (recent app-store reviews). Errors are JSON `{ "message": ... }`.
+- [OpenAPI description](https://vultisig.com/openapi.json): `GET /api/v1/articles` (published articles, markdown bodies), `GET /api/v1/articles/image/{id}`, `GET /api/v1/reviews` (recent app-store reviews). Errors are JSON `{ "message": ... }`.
 - [API catalog](https://vultisig.com/.well-known/api-catalog): RFC 9727 linkset for the description above
 - [Agent manifest](https://vultisig.com/.well-known/agent.json): capabilities, chains, SDK/CLI install lines
 - [Articles RSS](https://vultisig.com/articles/feed.xml)
