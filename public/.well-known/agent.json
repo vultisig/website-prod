@@ -17,10 +17,50 @@
     "natural-language-agent-interface"
   ],
   "supported_chains": {
-    "utxo": ["Bitcoin", "Litecoin", "Dogecoin", "BitcoinCash", "Dash", "Zcash"],
-    "evm": ["Ethereum", "BSC", "Polygon", "Avalanche", "Arbitrum", "Optimism", "Base", "Blast", "Cronos", "ZkSync", "Hyperliquid", "Mantle", "Sei"],
-    "cosmos": ["THORChain", "MayaChain", "Cosmos", "Osmosis", "Dydx", "Kujira", "Noble", "Terra", "TerraClassic", "Akash"],
-    "other": ["Solana", "Sui", "Polkadot", "TON", "Ripple", "Tron", "Cardano"]
+    "utxo": [
+      "Bitcoin",
+      "Litecoin",
+      "Dogecoin",
+      "Bitcoin Cash",
+      "Dash",
+      "Zcash"
+    ],
+    "evm": [
+      "Ethereum",
+      "BSC",
+      "Polygon",
+      "Avalanche",
+      "Arbitrum",
+      "Optimism",
+      "Base",
+      "Blast",
+      "Cronos",
+      "zkSync",
+      "Hyperliquid",
+      "Mantle",
+      "Sei"
+    ],
+    "cosmos": [
+      "THORChain",
+      "MayaChain",
+      "Cosmos",
+      "Osmosis",
+      "dYdX",
+      "Kujira",
+      "Noble",
+      "Terra",
+      "Terra Classic",
+      "Akash"
+    ],
+    "other": [
+      "Solana",
+      "Sui",
+      "Polkadot",
+      "TON",
+      "Ripple",
+      "Tron",
+      "Cardano"
+    ]
   },
   "sdk": {
     "language": "typescript",
@@ -43,7 +83,9 @@
     "llms_full_txt": "https://vultisig.com/llms-full.txt",
     "skill_md": "https://vultisig.com/SKILL.md",
     "agent_guide": "https://github.com/vultisig/vultisig-sdk/blob/main/docs/agent.md",
-    "cli": "https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli"
+    "cli": "https://github.com/vultisig/vultisig-sdk/tree/main/clients/cli",
+    "openapi": "https://vultisig.com/openapi.json",
+    "api_catalog": "https://vultisig.com/.well-known/api-catalog"
   },
   "vault_types": {
     "fast_vault": {
@@ -51,11 +93,17 @@
       "use_case": "autonomous_agent_operations"
     },
     "secure_vault": {
-      "description": "2-of-2 with human co-signer via Vultisig mobile app. Human must scan QR to co-sign.",
+      "description": "m-of-n across your own devices (2-of-2, 2-of-3, 3-of-4). A human must co-sign from the Vultisig mobile app, scanning a QR to approve.",
       "use_case": "human_gated_operations"
     }
   },
-  "swap_providers": ["THORChain", "MayaChain", "1inch", "LiFi", "KyberSwap"],
+  "swap_providers": [
+    "THORChain",
+    "MayaChain",
+    "1inch",
+    "LiFi",
+    "KyberSwap"
+  ],
   "token": {
     "name": "VULT",
     "chain": "Ethereum",
