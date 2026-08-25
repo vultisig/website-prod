@@ -78,6 +78,7 @@ export default async function ChainPage({ params }: PageProps) {
         subject={chain}
         headline={chain.name}
         heroArt={`hero-${chain.slug}`}
+        vaultArt={`vault-view-${chain.slug}`}
         breadcrumb={{ label: chain.name }}
         chains={chainsInFamily(family)}
         currentSlug={chain.slug}
