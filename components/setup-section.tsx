@@ -5,8 +5,12 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 
 import SectionHeading from "@/components/ui/section-heading"
+import SplineScene from "@/components/ui/spline-scene"
 import { LearnMoreButton } from "@/components/ui/learn-more-button"
 import { cn } from "@/lib/utils"
+
+/** The slot the vault art is laid into, on both plates. */
+const ART_SIZES = "(max-width: 767px) 90vw, 634px"
 
 type VaultId = "fast" | "secure"
 
@@ -18,6 +22,12 @@ type Vault = {
   href: string
   image: string
   imageAlt: string
+  /**
+   * Exported Spline scene to run in place of `image`, which then serves as its
+   * poster. Drop a `.splinecode` in public/v5 and name it here to animate a
+   * vault; leave it off and the plate stays a still.
+   */
+  scene?: string
   /** Tint of the selected tab pill. */
   activeClass: string
 }
@@ -32,9 +42,13 @@ const VAULTS: Vault[] = [
       "It requires only one user device, and our Vultiserver co-signs your transactions instantly - giving you speed and simplicity without compromising usability.",
     ],
     href: "https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#fast-vaults",
-    image: "/v5/setup-fast-vault.webp",
+    // Poster rendered from the scene's own settled frame, so the handover from
+    // still to canvas has nothing to pop between. The original still art is
+    // kept at /v5/setup-fast-vault.webp.
+    image: "/v5/setup-fast-vault-scene.webp",
     imageAlt:
-      "Single server tray guarded by a shield, next to a phone signing a transaction",
+      "Single server tray guarded by a shield, next to a laptop signing a transaction",
+    scene: "/v5/setup-fast-vault.splinecode",
     activeClass: "border-v5-warning/5 bg-v5-warning/20",
   },
   {
@@ -46,9 +60,13 @@ const VAULTS: Vault[] = [
       "It's always accessible through backups of the devices, making it the most reliable way to secure any amount of assets - even if a device fails.",
     ],
     href: "https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#secure-vault",
-    image: "/v5/setup-secure-vault.webp",
+    // Poster rendered from the scene's own settled frame, so the handover from
+    // still to canvas has nothing to pop between. The original still art is
+    // kept at /v5/setup-secure-vault.webp.
+    image: "/v5/setup-secure-vault-scene.webp",
     imageAlt:
       "Three stacked device trays co-signing a transaction under a shield",
+    scene: "/v5/setup-secure-vault.splinecode",
     activeClass: "border-v5-success/5 bg-v5-success/20",
   },
 ]
@@ -161,25 +179,44 @@ export default function SetupSection() {
               </div>
               {/* Both plates stay mounted so the incoming one is already
                   decoded when it fades in; only one is ever above 0 opacity,
-                  since `shown` moves after the outgoing plate has faded. */}
+                  since `shown` moves after the outgoing plate has faded. An
+                  animated plate is only ever rendering while it is the visible
+                  one - a plate parked at 0 opacity still occupies the layout,
+                  so it would otherwise burn GPU behind the other tab. */}
               <div className="relative aspect-[1268/796] w-full min-w-0 md:w-[634px]">
-                {VAULTS.map((item) => (
-                  <Image
-                    key={item.id}
-                    src={item.image}
-                    alt={item.imageAlt}
-                    fill
-                    sizes="(max-width: 767px) 90vw, 634px"
-                    aria-hidden={item.id !== shown || undefined}
-                    className={cn(
-                      "rounded-3xl object-contain",
-                      PANEL_MOTION,
-                      item.id === shown && !swapping
-                        ? "opacity-100"
-                        : "opacity-0",
-                    )}
-                  />
-                ))}
+                {VAULTS.map((item) => {
+                  const visible = item.id === shown && !swapping
+                  return (
+                    <div
+                      key={item.id}
+                      aria-hidden={item.id !== shown || undefined}
+                      className={cn(
+                        "absolute inset-0 overflow-hidden rounded-3xl",
+                        PANEL_MOTION,
+                        visible ? "opacity-100" : "opacity-0",
+                      )}
+                    >
+                      {item.scene ? (
+                        <SplineScene
+                          scene={item.scene}
+                          poster={item.image}
+                          posterAlt={item.imageAlt}
+                          sizes={ART_SIZES}
+                          active={visible}
+                          className="size-full"
+                        />
+                      ) : (
+                        <Image
+                          src={item.image}
+                          alt={item.imageAlt}
+                          fill
+                          sizes={ART_SIZES}
+                          className="object-contain"
+                        />
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             </div>
 

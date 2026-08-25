@@ -37,6 +37,12 @@ export type PageBodyProps = {
    */
   headline: string
   heroArt: string
+  /**
+   * `public/v5/chains/vault-view-<slug>.webp` — the same phone frame as the
+   * shared art, with that chain's own account screen inside it, so the section
+   * shows the balance and token list the copy above it is describing.
+   */
+  vaultArt: string
   /** Trailing breadcrumb label, after Chains / family. */
   breadcrumb: { label: string }
   /** Rail of sibling chains; the current one is rendered as plain text. */
@@ -56,6 +62,7 @@ export default function ChainPageBody({
   subject,
   headline,
   heroArt,
+  vaultArt,
   breadcrumb,
   chains,
   currentSlug,
@@ -135,8 +142,8 @@ export default function ChainPageBody({
           <div className="flex flex-col gap-[30px] lg:flex-row lg:gap-[50px]">
             <div className="overflow-hidden rounded-v5-panel bg-v5-accent lg:w-[605px] lg:shrink-0">
               <Image
-                src="/v5/chains-vault-view.webp"
-                alt={`The Vultisig vault view showing ${subject.name} alongside every other asset`}
+                src={`/v5/chains/${vaultArt}.webp`}
+                alt={`The Vultisig vault open on ${subject.name}, showing its balance and token list`}
                 width={1308}
                 height={1271}
                 className="size-full object-cover"
