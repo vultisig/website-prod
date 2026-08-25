@@ -9,9 +9,14 @@ const isDev = process.env.NODE_ENV !== 'production'
  * bundle is blocked and nothing hydrates — every dropdown, toggle and menu
  * silently does nothing. Production bundles never eval, so the allowance is
  * scoped to development only and the shipped header is unchanged.
+ *
+ * `'wasm-unsafe-eval'` is what lets the Spline runtime compile its DRACO
+ * decoder: a bare `script-src` blocks WebAssembly outright, and the vault scene
+ * in setup-section is DRACO-compressed geometry, so without it the canvas loads
+ * and stays empty. It permits WebAssembly compilation only — not `eval()`.
  */
 const scriptSrc = [
-  "script-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
   isDev ? "'unsafe-eval'" : null,
   'https://www.googletagmanager.com',
   'https://static.ads-twitter.com',
@@ -38,6 +43,11 @@ const securityHeaders = [
       "img-src 'self' data: https: blob:",
       "font-src 'self'",
       "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://api.rss2json.com https://api.coingecko.com https://*.vultisig.com https://*.markfi.xyz https://cloudflareinsights.com https://static.cloudflareinsights.com https://queue.simpleanalyticscdn.com",
+      // three's DRACOLoader, which the Spline runtime decodes the vault scene
+      // with, runs its decoder in a Worker built from a Blob. Without an
+      // explicit worker-src that falls back to `default-src 'self'`, which
+      // rejects blob: and leaves the scene stuck decoding.
+      "worker-src 'self' blob:",
       "frame-ancestors 'self'",
     ].join('; '),
   },

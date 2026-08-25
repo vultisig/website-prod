@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "assert-copy": "node scripts/assert-copy-invariants.mjs",
-    "build": "node scripts/assert-copy-invariants.mjs && next build",
-    "dev": "next dev --webpack",
+    "build": "npm run vendor-spline && node scripts/assert-copy-invariants.mjs && next build",
+    "dev": "npm run vendor-spline && next dev --webpack",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "vendor-spline": "node scripts/vendor-spline-runtime.mjs"
   },
   "browserslist": [
     "last 2 Chrome versions",
@@ -44,6 +45,7 @@
     "@radix-ui/react-toggle": "1.1.1",
     "@radix-ui/react-toggle-group": "1.1.1",
     "@radix-ui/react-tooltip": "1.1.6",
+    "@splinetool/runtime": "^2.0.5",
     "@tailwindcss/typography": "^0.5.19",
     "@tiptap/extension-image": "^3.22.3",
     "@tiptap/extension-link": "^3.22.3",
