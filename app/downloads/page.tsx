@@ -6,19 +6,19 @@ import { resolveTab } from "./tabs"
 const hashes = [
   {
     os: "ios",
-    hash: "sha256:98c3de85549a993bf89e1b52e1336e4a5f09c77f96cdeb64915b9b6e5c9b346b",
+    hash: "sha256:3fcc60d54f71b5aec673ef2a25b3b59309b312056729267a457869123355e3bc",
   },
   {
     os: "linux",
-    hash: "sha256:78e7eca744085e747cfa3397f0140c3288f249f3ea5b0a3f51ca32f92086493c",
+    hash: "sha256:9d210b0abdb54895057972a73bf3e2082c80673648e4c900ed2765e09959145f",
   },
   {
     os: "android",
-    hash: "sha256:6409452465ae0cf96c894c9c64d6ce1830b7851ec380956becce962e82b4cb47",
+    hash: "sha256:ac6fff7a363750accb1f0109b5c065ffe8d3c65d060510a31df8952c40eda1cb",
   },
   {
     os: "windows",
-    hash: "sha256:7011792fef6f54358193ef88b98106fb9d8fe5e181828c55315ebf5a996566f2",
+    hash: "sha256:c6db94e523712f62515b8d34f04710f367e2af7b294b68a04ea8f3db196429df",
   },
 ]
 
