@@ -2,15 +2,33 @@
 
 import { Shield, Zap } from "lucide-react"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { type CSSProperties, useEffect, useState } from "react"
 
 import SectionHeading from "@/components/ui/section-heading"
 import SplineScene from "@/components/ui/spline-scene"
 import { LearnMoreButton } from "@/components/ui/learn-more-button"
 import { cn } from "@/lib/utils"
 
-/** The slot the vault art is laid into, on both plates. */
+/** Width of the vault art on each plate, for the poster's srcset. */
 const ART_SIZES = "(max-width: 767px) 90vw, 634px"
+
+/**
+ * The exported art's own frame, which the slot is a window onto. The poster is
+ * laid in `object-contain` and shares this ratio, so it fills the frame edge to
+ * edge; the canvas sizes itself off the frame's width.
+ */
+const ART_ASPECT = "aspect-[1268/796]"
+
+/**
+ * What the card actually shows of that frame. Both scenes settle with the
+ * vault in the top ~78% and nothing but background below it, so laying the art
+ * in whole sized this row off a band of empty pixels: it ran ~80px past the
+ * copy beside it and left a hole under the last paragraph. The slot is
+ * shorter than the art and clips that band instead, which shortens the row
+ * without shrinking the vault. Keep it at or above 640 - `Secure Vault`'s
+ * shadow reaches 620, and the crop would start eating the art below that.
+ */
+const SLOT_ASPECT = "aspect-[1268/640]"
 
 type VaultId = "fast" | "secure"
 
@@ -28,6 +46,14 @@ type Vault = {
    * vault; leave it off and the plate stays a still.
    */
   scene?: string
+  /**
+   * The flat grey the scene's own Backdrop mesh renders as, sampled from the
+   * poster. The card paints itself this colour so the art's slot stops reading
+   * as a box inside the card. It has to travel with the tab rather than be one
+   * token: the two scenes carry the same Backdrop material but different
+   * lighting rigs, so they settle on different greys.
+   */
+  surface: string
   /** Tint of the selected tab pill. */
   activeClass: string
 }
@@ -49,6 +75,7 @@ const VAULTS: Vault[] = [
     imageAlt:
       "Single server tray guarded by a shield, next to a laptop signing a transaction",
     scene: "/v5/setup-fast-vault.splinecode",
+    surface: "#eeeff8",
     activeClass: "border-v5-warning/5 bg-v5-warning/20",
   },
   {
@@ -67,6 +94,7 @@ const VAULTS: Vault[] = [
     imageAlt:
       "Three stacked device trays co-signing a transaction under a shield",
     scene: "/v5/setup-secure-vault.splinecode",
+    surface: "#e2e6eb",
     activeClass: "border-v5-success/5 bg-v5-success/20",
   },
 ]
@@ -82,6 +110,15 @@ const PANEL_MOTION =
 
 /** Must match PANEL_MOTION's duration - it times the swap at the panel's floor. */
 const PANEL_FADE_MS = 200
+
+/**
+ * The card surface crosses between the two vaults' backdrop greys. Slower than
+ * the panel so the colour is still settling while the new copy fades in, which
+ * reads as one move rather than a flash. Written out in full for the same
+ * reason as PANEL_MOTION.
+ */
+const SURFACE_MOTION =
+  "[transition:background-color_400ms_ease-out] motion-reduce:!transition-none"
 
 const TAB_ICONS: Record<VaultId, typeof Zap> = { fast: Zap, secure: Shield }
 const TAB_ICON_COLOR: Record<VaultId, string> = {
@@ -153,8 +190,21 @@ export default function SetupSection() {
             subtitle="Fast Vault for daily spending. Secure Vault for maximum protection. Both are keyless and require no seed phrase."
           />
 
-          <div className="flex w-full flex-col">
-            <div className="flex flex-col gap-3 rounded-t-3xl rounded-bl-3xl bg-v5-page p-4 md:flex-row md:p-[30px]">
+          {/* The card paints the active vault's backdrop grey rather than the
+              page token: the slot on the right is a window onto the scene's own
+              Backdrop mesh, and any other surface colour draws a visible box
+              around the art. One variable so the body, the notch backdrop and
+              the bottom strip can never drift apart. */}
+          <div
+            className="flex w-full flex-col"
+            style={{ "--setup-surface": vault.surface } as CSSProperties}
+          >
+            <div
+              className={cn(
+                "flex flex-col gap-3 rounded-t-3xl rounded-bl-3xl bg-[var(--setup-surface)] p-4 md:flex-row md:p-[30px]",
+                SURFACE_MOTION,
+              )}
+            >
               <div className="flex min-w-0 flex-col gap-3 md:w-[476px]">
                 <VaultTabs selected={selected} onSelect={setSelected} />
                 <div
@@ -183,7 +233,12 @@ export default function SetupSection() {
                   animated plate is only ever rendering while it is the visible
                   one - a plate parked at 0 opacity still occupies the layout,
                   so it would otherwise burn GPU behind the other tab. */}
-              <div className="relative aspect-[1268/796] w-full min-w-0 md:w-[634px]">
+              <div
+                className={cn(
+                  "relative w-full min-w-0 overflow-hidden rounded-3xl md:w-[634px]",
+                  SLOT_ASPECT,
+                )}
+              >
                 {VAULTS.map((item) => {
                   const visible = item.id === shown && !swapping
                   return (
@@ -191,9 +246,19 @@ export default function SetupSection() {
                       key={item.id}
                       aria-hidden={item.id !== shown || undefined}
                       className={cn(
-                        "absolute inset-0 overflow-hidden rounded-3xl",
+                        "absolute inset-x-0 top-0",
+                        ART_ASPECT,
                         PANEL_MOTION,
-                        visible ? "opacity-100" : "opacity-0",
+                        // Both plates fill the same box, so the one later in
+                        // source order sits on top whichever tab is open. Each
+                        // scene is published with `mouseEventTarget: "canvas"`,
+                        // meaning the runtime listens on its own canvas - so a
+                        // plate parked at 0 opacity was still eating the
+                        // pointer moves the visible plate needed to follow the
+                        // cursor. Only the live plate takes the pointer.
+                        visible
+                          ? "opacity-100"
+                          : "pointer-events-none opacity-0",
                       )}
                     >
                       {item.scene ? (
@@ -229,7 +294,7 @@ export default function SetupSection() {
                 and the card reads as curving into the notch instead of squaring
                 off. */}
             <div className="flex items-stretch">
-              <div className="bg-v5-page">
+              <div className={cn("bg-[var(--setup-surface)]", SURFACE_MOTION)}>
                 <div className="rounded-tr-3xl bg-v5-deep p-4 md:p-[25px]">
                   <LearnMoreButton
                     href={vault.href}
@@ -239,7 +304,12 @@ export default function SetupSection() {
                   />
                 </div>
               </div>
-              <div className="flex-1 rounded-b-3xl bg-v5-page" />
+              <div
+                className={cn(
+                  "flex-1 rounded-b-3xl bg-[var(--setup-surface)]",
+                  SURFACE_MOTION,
+                )}
+              />
             </div>
           </div>
         </div>
