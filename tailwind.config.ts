@@ -263,6 +263,20 @@ const config: Config = {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(360deg)" },
         },
+        // The chain ring, and the counter-turn each pill rides to stay upright
+        // inside it. Two keyframes rather than one played in reverse: a
+        // `reverse` direction and a `paused` play state read the same
+        // declaration, so pausing the ring on hover would have to fight the
+        // direction back on. Both must run at the same duration or the pills
+        // drift out of true.
+        "v5-orbit": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
+        "v5-orbit-counter": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(-360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -274,6 +288,10 @@ const config: Config = {
         "v5-fade-out": "v5-fade-out 220ms cubic-bezier(0.4, 0, 1, 1) both",
         // Slow enough that the wordmark stays readable while it turns.
         "v5-seal-spin": "v5-seal-spin 20s linear infinite",
+        // 40s is the rate the pre-v5 /mpc ring turned at - slow enough that a
+        // pill is readable for the whole time it is on screen.
+        "v5-orbit": "v5-orbit 40s linear infinite",
+        "v5-orbit-counter": "v5-orbit-counter 40s linear infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

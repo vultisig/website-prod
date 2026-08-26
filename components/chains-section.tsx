@@ -1,13 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
+import type { CSSProperties } from "react"
 
 import StarField from "@/components/star-field"
 import { supportedChainCountLabel } from "@/content/chain-count"
 import { chainHref } from "@/content/chains"
 import { cn } from "@/lib/utils"
-
-/** Orbit diameter the desktop pill coordinates below are expressed in. */
-const ORBIT = 558
 
 type Chain = {
   name: string
@@ -22,9 +20,6 @@ type Chain = {
    * dead pill.
    */
   slug: string
-  /** Pill top-left inside the orbit box, in orbit pixels. */
-  x: number
-  y: number
 }
 
 const CHAINS: Chain[] = [
@@ -32,88 +27,82 @@ const CHAINS: Chain[] = [
     name: "MayaChain",
     dot: "#2cfffc",
     icon: "mayachain",
-    x: 216,
-    y: -19,
     slug: "cacao",
   },
   {
     name: "Bitcoin",
     dot: "#f7931a",
     icon: "bitcoin",
-    x: 368,
-    y: 19,
     slug: "btc",
   },
   {
     name: "Hyperliquid",
     dot: "#97fce4",
     icon: "hyperliquid",
-    x: 458,
-    y: 120,
     slug: "hype",
   },
   {
     name: "Ethereum",
     dot: "#8c8c8c",
     icon: "ethereum",
-    x: 500,
-    y: 259,
     slug: "eth",
   },
   {
     name: "Dogecoin",
     dot: "#ba9f33",
     icon: "dogecoin",
-    x: 464,
-    y: 399,
     slug: "doge",
   },
   {
     name: "BNB Chain",
     dot: "#f0b90b",
     icon: "bnb",
-    x: 358,
-    y: 501,
     slug: "bnb",
   },
   {
     name: "THORChain",
     dot: "#18e4cd",
     icon: "thorchain",
-    x: 216,
-    y: 539,
     slug: "rune",
   },
   {
     name: "Solana",
     dot: "#aa51ea",
     icon: "solana",
-    x: 93,
-    y: 501,
     slug: "sol",
   },
-  { name: "TRON", dot: "#ff060a", icon: "tron", x: -9, y: 399, slug: "trx" },
+  { name: "TRON", dot: "#ff060a", icon: "tron", slug: "trx" },
   {
     name: "XRP Ledger",
     dot: "#ffffff",
     icon: "xrp",
-    x: -62,
-    y: 259,
     slug: "xrp",
   },
-  { name: "Zcash", dot: "#f3b724", icon: "zcash", x: -10, y: 119, slug: "zec" },
+  { name: "Zcash", dot: "#f3b724", icon: "zcash", slug: "zec" },
   {
     name: "Polygon",
     dot: "#6600ff",
     icon: "polygon",
-    x: 89,
-    y: 19,
     slug: "pol",
   },
 ]
 
-function percent(value: number): string {
-  return `${(value / ORBIT) * 100}%`
+/**
+ * The ring turns, so a pill's place on it is an angle rather than a coordinate:
+ * the list is ordered clockwise from the top and each pill takes an equal share
+ * of the circle. `translate()` runs along the rotated X axis, which starts at 3
+ * o'clock, so the quarter turn puts the first chain back at the top where the
+ * Figma layout has it.
+ *
+ * The radius the pills ride is spelled out in the transform below rather than
+ * derived from here: Tailwind reads arbitrary values out of the source text, so
+ * a class assembled at runtime is never generated. It is half of the ring's own
+ * `md:size-[558px]`, which puts every pill's centre on the border - which the
+ * pixel coordinates this replaces only did for the ten pills narrow enough to
+ * fit that way.
+ */
+function orbitAngle(index: number): string {
+  return `${(360 / CHAINS.length) * index - 90}deg`
 }
 
 /**
@@ -147,34 +136,40 @@ const RUN = "[transition-duration:380ms]"
  * `max-w-none` on the mark keeps the preflight's `max-width:100%` from clamping
  * it to the slot, which would scale it up from 8px instead of holding full size.
  */
-function ChainPill({ name, dot, icon, x, y, slug }: Chain) {
+function ChainPill({ chain, index }: { chain: Chain; index: number }) {
+  const { name, dot, icon, slug } = chain
   return (
     <li
-      style={{ left: percent(x), top: percent(y) }}
-      className="static md:absolute"
+      style={{ "--orbit-angle": orbitAngle(index) } as CSSProperties}
+      className="static md:absolute md:left-1/2 md:top-1/2 md:[transform:translate(-50%,-50%)_rotate(var(--orbit-angle))_translate(279px)_rotate(calc(var(--orbit-angle)_*_-1))]"
     >
-      <Link
-        href={chainHref(slug)}
-        className={`group flex h-[38px] items-center gap-2 whitespace-nowrap rounded-[10px] border border-v5-border-light bg-v5-surface-2 px-[17px] text-v5-body-s font-medium text-v5-text-primary backdrop-blur-[2px] transition-colors ${RUN} [@media(hover:hover)]:hover:border-[#263b5a] [@media(hover:hover)]:hover:bg-[#263b5a]`}
-      >
-        <span
-          aria-hidden
-          className={`relative h-4 w-2 shrink-0 transition-[width] ${RUN} [@media(hover:hover)]:group-hover:w-4 motion-reduce:!w-2`}
+      {/* Turns against the ring at the same rate, so the pill orbits without
+          tipping. It has to be its own element: the li already spends its
+          transform placing the pill on the circle. */}
+      <div className="md:animate-v5-orbit-counter motion-reduce:!animate-none [@media(hover:hover)]:group-hover/orbit:[animation-play-state:paused] group-focus-within/orbit:[animation-play-state:paused]">
+        <Link
+          href={chainHref(slug)}
+          className={`group flex h-[38px] items-center gap-2 whitespace-nowrap rounded-[10px] border border-v5-border-light bg-v5-surface-2 px-[17px] text-v5-body-s font-medium text-v5-text-primary backdrop-blur-[2px] transition-colors ${RUN} [@media(hover:hover)]:hover:border-[#263b5a] [@media(hover:hover)]:hover:bg-[#263b5a]`}
         >
           <span
-            style={{ backgroundColor: dot }}
-            className={`absolute left-0 top-1/2 size-2 -translate-y-1/2 rounded-full transition-opacity ${RUN} [@media(hover:hover)]:group-hover:opacity-0 motion-reduce:!opacity-100`}
-          />
-          <Image
-            src={`/v5/chains-${icon}.svg`}
-            alt=""
-            width={16}
-            height={16}
-            className={`absolute left-0 top-1/2 size-4 max-w-none -translate-y-1/2 opacity-0 transition-opacity ${RUN} [@media(hover:hover)]:group-hover:opacity-100 motion-reduce:!opacity-0`}
-          />
-        </span>
-        {name}
-      </Link>
+            aria-hidden
+            className={`relative h-4 w-2 shrink-0 transition-[width] ${RUN} [@media(hover:hover)]:group-hover:w-4 motion-reduce:!w-2`}
+          >
+            <span
+              style={{ backgroundColor: dot }}
+              className={`absolute left-0 top-1/2 size-2 -translate-y-1/2 rounded-full transition-opacity ${RUN} [@media(hover:hover)]:group-hover:opacity-0 motion-reduce:!opacity-100`}
+            />
+            <Image
+              src={`/v5/chains-${icon}.svg`}
+              alt=""
+              width={16}
+              height={16}
+              className={`absolute left-0 top-1/2 size-4 max-w-none -translate-y-1/2 opacity-0 transition-opacity ${RUN} [@media(hover:hover)]:group-hover:opacity-100 motion-reduce:!opacity-0`}
+            />
+          </span>
+          {name}
+        </Link>
+      </div>
     </li>
   )
 }
@@ -213,9 +208,15 @@ export default function ChainsSection({
               height={82}
               className="size-16 md:absolute md:left-1/2 md:top-1/2 md:size-[82px] md:-translate-x-1/2 md:-translate-y-1/2"
             />
-            <ul className="flex flex-wrap justify-center gap-3 md:contents">
-              {CHAINS.map((chain) => (
-                <ChainPill key={chain.name} {...chain} />
+            {/* The ring carries the pills round; each one turns back against
+                it to stay upright. Both stop while the ring is hovered or holds
+                focus - the pills are links, and a target that drifts under the
+                cursor is a poor one. `group/orbit` sits on the ul so the pause
+                reaches the pills; the ul is not its own group ancestor, so it
+                takes a plain `hover:` for itself. */}
+            <ul className="group/orbit flex flex-wrap justify-center gap-3 focus-within:[animation-play-state:paused] motion-reduce:!animate-none md:absolute md:inset-0 md:block md:animate-v5-orbit [@media(hover:hover)]:hover:[animation-play-state:paused]">
+              {CHAINS.map((chain, index) => (
+                <ChainPill key={chain.name} chain={chain} index={index} />
               ))}
             </ul>
           </div>
