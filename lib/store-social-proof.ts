@@ -6,9 +6,11 @@ export const MIN_REVIEW_CHARS = 80
 export const MAX_TESTIMONIALS = 6
 export const REVIEW_TEXT_MAX = 200
 
-const EMOJI_AND_SPACE = /\p{Extended_Pictographic}/gu
+const PICTOGRAPH = /\p{Extended_Pictographic}/gu
 const COLLAPSE_SPACE = /\s+/g
 const ONE_DECIMAL = /^\d+\.\d$/
+const MILLION_INSTALLS = 1_000_000
+const THOUSAND_INSTALLS = 1_000
 
 export type StoreId = "apple" | "google"
 
@@ -44,8 +46,8 @@ export function displayScore(score: number, scoreText?: string): string {
 }
 
 export function compactInstalls(minInstalls: number): string {
-  if (minInstalls >= 1_000_000) return `${Math.floor(minInstalls / 1_000_000)}M+`
-  if (minInstalls >= 1_000) return `${Math.floor(minInstalls / 1_000)}K+`
+  if (minInstalls >= MILLION_INSTALLS) return `${Math.floor(minInstalls / MILLION_INSTALLS)}M+`
+  if (minInstalls >= THOUSAND_INSTALLS) return `${Math.floor(minInstalls / THOUSAND_INSTALLS)}K+`
   return `${minInstalls}+`
 }
 
@@ -64,7 +66,7 @@ export function reviewLabel(store: StoreId): string {
 export function isDisplayableReview(text: string, score: number): boolean {
   if (score < MIN_REVIEW_SCORE) return false
   const stripped = text
-    .replace(EMOJI_AND_SPACE, "")
+    .replace(PICTOGRAPH, "")
     .replace(COLLAPSE_SPACE, " ")
     .trim()
   return stripped.length >= MIN_REVIEW_CHARS
@@ -102,27 +104,24 @@ export function pickTestimonials(reviews: RawReview[]): Testimonial[] {
   const googleFirst =
     new Date(google[0]?.date ?? 0).getTime() >=
     new Date(apple[0]?.date ?? 0).getTime()
-  return interleave(
-    googleFirst ? google : apple,
-    googleFirst ? apple : google,
-  ).map(toTestimonial)
+  const first = googleFirst ? google : apple
+  const second = googleFirst ? apple : google
+  return interleave(first, second).map(toTestimonial)
 }
 
 function interleave(first: RawReview[], second: RawReview[]): RawReview[] {
   const picked: RawReview[] = []
-  let i = 0
-  let j = 0
-  while (picked.length < MAX_TESTIMONIALS && (i < first.length || j < second.length)) {
+  const rounds = Math.max(first.length, second.length)
+  for (let i = 0; i < rounds; i += 1) {
     const a = first[i]
     if (a) {
       picked.push(a)
-      i += 1
+      if (picked.length >= MAX_TESTIMONIALS) break
     }
-    if (picked.length >= MAX_TESTIMONIALS) break
-    const b = second[j]
+    const b = second[i]
     if (b) {
       picked.push(b)
-      j += 1
+      if (picked.length >= MAX_TESTIMONIALS) break
     }
   }
   return picked
@@ -150,26 +149,31 @@ function asList<T>(value: T | T[] | undefined): T[] {
   return Array.isArray(value) ? value : [value]
 }
 
+function appleReviewFromRss(entry: Record<string, unknown>): RawReview | null {
+  const score = Number(rssLabel(entry["im:rating"]))
+  const text = rssLabel(entry.content)
+  const author = rssLabel(
+    (entry.author as { name?: unknown } | undefined)?.name,
+  )
+  if (!author || !isDisplayableReview(text, score)) return null
+  const updated = rssLabel(entry.updated)
+  return {
+    id: rssLabel(entry.id) || `apple-${author}-${updated}`,
+    author,
+    text,
+    score,
+    date: updated || new Date().toISOString(),
+    store: "apple",
+  }
+}
+
 export function parseAppleRss(payload: unknown): RawReview[] {
   if (!payload || typeof payload !== "object") return []
   const feed = (payload as { feed?: { entry?: unknown } }).feed
-  const entries = asList(feed?.entry) as Array<Record<string, unknown>>
   const reviews: RawReview[] = []
-  for (const entry of entries) {
-    const score = Number(rssLabel(entry["im:rating"]))
-    const text = rssLabel(entry.content)
-    const author = rssLabel(
-      (entry.author as { name?: unknown } | undefined)?.name,
-    )
-    if (!author || !isDisplayableReview(text, score)) continue
-    reviews.push({
-      id: rssLabel(entry.id) || `apple-${author}-${rssLabel(entry.updated)}`,
-      author,
-      text,
-      score,
-      date: rssLabel(entry.updated) || new Date().toISOString(),
-      store: "apple",
-    })
+  for (const entry of asList(feed?.entry) as Array<Record<string, unknown>>) {
+    const review = appleReviewFromRss(entry)
+    if (review) reviews.push(review)
   }
   return reviews
 }
@@ -189,6 +193,31 @@ function jsonScripts(html: string): unknown[] {
   return scripts
 }
 
+function appleReviewFromJson(
+  record: Record<string, unknown>,
+): RawReview | null {
+  const text = record.contents
+  const author = record.reviewerName
+  const score = record.rating
+  if (
+    record.$kind !== "Review" ||
+    typeof text !== "string" ||
+    typeof author !== "string" ||
+    typeof score !== "number"
+  ) {
+    return null
+  }
+  return {
+    id: String(record.id ?? `${author}-${record.date}`),
+    author,
+    text,
+    score,
+    date:
+      typeof record.date === "string" ? record.date : new Date().toISOString(),
+    store: "apple",
+  }
+}
+
 function collectAppleReviews(node: unknown, into: Map<string, RawReview>): void {
   if (Array.isArray(node)) {
     for (const child of node) collectAppleReviews(child, into)
@@ -196,28 +225,8 @@ function collectAppleReviews(node: unknown, into: Map<string, RawReview>): void 
   }
   if (!node || typeof node !== "object") return
   const record = node as Record<string, unknown>
-  const text = record.contents
-  const author = record.reviewerName
-  const score = record.rating
-  if (
-    record.$kind === "Review" &&
-    typeof text === "string" &&
-    typeof author === "string" &&
-    typeof score === "number"
-  ) {
-    const id = String(record.id ?? `${author}-${record.date}`)
-    if (!into.has(id)) {
-      into.set(id, {
-        id,
-        author,
-        text,
-        score,
-        date:
-          typeof record.date === "string" ? record.date : new Date().toISOString(),
-        store: "apple",
-      })
-    }
-  }
+  const review = appleReviewFromJson(record)
+  if (review && !into.has(review.id)) into.set(review.id, review)
   for (const value of Object.values(record)) collectAppleReviews(value, into)
 }
 
