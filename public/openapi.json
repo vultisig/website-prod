@@ -140,7 +140,7 @@
           "reviews"
         ],
         "summary": "List recent app-store reviews",
-        "description": "Recent four- and five-star reviews pulled from the Apple App Store and Google Play listings, cached server-side for 30 minutes. If the stores cannot be reached a built-in fallback set is returned with `cached: false`. Individual reviews only \u2014 store-level aggregate ratings are not exposed.",
+        "description": "Live App Store and Google Play aggregates plus recent four- and five-star written reviews, cached server-side for 30 minutes. Short or empty reviews are omitted. If a store cannot be reached that store is left out rather than replaced with invented copy.",
         "responses": {
           "200": {
             "description": "Cached reviews",
@@ -150,6 +150,7 @@
                   "type": "object",
                   "required": [
                     "testimonials",
+                    "stores",
                     "cached",
                     "lastUpdated"
                   ],
@@ -158,6 +159,12 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/StoreReview"
+                      }
+                    },
+                    "stores": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/StoreAggregate"
                       }
                     },
                     "cached": {
@@ -235,6 +242,44 @@
             "enum": [
               "published"
             ]
+          }
+        }
+      },
+      "StoreAggregate": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "rating",
+          "displayScore",
+          "caption"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "apple",
+              "google"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "enum": [
+              "App Store",
+              "Google Play"
+            ]
+          },
+          "rating": {
+            "type": "number",
+            "description": "One-decimal score matching the store listing"
+          },
+          "displayScore": {
+            "type": "string",
+            "description": "Score as shown on the store, e.g. \"4.7\""
+          },
+          "caption": {
+            "type": "string",
+            "description": "Rating count and, for Play, the install bucket"
           }
         }
       },

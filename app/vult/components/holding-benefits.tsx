@@ -25,14 +25,6 @@ const BENEFITS: Benefit[] = [
       alt: "Isometric blue block with a lightning bolt",
     },
   },
-  {
-    title: "Higher card cashback",
-    body: "Your VULT tier sets your card cashback rate too.",
-    icon: {
-      src: "/v5/vult-benefit-cashback.svg",
-      alt: "Isometric blue block shaped like a payment card",
-    },
-  },
 ]
 
 const PHONE_ALT =
