@@ -16,7 +16,7 @@ const STORE_BADGE = {
 } as const
 
 function StoreAvatar({ store }: { store: Review["store"] }) {
-  const badge = STORE_BADGE[store === "google" ? "google" : "apple"]
+  const badge = STORE_BADGE[store]
   return (
     <Image
       src={badge.src}

@@ -21,6 +21,9 @@ const PLAY_REVIEW_COUNT = 50
 const PLAY_SORT_NEWEST = 2
 const APPLE_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
+const APPLE_LOOKUP_URL = `https://itunes.apple.com/lookup?id=${APPLE_APP_ID}&country=us`
+const APPLE_RSS_URL = `https://itunes.apple.com/us/rss/customerreviews/id=${APPLE_APP_ID}/sortBy=mostRecent/json`
+const APPLE_REVIEWS_HTML_URL = `https://apps.apple.com/us/app/id${APPLE_APP_ID}?see-all=reviews`
 
 const itunesLookupSchema = z.object({
   results: z
@@ -63,8 +66,10 @@ type CacheEntry = {
   timestamp: number
 }
 
+type ProofResult = { data: StoreSocialProof; cached: boolean }
+
 let cache: CacheEntry | null = null
-let inflight: Promise<{ data: StoreSocialProof; cached: boolean }> | null = null
+let inflight: Promise<ProofResult> | null = null
 
 export function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -129,9 +134,7 @@ async function fetchPlayApp(): Promise<StoreAggregate> {
 }
 
 async function fetchAppleApp(): Promise<StoreAggregate> {
-  const raw = await fetchJson(
-    `https://itunes.apple.com/lookup?id=${APPLE_APP_ID}&country=us`,
-  )
+  const raw = await fetchJson(APPLE_LOOKUP_URL)
   const result = itunesLookupSchema.parse(raw).results[0]
   const score = displayScore(result.averageUserRating)
   return {
@@ -156,35 +159,29 @@ async function fetchPlayReviews(): Promise<RawReview[]> {
     FETCH_TIMEOUT_MS,
   )
   const parsed = playReviewsSchema.parse(raw)
-  return parsed.data.flatMap((item, index) => {
+  const reviews: RawReview[] = []
+  for (const [index, item] of parsed.data.entries()) {
     const text = item.text ?? ""
     const author = item.userName ?? ""
-    if (!author || !text) return []
-    return [
-      {
-        id: String(item.id ?? `google-${author}-${index}`),
-        author,
-        text,
-        score: item.score,
-        date: isoDate(item.date),
-        store: "google" as const,
-      },
-    ]
-  })
+    if (!author || !text) continue
+    reviews.push({
+      id: String(item.id ?? `google-${author}-${index}`),
+      author,
+      text,
+      score: item.score,
+      date: isoDate(item.date),
+      store: "google",
+    })
+  }
+  return reviews
 }
 
 async function fetchAppleReviewsRss(): Promise<RawReview[]> {
-  const raw = await fetchJson(
-    `https://itunes.apple.com/us/rss/customerreviews/id=${APPLE_APP_ID}/sortBy=mostRecent/json`,
-  )
-  return parseAppleRss(raw)
+  return parseAppleRss(await fetchJson(APPLE_RSS_URL))
 }
 
 async function fetchAppleReviewsHtml(): Promise<RawReview[]> {
-  const html = await fetchText(
-    `https://apps.apple.com/us/app/id${APPLE_APP_ID}?see-all=reviews`,
-  )
-  return extractAppleReviewsFromHtml(html)
+  return extractAppleReviewsFromHtml(await fetchText(APPLE_REVIEWS_HTML_URL))
 }
 
 function mergeAppleReviews(groups: RawReview[][]): RawReview[] {
@@ -234,50 +231,48 @@ async function fetchFresh(): Promise<StoreSocialProof> {
 
 function mergeWithCache(fresh: StoreSocialProof): StoreSocialProof {
   const previous = cache?.data
-  return {
-    stores: fresh.stores.length > 0 ? fresh.stores : (previous?.stores ?? []),
-    testimonials:
-      fresh.testimonials.length > 0
-        ? fresh.testimonials
-        : (previous?.testimonials ?? []),
-    fetchedAt: Date.now(),
+  const stores =
+    fresh.stores.length > 0 ? fresh.stores : (previous?.stores ?? [])
+  const testimonials =
+    fresh.testimonials.length > 0
+      ? fresh.testimonials
+      : (previous?.testimonials ?? [])
+  return { stores, testimonials, fetchedAt: Date.now() }
+}
+
+function isFreshEnough(entry: CacheEntry, forceRefresh: boolean): boolean {
+  const age = Date.now() - entry.timestamp
+  if (forceRefresh) return age < REFRESH_FLOOR_MS
+  return age < CACHE_TTL_MS
+}
+
+async function loadStoreSocialProof(): Promise<ProofResult> {
+  try {
+    const merged = mergeWithCache(await fetchFresh())
+    if (merged.stores.length > 0 || merged.testimonials.length > 0) {
+      cache = { data: merged, timestamp: Date.now() }
+    }
+    return { data: merged, cached: false }
+  } catch (error) {
+    console.error("Error fetching store social proof:", error)
+    if (cache) return { data: cache.data, cached: true }
+    return {
+      data: { stores: [], testimonials: [], fetchedAt: Date.now() },
+      cached: false,
+    }
+  } finally {
+    inflight = null
   }
 }
 
 export async function getStoreSocialProof(options?: {
   forceRefresh?: boolean
-}): Promise<{ data: StoreSocialProof; cached: boolean }> {
+}): Promise<ProofResult> {
   const forceRefresh = options?.forceRefresh === true
-  const now = Date.now()
-  const withinFloor = !!cache && now - cache.timestamp < REFRESH_FLOOR_MS
-  const cacheValid = !!cache && now - cache.timestamp < CACHE_TTL_MS
-
-  if (!forceRefresh && cacheValid && cache) {
-    return { data: cache.data, cached: true }
-  }
-  if (forceRefresh && withinFloor && cache) {
+  if (cache && isFreshEnough(cache, forceRefresh)) {
     return { data: cache.data, cached: true }
   }
   if (inflight) return inflight
-
-  inflight = (async () => {
-    try {
-      const merged = mergeWithCache(await fetchFresh())
-      if (merged.stores.length > 0 || merged.testimonials.length > 0) {
-        cache = { data: merged, timestamp: Date.now() }
-      }
-      return { data: merged, cached: false }
-    } catch (error) {
-      console.error("Error fetching store social proof:", error)
-      if (cache) return { data: cache.data, cached: true }
-      return {
-        data: { stores: [], testimonials: [], fetchedAt: Date.now() },
-        cached: false,
-      }
-    } finally {
-      inflight = null
-    }
-  })()
-
+  inflight = loadStoreSocialProof()
   return inflight
 }
