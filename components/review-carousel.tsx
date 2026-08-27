@@ -2,18 +2,13 @@
 
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import StarRating from "@/components/ui/star-rating"
 import { cn } from "@/lib/utils"
+import type { Testimonial } from "@/lib/store-social-proof"
 
-export type Review = {
-  name: string
-  text: string
-  label: string
-  store?: "google" | "apple"
-  score?: number
-}
+export type Review = Testimonial
 
 const STORE_BADGE = {
   apple: { src: "/v5/store-app-store.webp", alt: "App Store review" },
@@ -40,28 +35,12 @@ export default function ReviewCarousel({
   reviews: Review[]
   className?: string
 }) {
-  const [items, setItems] = useState(reviews)
   const [index, setIndex] = useState(0)
+  const review = reviews[index] ?? reviews[0]
+  if (!review) return null
 
-  useEffect(() => {
-    let cancelled = false
-    fetch("/api/reviews")
-      .then((response) => response.json())
-      .then((data) => {
-        if (cancelled || !Array.isArray(data.testimonials)) return
-        if (data.testimonials.length === 0) return
-        setItems(data.testimonials)
-        setIndex(0)
-      })
-      .catch(() => undefined)
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  const review = items[index] ?? items[0]
   const step = (delta: number) =>
-    setIndex((current) => (current + delta + items.length) % items.length)
+    setIndex((current) => (current + delta + reviews.length) % reviews.length)
 
   return (
     <div className={cn("flex w-[455px] flex-col gap-[43px]", className)}>
@@ -79,7 +58,7 @@ export default function ReviewCarousel({
           <StoreAvatar store={review.store} />
           <span className="flex-1 text-v5-link font-medium">{review.name}</span>
           <StarRating
-            rating={review.score ?? 5}
+            rating={review.score}
             size={16}
             className="flex items-center gap-[3px]"
           />
@@ -96,9 +75,9 @@ export default function ReviewCarousel({
           <ArrowLeft className="size-6" aria-hidden />
         </button>
         <div className="flex items-center gap-2">
-          {items.map((item, dot) => (
+          {reviews.map((item, dot) => (
             <span
-              key={item.name + dot}
+              key={item.name + item.date + dot}
               className={cn(
                 "h-[9px] rounded-[7px]",
                 dot === index ? "w-8 bg-v5-cta" : "w-[9px] bg-v5-text-secondary",

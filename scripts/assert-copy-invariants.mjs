@@ -25,17 +25,30 @@ if (!/^\d+\+$/.test(label)) {
 const stale = ["30+", "35+"]
 const scanDirs = ["app", "components", "content", "lib"]
 const skipNames = new Set(["chain-count.ts"])
+const bannedSocialProof = [
+  "Rated 5.0 on Google Play",
+  "441 reviews",
+  "CryptoExpert",
+  "BlockchainDev",
+  "DeFiTrader",
+]
 const errors = []
 
 for (const dir of scanDirs) {
   walk(path.join(root, dir), (file) => {
     if (!/\.(ts|tsx)$/.test(file)) return
     if (skipNames.has(path.basename(file))) return
+    if (file.endsWith(".test.ts")) return
     const rel = path.relative(root, file)
     const text = fs.readFileSync(file, "utf8")
     for (const needle of stale) {
       if (text.includes(needle)) {
         errors.push(`${rel} still contains "${needle}"`)
+      }
+    }
+    for (const needle of bannedSocialProof) {
+      if (text.includes(needle)) {
+        errors.push(`${rel} hardcodes unverified store social proof "${needle}"`)
       }
     }
     if (text.includes("36+")) {
