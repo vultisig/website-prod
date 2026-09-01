@@ -49,7 +49,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "About Vultisig", href: "/about" },
       { label: "FAQs", href: "/support" },
-      { label: "Docs", href: "/docs" },
+      { label: "Docs", href: "https://docs.vultisig.com" },
       {
         label: "Integrate Vultisig",
         href: "https://docs.vultisig.com/developer-docs/vultisig-extension-integration-guide",

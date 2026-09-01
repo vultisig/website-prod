@@ -57,7 +57,8 @@ const SUPPORT_CARDS: SupportCard[] = [
     title: "Read the docs",
     body: "Get educated and enjoy safer asset management.",
     linkLabel: "Go to Docs",
-    href: "/docs",
+    href: "https://docs.vultisig.com",
+    external: true,
   },
   {
     icon: "/v5/support-company.svg",

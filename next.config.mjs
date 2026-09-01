@@ -101,6 +101,14 @@ const nextConfig = {
         permanent: true,
       },
       {
+        // /docs was only a link shim in front of the real docs site. The page is
+        // retired but the URL is still indexed and linked, so it hands its
+        // traffic straight over rather than 404ing.
+        source: '/docs',
+        destination: 'https://docs.vultisig.com',
+        permanent: true,
+      },
+      {
         source: '/skills',
         destination: '/skills/SKILL.md',
         permanent: false,

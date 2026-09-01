@@ -1,10 +1,12 @@
 import { ArrowRight, Code2 } from "lucide-react"
-import Link from "next/link"
 
 import AudienceToggle from "@/app/agent/components/audience-toggle"
 import { LandingButton } from "@/components/ui/landing-button"
 
 const DOCS_URL = "https://docs.vultisig.com"
+// "Build with SDK" lands in the developer section so it stays distinct from
+// the "View Docs" button beside it, which takes the docs root.
+const SDK_DOCS_URL = "https://docs.vultisig.com/developer-docs"
 
 const ILLUSTRATION_ALT =
   "An isometric blue vault with SDK modules and signed transaction tiles orbiting it, wired to an agent process"
@@ -31,7 +33,7 @@ export default function Hero() {
                 invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
-                <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
+                <a href={SDK_DOCS_URL} target="_blank" rel="noopener noreferrer">
                   <Code2 aria-hidden />
                   Build with SDK
                 </a>
@@ -43,10 +45,10 @@ export default function Hero() {
                 invertOnHover
                 className="h-[50px] w-full md:w-[185px]"
               >
-                <Link href="/docs">
+                <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
                   View Docs
                   <ArrowRight aria-hidden />
-                </Link>
+                </a>
               </LandingButton>
             </div>
           </div>
