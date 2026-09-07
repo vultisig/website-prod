@@ -27,7 +27,7 @@ export const channels = {
     label: "macOS",
   },
   "macos-github": {
-    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.45.72",
+    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.46.73",
     platform: "macos github",
     icon: "/v5/download-macos.webp",
     iconWidth: 54,
