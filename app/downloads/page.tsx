@@ -14,7 +14,7 @@ const hashes = [
   },
   {
     os: "android",
-    hash: "sha256:ac6fff7a363750accb1f0109b5c065ffe8d3c65d060510a31df8952c40eda1cb",
+    hash: "sha256:76af63d02ada295c148feaa1b060cb8cb4ab49426f347f231be9615025b1a066",
   },
   {
     os: "windows",
