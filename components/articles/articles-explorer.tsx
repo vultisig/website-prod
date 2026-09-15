@@ -35,8 +35,8 @@ type ArticlesExplorerProps = {
   /** Every published article, so a category switch never needs the server. */
   articles: ArticleSummary[]
   tabs: CategoryTab[]
-  initialCategory: CategorySlug
-  initialQuery: string
+  initialCategory?: CategorySlug
+  initialQuery?: string
 }
 
 /**
@@ -48,11 +48,19 @@ type ArticlesExplorerProps = {
  * whole sets, which is worth a beat; the search field narrows the same set on
  * every keystroke, so fading it would strobe.
  */
+function categoryFromSearch(search: string): CategorySlug {
+  return resolveCategory(new URLSearchParams(search).get("category") ?? undefined)
+}
+
+function queryFromSearch(search: string): string {
+  return new URLSearchParams(search).get("q") || ""
+}
+
 export default function ArticlesExplorer({
   articles,
   tabs,
-  initialCategory,
-  initialQuery,
+  initialCategory = "all",
+  initialQuery = "",
 }: ArticlesExplorerProps) {
   // `category` flips on click so the pill reacts at once; `shown` trails it by
   // one fade, and `entering` is what keeps the first paint animation-free.
@@ -61,15 +69,18 @@ export default function ArticlesExplorer({
   const [entering, setEntering] = useState(false)
   const [query, setQuery] = useState(initialQuery)
 
+  useEffect(() => {
+    const nextCategory = categoryFromSearch(window.location.search)
+    const nextQuery = queryFromSearch(window.location.search)
+    setCategory(nextCategory)
+    setShown(nextCategory)
+    setQuery(nextQuery)
+  }, [])
+
   // Each switch pushes a history entry, so Back has to walk the categories too.
   useEffect(() => {
     const onPopState = () =>
-      setCategory(
-        resolveCategory(
-          new URLSearchParams(window.location.search).get("category") ??
-            undefined,
-        ),
-      )
+      setCategory(categoryFromSearch(window.location.search))
 
     window.addEventListener("popstate", onPopState)
     return () => window.removeEventListener("popstate", onPopState)

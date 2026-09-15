@@ -2,13 +2,11 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import ArticlesExplorer from "@/components/articles/articles-explorer"
-import { buildCategoryTabs, resolveCategory } from "@/lib/article-categories"
-import { getAllArticles, toArticleSummary } from "@/lib/articles"
+import { buildCategoryTabs } from "@/lib/article-categories"
+import { getCachedArticleSummaries } from "@/lib/articles"
 import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE, SITE_URL } from "@/lib/site"
 
-// Make articles page dynamic - articles change frequently
-export const dynamic = "force-dynamic"
-export const revalidate = 0
+export const revalidate = 120
 
 const ARTICLES_URL = `${SITE_URL}/articles`
 const collectionName = "Vultisig Articles"
@@ -96,19 +94,8 @@ function EmptyState() {
   )
 }
 
-export default async function ArticlesPage({
-  searchParams,
-}: {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
-  const params = await searchParams
-  const category = resolveCategory(params?.category)
-  const rawQuery = Array.isArray(params?.q) ? params?.q[0] : params?.q
-
-  const articles = await getAllArticles()
-  // Summaries only — full bodies would otherwise ship in the client payload.
-  // Every category goes down, so switching one filters in place and can fade.
-  const summaries = articles.map(toArticleSummary)
+export default async function ArticlesPage() {
+  const summaries = await getCachedArticleSummaries()
   const tabs = buildCategoryTabs(summaries)
 
   return (
@@ -127,15 +114,10 @@ export default async function ArticlesPage({
             </p>
           </div>
 
-          {articles.length === 0 ? (
+          {summaries.length === 0 ? (
             <EmptyState />
           ) : (
-            <ArticlesExplorer
-              articles={summaries}
-              tabs={tabs}
-              initialCategory={category}
-              initialQuery={rawQuery || ""}
-            />
+            <ArticlesExplorer articles={summaries} tabs={tabs} />
           )}
         </div>
       </main>

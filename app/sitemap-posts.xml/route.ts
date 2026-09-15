@@ -1,14 +1,13 @@
-import { getAllArticles } from "@/lib/articles"
+import { getCachedArticleSummaries } from "@/lib/articles"
 import { SITE_URL } from "@/lib/site"
 import { absoluteUrl, escapeXml, xmlResponse } from "@/lib/sitemap"
 
-// Always reflect the live article DB — never serve a build-time empty snapshot.
-export const dynamic = "force-dynamic"
+export const revalidate = 120
 
 // Article URLs. Hero images are declared inline via the image sitemap
 // extension, so this doubles as the image sitemap for editorial content.
 export async function GET() {
-  const articles = await getAllArticles()
+  const articles = await getCachedArticleSummaries()
 
   const urls = articles
     .map((article) => {

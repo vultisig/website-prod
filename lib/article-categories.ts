@@ -1,4 +1,4 @@
-import type { Article, ArticleSummary } from "@/lib/articles"
+import type { ArticleSummary } from "@/lib/articles"
 
 /**
  * Articles carry no category field — only free-form `tags` plus the title.
@@ -90,10 +90,10 @@ export function filterByCategory<T extends ArticleSummary>(
  * Array.sort is stable, so ties fall back to recency.
  */
 export function pickRelatedArticles(
-  articles: Article[],
-  current: Article,
+  articles: ArticleSummary[],
+  current: ArticleSummary,
   limit = 3,
-): Article[] {
+): ArticleSummary[] {
   const category = categoryOf(current)
   const tags = new Set((current.tags || []).map((tag) => tag.toLowerCase()))
 

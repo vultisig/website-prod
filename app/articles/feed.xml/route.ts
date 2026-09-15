@@ -1,8 +1,10 @@
-import { getAllArticles } from '@/lib/articles'
+import { getCachedArticleSummaries } from '@/lib/articles'
 import { SITE_URL } from '@/lib/site'
 
+export const revalidate = 120
+
 export async function GET() {
-  const articles = await getAllArticles()
+  const articles = await getCachedArticleSummaries()
 
   const rssItems = articles
     .map(article => {

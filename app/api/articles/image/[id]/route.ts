@@ -1,17 +1,27 @@
-import { NextRequest, NextResponse } from 'next/server'
-import connectDB from '@/lib/mongodb'
-import { GridFSBucket } from 'mongodb'
-import mongoose from 'mongoose'
-import { canReadPrivateArticleImages } from '@/lib/auth'
-import Article from '@/lib/models/Article'
+import { Readable } from "node:stream"
 
-const FALLBACK_IMAGE_CONTENT_TYPE = 'image/jpeg'
+import { GridFSBucket } from "mongodb"
+import mongoose from "mongoose"
+import { type NextRequest, NextResponse } from "next/server"
+
+import {
+  PRIVATE_IMAGE_CACHE_CONTROL,
+  PUBLIC_IMAGE_CACHE_CONTROL,
+  articleImagePath,
+  publishedCoverFilter,
+  publishedInlineFilter,
+} from "@/lib/article-images"
+import { canReadPrivateArticleImages } from "@/lib/auth"
+import Article from "@/lib/models/Article"
+import connectDB from "@/lib/mongodb"
+
+const FALLBACK_IMAGE_CONTENT_TYPE = "image/jpeg"
 const ALLOWED_IMAGE_CONTENT_TYPES = new Set([
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/gif',
-  'image/webp',
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/gif",
+  "image/webp",
 ])
 
 function getSafeImageContentType(contentType: string | undefined): string {
@@ -22,39 +32,49 @@ function getSafeImageContentType(contentType: string | undefined): string {
     return FALLBACK_IMAGE_CONTENT_TYPE
   }
 
-  return normalizedContentType === 'image/jpg'
+  return normalizedContentType === "image/jpg"
     ? FALLBACK_IMAGE_CONTENT_TYPE
     : normalizedContentType
 }
 
-function getGridFsContentType(file: { contentType?: string; metadata?: { contentType?: string } }): string {
+function gridFsContentType(file: {
+  contentType?: string
+  metadata?: { contentType?: string }
+}): string {
   return getSafeImageContentType(file.metadata?.contentType || file.contentType)
 }
 
 function imageNotFound(): NextResponse {
-  return NextResponse.json({ message: 'Image not found' }, { status: 404 })
+  return NextResponse.json({ message: "Image not found" }, { status: 404 })
 }
 
-async function isReferencedByPublishedArticle(imagePath: string): Promise<boolean> {
-  const escapedImagePath = imagePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const publishedArticleQuery = {
-    $and: [
-      { $or: [{ status: 'published' }, { status: { $exists: false } }] },
-      {
-        $or: [
-          { image: imagePath },
-          { content: { $regex: escapedImagePath } },
-        ],
-      },
-    ],
-  }
+async function isPublishedImage(imagePath: string): Promise<boolean> {
+  if (await Article.exists(publishedCoverFilter(imagePath))) return true
+  return (await Article.exists(publishedInlineFilter(imagePath))) !== null
+}
 
-  return (await Article.exists(publishedArticleQuery)) !== null
+function fileResponse(
+  stream: Readable,
+  contentType: string,
+  cacheControl: string,
+): NextResponse {
+  return new NextResponse(
+    Readable.toWeb(stream) as ReadableStream<Uint8Array>,
+    {
+      headers: {
+        "Content-Type": contentType,
+        "X-Content-Type-Options": "nosniff",
+        "Content-Security-Policy": "default-src 'none'; sandbox",
+        "Cache-Control": cacheControl,
+        "CDN-Cache-Control": cacheControl,
+      },
+    },
+  )
 }
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params
@@ -65,54 +85,42 @@ export async function GET(
     await connectDB()
     const db = mongoose.connection.db
     if (!db) {
-      return NextResponse.json({ message: 'Database connection error' }, { status: 500 })
+      return NextResponse.json(
+        { message: "Database connection error" },
+        { status: 500 },
+      )
     }
 
-    const bucket = new GridFSBucket(db, { bucketName: 'article-images' })
+    const bucket = new GridFSBucket(db, { bucketName: "article-images" })
     const objectId = new mongoose.Types.ObjectId(id)
-
     const files = await bucket.find({ _id: objectId }).toArray()
     if (files.length === 0) {
       return imageNotFound()
     }
 
     const file = files[0]
-    const contentType = getGridFsContentType(file)
-    const imagePath = `/api/articles/image/${id}`
+    if (!file) return imageNotFound()
 
-    if (!(await canReadPrivateArticleImages(req)) && !(await isReferencedByPublishedArticle(imagePath))) {
+    const imagePath = articleImagePath(id)
+    const published = await isPublishedImage(imagePath)
+    if (!published && !(await canReadPrivateArticleImages(req))) {
       return imageNotFound()
     }
 
-    const downloadStream = bucket.openDownloadStream(objectId)
+    const cacheControl = published
+      ? PUBLIC_IMAGE_CACHE_CONTROL
+      : PRIVATE_IMAGE_CACHE_CONTROL
 
-    return new Promise<NextResponse>((resolve) => {
-      const chunks: Buffer[] = []
-
-      downloadStream.on('data', (chunk: Buffer) => {
-        chunks.push(chunk)
-      })
-
-      downloadStream.on('end', () => {
-        const buffer = Buffer.concat(chunks)
-
-        resolve(new NextResponse(buffer, {
-          headers: {
-            'Content-Type': contentType,
-            'X-Content-Type-Options': 'nosniff',
-            'Content-Security-Policy': "default-src 'none'; sandbox",
-            'Cache-Control': 'public, max-age=31536000, immutable',
-          },
-        }))
-      })
-
-      downloadStream.on('error', (err) => {
-        console.error('GridFS download error:', err)
-        resolve(imageNotFound())
-      })
-    })
+    return fileResponse(
+      bucket.openDownloadStream(objectId),
+      gridFsContentType(file),
+      cacheControl,
+    )
   } catch (err) {
-    console.error('Image retrieval error:', err)
-    return NextResponse.json({ message: 'Failed to retrieve image' }, { status: 500 })
+    console.error("Image retrieval error:", err)
+    return NextResponse.json(
+      { message: "Failed to retrieve image" },
+      { status: 500 },
+    )
   }
 }

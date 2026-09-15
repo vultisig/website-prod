@@ -78,6 +78,7 @@ const ArticleSchema = new Schema<IArticle>(
 // Index for faster queries
 ArticleSchema.index({ slug: 1 })
 ArticleSchema.index({ publishedAt: -1 })
+ArticleSchema.index({ image: 1, status: 1 })
 ArticleSchema.index({ featured: 1 })
 ArticleSchema.index({ status: 1 })
 

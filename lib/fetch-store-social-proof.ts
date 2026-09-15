@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache"
 import { z } from "zod"
 
 import {
@@ -97,7 +98,7 @@ async function fetchStore(url: string, accept: string): Promise<Response> {
   const response = await fetch(url, {
     headers: { "User-Agent": APPLE_UA, Accept: accept },
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-    cache: "no-store",
+    next: { revalidate: CACHE_TTL_MS / 1000 },
   })
   if (!response.ok) throw new Error(`${url} → ${response.status}`)
   return response
@@ -276,3 +277,9 @@ export async function getStoreSocialProof(options?: {
   inflight = loadStoreSocialProof()
   return inflight
 }
+
+export const getCachedStoreSocialProof = unstable_cache(
+  async () => getStoreSocialProof(),
+  ["store-social-proof"],
+  { revalidate: CACHE_TTL_MS / 1000 },
+)

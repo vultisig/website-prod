@@ -48,19 +48,24 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Mobile pans across the same render inside a full-bleed clip;
-              desktop bleeds it off the card's right edge as Figma does. */}
-          <div className="-mx-4 -mb-8 mt-6 overflow-hidden md:contents">
-            {/* eslint-disable-next-line @next/next/no-img-element -- panned crop, not a layout-sized image */}
-            <img
-              src="/v5/mpc-hero.webp"
-              alt={ILLUSTRATION_ALT}
+          {/* Phone-width crop on mobile; the 2200px plate on desktop. */}
+          <picture className="contents">
+            <source
+              media="(min-width: 768px)"
+              srcSet="/v5/mpc-hero.webp"
               width={2200}
               height={1068}
-              fetchPriority="high"
-              className="block aspect-[2200/1068] w-[175%] max-w-none -translate-x-[18%] md:absolute md:left-[10.72%] md:top-[-2.68%] md:h-[111.65%] md:w-[105.8%] md:translate-x-0"
             />
-          </div>
+            {/* eslint-disable-next-line @next/next/no-img-element -- art direction needs <picture> */}
+            <img
+              src="/v5/mpc-hero-mobile.webp"
+              alt={ILLUSTRATION_ALT}
+              width={722}
+              height={613}
+              fetchPriority="high"
+              className="-mx-4 -mb-8 mt-6 block aspect-[361/307] w-[calc(100%+2rem)] max-w-none md:absolute md:left-[10.72%] md:top-[-2.68%] md:m-0 md:aspect-[2200/1068] md:h-[111.65%] md:w-[105.8%]"
+            />
+          </picture>
         </div>
       </div>
     </section>
