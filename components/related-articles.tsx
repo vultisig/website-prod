@@ -1,8 +1,8 @@
 import ArticleCard from "@/components/article-card"
-import type { Article } from "@/lib/articles"
+import type { ArticleSummary } from "@/lib/articles"
 
 interface RelatedArticlesProps {
-  articles: Article[]
+  articles: ArticleSummary[]
 }
 
 export default function RelatedArticles({ articles }: RelatedArticlesProps) {

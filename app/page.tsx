@@ -3,6 +3,9 @@ import dynamic from "next/dynamic"
 import { Suspense } from "react"
 
 import Hero from "@/components/hero"
+import MediumSection, {
+  MediumSectionFallback,
+} from "@/components/medium-section"
 import RatingsSection, {
   RatingsSectionFallback,
 } from "@/components/ratings-section"
@@ -15,7 +18,6 @@ const BestFeaturesSection = dynamic(
 const SetupSection = dynamic(() => import("@/components/setup-section"))
 const ChainsSection = dynamic(() => import("@/components/chains-section"))
 const LandingFaq = dynamic(() => import("@/components/landing-faq"))
-const MediumSection = dynamic(() => import("@/components/medium-section"))
 const FooterBanner = dynamic(() => import("@/components/footer-banner"))
 
 export const metadata: Metadata = {
@@ -35,7 +37,9 @@ export default function Home() {
         <RatingsSection />
       </Suspense>
       <LandingFaq />
-      <MediumSection />
+      <Suspense fallback={<MediumSectionFallback />}>
+        <MediumSection />
+      </Suspense>
       <FooterBanner />
     </main>
   )

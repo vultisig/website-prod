@@ -1,7 +1,64 @@
+import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache'
 import { cache } from 'react'
 
 import connectDB from './mongodb'
 import Article, { IArticle } from './models/Article'
+
+const ARTICLE_CACHE_SECONDS = 120
+
+const SUMMARY_PROJECTION = {
+  slug: 1,
+  title: 1,
+  description: 1,
+  author: 1,
+  publishedAt: 1,
+  updatedAt: 1,
+  image: 1,
+  tags: 1,
+  featured: 1,
+  status: 1,
+} as const
+
+type SummaryDoc = {
+  slug: string
+  title: string
+  description: string
+  author: string
+  publishedAt: Date
+  updatedAt?: Date
+  image?: string
+  tags?: string[]
+  featured?: boolean
+  status?: 'draft' | 'published'
+}
+
+function publishedOnlyQuery(includeDrafts: boolean) {
+  return includeDrafts
+    ? {}
+    : { $or: [{ status: 'published' as const }, { status: { $exists: false } }] }
+}
+
+function toSummaryInterface(doc: SummaryDoc): ArticleSummary {
+  return {
+    slug: doc.slug,
+    title: doc.title,
+    description: doc.description,
+    author: doc.author,
+    publishedAt: doc.publishedAt.toISOString(),
+    updatedAt: doc.updatedAt?.toISOString(),
+    image: doc.image,
+    tags: doc.tags || [],
+    featured: doc.featured || false,
+    status: doc.status || 'published',
+  }
+}
+
+function bustArticlePages(slug: string) {
+  revalidateTag('articles', 'max')
+  revalidatePath('/articles')
+  revalidatePath(`/articles/${slug}`)
+  revalidatePath('/')
+}
 
 export interface Article {
   slug: string
@@ -76,17 +133,40 @@ function toArticleInterface(doc: IArticle): Article {
 export async function getAllArticles(includeDrafts = false): Promise<Article[]> {
   try {
     await connectDB()
-    const query = includeDrafts ? {} : { $or: [{ status: 'published' }, { status: { $exists: false } }] }
-    const articles = await Article.find(query)
+    const articles = await Article.find(publishedOnlyQuery(includeDrafts))
       .sort({ publishedAt: -1 })
       .lean()
 
-    return articles.map((doc: any) => toArticleInterface(doc))
+    return articles.map((doc) => toArticleInterface(doc as IArticle))
   } catch (error) {
     console.error('Error fetching articles:', error)
     return []
   }
 }
+
+export async function getArticleSummaries(
+  includeDrafts = false,
+): Promise<ArticleSummary[]> {
+  if (!process.env.MONGODB_URI) return []
+  try {
+    await connectDB()
+    const articles = await Article.find(publishedOnlyQuery(includeDrafts))
+      .select(SUMMARY_PROJECTION)
+      .sort({ publishedAt: -1 })
+      .lean()
+
+    return articles.map((doc) => toSummaryInterface(doc as SummaryDoc))
+  } catch (error) {
+    console.error('Error fetching article summaries:', error)
+    return []
+  }
+}
+
+export const getCachedArticleSummaries = unstable_cache(
+  async () => getArticleSummaries(false),
+  ['article-summaries'],
+  { revalidate: ARTICLE_CACHE_SECONDS, tags: ['articles'] },
+)
 
 // cache() dedupes the generateMetadata + page calls into one query per request.
 export const getArticleBySlug = cache(async (slug: string): Promise<Article | null> => {
@@ -113,14 +193,11 @@ export async function getRelatedArticles(
   currentSlug: string,
   tags: string[] = [],
   limit = 3,
-): Promise<Article[]> {
-  const all = await getAllArticles()
+): Promise<ArticleSummary[]> {
+  const all = await getArticleSummaries()
   const others = all.filter((a) => a.slug !== currentSlug)
   const tagSet = new Set(tags)
 
-  // getAllArticles() is already sorted publishedAt desc and Array.sort is
-  // stable, so sorting on overlap alone keeps most-recent-first within each
-  // tier and falls back to recency when no tags overlap.
   const scored = others
     .map((a) => ({
       article: a,
@@ -158,6 +235,7 @@ export async function createArticle(article: Omit<Article, 'slug'>, slug: string
       status: article.status || 'draft',
     })
 
+    bustArticlePages(slug)
     return true
   } catch (error) {
     console.error('Error creating article:', error)
@@ -221,6 +299,7 @@ export async function updateArticle(
       }
     }
 
+    bustArticlePages(slug)
     return true
   } catch (error) {
     console.error('Error updating article:', error)
@@ -238,7 +317,7 @@ export async function deleteArticle(slug: string): Promise<boolean> {
 
     await connectDB()
     const result = await Article.deleteOne({ slug })
-    
+    if (result.deletedCount > 0) bustArticlePages(slug)
     return result.deletedCount > 0
   } catch (error) {
     console.error('Error deleting article:', error)

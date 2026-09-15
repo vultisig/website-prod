@@ -132,7 +132,6 @@ export default function DownloadsTabs({
               alt={TAB_CONTENT[tab.key].mockup.alt}
               width={675}
               height={657}
-              priority={tab.key === initialTab}
               aria-hidden={tab.key !== shown}
               data-state={tab.key === shown ? state : "gone"}
               className={cn(

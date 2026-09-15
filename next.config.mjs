@@ -60,6 +60,7 @@ const nextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   experimental: {
     optimizePackageImports: ['lucide-react', 'recharts', 'motion', 'react-icons'],
@@ -69,6 +70,7 @@ const nextConfig = {
       { source: '/(.*)', headers: securityHeaders },
       { source: '/fonts/:path*', headers: cacheOneYear },
       { source: '/images/:path*', headers: cacheOneYear },
+      { source: '/v5/:path*', headers: cacheOneYear },
       { source: '/_next/static/:path*', headers: cacheOneYear },
     ]
   },

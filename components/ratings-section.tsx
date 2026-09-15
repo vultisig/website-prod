@@ -5,7 +5,7 @@ import Link from "next/link"
 import ReviewCarousel from "@/components/review-carousel"
 import StarRating from "@/components/ui/star-rating"
 import { LandingButton } from "@/components/ui/landing-button"
-import { getStoreSocialProof } from "@/lib/fetch-store-social-proof"
+import { getCachedStoreSocialProof } from "@/lib/fetch-store-social-proof"
 import {
   ratingsHeadline,
   type StoreAggregate,
@@ -55,7 +55,7 @@ export function RatingsSectionFallback() {
 }
 
 export default async function RatingsSection() {
-  const { data } = await getStoreSocialProof()
+  const { data } = await getCachedStoreSocialProof()
   const headline = ratingsHeadline(data.stores)
 
   return (

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { formatArticleDate } from "@/lib/article-format"
-import { getAllArticles } from "@/lib/articles"
+import { getCachedArticleSummaries } from "@/lib/articles"
 
 interface Article {
   title: string
@@ -68,6 +68,8 @@ function ArticleCard({ article }: { article: Article }) {
         alt={`Cover image for ${article.title}`}
         width={720}
         height={396}
+        loading="lazy"
+        decoding="async"
         className="aspect-[720/396] w-full object-cover"
       />
       <div className="flex flex-1 flex-col gap-3.5 px-4 py-5 md:min-h-[206px]">
@@ -107,7 +109,7 @@ function ArticleCard({ article }: { article: Article }) {
 async function getServerArticles(): Promise<Article[]> {
   if (process.env.MONGODB_URI) {
     try {
-      const internalArticles = await getAllArticles()
+      const internalArticles = await getCachedArticleSummaries()
       if (internalArticles.length > 0) {
         return internalArticles
           .slice(0, 3)
@@ -164,6 +166,17 @@ async function getServerArticles(): Promise<Article[]> {
   }
 
   return FALLBACK_ARTICLES
+}
+
+export function MediumSectionFallback() {
+  return (
+    <section
+      className="bg-v5-page px-4 py-9 md:px-[30px] md:pb-[60px] md:pt-[90px]"
+      aria-hidden
+    >
+      <div className="mx-auto min-h-[420px] max-w-v5-content" />
+    </section>
+  )
 }
 
 export default async function MediumSection() {

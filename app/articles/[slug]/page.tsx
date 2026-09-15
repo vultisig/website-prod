@@ -10,8 +10,9 @@ import { pickRelatedArticles } from "@/lib/article-categories"
 import { formatArticleDate } from "@/lib/article-format"
 import { extractHeadings } from "@/lib/article-toc"
 import {
-  getAllArticles,
   getArticleBySlug,
+  getArticleSummaries,
+  getCachedArticleSummaries,
   toMetaDescription,
 } from "@/lib/articles"
 import {
@@ -25,12 +26,11 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>
 }
 
-// Disable static generation - articles are dynamic and change frequently
-export const dynamic = "force-dynamic"
-export const revalidate = 0
+export const revalidate = 120
 
 export async function generateStaticParams() {
-  return []
+  const articles = await getArticleSummaries()
+  return articles.map((article) => ({ slug: article.slug }))
 }
 
 function articleUrl(slug: string): string {
@@ -163,7 +163,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   if (!article) notFound()
 
   const headings = extractHeadings(article.content)
-  const related = pickRelatedArticles(await getAllArticles(), article, 3)
+  const related = pickRelatedArticles(
+    await getCachedArticleSummaries(),
+    article,
+    3,
+  )
 
   const shortTitle =
     article.title.length > BREADCRUMB_TITLE_MAX
