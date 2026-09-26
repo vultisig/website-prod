@@ -55,7 +55,7 @@ export const channels = {
     label: "Linux",
   },
   "android-github": {
-    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.119",
+    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.121",
     platform: "android github",
     icon: "/v5/download-android-apk.svg",
     iconWidth: 45,
