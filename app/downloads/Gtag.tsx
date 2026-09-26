@@ -41,14 +41,14 @@ export const channels = {
     label: "Android",
   },
   windows: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.71/Vultisig-amd64-installer-v1.0.71.exe",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.74/Vultisig-amd64-installer-v1.0.74.exe",
     platform: "windows",
     icon: "/v5/download-windows.svg",
     iconWidth: 54,
     label: "Windows",
   },
   linux: {
-    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.71/vultisig_1.0.71_amd64.deb",
+    href: "https://github.com/vultisig/vultisig-windows/releases/download/v1.0.74/vultisig_1.0.74_amd64.deb",
     platform: "linux",
     icon: "/v5/download-linux.webp",
     iconWidth: 54,
