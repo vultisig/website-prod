@@ -27,7 +27,7 @@ export const channels = {
     label: "macOS",
   },
   "macos-github": {
-    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.47.75",
+    href: "https://github.com/vultisig/vultisig-ios/releases/tag/v1.48.77",
     platform: "macos github",
     icon: "/v5/download-macos.webp",
     iconWidth: 54,
@@ -55,7 +55,7 @@ export const channels = {
     label: "Linux",
   },
   "android-github": {
-    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.121",
+    href: "https://github.com/vultisig/vultisig-android/releases/tag/v1.0.122",
     platform: "android github",
     icon: "/v5/download-android-apk.svg",
     iconWidth: 45,
