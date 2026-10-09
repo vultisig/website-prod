@@ -6,7 +6,7 @@ import { OPEN_GRAPH_DEFAULTS, ORGANIZATION_ID, SITE_URL } from "@/lib/site"
 
 const ABOUT_URL = `${SITE_URL}/about`
 
-const ABOUT_DESCRIPTION = `Vultisig is a free, open-source, self-custodial MPC wallet. DKLS23 threshold signatures split signing across your own devices on ${supportedChainCountLabel} chains.`
+const ABOUT_DESCRIPTION = `Vultisig is a free, open-source, self-custodial MPC wallet. DKLS23 threshold signatures mean your key never exists in one place, on ${supportedChainCountLabel} chains.`
 
 export const metadata: Metadata = {
   title: "About Vultisig - The Company Behind the Seedless MPC Wallet",
@@ -84,8 +84,8 @@ export default function AboutPage() {
           <p className="text-v5-body-m-relaxed">
             Think of a vault as a safe that opens only when enough keyholders
             turn their keys together. In a Secure Vault, every key share lives
-            on a device you own, from 2-of-2 up to any m-of-n setup, and no
-            server takes part in signing. In a Fast Vault, your device holds one
+            on a device you own, from 2-of-2 to setups like 2-of-3 or 3-of-4,
+            and no server takes part in signing. In a Fast Vault, your device holds one
             share and VultiServer holds the other. VultiServer co-signs but can
             never sign alone, and its share is emailed to you, encrypted with
             your password.

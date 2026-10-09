@@ -24,7 +24,7 @@ const DOWNLOAD_FAQ = [
   {
     question: "How do I verify my download?",
     answer:
-      "Compare the file's SHA-256 checksum with the one listed on this page before you install it.",
+      "For direct downloads, compare the file's SHA-256 checksum with the one listed on this page before you install it. App store installs are verified by the store.",
   },
 ]
 

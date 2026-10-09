@@ -4,7 +4,7 @@ import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE } from "@/lib/site"
 export const metadata: Metadata = {
   title: "MPC Wallet: Free & Open-Source Multi-Party Computation Wallet",
   description:
-    "Vultisig is a free, open-source MPC wallet. Threshold signatures split signing across your own devices, with no seed phrase and no single point of failure.",
+    "Vultisig is a free, open-source MPC wallet. Threshold signatures mean your key never exists in one place: no seed phrase and no single point of failure.",
   alternates: {
     canonical: "https://vultisig.com/mpc",
   },

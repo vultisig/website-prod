@@ -50,7 +50,7 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   {
     question: "What are the risks of MPC wallets?",
     answer:
-      "The primary risk with most MPC wallets is vendor dependency. Many MPC providers hold one key share on their servers, creating a single point of failure if the company is compromised or shuts down. Vultisig removes it: in a Secure Vault, every key share lives on your own devices, and in a Fast Vault, VultiServer's share is emailed to you so recovery never depends on Vultisig. The risk that remains is losing enough devices and backups to fall below your vault threshold, which is why each device exports a backup file.",
+      "The primary risk with most MPC wallets is vendor dependency. Many MPC providers hold one key share on their servers, creating a single point of failure if the company is compromised or shuts down. In a Vultisig Secure Vault, every key share lives on your own devices, so no company is involved at all. In a Fast Vault, VultiServer co-signs, and its share is emailed to you so recovery never depends on Vultisig. The risk that remains is losing enough devices and backups to fall below your vault threshold, which is why each device exports a backup file.",
   },
   {
     question: "MPC wallet vs hardware wallet: Which is more secure?",
