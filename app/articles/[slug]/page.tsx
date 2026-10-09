@@ -20,6 +20,7 @@ import {
   ORGANIZATION_ID,
   SHARE_IMAGE,
   SITE_URL,
+  articleUrl,
 } from "@/lib/site"
 
 interface ArticlePageProps {
@@ -31,10 +32,6 @@ export const revalidate = 120
 export async function generateStaticParams() {
   const articles = await getArticleSummaries()
   return articles.map((article) => ({ slug: article.slug }))
-}
-
-function articleUrl(slug: string): string {
-  return `${SITE_URL}/articles/${slug}`
 }
 
 // Absolute URL for OG/JSON-LD; articles without a cover fall back to the site card.

@@ -6,6 +6,11 @@ export const SITE_URL = "https://vultisig.com"
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`
 
+/** Absolute URL of an article page: its canonical, JSON-LD id and IndexNow ping target. */
+export function articleUrl(slug: string): string {
+  return `${SITE_URL}/articles/${slug}`
+}
+
 /** Default social share card; pages override `alt`, articles their own cover. */
 export const SHARE_IMAGE = {
   // Its own filename rather than a swap over the old card: crawlers key their
