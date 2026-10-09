@@ -1,4 +1,4 @@
-import { fill, type ChainFamily } from "@/content/chain-families"
+import { fill, type FaqEntry } from "@/content/chain-families"
 import type { Chain } from "@/content/chains"
 import { SITE_URL } from "@/lib/site"
 
@@ -13,12 +13,13 @@ type Subject = Pick<Chain, "name" | "ticker">
  */
 export function familyJsonLd({
   url,
-  family,
+  faq,
   subject,
   trail,
 }: {
   url: string
-  family: ChainFamily
+  /** The page's resolved questions, so the JSON-LD matches what is rendered. */
+  faq: FaqEntry[]
   subject: Subject
   trail: { name: string; item: string }[]
 }) {
@@ -28,7 +29,7 @@ export function familyJsonLd({
       {
         "@type": "FAQPage",
         "@id": `${url}#faq`,
-        mainEntity: family.faq.items.map((item) => ({
+        mainEntity: faq.map((item) => ({
           "@type": "Question",
           name: fill(item.question, subject),
           acceptedAnswer: {

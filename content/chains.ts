@@ -20,8 +20,9 @@ export type Chain = {
   name: string
   /**
    * URL segment under its family: /chains/evm/arb. Ticker-derived, except where
-   * tickers collide — Base, Optimism and zkSync all report ETH, and QBTC
-   * reports BTC — so those take their own name.
+   * tickers collide — Base, Optimism, zkSync and Robinhood Chain pay gas in ETH —
+   * so those take their own name. Arbitrum and Blast keep the slugs they were
+   * published under; their gas is ETH too.
    */
   slug: string
   /**
@@ -48,12 +49,12 @@ export type Chain = {
    * rollups and sidechains, `cosmos` is anything built on the Cosmos SDK, and a
    * chain can hold several (Cronos and Sei are Cosmos chains with EVM
    * execution). Chains in their own families — Solana, Sui, TON, Tron, XRP,
-   * Polkadot, Bittensor, QBTC — carry none and surface only under "All".
+   * Polkadot, Bittensor — carry none and surface only under "All".
    */
   categories: ChainCategory[]
 }
 
-/** The 38 chains on the Figma frame, alphabetical as laid out there. */
+/** The supported chains, alphabetical as laid out on the Figma frame. Robinhood Chain was added after it. */
 export const CHAINS: Chain[] = [
   {
     name: "Akash",
@@ -68,7 +69,7 @@ export const CHAINS: Chain[] = [
     name: "Arbitrum",
     slug: "arb",
     family: "evm",
-    ticker: "ARB",
+    ticker: "ETH",
     icon: "arbitrum",
     glow: "#5C6C85",
     categories: ["evm", "l2"],
@@ -131,7 +132,7 @@ export const CHAINS: Chain[] = [
     name: "Blast",
     slug: "blast",
     family: "evm",
-    ticker: "BLAST",
+    ticker: "ETH",
     icon: "blast",
     glow: "#ADAD00",
     categories: ["evm", "l2"],
@@ -209,15 +210,6 @@ export const CHAINS: Chain[] = [
     categories: ["evm"],
   },
   {
-    name: "Kujira",
-    slug: "kuji",
-    family: "cosmos",
-    ticker: "KUJI",
-    icon: "kujira",
-    glow: "#E53935",
-    categories: ["cosmos"],
-  },
-  {
     name: "Litecoin",
     slug: "ltc",
     family: "utxo",
@@ -290,15 +282,6 @@ export const CHAINS: Chain[] = [
     categories: ["evm", "l2"],
   },
   {
-    name: "QBTC",
-    slug: "qbtc",
-    family: "l1",
-    ticker: "BTC",
-    icon: "qbtc",
-    glow: "#DBAF54",
-    categories: [],
-  },
-  {
     name: "Ripple",
     slug: "xrp",
     family: "l1",
@@ -306,6 +289,15 @@ export const CHAINS: Chain[] = [
     icon: "ripple",
     glow: "#536C93",
     categories: [],
+  },
+  {
+    name: "Robinhood Chain",
+    slug: "robinhood",
+    family: "evm",
+    ticker: "ETH",
+    icon: "robinhood",
+    glow: "#CCFF00",
+    categories: ["evm"],
   },
   {
     name: "Sei",
@@ -365,7 +357,7 @@ export const CHAINS: Chain[] = [
     name: "TON",
     slug: "ton",
     family: "l1",
-    ticker: "TON",
+    ticker: "GRAM",
     icon: "ton",
     glow: "#0098EA",
     categories: [],
