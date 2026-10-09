@@ -4,7 +4,7 @@ import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE } from "@/lib/site"
 export const metadata: Metadata = {
   title: "How Vultisig Works: MPC & TSS Technology Explained",
   description:
-    "Learn how Vultisig uses MPC (Multi-Party Computation) and TSS (Threshold Signature Scheme) to secure your crypto without seed phrases. Multi-device signing explained.",
+    "How Vultisig secures crypto without a seed phrase: MPC threshold signatures split signing across your devices, so no single device can move funds.",
   alternates: {
     canonical: "https://vultisig.com/how-it-works",
   },

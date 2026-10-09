@@ -5,7 +5,7 @@ import { OPEN_GRAPH_DEFAULTS } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Supported Chains - Vultisig MPC Wallet",
-  description: `Browse the ${supportedChainCountLabel} blockchains Vultisig supports natively — Bitcoin, Ethereum, Solana, THORChain, Cosmos and more, each with the same MPC threshold security and no seed phrase.`,
+  description: `Browse the ${supportedChainCountLabel} blockchains Vultisig supports natively, from Bitcoin and Ethereum to Solana and THORChain, in one seedless MPC vault.`,
   alternates: {
     canonical: "https://vultisig.com/chains",
   },

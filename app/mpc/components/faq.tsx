@@ -30,12 +30,12 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   {
     question: "Can Vultisig recover my wallet if all devices are lost?",
     answer:
-      "Vultisig does not hold any of your key shares, so we cannot recover your vault. This is by design: True self-custody means no third party has access. To protect against total device loss, we recommend using a 2-of-3 vault configuration where your third share is stored on a secure backup device kept in a separate location. You can also export encrypted vault backups.",
+      "No. Vultisig can never sign or recover a vault on its own. In a Secure Vault, every share is on your devices; in a Fast Vault, VultiServer holds one share and emails you an encrypted copy, but it still needs your device's share. To protect against losing every device, export each device's backup file and store the files in separate places, or use a 2-of-3 vault with one device kept as a backup.",
   },
   {
     question: "Does Vultisig charge fees?",
     answer:
-      "Vultisig is free to download and use. There are no subscription fees, no premium tiers, and no per-transaction charges from Vultisig. The only fees you pay are swap fees, going to Vultisigs token $VULT or standard blockchain network fees (gas fees) which go to network validators.",
+      "Vultisig is free to download and use, with no subscription and no premium tiers. Sending pays only the network fee. Swaps carry a 0.50% Vultisig fee, which drops to as low as 0% for $VULT holders.",
   },
   {
     question: "Which blockchains does Vultisig support?",
@@ -45,12 +45,12 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   {
     question: "Is an MPC wallet safe?",
     answer:
-      "MPC wallets are considered one of the most secure approaches to crypto custody. By eliminating the single private key, they remove the most exploited attack vector in crypto theft. Vultisig adds additional security layers: open-source code for public verification, independent security audits, the modern DKLS23 protocol, and a fully self-custodial architecture where no company holds any key material.",
+      "MPC wallets are considered one of the most secure approaches to crypto custody. By eliminating the single private key, they remove the most exploited attack vector in crypto theft. Vultisig adds additional security layers: open-source code for public verification, the DKLS23 protocol in an implementation audited by Trail of Bits, and a self-custodial design in which Vultisig can never move your funds.",
   },
   {
     question: "What are the risks of MPC wallets?",
     answer:
-      "The primary risk with most MPC wallets is vendor dependency. Many MPC providers hold one key share on their servers, creating a single point of failure if the company is compromised or shuts down. Vultisig eliminates this risk entirely: All key shares live on your own devices. The only risk is losing enough devices or backups to fall below your vault threshold, which is why we recommend 2-of-3 configurations with a secure backup device.",
+      "The primary risk with most MPC wallets is vendor dependency. Many MPC providers hold one key share on their servers, creating a single point of failure if the company is compromised or shuts down. Vultisig removes it: in a Secure Vault, every key share lives on your own devices, and in a Fast Vault, VultiServer's share is emailed to you so recovery never depends on Vultisig. The risk that remains is losing enough devices and backups to fall below your vault threshold, which is why each device exports a backup file.",
   },
   {
     question: "MPC wallet vs hardware wallet: Which is more secure?",
@@ -60,7 +60,7 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   {
     question: "Do MPC wallets have seed phrases?",
     answer:
-      "Most MPC wallets still generate a seed phrase as a backup mechanism. Vultisig does not. Your vault is secured entirely through distributed key shares across your devices. There is no seed phrase to write down, store, lose, or have stolen. Recovery is handled through threshold-based re-sharing using your remaining devices.",
+      "Not in Vultisig. Your vault is secured entirely through key shares across your devices, so there is no seed phrase to write down, store, lose, or have stolen. Each device exports its own backup file, and a lost device is replaced by re-sharing from your remaining devices.",
   },
   {
     question: "Can I use Vultisig for DeFi and swaps?",
@@ -70,7 +70,7 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   {
     question: "How is Vultisig different from ZenGo?",
     answer:
-      `Both are MPC wallets without seed phrases, but the architectures differ. ZenGo holds one key share on their servers: If ZenGo goes down, recovery depends on their infrastructure. Vultisig is fully self-custodial: all key shares live on your devices with zero server dependency. Vultisig is also free, open source, and supports ${supportedChainCountLabel} chains compared to ZenGo's more limited selection.`,
+      `Both are MPC wallets without seed phrases, but the architectures differ. ZenGo holds one key share on its servers, and that share signs every transaction. Vultisig's Secure Vault keeps every share on your own devices with no server in the signing loop, and its Fast Vault emails you a copy of the server's share. Vultisig is also free, open source, and supports ${supportedChainCountLabel} chains compared to ZenGo's more limited selection.`,
   },
   {
     question: "Is Vultisig really free? What's the catch?",

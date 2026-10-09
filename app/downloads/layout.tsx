@@ -4,7 +4,7 @@ import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Download Vultisig - Free MPC Wallet for iOS, Android, Mac, Windows",
   description:
-    "Download Vultisig, the free MPC wallet for iOS, Android, macOS and Windows. Secure your crypto with multi-device signing. No seed phrases required.",
+    "Download Vultisig, the free MPC wallet for iOS, Android, macOS, Windows, Linux and your browser. Multi-device signing, no seed phrase.",
   alternates: {
     canonical: "https://vultisig.com/downloads",
   },
