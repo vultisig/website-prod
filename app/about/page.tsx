@@ -6,7 +6,7 @@ import { OPEN_GRAPH_DEFAULTS, ORGANIZATION_ID, SITE_URL } from "@/lib/site"
 
 const ABOUT_URL = `${SITE_URL}/about`
 
-const ABOUT_DESCRIPTION = `Vultisig is a free, open-source, self-custodial MPC wallet built by the founders of THORChain. No seed phrase: DKLS23 threshold signatures split signing across your own devices, on ${supportedChainCountLabel} chains.`
+const ABOUT_DESCRIPTION = `Vultisig is a free, open-source, self-custodial MPC wallet. DKLS23 threshold signatures mean your key never exists in one place, on ${supportedChainCountLabel} chains.`
 
 export const metadata: Metadata = {
   title: "About Vultisig - The Company Behind the Seedless MPC Wallet",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 const RESOURCES = [
   {
-    href: "https://docs.vultisig.com/other/security",
+    href: "https://docs.vultisig.com/help-and-legal/security",
     label: "Security audits",
   },
   { href: "https://github.com/vultisig", label: "Source code on GitHub" },
@@ -76,6 +76,34 @@ export default function AboutPage() {
             Tortola, British Virgin Islands. The wallet ships on iOS, Android,
             macOS, Windows, Linux and as a browser extension, with a TypeScript
             SDK for developers and AI agents.
+          </p>
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="text-v5-title3 font-semibold">How a vault works</h2>
+          <p className="text-v5-body-m-relaxed">
+            Think of a vault as a safe that opens only when enough keyholders
+            turn their keys together. In a Secure Vault, every key share lives
+            on a device you own, from 2-of-2 to setups like 2-of-3 or 3-of-4,
+            and no server takes part in signing. In a Fast Vault, your device holds one
+            share and VultiServer holds the other. VultiServer co-signs but can
+            never sign alone, and its share is emailed to you, encrypted with
+            your password.
+          </p>
+          <p className="text-v5-body-m-relaxed">
+            Each device exports its own backup file. If Vultisig&apos;s software
+            ever became unavailable, a documented emergency recovery path
+            rebuilds your key from your shares.
+          </p>
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="text-v5-title3 font-semibold">Security</h2>
+          <p className="text-v5-body-m-relaxed">
+            Vultisig signs with DKLS23 threshold signatures, using Silence
+            Laboratories&apos; implementation, which Trail of Bits audited. The
+            wallet code is open source on GitHub, so anyone can check what it
+            does.
           </p>
         </section>
 

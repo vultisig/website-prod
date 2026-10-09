@@ -1,3 +1,4 @@
+import DownloadsFaq from "./downloads-faq"
 import DownloadsTabs from "./downloads-tabs"
 import { HashSection } from "./HashCard"
 import { resolveTab } from "./tabs"
@@ -43,6 +44,7 @@ export default async function DownloadsPage({
             </div>
           }
         />
+        <DownloadsFaq />
       </div>
     </main>
   )
