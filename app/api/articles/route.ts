@@ -2,7 +2,8 @@ import { NextRequest, NextResponse, after } from 'next/server'
 import type { Article } from '@/lib/articles'
 import { createArticle, updateArticle, deleteArticle, getAllArticles } from '@/lib/articles'
 import { canAdminWriteArticles, canWriteArticles } from '@/lib/auth'
-import { articleUrl, notifyIndexNow } from '@/lib/indexnow'
+import { notifyIndexNow } from '@/lib/indexnow'
+import { articleUrl } from '@/lib/site'
 
 const json = (data: any, status = 200) => NextResponse.json(data, { status })
 const error = (message: string, status = 500) => json({ message }, status)
