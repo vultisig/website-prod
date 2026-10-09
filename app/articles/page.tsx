@@ -11,11 +11,11 @@ export const revalidate = 120
 const ARTICLES_URL = `${SITE_URL}/articles`
 const collectionName = "Vultisig Articles"
 const collectionDescription =
-  "Latest articles, insights, and updates from Vultisig."
+  "Guides and comparisons on MPC wallets, seedless self-custody, swap fees and AI agent wallets, plus Vultisig product updates."
 
 export const metadata: Metadata = {
-  title: "Articles - Vultisig Blog",
-  description: "Read the latest articles, insights, and updates from Vultisig.",
+  title: "Crypto Wallet Guides and Comparisons - Vultisig Blog",
+  description: collectionDescription,
   alternates: {
     canonical: ARTICLES_URL,
     types: {
