@@ -183,7 +183,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         },
         {
           title: "Fast Vault & Secure Vault",
-          body: "Use 1-of-2 for daily spending or 2-of-3 for cold storage of larger holdings.",
+          body: "A Fast Vault is 2-of-2 with VultiServer, which co-signs but can never sign alone. A Secure Vault is 2-of-3 across your own devices, for larger holdings.",
           icon: "feature-3",
         },
       ],
@@ -205,7 +205,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
           question:
             "Can I hold {chain} in a Secure Vault instead of a Fast Vault?",
           answer:
-            "Yes. A Fast Vault is 1-of-2 for day-to-day spending; a Secure Vault is 2-of-3 and better suited to larger holdings. The same {asset} can live in either, and you choose per vault.",
+            "Yes. A Fast Vault is 2-of-2: your device plus VultiServer, which co-signs but can never sign alone. A Secure Vault is 2-of-3 across your own devices and suits larger holdings. You pick the type when you create a vault, and {asset} works in both.",
         },
         {
           question: "What happens to my {chain} if I lose a device?",
