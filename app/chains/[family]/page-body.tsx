@@ -5,7 +5,8 @@ import FooterBanner from "@/components/footer-banner"
 import FaqSection from "@/components/ui/faq-section"
 import {
   fill,
-  FAMILY_ACTIONS,
+  type ActionLabel,
+  type ChainCopy,
   type ChainFamily,
 } from "@/content/chain-families"
 import { CHAIN_ARTICLES } from "@/content/chain-articles"
@@ -19,7 +20,20 @@ import {
   SwapIcon,
 } from "../components/action-icons"
 
-const ACTION_ICONS = [SwapIcon, SendIcon, BuyIcon, FunctionIcon, ReceiveIcon]
+const ACTION_ICONS: Record<ActionLabel, typeof SwapIcon> = {
+  Swap: SwapIcon,
+  Send: SendIcon,
+  Buy: BuyIcon,
+  Function: FunctionIcon,
+  Receive: ReceiveIcon,
+}
+
+/** Tailwind needs whole class names, so the column count maps to literals. */
+const ACTION_COLUMNS: Record<number, string> = {
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+  5: "lg:grid-cols-5",
+}
 
 /** Outer panel shared by the lower sections. */
 export const PANEL = "rounded-[20px] px-5 py-10 md:rounded-v5-panel md:p-[60px]"
@@ -30,7 +44,9 @@ export type PageBodyProps = {
    * What the copy is about. A family page passes its representative chain, a
    * chain page passes itself, and every `{chain}` / `{asset}` resolves from it.
    */
-  subject: Pick<Chain, "name" | "ticker">
+  subject: Chain
+  /** The family template resolved for this chain: facts, corrections, actions. */
+  copy: ChainCopy
   /**
    * Fills `{chain}` in the headline only, which is the one line that names the
    * whole family on a family page — "Hold EVM chains…" over "Hold Ethereum…".
@@ -60,6 +76,7 @@ export type PageBodyProps = {
 export default function ChainPageBody({
   family,
   subject,
+  copy,
   headline,
   heroArt,
   vaultArt,
@@ -95,19 +112,19 @@ export default function ChainPageBody({
         <section className="flex flex-col gap-[30px] lg:flex-row lg:items-center">
           <div className="flex flex-col gap-6 lg:w-[696px] lg:shrink-0">
             <h1 className="text-v5-hero-sm font-medium text-v5-text-inverse md:text-v5-hero">
-              {fill(family.hero.title, {
+              {fill(copy.hero.title, {
                 name: headline,
                 ticker: subject.ticker,
               })}
             </h1>
             <p className="text-v5-subtitle font-normal text-v5-text-inverse lg:w-[577px]">
-              {t(family.hero.body)}
+              {t(copy.hero.body)}
             </p>
             <Link
               href="/downloads"
               className="flex h-[50px] w-fit items-center rounded-xl bg-v5-cta px-4 text-v5-button font-medium text-v5-text-primary transition-opacity hover:opacity-90"
             >
-              {t(family.hero.cta)}
+              {t(copy.hero.cta)}
             </Link>
           </div>
 
@@ -116,14 +133,18 @@ export default function ChainPageBody({
             why the group exports taller than the 400px card and is not clipped
             to it. `priority` because it is the LCP element on every one.
           */}
-          <Image
-            src={`/v5/chains/${heroArt}.webp`}
-            alt={`The Vultisig vault open on ${subject.name}, with its balance and actions`}
-            width={1308}
-            height={1036}
-            priority
-            className="w-full lg:w-[654px] lg:shrink-0"
-          />
+          {copy.hasArt ? (
+            <Image
+              src={`/v5/chains/${heroArt}.webp`}
+              alt={`The Vultisig vault open on ${subject.name}, with its balance and actions`}
+              width={1308}
+              height={1036}
+              priority
+              className="w-full lg:w-[654px] lg:shrink-0"
+            />
+          ) : (
+            <ChainLogoPanel chain={subject} className="aspect-[1308/1036] w-full rounded-v5-panel bg-v5-white lg:w-[654px] lg:shrink-0" />
+          )}
         </section>
 
         {/* One vault view */}
@@ -132,26 +153,30 @@ export default function ChainPageBody({
         >
           <div className="flex flex-col gap-3.5 text-center">
             <h2 className="text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-display">
-              {t(family.vaultView.title)}
+              {t(copy.vaultView.title)}
             </h2>
             <p className="mx-auto max-w-[772px] text-v5-subtitle font-normal text-v5-text-inverse">
-              {t(family.vaultView.body)}
+              {t(copy.vaultView.body)}
             </p>
           </div>
 
           <div className="flex flex-col gap-[30px] lg:flex-row lg:gap-[50px]">
             <div className="overflow-hidden rounded-v5-panel bg-v5-accent lg:w-[605px] lg:shrink-0">
-              <Image
-                src={`/v5/chains/${vaultArt}.webp`}
-                alt={`The Vultisig vault open on ${subject.name}, showing its balance and token list`}
-                width={1308}
-                height={1271}
-                className="size-full object-cover"
-              />
+              {copy.hasArt ? (
+                <Image
+                  src={`/v5/chains/${vaultArt}.webp`}
+                  alt={`The Vultisig vault open on ${subject.name}, showing its balance and token list`}
+                  width={1308}
+                  height={1271}
+                  className="size-full object-cover"
+                />
+              ) : (
+                <ChainLogoPanel chain={subject} className="aspect-[1308/1271] size-full" />
+              )}
             </div>
 
             <ul className="flex flex-1 flex-col gap-[30px]">
-              {family.vaultView.features.map((feature) => (
+              {copy.vaultView.features.map((feature) => (
                 <li
                   key={feature.title}
                   className="flex flex-1 flex-col justify-center gap-3.5 rounded-[20px] bg-v5-page p-5"
@@ -175,6 +200,43 @@ export default function ChainPageBody({
           </div>
         </section>
 
+        {/* At a glance: what only this chain's page can say */}
+        <section
+          className={`${PANEL} flex flex-col gap-10 bg-v5-white md:gap-[50px]`}
+        >
+          <h2 className="text-center text-v5-display-sm font-semibold text-v5-text-inverse md:text-v5-display">
+            {subject.name} on Vultisig at a glance
+          </h2>
+          <dl className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div className="flex flex-col gap-3 rounded-[20px] bg-v5-page p-6">
+              <dt className="text-v5-prose-h3 font-semibold text-v5-text-inverse">
+                Address
+              </dt>
+              <dd className="text-v5-body-l-relaxed font-normal text-v5-text-inverse">
+                {t(copy.facts.address)}
+              </dd>
+            </div>
+            <div className="flex flex-col gap-3 rounded-[20px] bg-v5-page p-6">
+              <dt className="text-v5-prose-h3 font-semibold text-v5-text-inverse">
+                Network fee
+              </dt>
+              <dd className="text-v5-body-l-relaxed font-normal text-v5-text-inverse">
+                {t(copy.facts.fee)}
+              </dd>
+            </div>
+          </dl>
+          <ul className="flex flex-col gap-3">
+            {copy.facts.notes.map((note) => (
+              <li
+                key={note}
+                className="rounded-[20px] bg-v5-page p-6 text-v5-body-l-relaxed font-normal text-v5-text-inverse"
+              >
+                {t(note)}
+              </li>
+            ))}
+          </ul>
+        </section>
+
         {/* Every action, one vault */}
         <section
           className={`${PANEL} flex flex-col gap-10 bg-v5-white md:gap-[50px]`}
@@ -182,9 +244,11 @@ export default function ChainPageBody({
           <h2 className="text-center text-v5-display-sm font-semibold text-v5-text-inverse md:text-v5-display">
             Every action, one vault
           </h2>
-          <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {FAMILY_ACTIONS.map((action, index) => {
-              const Icon = ACTION_ICONS[index]
+          <ul
+            className={`grid grid-cols-1 gap-5 sm:grid-cols-2 ${ACTION_COLUMNS[copy.actions.length]}`}
+          >
+            {copy.actions.map((action) => {
+              const Icon = ACTION_ICONS[action.label]
               return (
                 <li
                   key={action.label}
@@ -211,10 +275,10 @@ export default function ChainPageBody({
         className="bg-transparent px-0 py-10 md:px-0 md:py-[60px]"
         aside={
           <h2 className="text-v5-display-sm font-medium text-v5-text-inverse v5wide:w-[476px] v5wide:shrink-0 v5wide:text-v5-faq-title">
-            {t(family.faq.title)}
+            {t(copy.faq.title)}
           </h2>
         }
-        items={family.faq.items.map((item) => ({
+        items={copy.faq.items.map((item) => ({
           question: t(item.question),
           answer: t(item.answer),
         }))}
@@ -272,5 +336,26 @@ export default function ChainPageBody({
         <FooterBanner />
       </div>
     </>
+  )
+}
+
+/** Stands in for a chain's Figma art until it exists: its own logo, never another chain's. */
+function ChainLogoPanel({
+  chain,
+  className,
+}: {
+  chain: Chain
+  className: string
+}) {
+  return (
+    <div className={`flex items-center justify-center ${className}`}>
+      <Image
+        src={`/v5/chains/chain-${chain.icon}.svg`}
+        alt={`${chain.name} logo`}
+        width={240}
+        height={240}
+        className="size-[160px] md:size-[240px]"
+      />
+    </div>
   )
 }

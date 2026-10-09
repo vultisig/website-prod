@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import {
+  chainCopy,
   chainsInFamily,
   fill,
   getChainInFamily,
@@ -12,7 +13,7 @@ import { OPEN_GRAPH_DEFAULTS, SHARE_IMAGE, SITE_URL } from "@/lib/site"
 import ChainPageBody from "../page-body"
 import { familyJsonLd } from "../seo"
 
-/** Only the 38 real pairs resolve; a chain under the wrong family is a 404. */
+/** Only real family/chain pairs resolve; a chain under the wrong family is a 404. */
 export const dynamicParams = false
 
 export function generateStaticParams() {
@@ -34,7 +35,7 @@ export async function generateMetadata({
 
   const { family, chain } = found
   const url = chainUrl(family.slug, chain.slug)
-  const meta = family.chainMeta ?? family.meta
+  const { meta } = chainCopy(family, chain)
   const title = fill(meta.title, chain)
   const description = fill(meta.description, chain)
 
@@ -59,9 +60,10 @@ export default async function ChainPage({ params }: PageProps) {
 
   const { family, chain } = found
   const url = chainUrl(family.slug, chain.slug)
+  const copy = chainCopy(family, chain)
   const jsonLd = familyJsonLd({
     url,
-    family,
+    faq: copy.faq.items,
     subject: chain,
     trail: [{ name: chain.name, item: url }],
   })
@@ -76,6 +78,7 @@ export default async function ChainPage({ params }: PageProps) {
       <ChainPageBody
         family={family}
         subject={chain}
+        copy={copy}
         headline={chain.name}
         heroArt={`hero-${chain.slug}`}
         vaultArt={`vault-view-${chain.slug}`}

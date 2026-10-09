@@ -1,3 +1,4 @@
+import { CHAIN_DETAILS, type ChainFacts } from "./chain-details"
 import { CHAINS, type Chain, type ChainFamilySlug } from "./chains"
 
 export type Feature = {
@@ -10,7 +11,11 @@ export type Feature = {
   icon: string
 }
 
+/** Family questions a chain can replace or drop by id. */
+export type FaqId = "tokens" | "address" | "stake"
+
 export type FaqEntry = {
+  id?: FaqId
   question: string
   answer: string
 }
@@ -107,7 +112,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         },
         {
           title: "Token support",
-          body: "ERC-20 balances display natively alongside ETH, no separate import step.",
+          body: "ERC-20 balances sit next to {asset} in the same vault, with no separate token wallet.",
           icon: "feature-3",
         },
       ],
@@ -121,9 +126,10 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
             "Yes. Vultisig supports smart contract calls, so you can approve, stake, or interact with supported dApps directly from your vault.",
         },
         {
+          id: "tokens",
           question: "Do ERC-20 tokens show up automatically?",
           answer:
-            "Yes. ERC-20 balances display alongside native ETH in the same vault view, with no separate import or custom token step for supported tokens.",
+            "Yes. On {chain}, Vultisig finds ERC-20 balances automatically and shows them next to native {asset}, with no import step.",
         },
         {
           question: "Does Vultisig control my gas fees?",
@@ -173,7 +179,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       features: [
         {
           title: "Native {chain} addresses",
-          body: "Vultisig derives the format the chain itself uses — Native SegWit on Bitcoin and Litecoin — so every wallet, exchange and explorer treats your address normally.",
+          body: "Vultisig derives the address format {chain} itself uses, so every wallet, exchange and explorer treats your address normally.",
           icon: "feature-1",
         },
         {
@@ -183,7 +189,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
         },
         {
           title: "Fast Vault & Secure Vault",
-          body: "A Fast Vault is 2-of-2 with VultiServer, which co-signs but can never sign alone. A Secure Vault is 2-of-3 across your own devices, for larger holdings.",
+          body: "A Fast Vault is 2-of-2 with VultiServer, which co-signs but can never sign alone. A Secure Vault uses only your own devices, typically 2-of-3, for larger holdings.",
           icon: "feature-3",
         },
       ],
@@ -197,6 +203,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
             "No. Vultisig splits your key across the devices you already own — phone, laptop, tablet. A hardware wallet is optional, not required.",
         },
         {
+          id: "address",
           question: "What address format does Vultisig use for {chain}?",
           answer:
             "Whatever the chain's own standard is — Native SegWit (bech32) on Bitcoin and Litecoin, CashAddr on Bitcoin Cash, a Shelley address on Cardano, and the ordinary base58 format elsewhere. Anyone can send to it from any wallet or exchange, and it appears on every block explorer like any other address.",
@@ -205,7 +212,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
           question:
             "Can I hold {chain} in a Secure Vault instead of a Fast Vault?",
           answer:
-            "Yes. A Fast Vault is 2-of-2: your device plus VultiServer, which co-signs but can never sign alone. A Secure Vault is 2-of-3 across your own devices and suits larger holdings. You pick the type when you create a vault, and {asset} works in both.",
+            "Yes. A Fast Vault is 2-of-2: your device plus VultiServer, which co-signs but can never sign alone. A Secure Vault uses only your own devices, typically 2-of-3, and suits larger holdings. You pick the type when you create a vault, and {asset} works in both.",
         },
         {
           question: "What happens to my {chain} if I lose a device?",
@@ -240,26 +247,26 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     heroArt: "hero-rune",
     hero: {
       title: "Hold {chain} without holding a single key",
-      body: "Hold and send {asset}, stake it, and transfer over IBC. Every transaction requires your device threshold to approve it, not one exposed private key.",
+      body: "Hold and send {asset} from the same vault as every other chain. Every transaction requires your device threshold to approve it, not one exposed private key.",
       cta: "Add {chain} to your Vault",
     },
     vaultView: {
       title: "Your {asset}, in one vault view",
-      body: "Balance, address and history sit beside every other asset you hold, with staking and IBC transfers from the same view.",
+      body: "Balance, address and history sit beside every other asset you hold, each action approved by your device threshold.",
       features: [
         {
-          title: "Native swap routing",
-          body: "Cross-chain swaps in Vultisig settle through THORChain's liquidity, so {asset} trades for BTC or ETH without leaving the vault.",
+          title: "Ordinary bech32 address",
+          body: "Vultisig derives the chain's own bech32 account, so explorers, exchanges and services treat it normally.",
           icon: "feature-1",
         },
         {
-          title: "No bridging step",
-          body: "Swaps are routed natively, so there's no wrapped-asset or bridge-contract risk in the middle.",
+          title: "One vault, every chain",
+          body: "No separate Cosmos wallet and no second seed phrase. {asset} sits next to Bitcoin and Ethereum.",
           icon: "feature-2",
         },
         {
           title: "Hold and send {asset}",
-          body: "Hold, send and stake {asset} directly, each action approved by your device threshold.",
+          body: "Hold and send {asset} directly, each action approved by your device threshold.",
           icon: "feature-3",
         },
       ],
@@ -268,26 +275,18 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
       title: "{chain} on Vultisig, answered",
       items: [
         {
-          question: "Why does Vultisig use THORChain for swaps?",
-          answer:
-            "THORChain enables native cross-chain swaps without wrapping assets or routing through a bridge contract, which removes a common attack surface.",
-        },
-        {
-          question: "Do I need RUNE to swap on Vultisig?",
-          answer:
-            "No. RUNE is the settlement asset THORChain uses under the hood, but you do not have to hold it. You choose the assets on each side and Vultisig handles the route.",
-        },
-        {
+          id: "stake",
           question: "Can I stake {asset} from my vault?",
           answer:
-            "Yes. Staking and delegation run from the vault, and each action is approved by your device threshold rather than a single private key.",
+            "Not today. Vultisig holds and sends {asset}; in-app staking covers THORChain, MayaChain, Terra and Terra Classic.",
         },
         {
           question: "Which Cosmos SDK chains does Vultisig support?",
           answer:
-            "Cosmos Hub, Osmosis, THORChain, MayaChain, Kujira, dYdX, Akash, Noble, Terra, Terra Classic and Sei are all held in the same vault.",
+            "Cosmos Hub, Osmosis, THORChain, MayaChain, dYdX, Akash, Noble, Terra and Terra Classic are all held in the same vault.",
         },
         {
+          id: "address",
           question: "Do I get a standard Cosmos address?",
           answer:
             "Yes. Vultisig derives ordinary bech32 accounts for each chain, so your address works with every Cosmos explorer, IBC transfer and service as normal.",
@@ -302,7 +301,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     chainMeta: {
       title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
       description:
-        "Hold {chain} in a Vultisig MPC vault. Stake, send over IBC and swap cross-chain, each approved by your own devices. No seed phrase, no custodian.",
+        "Hold {chain} in a Vultisig MPC vault. Send {asset} from the same vault as every other chain, each action approved by your own devices. No seed phrase.",
     },
     articleTerms: ["cosmos", "thorchain", "rune", "osmosis", "atom", "ibc"],
   },
@@ -353,6 +352,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
             "Yes. Vultisig implements threshold signing for Ed25519 as well as ECDSA, which is what lets one vault cover chains built on different curves.",
         },
         {
+          id: "address",
           question: "Is my {chain} address a standard address?",
           answer:
             "Yes. The vault derives the chain's normal address format, so anyone can send to it from any wallet or exchange and it appears on explorers like any other.",
@@ -382,7 +382,9 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
  * description on that card, which reads as an unfinished line rather than an
  * intent, so it is described by what the button actually does.
  */
-export const FAMILY_ACTIONS = [
+export type ActionLabel = "Swap" | "Send" | "Buy" | "Function" | "Receive"
+
+export const FAMILY_ACTIONS: { label: ActionLabel; body: string }[] = [
   {
     label: "Swap",
     body: "Trade {asset} for any other supported asset. No bridge, no separate app.",
@@ -397,7 +399,7 @@ export const FAMILY_ACTIONS = [
   },
   {
     label: "Function",
-    body: "Chain-specific actions like staking and deposits, approved by your threshold.",
+    body: "Chain-specific actions, such as staking, bonding or IBC transfers where the chain has them, approved by your threshold."
   },
   {
     label: "Receive",
@@ -438,4 +440,60 @@ export function fill(text: string, chain: Pick<Chain, "name" | "ticker">) {
   return text
     .replaceAll("{chain}", chain.name)
     .replaceAll("{asset}", chain.ticker)
+}
+
+/** The copy one chain page renders: the family template with that chain's facts and corrections applied. */
+export type ChainCopy = {
+  facts: ChainFacts
+  hasArt: boolean
+  hero: ChainFamily["hero"]
+  vaultView: ChainFamily["vaultView"]
+  faq: { title: string; items: FaqEntry[] }
+  actions: typeof FAMILY_ACTIONS
+  meta: { title: string; description: string }
+}
+
+/**
+ * Resolves a chain's page copy. The family's address question is answered with
+ * the chain's own address format, so no page lists every other chain's format.
+ */
+export function chainCopy(family: ChainFamily, chain: Chain): ChainCopy {
+  const details = CHAIN_DETAILS[chain.slug]
+  if (!details) throw new Error(`No CHAIN_DETAILS entry for ${chain.slug}`)
+  const overrides = details.overrides ?? {}
+  const faqOverrides = overrides.faq ?? {}
+  const addressAnswer: FaqEntry = {
+    id: "address",
+    question: "What does a {chain} address look like in Vultisig?",
+    answer: `${details.facts.address} Anyone can send to it from a wallet or exchange that supports {chain}, and it shows on block explorers like any other address.`,
+  }
+
+  const items = family.faq.items.flatMap((item) => {
+    if (item.id === "address") return [addressAnswer]
+    if (item.id && item.id in faqOverrides) {
+      const replacement = faqOverrides[item.id]
+      return replacement ? [replacement] : []
+    }
+    return [item]
+  })
+  const meta = family.chainMeta ?? family.meta
+
+  return {
+    facts: details.facts,
+    hasArt: details.hasArt !== false,
+    hero: { ...family.hero, body: overrides.heroBody ?? family.hero.body },
+    vaultView: {
+      ...family.vaultView,
+      body: overrides.vaultViewBody ?? family.vaultView.body,
+      features: overrides.features ?? family.vaultView.features,
+    },
+    faq: { title: family.faq.title, items: [...items, ...(overrides.extraFaq ?? [])] },
+    actions: FAMILY_ACTIONS.filter(
+      (action) => !overrides.hiddenActions?.includes(action.label),
+    ),
+    meta: {
+      title: meta.title,
+      description: overrides.metaDescription ?? meta.description,
+    },
+  }
 }

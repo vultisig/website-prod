@@ -492,8 +492,8 @@ sdk.on('error', (error) => { /* handle SDK-level errors */ });
 | Category | Chains | Signature |
 |----------|--------|-----------|
 | **UTXO** | Bitcoin, Litecoin, Dogecoin, Bitcoin Cash, Dash, Zcash | ECDSA |
-| **EVM** | Ethereum, BSC, Polygon, Avalanche, Arbitrum, Optimism, Base, Blast, Cronos, zkSync, Hyperliquid, Mantle, Sei | ECDSA |
-| **Cosmos/IBC** | THORChain, MayaChain, Cosmos Hub, Osmosis, Dydx, Kujira, Noble, Terra, Terra Classic, Akash | ECDSA |
+| **EVM** | Ethereum, BSC, Polygon, Avalanche, Arbitrum, Optimism, Base, Blast, Cronos, zkSync, Hyperliquid, Mantle, Sei, Robinhood Chain | ECDSA |
+| **Cosmos/IBC** | THORChain, MayaChain, Cosmos Hub, Osmosis, Dydx, Noble, Terra, Terra Classic, Akash | ECDSA |
 | **Other** | Solana, Sui, Polkadot, TON, Ripple, Tron, Cardano | EdDSA / Mixed |
 
 ## Security model

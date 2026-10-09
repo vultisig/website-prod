@@ -38,7 +38,8 @@
       "zkSync",
       "Hyperliquid",
       "Mantle",
-      "Sei"
+      "Sei",
+      "Robinhood Chain"
     ],
     "cosmos": [
       "THORChain",
@@ -46,7 +47,6 @@
       "Cosmos",
       "Osmosis",
       "dYdX",
-      "Kujira",
       "Noble",
       "Terra",
       "Terra Classic",

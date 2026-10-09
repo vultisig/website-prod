@@ -98,6 +98,17 @@ const nextConfig = {
         permanent: true,
       },
       {
+        // Kujira was removed from every Vultisig app (its RPC endpoints are dead).
+        source: '/chains/cosmos/kuji',
+        destination: '/chains',
+        permanent: true,
+      },
+      {
+        source: '/chains/l1/qbtc',
+        destination: '/chains',
+        permanent: true,
+      },
+      {
         source: '/technical-overview',
         destination: '/how-it-works',
         permanent: true,
