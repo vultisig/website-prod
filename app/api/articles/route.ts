@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse, after } from 'next/server'
 import type { Article } from '@/lib/articles'
 import { createArticle, updateArticle, deleteArticle, getAllArticles } from '@/lib/articles'
 import { canAdminWriteArticles, canWriteArticles } from '@/lib/auth'
+import { articleUrl, notifyIndexNow } from '@/lib/indexnow'
 
 const json = (data: any, status = 200) => NextResponse.json(data, { status })
 const error = (message: string, status = 500) => json({ message }, status)
@@ -68,6 +69,7 @@ export async function POST(req: NextRequest) {
   try {
     const { article, slug } = await parseArticlePayload(req, 'draft')
     await createArticle(article, slug)
+    if (article.status === 'published') after(() => notifyIndexNow([articleUrl(slug)]))
 
     return json({ message: 'Article created', slug }, 201)
   } catch (err) {
@@ -83,6 +85,11 @@ export async function PUT(req: NextRequest) {
   try {
     const { article, slug, oldSlug } = await parseArticlePayload(req, 'published')
     await updateArticle(article, slug, oldSlug)
+    const changed = [
+      ...(article.status === 'published' ? [slug] : []),
+      ...(oldSlug && oldSlug !== slug ? [oldSlug] : []),
+    ]
+    after(() => notifyIndexNow(changed.map(articleUrl)))
 
     return json({ message: 'Article updated', slug })
   } catch (err) {
@@ -99,6 +106,7 @@ export async function DELETE(req: NextRequest) {
   if (!slug) return error('Slug is required', 400)
 
   const deleted = await deleteArticle(slug)
+  if (deleted) after(() => notifyIndexNow([articleUrl(slug)]))
   return deleted
     ? json({ message: 'Article deleted' })
     : error('Article not found', 404)
