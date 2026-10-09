@@ -93,6 +93,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/index.html',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/technical-overview',
         destination: '/how-it-works',
         permanent: true,

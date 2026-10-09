@@ -9,7 +9,7 @@ import { PRIVACY_POLICY } from "./privacy-policy"
 const PRIVACY_URL = `${SITE_URL}/privacy`
 const PRIVACY_TITLE = "Privacy Policy - Vultisig MPC Wallet"
 const PRIVACY_DESCRIPTION =
-  "Vultisig privacy policy. Learn how the MPC wallet protects your data and maintains self-custody security."
+  "Vultisig privacy policy: what data the Vultisig MPC wallet apps, browser extension and related services collect, how it is used, and your rights over it."
 
 export const metadata: Metadata = {
   title: PRIVACY_TITLE,

@@ -151,7 +151,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     chainMeta: {
       title: "{chain} Wallet — Hold {asset} and ERC-20s Without a Seed Phrase",
       description:
-        "Hold {chain} in a Vultisig MPC vault. Send {asset}, swap tokens and call smart contracts, each approved by your device threshold — no seed phrase, no single private key.",
+        "Hold {chain} in a Vultisig MPC vault. Send {asset}, swap tokens and use dApps, each approved by your own devices. No seed phrase, no single private key.",
     },
     articleTerms: ["ethereum", "evm", "erc-20", "arbitrum", "base", "layer 2"],
   },
@@ -227,7 +227,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     chainMeta: {
       title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
       description:
-        "Hold {chain} in a Vultisig MPC vault. Standard {chain} addresses, ordinary on-chain transactions and no seed phrase — your key is split across devices you already own.",
+        "Hold {chain} in a Vultisig MPC vault. Standard {asset} addresses, ordinary transactions, no seed phrase. Your key is split across devices you already own.",
     },
     articleTerms: ["bitcoin", "btc", "utxo", "segwit", "litecoin"],
   },
@@ -302,7 +302,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     chainMeta: {
       title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
       description:
-        "Hold {chain} in a Vultisig MPC vault. Stake, transfer over IBC and settle native cross-chain swaps, each approved by your device threshold — no seed phrase, no custodian.",
+        "Hold {chain} in a Vultisig MPC vault. Stake, send over IBC and swap cross-chain, each approved by your own devices. No seed phrase, no custodian.",
     },
     articleTerms: ["cosmos", "thorchain", "rune", "osmosis", "atom", "ibc"],
   },
@@ -367,7 +367,7 @@ export const CHAIN_FAMILIES: ChainFamily[] = [
     meta: {
       title: "{chain} Wallet — Hold {asset} Without a Seed Phrase",
       description:
-        "Hold {chain} in an MPC vault alongside every other chain Vultisig supports. Your key is split across devices you already own, and it takes your threshold to move {asset}.",
+        "Hold {chain} in a Vultisig MPC vault alongside every other chain we support. Your key is split across your own devices; only your threshold moves {asset}.",
     },
     articleTerms: ["solana", "sui", "ton", "tron", "xrp", "polkadot"],
   },

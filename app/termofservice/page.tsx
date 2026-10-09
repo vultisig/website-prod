@@ -9,7 +9,7 @@ import { TERMS_OF_SERVICE } from "./terms-of-service"
 const TERMS_URL = `${SITE_URL}/termofservice`
 const TERMS_TITLE = "Terms of Service - Vultisig MPC Wallet"
 const TERMS_DESCRIPTION =
-  "Vultisig terms of service and user agreement for the MPC wallet application."
+  "Vultisig terms of service: the agreement that governs your use of the Vultisig website and the Vultisig MPC wallet app."
 
 export const metadata: Metadata = {
   title: TERMS_TITLE,
