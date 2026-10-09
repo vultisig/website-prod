@@ -30,6 +30,7 @@ const ACTION_ICONS: Record<ActionLabel, typeof SwapIcon> = {
 
 /** Tailwind needs whole class names, so the column count maps to literals. */
 const ACTION_COLUMNS: Record<number, string> = {
+  2: "lg:grid-cols-2",
   3: "lg:grid-cols-3",
   4: "lg:grid-cols-4",
   5: "lg:grid-cols-5",

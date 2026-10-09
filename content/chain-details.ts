@@ -39,7 +39,7 @@ const AUTO_ERC20_NOTE = "ERC-20 tokens are found automatically, with no import s
 const NO_AUTO_ERC20_FAQ: FaqEntry = {
   question: "Do ERC-20 tokens show up automatically?",
   answer:
-    "Not on {chain}. Automatic ERC-20 discovery runs on Ethereum, Base, Arbitrum, Polygon, Optimism, BNB Chain and Avalanche. On {chain}, native {asset} shows automatically, and token support depends on each app's token list.",
+    "Not on {chain}. Automatic ERC-20 discovery runs on Ethereum, Base, Arbitrum, Polygon, Optimism, BNB Chain, Avalanche and Robinhood Chain. On {chain}, native {asset} shows automatically, and token support depends on each app's token list.",
 }
 
 const NO_STAKING_FAQ: FaqEntry = {
@@ -122,7 +122,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in ETH, not BLAST.",
       notes: ["Blast tokens such as USDB can be added by their contract address."],
     },
-    overrides: { faq: { tokens: NO_AUTO_ERC20_FAQ } },
+    overrides: { hiddenActions: ["Buy", "Function"], faq: { tokens: NO_AUTO_ERC20_FAQ } },
   },
   cro: {
     facts: {
@@ -130,7 +130,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in CRO.",
       notes: ["CRO swaps route through LI.FI."],
     },
-    overrides: { faq: { tokens: NO_AUTO_ERC20_FAQ } },
+    overrides: { hiddenActions: ["Function"], faq: { tokens: NO_AUTO_ERC20_FAQ } },
   },
   eth: {
     facts: {
@@ -148,7 +148,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in HYPE.",
       notes: ["HyperEVM swaps route through LI.FI."],
     },
-    overrides: { faq: { tokens: NO_AUTO_ERC20_FAQ } },
+    overrides: { hiddenActions: ["Buy", "Function"], faq: { tokens: NO_AUTO_ERC20_FAQ } },
   },
   mantle: {
     facts: {
@@ -156,7 +156,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in MNT, Mantle's own gas token, not ETH.",
       notes: ["Mantle is an OP Stack chain, so transactions also carry a small L1 data fee."],
     },
-    overrides: { faq: { tokens: NO_AUTO_ERC20_FAQ } },
+    overrides: { hiddenActions: ["Function"], faq: { tokens: NO_AUTO_ERC20_FAQ } },
   },
   op: {
     facts: {
@@ -164,6 +164,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in ETH, plus the small L1 data fee every OP Stack chain charges.",
       notes: [AUTO_ERC20_NOTE],
     },
+    overrides: { hiddenActions: ["Function"] },
   },
   pol: {
     facts: {
@@ -171,14 +172,15 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in POL.",
       notes: [AUTO_ERC20_NOTE],
     },
+    overrides: { hiddenActions: ["Function"] },
   },
   robinhood: {
     facts: {
       address: "A 0x address on Robinhood Chain (chain ID 4663), the same one your vault uses on every EVM chain.",
       fee: "Paid in ETH.",
-      notes: ["Robinhood Chain swaps route through 1inch and KyberSwap."],
+      notes: [AUTO_ERC20_NOTE, "Robinhood Chain swaps route through 1inch and KyberSwap."],
     },
-    overrides: { faq: { tokens: NO_AUTO_ERC20_FAQ } },
+    overrides: { hiddenActions: ["Buy", "Function"] },
     hasArt: false,
   },
   sei: {
@@ -193,7 +195,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       metaDescription:
         "Hold Sei in a Vultisig MPC vault. Send SEI and use dApps on Sei's EVM, each approved by your own devices. No seed phrase, no single private key.",
       faq: { tokens: NO_AUTO_ERC20_FAQ },
-      hiddenActions: NO_SWAP_OR_FUNCTION,
+      hiddenActions: ["Swap", "Buy", "Function"],
     },
   },
   zksync: {
@@ -202,7 +204,16 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in ETH.",
       notes: ["zkSync swaps route through 1inch and LI.FI."],
     },
-    overrides: { faq: { tokens: NO_AUTO_ERC20_FAQ } },
+    overrides: {
+      faq: {
+        tokens: {
+          question: "Do ERC-20 tokens show up automatically?",
+          answer:
+            "Not in every app. The desktop app and browser extension find zkSync ERC-20 balances automatically; in the mobile apps, native ETH shows automatically and token support depends on each app's token list.",
+        },
+      },
+      hiddenActions: ["Function"],
+    },
   },
 
   // UTXO
@@ -255,6 +266,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in ZEC, under Zcash's ZIP-317 fee rules.",
       notes: ["ZEC swaps route natively through THORChain and MayaChain."],
     },
+    overrides: { hiddenActions: ["Buy"] },
   },
 
   // Cosmos
@@ -264,7 +276,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in AKT.",
       notes: ["On-chain, AKT is held in the uakt denomination: 1 AKT is 1,000,000 uakt."],
     },
-    overrides: { faq: { stake: NO_STAKING_FAQ }, hiddenActions: NO_SWAP_OR_FUNCTION },
+    overrides: { faq: { stake: NO_STAKING_FAQ }, hiddenActions: ["Swap", "Buy", "Function"] },
   },
   atom: {
     facts: {
@@ -293,6 +305,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       ],
     },
     overrides: {
+      hiddenActions: ["Buy"],
       heroBody:
         "Hold and send CACAO, swap it natively through MayaChain, and stake it in the CACAO pool. Every transaction requires your device threshold to approve it, not one exposed private key.",
       faq: {
@@ -318,7 +331,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in USDC. Noble has no separate gas token.",
       notes: ["Noble's native asset is USDC."],
     },
-    overrides: { faq: { stake: NO_STAKING_FAQ }, hiddenActions: NO_SWAP_OR_FUNCTION },
+    overrides: { faq: { stake: NO_STAKING_FAQ }, hiddenActions: ["Swap", "Buy", "Function"] },
   },
   osmo: {
     facts: {
@@ -330,7 +343,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       heroBody:
         "Hold and send OSMO, and move it between Osmosis and Cosmos Hub over IBC. Every transaction requires your device threshold to approve it, not one exposed private key.",
       faq: { stake: NO_STAKING_FAQ },
-      hiddenActions: ["Swap"],
+      hiddenActions: ["Swap", "Buy"],
     },
   },
   rune: {
@@ -372,7 +385,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
             "Yes. Delegate, undelegate, redelegate and claim rewards from the vault, each action approved by your device threshold.",
         },
       },
-      hiddenActions: ["Swap"],
+      hiddenActions: ["Swap", "Buy"],
     },
   },
   lunc: {
@@ -391,7 +404,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
             "Yes. Delegate, undelegate, redelegate and claim rewards from the vault, each action approved by your device threshold.",
         },
       },
-      hiddenActions: ["Swap"],
+      hiddenActions: ["Swap", "Buy"],
     },
   },
 
@@ -402,7 +415,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       fee: "Paid in TAO.",
       notes: ["Bittensor accounts keep a small existential deposit, so a balance can't be sent down to exactly zero."],
     },
-    overrides: { hiddenActions: NO_SWAP_OR_FUNCTION },
+    overrides: { hiddenActions: ["Swap", "Buy", "Function"] },
   },
   dot: {
     facts: {

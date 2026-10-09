@@ -399,7 +399,7 @@ export const FAMILY_ACTIONS: { label: ActionLabel; body: string }[] = [
   },
   {
     label: "Function",
-    body: "Chain-specific actions, such as staking, bonding or IBC transfers where the chain has them, approved by your threshold."
+    body: "Chain-specific actions, such as staking, bonding or IBC transfers where the chain has them, approved by your threshold.",
   },
   {
     label: "Receive",
