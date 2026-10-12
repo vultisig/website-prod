@@ -19,7 +19,7 @@ export type ProductFaqItem = {
   text: string
 }
 
-/** Shared product FAQ — homepage, support, and $VULT. */
+/** Shared product FAQ: homepage and support. */
 export const productFaqItems: ProductFaqItem[] = [
   {
     id: "what",

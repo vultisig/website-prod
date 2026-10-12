@@ -121,7 +121,7 @@ export default function FaqSection({
               <AccordionPrimitive.Content forceMount className="group/answer">
                 <div className={PANEL_OPEN}>
                   <div className="overflow-hidden">
-                    <div className="pt-5 text-v5-body-m font-normal text-v5-text-inverse [&_ul]:ml-6 [&_ul]:list-disc">
+                    <div className="break-words pt-5 text-v5-body-m font-normal text-v5-text-inverse [&_ul]:ml-6 [&_ul]:list-disc">
                       {item.answer}
                     </div>
                   </div>
