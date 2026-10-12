@@ -16,8 +16,8 @@ export default function Hero() {
               The <span className="text-v5-vult">$VULT</span> Token
             </h1>
             <p className="text-v5-label font-normal text-v5-text-primary md:w-[499px] md:text-v5-subtitle">
-              Hold between 1,500 to 1 Million $VULT and reduce your trading fees
-              between 20 - 100%!
+              Hold 1,500 to 1,000,000 $VULT to cut Vultisig&apos;s swap fee by 10
+              to 100%.
             </p>
             <LandingButton
               asChild

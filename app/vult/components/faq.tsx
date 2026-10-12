@@ -1,15 +1,36 @@
-import {
-  faqPageJsonLd,
-  productFaqItems,
-  type ProductFaqId,
-} from "@/content/product-faq"
+import { faqPageJsonLd } from "@/content/product-faq"
 import FaqSection from "@/components/ui/faq-section"
 
-const VULT_FAQ_IDS: ProductFaqId[] = ["what", "whyMpc", "lostDevice"]
+import { VULT_CONTRACT_ADDRESS, VULT_MAX_SUPPLY } from "../token"
 
-const FAQ_ITEMS = productFaqItems.filter((item) =>
-  VULT_FAQ_IDS.includes(item.id),
-)
+const MAX_SUPPLY_LABEL = VULT_MAX_SUPPLY.toLocaleString("en-US")
+
+const FAQ_ITEMS: { question: string; text: string }[] = [
+  {
+    question: "What is VULT?",
+    text: "VULT is the token of Vultisig, the self-custodial MPC wallet. It is an ERC-20 token on Ethereum. Holding it lowers the fee you pay on swaps inside Vultisig.",
+  },
+  {
+    question: "What does holding VULT do?",
+    text: "Vultisig reads the VULT balance on your vault's Ethereum address and applies a discount tier to your swaps. Tiers run from Bronze at 1,500 VULT to Ultimate at 1,000,000 VULT, where Vultisig's own swap fee drops to zero. Network and provider fees still apply.",
+  },
+  {
+    question: "Where can I buy VULT?",
+    text: "VULT trades on Uniswap on Ethereum. The Buy $VULT button on this page opens VULT on Uniswap. Always check the contract address before you trade.",
+  },
+  {
+    question: "What is the VULT contract address?",
+    text: `The VULT contract on Ethereum is ${VULT_CONTRACT_ADDRESS}.`,
+  },
+  {
+    question: "What is the maximum supply of VULT?",
+    text: `VULT has a maximum supply of ${MAX_SUPPLY_LABEL} tokens.`,
+  },
+  {
+    question: "Where can I see the VULT price?",
+    text: "This page shows the live VULT price, max supply and contract address at the top. CoinGecko and CoinMarketCap also list VULT under the name Vultisig.",
+  },
+]
 
 export default function VultFaq() {
   return (
