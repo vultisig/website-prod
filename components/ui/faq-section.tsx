@@ -13,6 +13,18 @@ export type FaqItem = {
 }
 
 /**
+ * Replaces the default lucide marks for pages whose frame draws its own pair.
+ * Each mark is a rendered 20px icon inked from `currentColor`, not a component,
+ * so a server page can hand them across the client boundary. `className` sets
+ * the ink, which otherwise follows the question text.
+ */
+export type FaqMarks = {
+  plus: ReactNode
+  minus: ReactNode
+  className?: string
+}
+
+/**
  * The answer opens and closes on a row track rather than a height.
  *
  * `forceMount` keeps every answer in the server HTML, which is what makes them
@@ -58,6 +70,8 @@ type FaqSectionProps = {
    * FAQ on a coloured card rather than the page surface.
    */
   panelClassName?: string
+  /** Defaults to lucide's Plus and Minus in the question's ink. */
+  marks?: FaqMarks
 }
 
 export default function FaqSection({
@@ -67,7 +81,11 @@ export default function FaqSection({
   aside,
   className,
   panelClassName,
+  marks,
 }: FaqSectionProps) {
+  const plusMark = marks?.plus ?? <Plus className="size-5" />
+  const minusMark = marks?.minus ?? <Minus className="size-5" />
+
   return (
     <section className={cn("bg-v5-page px-4 py-16 md:px-[30px]", className)}>
       <div
@@ -106,14 +124,28 @@ export default function FaqSection({
                   <span className="text-v5-title2 font-medium">
                     {item.question}
                   </span>
-                  {/* Stacked so the two marks cross over each other in place. */}
-                  <span aria-hidden className="relative mt-0.5 size-5 shrink-0">
-                    <Plus
-                      className={`absolute inset-0 size-5 ${MARK} group-data-[state=open]:rotate-90 group-data-[state=open]:opacity-0`}
-                    />
-                    <Minus
-                      className={`absolute inset-0 size-5 -rotate-90 opacity-0 ${MARK} group-data-[state=open]:rotate-0 group-data-[state=open]:opacity-100`}
-                    />
+                  {/*
+                    Stacked so the two marks cross over each other in place. The
+                    motion rides on a wrapper so a page-supplied mark gets it
+                    without having to take a className.
+                  */}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "relative mt-0.5 size-5 shrink-0",
+                      marks?.className,
+                    )}
+                  >
+                    <span
+                      className={`absolute inset-0 flex ${MARK} group-data-[state=open]:rotate-90 group-data-[state=open]:opacity-0`}
+                    >
+                      {plusMark}
+                    </span>
+                    <span
+                      className={`absolute inset-0 flex -rotate-90 opacity-0 ${MARK} group-data-[state=open]:rotate-0 group-data-[state=open]:opacity-100`}
+                    >
+                      {minusMark}
+                    </span>
                   </span>
                 </AccordionPrimitive.Trigger>
               </AccordionPrimitive.Header>

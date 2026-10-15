@@ -101,6 +101,9 @@ export const v5FontSize = {
     "48px",
     { lineHeight: "1.35", letterSpacing: "-1.056px" },
   ],
+  // Fast Vault — numbered setup-step titles, and the JetBrains Mono index beside them
+  "v5-step-title": ["24px", { lineHeight: "1.2", letterSpacing: "-0.456px" }],
+  "v5-step-index": ["24px", { lineHeight: "1.32", letterSpacing: "-0.528px" }],
   // Articles — h3 inside article prose
   "v5-prose-h3": ["24px", { lineHeight: "1.35", letterSpacing: "-0.528px" }],
   // Landing bento — iOS notification mock inside the "Secure notifications" card
