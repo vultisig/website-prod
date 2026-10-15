@@ -67,7 +67,7 @@ const VAULTS: Vault[] = [
       "This is a fast, one-device setup perfect for storing and using smaller amounts every day.",
       "It requires only one user device, and our Vultiserver co-signs your transactions instantly - giving you speed and simplicity without compromising usability.",
     ],
-    href: "https://docs.vultisig.com/vultisig-vault-user-actions/creating-a-vault#fast-vaults",
+    href: "/fast-vault",
     // Poster rendered from the scene's own settled frame, so the handover from
     // still to canvas has nothing to pop between. The original still art is
     // kept at /v5/setup-fast-vault.webp.
@@ -296,10 +296,15 @@ export default function SetupSection() {
             <div className="flex items-stretch">
               <div className={cn("bg-[var(--setup-surface)]", SURFACE_MOTION)}>
                 <div className="rounded-tr-3xl bg-v5-deep p-4 md:p-[25px]">
+                  {/* Fast Vault has its own page; Secure Vault still goes to the docs. */}
                   <LearnMoreButton
                     href={vault.href}
-                    external
-                    ariaLabel={`Learn more about the ${vault.tab} in the docs`}
+                    external={vault.href.startsWith("http")}
+                    ariaLabel={
+                      vault.href.startsWith("http")
+                        ? `Learn more about the ${vault.tab} in the docs`
+                        : `Learn more about the ${vault.tab}`
+                    }
                     className="h-[50px] w-[190px]"
                   />
                 </div>
