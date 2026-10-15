@@ -122,6 +122,9 @@ const config: Config = {
           accent2: "#538bff", // stats / promo panel blue
           deep: "#063ed4", // "setup for your needs" panel
           sky: "#4d80ff", // MPC hero + "How Vultisig Works" panels
+          // Fast Vault hero panel. The hero art's edges fade into this exact
+          // blue, so a near-miss token seams where the image meets the card.
+          "fast-vault": "#235ae7",
           // Agent hero cards. These match the flat backdrop baked into each
           // hero render exactly — a near-miss token seams visibly where the
           // image meets the card.
