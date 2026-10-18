@@ -11,7 +11,7 @@ const hashes = [
   },
   {
     os: "linux",
-    hash: "sha256:66a2a18b732f9108ec14544e5df470c14d3599cfbed30860cab1e1fe0383c882",
+    hash: "sha256:84aae992c5eda94db91288daec6e1fc8474eed3f68ed9fd549eb456eaaa5fb8a",
   },
   {
     os: "android",
@@ -19,7 +19,7 @@ const hashes = [
   },
   {
     os: "windows",
-    hash: "sha256:46c06c0cead87deee71d6298d4250dfb53752633a6298d74a5509ac15744cde4",
+    hash: "sha256:e29868169617d23d52ac6ba4a8950569095f1f86fdb04c26de82606f9b96fa5c",
   },
 ]
 
