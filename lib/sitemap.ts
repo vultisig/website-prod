@@ -17,6 +17,7 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/downloads", changefreq: "monthly", priority: 0.9 },
   { path: "/mpc", changefreq: "monthly", priority: 0.8 },
   { path: "/how-it-works", changefreq: "monthly", priority: 0.8 },
+  { path: "/fast-vault", changefreq: "monthly", priority: 0.8 },
   { path: "/chains", changefreq: "monthly", priority: 0.8 },
   { path: "/vult", changefreq: "weekly", priority: 0.8 },
   { path: "/agent/for-agents", changefreq: "monthly", priority: 0.8 },
