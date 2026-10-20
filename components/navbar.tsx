@@ -134,7 +134,13 @@ const NAV_ENTRIES: NavEntry[] = [
       { label: "Vultisig Extension", href: "/downloads?tab=browser" },
     ],
   },
-  { label: "How It Works", href: "/how-it-works" },
+  {
+    label: "How It Works",
+    children: [
+      { label: "Overview", href: "/how-it-works" },
+      { label: "Fast Vaults", href: "/fast-vault" },
+    ],
+  },
   { label: "MPC Wallet", href: "/mpc" },
   {
     label: "Agent",
