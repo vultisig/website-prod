@@ -84,10 +84,39 @@ test("derives the live FAQ answers and the numbered how-to", () => {
 
 test("a fenced FAQ heading does not add a fifth question", () => {
   const ld = contentJsonLd(ARTICLE)
-  const questions = ld.faq?.mainEntity as { name: string }[]
+  const questions = ld.faq?.mainEntity as {
+    name: string
+    acceptedAnswer: { text: string }
+  }[]
   assert.equal(
     questions.some((item) => item.name === "This heading is inside a fence"),
     false,
+  )
+  assert.equal(
+    questions[3]?.acceptedAnswer.text,
+    "An attacker who takes only VultiServer still lacks the device share. ## FAQ ### This heading is inside a fence",
+  )
+})
+
+test("a fenced how-to heading is not the procedure", () => {
+  const ld = contentJsonLd(`
+\`\`\`
+## How to ignore this fence
+
+1. Not a step.
+2. Also not.
+\`\`\`
+
+## How to install
+
+1. Download it.
+2. Open it.
+`)
+  const steps = ld.howto?.step as { text: string }[]
+  assert.equal(ld.howto?.name, "How to install")
+  assert.deepEqual(
+    steps.map((step) => step.text),
+    ["Download it.", "Open it."],
   )
 })
 
@@ -110,6 +139,83 @@ Yes.
 
 test("empty markdown emits nothing", () => {
   assert.deepEqual(contentJsonLd(""), {})
+})
+
+test("schema text is the rendered text", () => {
+  const ld = contentJsonLd(`
+## How to skim this
+
+No numbered steps here.
+
+## How to use \`npm\`
+
+1. Wait! The vault is not ready. Try again tomorrow.
+2. Fully. Code at [github.com/vultisig](https://github.com/vultisig).
+
+## FAQ
+
+### What is **MPC**?
+
+> Not with Vultisig.
+
+![vault shares](/images/vault.png)
+
+The shares stay split. The *share* stays.
+
+### Only the second question?
+
+Yes.
+`)
+  const questions = ld.faq?.mainEntity as {
+    name: string
+    acceptedAnswer: { text: string }
+  }[]
+  const steps = ld.howto?.step as { name: string; text: string }[]
+
+  assert.equal(ld.howto?.name, "How to use npm")
+  assert.equal(steps.length, 2)
+  assert.equal(steps[0]?.name, "Wait!")
+  assert.equal(
+    steps[0]?.text,
+    "Wait! The vault is not ready. Try again tomorrow.",
+  )
+  assert.equal(steps[1]?.text, "Fully. Code at github.com/vultisig.")
+  assert.equal(questions[0]?.name, "What is MPC?")
+  assert.equal(
+    questions[0]?.acceptedAnswer.text,
+    "Not with Vultisig. The shares stay split. The share stays.",
+  )
+})
+
+test("a tiptap hard break stays inside the step", () => {
+  const ld = contentJsonLd(`
+## How to pay
+
+1. Pay from the device\\
+share only.
+2. Stop.
+`)
+  const steps = ld.howto?.step as { text: string }[]
+  assert.equal(steps[0]?.text, "Pay from the device share only.")
+  assert.equal(steps[1]?.text, "Stop.")
+  assert.equal(steps.length, 2)
+})
+
+test("a lazy list wrap stays one step and a later paragraph does not", () => {
+  const ld = contentJsonLd(`
+## How to install
+
+1. Download the app
+from the store today.
+
+2. Open it.
+
+  from the store today.
+`)
+  const steps = ld.howto?.step as { text: string }[]
+  assert.equal(steps[0]?.text, "Download the app from the store today.")
+  assert.equal(steps[1]?.text, "Open it.")
+  assert.equal(steps.length, 2)
 })
 
 test("jsonLdHtml cannot close the script tag", () => {

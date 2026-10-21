@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown"
 import remarkBreaks from "remark-breaks"
 
 import { articleAutoLinks, getInternalHref } from "@/lib/article-auto-links"
+import { withSpacingMarkers } from "@/lib/article-markdown"
 import { slugifyHeading } from "@/lib/article-toc"
 
 interface MarkdownRendererProps {
@@ -21,14 +22,6 @@ function toText(children: ReactNode): string {
     return toText(props?.children)
   }
   return ""
-}
-
-/** Blank lines become spacer paragraphs so tiptap-authored prose keeps its rhythm. */
-function withSpacingMarkers(content: string): string {
-  return content
-    .split("\n")
-    .map((line) => (line.trim() === "" ? "\n\n&nbsp;\n\n" : line))
-    .join("\n")
 }
 
 export default function MarkdownRenderer({
