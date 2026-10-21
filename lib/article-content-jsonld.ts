@@ -153,12 +153,19 @@ function orderedSteps(source: string): string[] {
 function collectSteps(node: MdNode, steps: string[]) {
   if (node.type === "list" && node.ordered === true) {
     for (const item of node.children ?? []) {
-      add(steps, inlineText(item))
+      add(steps, listItemText(item))
       for (const child of item.children ?? []) collectSteps(child, steps)
     }
     return
   }
   for (const child of node.children ?? []) collectSteps(child, steps)
+}
+
+function listItemText(item: MdNode): string {
+  return (item.children ?? [])
+    .filter((child) => child.type !== "list")
+    .map((child) => inlineText(child))
+    .join("")
 }
 
 function visibleText(source: string): string {

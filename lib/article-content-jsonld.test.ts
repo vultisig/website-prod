@@ -218,6 +218,22 @@ from the store today.
   assert.equal(steps.length, 2)
 })
 
+test("nested ordered items do not repeat in their parent step", () => {
+  const ld = contentJsonLd(`
+## How to configure
+
+1. Open settings.
+   1. Select Wallet.
+   2. Select Backup.
+2. Save.
+`)
+  const steps = ld.howto?.step as { text: string }[]
+  assert.deepEqual(
+    steps.map((step) => step.text),
+    ["Open settings.", "Select Wallet.", "Select Backup.", "Save."],
+  )
+})
+
 test("jsonLdHtml cannot close the script tag", () => {
   const html = jsonLdHtml({ text: "</script><script>alert(1)" })
   assert.equal(html.includes("</script>"), false)
