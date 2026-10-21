@@ -8,6 +8,11 @@ import MarkdownRenderer from "@/components/markdown-renderer"
 import RelatedArticles from "@/components/related-articles"
 import { pickRelatedArticles } from "@/lib/article-categories"
 import { formatArticleDate } from "@/lib/article-format"
+import {
+  contentJsonLd,
+  jsonLdHtml,
+  type JsonLdObject,
+} from "@/lib/article-content-jsonld"
 import { extractHeadings } from "@/lib/article-toc"
 import {
   getArticleBySlug,
@@ -74,6 +79,15 @@ export async function generateMetadata({
       tags: article.tags,
     },
   }
+}
+
+function ContentJsonLd({ data }: { data: JsonLdObject }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(data) }}
+    />
+  )
 }
 
 function ArticleJsonLd({
@@ -160,6 +174,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   if (!article) notFound()
 
   const headings = extractHeadings(article.content)
+  const contentLd = contentJsonLd(article.content)
   const related = pickRelatedArticles(
     await getCachedArticleSummaries(),
     article,
@@ -175,6 +190,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <>
       <ArticleJsonLd article={article} slug={slug} />
       <BreadcrumbJsonLd article={article} slug={slug} />
+      {contentLd.faq && <ContentJsonLd data={contentLd.faq} />}
+      {contentLd.howto && <ContentJsonLd data={contentLd.howto} />}
 
       <main className="min-h-screen bg-v5-page px-4 pb-[112px] pt-[110px] md:px-[30px] md:pb-[30px] md:pt-[134px]">
         <div className="mx-auto max-w-v5-content">
