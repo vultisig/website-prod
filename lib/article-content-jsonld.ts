@@ -1,7 +1,6 @@
-import { Children, createElement, isValidElement, type ReactNode } from "react"
-import { renderToStaticMarkup } from "react-dom/server"
-import ReactMarkdown from "react-markdown"
+import remarkParse from "remark-parse"
 import remarkBreaks from "remark-breaks"
+import { unified } from "unified"
 
 import { withSpacingMarkers } from "./article-markdown"
 
@@ -12,10 +11,19 @@ type Section = {
   body: string[]
 }
 
+type MdNode = {
+  type: string
+  value?: string
+  ordered?: boolean
+  children?: MdNode[]
+}
+
 const MIN_BLOCK_ITEMS = 2
 const FENCE = /^\s{0,3}(```|~~~)/
 const H2 = /^##\s+(.+?)\s*#*\s*$/
 const H3 = /^###\s+(.+?)\s*#*\s*$/
+
+const markdown = unified().use(remarkParse).use(remarkBreaks)
 
 /** JSON-LD for a script tag. Escapes `<` so answer text cannot close the tag. */
 export function jsonLdHtml(data: JsonLdObject): string {
@@ -136,84 +144,69 @@ function firstSentence(text: string): string {
   return match?.[0] ?? text
 }
 
-function orderedSteps(markdown: string): string[] {
+function orderedSteps(source: string): string[] {
   const steps: string[] = []
-  renderMarkdown(markdown, {
-    ol: ({ children }) => {
-      addItems(steps, children)
-      return null
-    },
-  })
+  collectSteps(parseMarkdown(source), steps)
   return steps
 }
 
-function visibleText(markdown: string): string {
+function collectSteps(node: MdNode, steps: string[]) {
+  if (node.type === "list" && node.ordered === true) {
+    for (const item of node.children ?? []) {
+      add(steps, inlineText(item))
+      for (const child of item.children ?? []) collectSteps(child, steps)
+    }
+    return
+  }
+  for (const child of node.children ?? []) collectSteps(child, steps)
+}
+
+function visibleText(source: string): string {
   const blocks: string[] = []
-  renderMarkdown(markdown, {
-    p: ({ children }) => {
-      add(blocks, nodeText(children))
-      return null
-    },
-    ol: ({ children }) => {
-      addItems(blocks, children)
-      return null
-    },
-    ul: ({ children }) => {
-      addItems(blocks, children)
-      return null
-    },
-    blockquote: ({ children }) => {
-      add(blocks, nodeText(children))
-      return null
-    },
-    pre: ({ children }) => {
-      add(blocks, nodeText(children))
-      return null
-    },
-    h1: recordHeading(blocks),
-    h2: recordHeading(blocks),
-    h3: recordHeading(blocks),
-    h4: recordHeading(blocks),
-  })
+  collectBlocks(parseMarkdown(source), blocks)
   return blocks.join(" ")
 }
 
-function recordHeading(
-  blocks: string[],
-): (props: { children?: ReactNode }) => null {
-  return ({ children }) => {
-    add(blocks, nodeText(children))
-    return null
+function collectBlocks(node: MdNode, out: string[]) {
+  if (node.type === "list") {
+    for (const item of node.children ?? []) add(out, inlineText(item))
+    return
   }
+  if (node.type === "blockquote") {
+    const inner: string[] = []
+    for (const child of node.children ?? []) collectBlocks(child, inner)
+    add(out, inner.join(" "))
+    return
+  }
+  if (node.type === "code") {
+    add(out, node.value ?? "")
+    return
+  }
+  if (node.type === "paragraph" || node.type === "heading") {
+    add(out, inlineText(node))
+    return
+  }
+  for (const child of node.children ?? []) collectBlocks(child, out)
 }
 
-type MarkdownComponents = {
-  p?: (props: { children?: ReactNode }) => null
-  ol?: (props: { children?: ReactNode }) => null
-  ul?: (props: { children?: ReactNode }) => null
-  blockquote?: (props: { children?: ReactNode }) => null
-  pre?: (props: { children?: ReactNode }) => null
-  h1?: (props: { children?: ReactNode }) => null
-  h2?: (props: { children?: ReactNode }) => null
-  h3?: (props: { children?: ReactNode }) => null
-  h4?: (props: { children?: ReactNode }) => null
+function inlineText(node: MdNode): string {
+  if (node.type === "text" || node.type === "inlineCode")
+    return node.value ?? ""
+  if (node.type === "code") return node.value ?? ""
+  // The page shows a line break. The schema string uses a space.
+  if (node.type === "break") return " "
+  if (
+    node.type === "image" ||
+    node.type === "imageReference" ||
+    node.type === "html"
+  ) {
+    return ""
+  }
+  return (node.children ?? []).map((child) => inlineText(child)).join("")
 }
 
-function renderMarkdown(markdown: string, components: MarkdownComponents) {
-  renderToStaticMarkup(
-    createElement(
-      ReactMarkdown,
-      { remarkPlugins: [remarkBreaks], components },
-      withSpacingMarkers(markdown),
-    ),
-  )
-}
-
-function addItems(out: string[], children: ReactNode) {
-  Children.forEach(children, (child) => {
-    if (!isValidElement(child)) return
-    add(out, nodeText(elementChildren(child)))
-  })
+function parseMarkdown(source: string): MdNode {
+  return markdown.runSync(markdown.parse(withSpacingMarkers(source))) as MdNode
 }
 
 function add(out: string[], raw: string) {
@@ -222,20 +215,4 @@ function add(out: string[], raw: string) {
     .replace(/\s+/g, " ")
     .trim()
   if (text) out.push(text)
-}
-
-/** A line break is a space in the schema string. The page shows it as a break. */
-function nodeText(node: ReactNode): string {
-  if (node == null || typeof node === "boolean") return ""
-  if (typeof node === "string" || typeof node === "number") return String(node)
-  if (Array.isArray(node)) return node.map((child) => nodeText(child)).join("")
-  if (!isValidElement(node)) return ""
-  if (node.type === "br") return " "
-  if (node.type === "img") return ""
-  return nodeText(elementChildren(node))
-}
-
-function elementChildren(node: ReactNode): ReactNode {
-  if (!isValidElement<{ children?: ReactNode }>(node)) return null
-  return node.props.children ?? null
 }
