@@ -51,13 +51,37 @@ const CANVAS_MOTION =
  */
 const PRELOAD_MARGIN = "300px"
 
+/** Touch devices keep the poster: the scene build blocks the main thread long enough to stall taps. */
+const ANIMATE_QUERY =
+  "(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)"
+
+/** Upper bound on waiting for an idle moment before the load starts anyway. */
+const IDLE_TIMEOUT_MS = 2000
+
+function whenIdle(): Promise<void> {
+  return new Promise(resolve => {
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(() => resolve(), { timeout: IDLE_TIMEOUT_MS })
+    } else {
+      setTimeout(resolve, 0)
+    }
+  })
+}
+
+/** Resolves once a frame has been painted after the call. */
+function nextPaint(): Promise<void> {
+  return new Promise(resolve =>
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+  )
+}
+
 export type SplineSceneProps = {
   /** Path to the exported `.splinecode` under public/. */
   scene: string
   /**
-   * Static art shown until the canvas is ready, and permanently for readers who
-   * ask for reduced motion or have no WebGL. Render it from the scene itself so
-   * the handover has nothing to pop between.
+   * Static art shown until the canvas is ready, and permanently on touch
+   * devices and for readers who ask for reduced motion or have no WebGL.
+   * Render it from the scene itself so the handover has nothing to pop between.
    */
   poster: string
   posterAlt: string
@@ -78,9 +102,11 @@ export type SplineSceneProps = {
  * are counted - and nothing above the fold needs it, so it is neither bundled
  * into the page nor fetched on mount: the dynamic import fires from an
  * IntersectionObserver, which keeps it off the critical path entirely for
- * readers who never scroll this far. Readers who ask for reduced motion never
- * load it at all and keep the poster. The same observer then gates the render
- * loop, so the scene only costs GPU while it is actually on screen.
+ * readers who never scroll this far. Touch devices and readers who ask for
+ * reduced motion never load it at all and keep the poster. The load waits for
+ * an idle moment, and the canvas fades in only once its first frame is painted,
+ * so the handover is invisible. The same observer then gates the render loop,
+ * so the scene only costs GPU while it is actually on screen.
  */
 export default function SplineScene({
   scene,
@@ -99,7 +125,7 @@ export default function SplineScene({
   useEffect(() => {
     const wrap = wrapRef.current
     if (!wrap) return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (!window.matchMedia(ANIMATE_QUERY).matches) return
 
     // Guards the async gap: the effect can be torn down (StrictMode, a route
     // change) while the runtime chunk or the scene is still in flight, and the
@@ -114,6 +140,8 @@ export default function SplineScene({
       const canvas = canvasRef.current
       if (!canvas || cancelled || started) return
       started = true
+      await whenIdle()
+      if (cancelled) return
       try {
         // Both magic comments are needed: the build runs on Turbopack and the
         // dev server on webpack, and either one would otherwise try to resolve
@@ -124,6 +152,7 @@ export default function SplineScene({
         if (cancelled) return
         const app = new Application(canvas, { wasmPath: WASM_PATH })
         await app.load(scene)
+        await nextPaint()
         if (cancelled) {
           app.dispose()
           return
