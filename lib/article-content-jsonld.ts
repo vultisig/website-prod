@@ -1,3 +1,9 @@
+import remarkParse from "remark-parse"
+import remarkBreaks from "remark-breaks"
+import { unified } from "unified"
+
+import { withSpacingMarkers } from "./article-markdown"
+
 export type JsonLdObject = Record<string, unknown>
 
 type Section = {
@@ -5,8 +11,19 @@ type Section = {
   body: string[]
 }
 
+type MdNode = {
+  type: string
+  value?: string
+  ordered?: boolean
+  children?: MdNode[]
+}
+
 const MIN_BLOCK_ITEMS = 2
 const FENCE = /^\s{0,3}(```|~~~)/
+const H2 = /^##\s+(.+?)\s*#*\s*$/
+const H3 = /^###\s+(.+?)\s*#*\s*$/
+
+const markdown = unified().use(remarkParse).use(remarkBreaks)
 
 /** JSON-LD for a script tag. Escapes `<` so answer text cannot close the tag. */
 export function jsonLdHtml(data: JsonLdObject): string {
@@ -20,8 +37,8 @@ export function contentJsonLd(content: string): {
 } {
   if (!content) return {}
   const sections = h2Sections(content)
-  const faq = faqFrom(sections)
-  const howto = howToFrom(sections)
+  const faq = firstFaq(sections)
+  const howto = firstHowTo(sections)
   return {
     ...(faq ? { faq } : {}),
     ...(howto ? { howto } : {}),
@@ -36,11 +53,10 @@ function h2Sections(content: string): Section[] {
   for (const line of content.split(/\r?\n/)) {
     if (FENCE.test(line)) {
       inFence = !inFence
+      current?.body.push(line)
       continue
     }
-    if (inFence) continue
-
-    const heading = line.match(/^##\s+(.+?)\s*$/)
+    const heading = inFence ? null : line.match(H2)
     if (heading?.[1]) {
       if (current) sections.push(current)
       current = { heading: heading[1], body: [] }
@@ -52,40 +68,48 @@ function h2Sections(content: string): Section[] {
   return sections
 }
 
-function faqFrom(sections: Section[]): JsonLdObject | undefined {
-  const section = sections.find((item) => /^faqs?$/i.test(item.heading.trim()))
-  if (!section) return undefined
-  const pairs = faqPairs(section.body)
-  if (pairs.length < MIN_BLOCK_ITEMS) return undefined
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: pairs.map((pair) => ({
-      "@type": "Question",
-      name: pair.question,
-      acceptedAnswer: { "@type": "Answer", text: pair.answer },
-    })),
+function firstFaq(sections: Section[]): JsonLdObject | undefined {
+  for (const section of sections) {
+    if (!/^faqs?$/i.test(visibleText(section.heading))) continue
+    const pairs = faqPairs(section.body)
+    if (pairs.length < MIN_BLOCK_ITEMS) continue
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: pairs.map((pair) => ({
+        "@type": "Question",
+        name: pair.question,
+        acceptedAnswer: { "@type": "Answer", text: pair.answer },
+      })),
+    }
   }
+  return undefined
 }
 
 function faqPairs(lines: string[]): { question: string; answer: string }[] {
   const pairs: { question: string; answer: string }[] = []
   let question: string | null = null
   let answer: string[] = []
+  let inFence = false
 
   const flush = () => {
     if (!question) return
-    const text = cleanText(answer.join(" "))
+    const text = visibleText(answer.join("\n"))
     if (text) pairs.push({ question, answer: text })
     question = null
     answer = []
   }
 
   for (const line of lines) {
-    const heading = line.match(/^###\s+(.+?)\s*$/)
+    if (FENCE.test(line)) {
+      inFence = !inFence
+      if (question) answer.push(line)
+      continue
+    }
+    const heading = inFence ? null : line.match(H3)
     if (heading?.[1]) {
       flush()
-      question = cleanText(heading[1])
+      question = visibleText(heading[1])
       continue
     }
     if (question) answer.push(line)
@@ -94,55 +118,108 @@ function faqPairs(lines: string[]): { question: string; answer: string }[] {
   return pairs
 }
 
-function howToFrom(sections: Section[]): JsonLdObject | undefined {
-  const section = sections.find((item) =>
-    /^how\s+to\b/i.test(item.heading.trim()),
-  )
-  if (!section) return undefined
-  const steps = numberedSteps(section.body)
-  if (steps.length < MIN_BLOCK_ITEMS) return undefined
-  return {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: section.heading.trim(),
-    step: steps.map((text, index) => ({
-      "@type": "HowToStep",
-      position: index + 1,
-      name: firstSentence(text),
-      text,
-    })),
-  }
-}
-
-function numberedSteps(lines: string[]): string[] {
-  const steps: string[] = []
-  let current: string[] | null = null
-
-  const push = () => {
-    if (!current) return
-    const text = cleanText(current.join(" "))
-    if (text) steps.push(text)
-    current = null
-  }
-
-  for (const line of lines) {
-    const item = line.match(/^\s*\d+\.\s+(.+)$/)
-    if (item?.[1]) {
-      push()
-      current = [item[1]]
-      continue
+function firstHowTo(sections: Section[]): JsonLdObject | undefined {
+  for (const section of sections) {
+    const name = visibleText(section.heading)
+    if (!/^how\s+to\b/i.test(name)) continue
+    const steps = orderedSteps(section.body.join("\n"))
+    if (steps.length < MIN_BLOCK_ITEMS) continue
+    return {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name,
+      step: steps.map((text, index) => ({
+        "@type": "HowToStep",
+        position: index + 1,
+        name: firstSentence(text),
+        text,
+      })),
     }
-    if (current && /^\s{2,}\S/.test(line)) current.push(line.trim())
   }
-  push()
-  return steps
-}
-
-function cleanText(value: string): string {
-  return value.replace(/`/g, "").replace(/\s+/g, " ").trim()
+  return undefined
 }
 
 function firstSentence(text: string): string {
-  const [sentence] = text.split(/(?<=\.)\s/)
-  return sentence ?? text
+  const match = text.match(/^.*?[.!?](?=\s|$)/)
+  return match?.[0] ?? text
+}
+
+function orderedSteps(source: string): string[] {
+  const steps: string[] = []
+  collectSteps(parseMarkdown(source), steps)
+  return steps
+}
+
+function collectSteps(node: MdNode, steps: string[]) {
+  if (node.type === "list" && node.ordered === true) {
+    for (const item of node.children ?? []) {
+      add(steps, listItemText(item))
+      for (const child of item.children ?? []) collectSteps(child, steps)
+    }
+    return
+  }
+  for (const child of node.children ?? []) collectSteps(child, steps)
+}
+
+function listItemText(item: MdNode): string {
+  return (item.children ?? [])
+    .filter((child) => child.type !== "list")
+    .map((child) => inlineText(child))
+    .join("")
+}
+
+function visibleText(source: string): string {
+  const blocks: string[] = []
+  collectBlocks(parseMarkdown(source), blocks)
+  return blocks.join(" ")
+}
+
+function collectBlocks(node: MdNode, out: string[]) {
+  if (node.type === "list") {
+    for (const item of node.children ?? []) add(out, inlineText(item))
+    return
+  }
+  if (node.type === "blockquote") {
+    const inner: string[] = []
+    for (const child of node.children ?? []) collectBlocks(child, inner)
+    add(out, inner.join(" "))
+    return
+  }
+  if (node.type === "code") {
+    add(out, node.value ?? "")
+    return
+  }
+  if (node.type === "paragraph" || node.type === "heading") {
+    add(out, inlineText(node))
+    return
+  }
+  for (const child of node.children ?? []) collectBlocks(child, out)
+}
+
+function inlineText(node: MdNode): string {
+  if (node.type === "text" || node.type === "inlineCode")
+    return node.value ?? ""
+  if (node.type === "code") return node.value ?? ""
+  // The page shows a line break. The schema string uses a space.
+  if (node.type === "break") return " "
+  if (
+    node.type === "image" ||
+    node.type === "imageReference" ||
+    node.type === "html"
+  ) {
+    return ""
+  }
+  return (node.children ?? []).map((child) => inlineText(child)).join("")
+}
+
+function parseMarkdown(source: string): MdNode {
+  return markdown.runSync(markdown.parse(withSpacingMarkers(source))) as MdNode
+}
+
+function add(out: string[], raw: string) {
+  const text = raw
+    .replace(/\u00a0/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+  if (text) out.push(text)
 }
