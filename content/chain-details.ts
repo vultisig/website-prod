@@ -19,6 +19,8 @@ export type ChainCopyOverrides = {
   faq?: Partial<Record<FaqId, FaqEntry | null>>
   /** Questions only this chain asks, appended after the family's. */
   extraFaq?: FaqEntry[]
+  /** Replaces the family's title template when this chain answers a query the template does not name. */
+  metaTitle?: string
   metaDescription?: string
   /** Action cards a chain does not offer in every app. */
   hiddenActions?: ActionLabel[]
@@ -222,6 +224,20 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       address: "A Native SegWit (bech32) address that starts with bc1q.",
       fee: "Paid in BTC, priced per byte of transaction size.",
       notes: ["BTC swaps route natively through THORChain and MayaChain, with no wrapped BTC."],
+    },
+    overrides: {
+      heroBody:
+        "An open-source Bitcoin MPC wallet with no seed phrase and no custodian. Your Bitcoin key is split across your own devices, and it takes your threshold to move any BTC.",
+      extraFaq: [
+        {
+          question: "Is Vultisig an open-source Bitcoin wallet?",
+          answer:
+            "Yes. The Vultisig apps are open source on GitHub, so you can check how your Bitcoin is signed instead of trusting a closed app. New vaults sign with DKLS23, in an implementation audited by Trail of Bits.",
+        },
+      ],
+      metaTitle: "Open-Source Bitcoin MPC Wallet — Hold BTC, No Seed Phrase",
+      metaDescription:
+        "Vultisig is an open-source Bitcoin MPC wallet. Your key is split across devices you own: no seed phrase, no custodian, standard bc1q addresses.",
     },
   },
   bch: {

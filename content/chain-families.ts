@@ -492,7 +492,7 @@ export function chainCopy(family: ChainFamily, chain: Chain): ChainCopy {
       (action) => !overrides.hiddenActions?.includes(action.label),
     ),
     meta: {
-      title: meta.title,
+      title: overrides.metaTitle ?? meta.title,
       description: overrides.metaDescription ?? meta.description,
     },
   }

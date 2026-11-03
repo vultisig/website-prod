@@ -4,14 +4,14 @@ import ChainsExplorer from "./components/chains-explorer"
 import { OPEN_GRAPH_DEFAULTS } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: "Supported Chains - Vultisig MPC Wallet",
+  title: `Multi-Chain MPC Wallet: ${supportedChainCountLabel} Chains in One Vault - Vultisig`,
   description: `Browse the ${supportedChainCountLabel} blockchains Vultisig supports natively, from Bitcoin and Ethereum to Solana and THORChain, in one seedless MPC vault.`,
   alternates: {
     canonical: "https://vultisig.com/chains",
   },
   openGraph: {
     ...OPEN_GRAPH_DEFAULTS,
-    title: "All your chains. One vault.",
+    title: `Multi-Chain MPC Wallet: ${supportedChainCountLabel} Chains in One Vault`,
     description: `${supportedChainCountLabel} chains with the same MPC threshold security on every one. No seed phrase, no single point of failure.`,
     url: "https://vultisig.com/chains",
   },
@@ -26,9 +26,10 @@ export default function ChainsPage() {
             All your chains. One vault.
           </h1>
           <p className="max-w-[856px] text-v5-subtitle font-normal text-v5-text-inverse">
-            Vultisig supports {supportedChainCountLabel} chains with the same
-            MPC threshold security on every one. No seed phrase, no single point
-            of failure, no matter which chain you&rsquo;re holding.
+            Vultisig is a multi-chain MPC wallet: {supportedChainCountLabel}{" "}
+            chains in one vault, with the same threshold security on every one.
+            No seed phrase, no single point of failure, no matter which chain
+            you&rsquo;re holding.
           </p>
         </header>
 
