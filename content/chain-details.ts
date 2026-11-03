@@ -50,6 +50,15 @@ const NO_STAKING_FAQ: FaqEntry = {
     "Not today. Vultisig holds and sends {asset}; in-app staking covers THORChain, MayaChain, Terra and Terra Classic.",
 }
 
+const TERRA_STATION_HERO =
+  "The Terra Station replacement with no seed phrase. Hold, send and stake {asset} from the same vault as every other chain, each transaction approved by your device threshold, not one exposed private key."
+
+const TERRA_STATION_FAQ: FaqEntry = {
+  question: "Can I use Vultisig instead of Terra Station?",
+  answer:
+    "Yes. Vultisig holds, sends and stakes {asset}, with delegate, undelegate, redelegate and claim rewards, in an MPC vault with no seed phrase. To move over, create a vault and send your {asset} from Terra Station to the vault's terra1 address. The same address holds both Terra (LUNA) and Terra Classic (LUNC).",
+}
+
 const THORCHAIN_SWAP_FEATURES: Feature[] = [
   {
     title: "Native swap routing",
@@ -392,8 +401,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       notes: ["Stake LUNA from the vault: delegate, undelegate, redelegate and claim rewards."],
     },
     overrides: {
-      heroBody:
-        "Hold, send and stake LUNA from the same vault as every other chain. Every transaction requires your device threshold to approve it, not one exposed private key.",
+      heroBody: TERRA_STATION_HERO,
       faq: {
         stake: {
           question: "Can I stake LUNA from my vault?",
@@ -401,6 +409,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
             "Yes. Delegate, undelegate, redelegate and claim rewards from the vault, each action approved by your device threshold.",
         },
       },
+      extraFaq: [TERRA_STATION_FAQ],
       hiddenActions: ["Swap", "Buy"],
     },
   },
@@ -411,8 +420,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       notes: ["Stake LUNC from the vault: delegate, undelegate, redelegate and claim rewards."],
     },
     overrides: {
-      heroBody:
-        "Hold, send and stake LUNC from the same vault as every other chain. Every transaction requires your device threshold to approve it, not one exposed private key.",
+      heroBody: TERRA_STATION_HERO,
       faq: {
         stake: {
           question: "Can I stake LUNC from my vault?",
@@ -420,6 +428,10 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
             "Yes. Delegate, undelegate, redelegate and claim rewards from the vault, each action approved by your device threshold.",
         },
       },
+      extraFaq: [TERRA_STATION_FAQ],
+      metaTitle: "Terra Classic (LUNC) Wallet — The Terra Station Replacement",
+      metaDescription:
+        "Replacing Terra Station? Hold, send and stake LUNC in a Vultisig MPC vault. Delegate and claim rewards, each approved by your own devices. No seed phrase.",
       hiddenActions: ["Swap", "Buy"],
     },
   },
