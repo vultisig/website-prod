@@ -50,19 +50,19 @@ const NO_STAKING_FAQ: FaqEntry = {
     "Not today. Vultisig holds and sends {asset}; in-app staking covers THORChain, MayaChain, Terra and Terra Classic.",
 }
 
-const STATION_HERO =
-  "Station, the Terra wallet, runs on Vultisig's MPC technology. A Vultisig vault holds, sends and stakes {asset} on the same threshold signing, with no seed phrase and no single private key."
+const TERRA_STATION_HERO =
+  "Terra Station runs on Vultisig's MPC technology. A Vultisig vault holds, sends and stakes {asset} on the same threshold signing, with no seed phrase and no single private key."
 
-const STATION_FAQ: FaqEntry[] = [
+const TERRA_STATION_FAQ: FaqEntry[] = [
   {
-    question: "Does Station use Vultisig technology?",
+    question: "Does Terra Station use Vultisig technology?",
     answer:
-      "Yes. Station, the wallet many Terra holders know as Terra Station, uses MPC infrastructure provided by Vultisig. Both apps hold Terra and Terra Classic, so your {asset} is protected by the same threshold signing in either one.",
+      "Yes. Terra Station uses MPC infrastructure provided by Vultisig. Both apps hold Terra and Terra Classic, so your {asset} is protected by the same threshold signing in either one.",
   },
   {
-    question: "Can I move my {asset} from an older Terra Station wallet?",
+    question: "Can I move my {asset} from Terra Station to Vultisig?",
     answer:
-      "Yes. Create a Vultisig vault and send your {asset} to the vault's terra1 address with an ordinary transfer. The same address holds both Terra (LUNA) and Terra Classic (LUNC), and you can stake again from the vault.",
+      "Yes. Open Vultisig, choose Import Vault, and select your Terra Station vault backup or vault share. Your vault carries over, with no transfer needed. If you have no vault backup, create a Vultisig vault and send your {asset} to its terra1 address, which holds both Terra (LUNA) and Terra Classic (LUNC).",
   },
 ]
 
@@ -408,7 +408,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       notes: ["Stake LUNA from the vault: delegate, undelegate, redelegate and claim rewards."],
     },
     overrides: {
-      heroBody: STATION_HERO,
+      heroBody: TERRA_STATION_HERO,
       faq: {
         stake: {
           question: "Can I stake LUNA from my vault?",
@@ -416,7 +416,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
             "Yes. Delegate, undelegate, redelegate and claim rewards from the vault, each action approved by your device threshold.",
         },
       },
-      extraFaq: STATION_FAQ,
+      extraFaq: TERRA_STATION_FAQ,
       hiddenActions: ["Swap", "Buy"],
     },
   },
@@ -427,7 +427,7 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
       notes: ["Stake LUNC from the vault: delegate, undelegate, redelegate and claim rewards."],
     },
     overrides: {
-      heroBody: STATION_HERO,
+      heroBody: TERRA_STATION_HERO,
       faq: {
         stake: {
           question: "Can I stake LUNC from my vault?",
@@ -435,10 +435,10 @@ export const CHAIN_DETAILS: Record<string, ChainDetails> = {
             "Yes. Delegate, undelegate, redelegate and claim rewards from the vault, each action approved by your device threshold.",
         },
       },
-      extraFaq: STATION_FAQ,
-      metaTitle: "Terra Classic (LUNC) Wallet — The MPC Tech Behind Station",
+      extraFaq: TERRA_STATION_FAQ,
+      metaTitle: "Terra Classic (LUNC) Wallet — MPC Tech Behind Terra Station",
       metaDescription:
-        "Station, the Terra wallet, runs on Vultisig's MPC. Hold, send and stake LUNC in a Vultisig vault on the same technology. No seed phrase.",
+        "Terra Station runs on Vultisig's MPC. Hold, send and stake LUNC in a Vultisig vault, or import your Terra Station vault backup. No seed phrase.",
       hiddenActions: ["Swap", "Buy"],
     },
   },
