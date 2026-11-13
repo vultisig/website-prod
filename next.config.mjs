@@ -20,7 +20,6 @@ const scriptSrc = [
   isDev ? "'unsafe-eval'" : null,
   'https://www.googletagmanager.com',
   'https://static.ads-twitter.com',
-  'https://cdn.markfi.xyz',
   'https://static.cloudflareinsights.com',
   'https://scripts.simpleanalyticscdn.com',
 ]
@@ -42,7 +41,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https: blob:",
       "font-src 'self'",
-      "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://api.rss2json.com https://api.coingecko.com https://*.vultisig.com https://*.markfi.xyz https://cloudflareinsights.com https://static.cloudflareinsights.com https://queue.simpleanalyticscdn.com",
+      "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://api.rss2json.com https://api.coingecko.com https://*.vultisig.com https://cloudflareinsights.com https://static.cloudflareinsights.com https://queue.simpleanalyticscdn.com",
       // three's DRACOLoader, which the Spline runtime decodes the vault scene
       // with, runs its decoder in a Worker built from a Blob. Without an
       // explicit worker-src that falls back to `default-src 'self'`, which

@@ -49,23 +49,12 @@ export default function TwitterAnalytics() {
       }
     }
 
-    const interactionEvents = ["pointerdown", "keydown", "touchstart", "scroll"]
-    const handleInteraction = () => loadScript()
-
+    // Idle only. Loading on the first tap ran this script's work inside the
+    // visitor's interaction window and counted against INP on slow phones.
     const cleanup = () => {
-      interactionEvents.forEach((eventName) =>
-        window.removeEventListener(eventName, handleInteraction),
-      )
       window.removeEventListener("load", scheduleLoad)
       if (timeoutId) window.clearTimeout(timeoutId)
     }
-
-    interactionEvents.forEach((eventName) =>
-      window.addEventListener(eventName, handleInteraction, {
-        passive: true,
-        once: true,
-      }),
-    )
 
     if (document.readyState === "complete") {
       scheduleLoad()
