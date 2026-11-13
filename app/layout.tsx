@@ -4,7 +4,6 @@ import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import GoogleAnalyticsWrapper from "@/components/ga-wrapper"
-import CookieAnalytics from "@/components/cookie-analytics"
 import localFont from "next/font/local"
 import { cn } from "@/lib/utils"
 import ScrollReveal from "@/components/scroll-reveal"
@@ -220,7 +219,6 @@ export default function RootLayout({
         )}
       >
         <GoogleAnalyticsWrapper />
-        <CookieAnalytics />
         <TwitterAnalytics />
         {JSON_LD_SCHEMAS.map((schema) => (
           <script
