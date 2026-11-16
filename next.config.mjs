@@ -82,6 +82,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/agent/for-agents',
+        destination: '/agent',
+        permanent: true,
+      },
+      {
         source: '/download',
         destination: '/downloads',
         permanent: true,
