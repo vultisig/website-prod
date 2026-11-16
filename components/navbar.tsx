@@ -214,6 +214,10 @@ function isActive(pathname: string, href?: string): boolean {
   return pathname.startsWith(route)
 }
 
+function isCurrentPage(pathname: string, href?: string): boolean {
+  return href !== undefined && pathname === href.split("?")[0]
+}
+
 /** Up/Down/Home/End through the links of an open menu. Radix only wires Tab. */
 function moveFocus(event: ReactKeyboardEvent<HTMLElement>) {
   const keys = ["ArrowDown", "ArrowUp", "Home", "End"]
@@ -292,7 +296,7 @@ function DesktopEntry({ entry, onDark }: { entry: NavEntry; onDark: boolean }) {
   }
 
   const groupActive = entry.children.some((child) =>
-    isActive(pathname, child.href),
+    isCurrentPage(pathname, child.href),
   )
 
   return (
@@ -328,7 +332,7 @@ function DesktopEntry({ entry, onDark }: { entry: NavEntry; onDark: boolean }) {
               <NavigationMenu.Link
                 key={child.label}
                 asChild
-                active={isActive(pathname, child.href)}
+                active={isCurrentPage(pathname, child.href)}
               >
                 <Link
                   href={child.href}
@@ -336,7 +340,7 @@ function DesktopEntry({ entry, onDark }: { entry: NavEntry; onDark: boolean }) {
                     MENU_ITEM,
                     FOCUS_RING,
                     chipHover(onDark),
-                    isActive(pathname, child.href) && chipActive(onDark),
+                    isCurrentPage(pathname, child.href) && chipActive(onDark),
                   )}
                 >
                   {child.label}
@@ -399,7 +403,7 @@ function MobilePanel({ onDark }: { onDark: boolean }) {
                     FOCUS_RING,
                     "justify-start",
                     chipHover(onDark),
-                    isActive(pathname, child.href) && chipActive(onDark),
+                    isCurrentPage(pathname, child.href) && chipActive(onDark),
                   )}
                 >
                   {child.label}
