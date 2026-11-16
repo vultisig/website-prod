@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 export type AudienceKey = "agents" | "builders"
 
 const AUDIENCES = [
-  { key: "agents", label: "For Agents", href: "/agent/for-agents" },
+  { key: "agents", label: "For Agents", href: "/agent" },
   { key: "builders", label: "For Builders", href: "/agent/for-builders" },
 ] as const satisfies readonly {
   key: AudienceKey

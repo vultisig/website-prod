@@ -20,7 +20,7 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/fast-vault", changefreq: "monthly", priority: 0.8 },
   { path: "/chains", changefreq: "monthly", priority: 0.8 },
   { path: "/vult", changefreq: "weekly", priority: 0.8 },
-  { path: "/agent/for-agents", changefreq: "monthly", priority: 0.8 },
+  { path: "/agent", changefreq: "monthly", priority: 0.8 },
   { path: "/agent/for-builders", changefreq: "monthly", priority: 0.8 },
   // Hidden for now: /backed-by is unlinked and noindexed until its data is verified.
   { path: "/support", changefreq: "monthly", priority: 0.7 },

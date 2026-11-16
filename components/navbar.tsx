@@ -147,7 +147,7 @@ const NAV_ENTRIES: NavEntry[] = [
     children: [
       // "For Users" has no page in the V5 design yet, so it stays unlinked.
       { label: "For Users" },
-      { label: "For Agents", href: "/agent/for-agents" },
+      { label: "For Agents", href: "/agent" },
       { label: "For Builders", href: "/agent/for-builders" },
     ],
   },

@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   description:
     "Deploy an agent to trade, rebalance, and manage DeFi positions for you. It proposes the moves - your vault's MPC threshold still has to approve them.",
   alternates: {
-    canonical: "https://vultisig.com/agent/for-agents",
+    canonical: "https://vultisig.com/agent",
   },
   openGraph: {
     ...OPEN_GRAPH_DEFAULTS,
     title: "Automation that never holds your keys",
     description:
       "Vultisig uses threshold signatures so agents can co-sign transactions without ever holding a complete private key.",
-    url: "https://vultisig.com/agent/for-agents",
+    url: "https://vultisig.com/agent",
     images: [
       {
         ...SHARE_IMAGE,
