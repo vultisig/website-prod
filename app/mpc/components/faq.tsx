@@ -1,7 +1,9 @@
 import { supportedChainCountLabel } from "@/content/chain-count"
+import { faqPageJsonLd } from "@/content/product-faq"
 import FaqSection from "@/components/ui/faq-section"
 
-type MpcFaqItem = {
+/** One Q&A; `answer` is both the visible text and the schema string. */
+export type MpcFaqItem = {
   question: string
   answer: string
 }
@@ -79,26 +81,25 @@ const FAQ_ITEMS: MpcFaqItem[] = [
   },
 ]
 
-const FAQ_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
+/** FAQ items; defaults are the /mpc page's. */
+export type MpcFaqProps = {
+  items?: MpcFaqItem[]
 }
 
-export default function MpcFaq() {
+export default function MpcFaq({ items = FAQ_ITEMS }: MpcFaqProps) {
+  const schema = faqPageJsonLd(
+    items.map(({ question, answer }) => ({ question, text: answer })),
+  )
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <FaqSection
         className="py-9 md:py-[60px]"
-        items={FAQ_ITEMS}
+        items={items}
         aside={
           <h2
             id="faq"

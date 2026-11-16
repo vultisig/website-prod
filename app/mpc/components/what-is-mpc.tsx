@@ -2,7 +2,8 @@ import Image from "next/image"
 
 import SectionHeading from "@/components/ui/section-heading"
 
-type Explainer = {
+/** One illustrated card; exported so other pages can supply their own. */
+export type Explainer = {
   title: string
   /** "\n" keeps Figma's hard line break; rendered via whitespace-pre-line. */
   body: string
@@ -60,14 +61,23 @@ function ExplainerCard({ title, body, image }: Explainer) {
   )
 }
 
-export default function WhatIsMpc() {
+/** Explainer cards; defaults are the /mpc page's. */
+export type WhatIsMpcProps = {
+  title?: string
+  explainers?: Explainer[]
+}
+
+export default function WhatIsMpc({
+  title = "What Is an MPC Wallet?",
+  explainers = EXPLAINERS,
+}: WhatIsMpcProps) {
   return (
     <section className="bg-v5-page px-4 pt-4 md:px-[30px] md:pt-[30px]">
       <div className="mx-auto max-w-v5-content">
         <div className="flex flex-col items-center gap-8 rounded-[20px] bg-v5-white px-4 py-9 md:gap-[50px] md:rounded-v5-panel md:p-[60px]">
-          <SectionHeading title="What Is an MPC Wallet?" />
+          <SectionHeading title={title} />
           <ul className="flex w-full flex-col gap-5 md:flex-row md:items-stretch">
-            {EXPLAINERS.map((explainer) => (
+            {explainers.map((explainer) => (
               <ExplainerCard key={explainer.title} {...explainer} />
             ))}
           </ul>

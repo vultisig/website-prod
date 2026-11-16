@@ -38,6 +38,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "How It Works", href: "/how-it-works" },
       { label: "Fast Vaults", href: "/fast-vault" },
       { label: "MPC", href: "/mpc" },
+      { label: "Seedless Wallet", href: "/seedless-wallet" },
       { label: "Articles", href: "/articles" },
       // Hidden for now: /backed-by still carries unverified handles and affiliations.
       // { label: "Backed By", href: "/backed-by" },

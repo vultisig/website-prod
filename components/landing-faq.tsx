@@ -3,7 +3,9 @@ import type { ReactNode } from "react"
 import {
   faqPageJsonLd,
   productFaqItems,
+  type ProductFaqId,
 } from "@/content/product-faq"
+import { RecoveryLink } from "@/components/recovery-link"
 import FaqSection from "@/components/ui/faq-section"
 
 const COST_ANSWER: ReactNode = (
@@ -17,11 +19,26 @@ const COST_ANSWER: ReactNode = (
   </>
 )
 
-const FAQ_ITEMS = productFaqItems.map((item) =>
-  item.id === "cost"
-    ? { question: item.question, answer: COST_ANSWER, text: item.text }
-    : { question: item.question, answer: item.text, text: item.text },
+const SEEDLESS_ANSWER: ReactNode = (
+  <p>
+    Yes. Vultisig is a{" "}
+    <RecoveryLink href="/seedless-wallet">seedless wallet</RecoveryLink>: there
+    is no seed phrase to write down. Your key is split into key shares, so there
+    is no single secret to steal, and each device exports its own backup file.
+  </p>
 )
+
+/** Visible JSX for answers that need markup; the schema keeps `item.text`. */
+const RICH_ANSWERS: Partial<Record<ProductFaqId, ReactNode>> = {
+  cost: COST_ANSWER,
+  seedless: SEEDLESS_ANSWER,
+}
+
+const FAQ_ITEMS = productFaqItems.map((item) => ({
+  question: item.question,
+  answer: RICH_ANSWERS[item.id] ?? item.text,
+  text: item.text,
+}))
 
 export default function LandingFaq() {
   return (
