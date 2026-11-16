@@ -121,9 +121,8 @@ function useOnDarkBackdrop(
 
 type NavEntry = {
   label: string
-  /** Absent while the destination page does not exist yet (Agent group). */
   href?: string
-  children?: { label: string; href?: string }[]
+  children?: { label: string; href: string }[]
 }
 
 const NAV_ENTRIES: NavEntry[] = [
@@ -142,15 +141,7 @@ const NAV_ENTRIES: NavEntry[] = [
     ],
   },
   { label: "MPC Wallet", href: "/mpc" },
-  {
-    label: "Agent",
-    children: [
-      // "For Users" has no page in the V5 design yet, so it stays unlinked.
-      { label: "For Users" },
-      { label: "For Agents", href: "/agent" },
-      { label: "For Builders", href: "/agent/for-builders" },
-    ],
-  },
+  { label: "Agent", href: "/agent" },
   { label: "$VULT", href: "/vult" },
   { label: "Articles", href: "/articles" },
   { label: "Chains", href: "/chains" },
@@ -212,10 +203,6 @@ function isActive(pathname: string, href?: string): boolean {
   const route = href.split("?")[0]
   if (route === "/") return pathname === "/"
   return pathname.startsWith(route)
-}
-
-function isCurrentPage(pathname: string, href?: string): boolean {
-  return href !== undefined && pathname === href.split("?")[0]
 }
 
 /** Up/Down/Home/End through the links of an open menu. Radix only wires Tab. */
@@ -296,7 +283,7 @@ function DesktopEntry({ entry, onDark }: { entry: NavEntry; onDark: boolean }) {
   }
 
   const groupActive = entry.children.some((child) =>
-    isCurrentPage(pathname, child.href),
+    isActive(pathname, child.href),
   )
 
   return (
@@ -327,31 +314,25 @@ function DesktopEntry({ entry, onDark }: { entry: NavEntry; onDark: boolean }) {
         )}
       >
         <div className={cn(SHEET, sheetTone(onDark), "p-3")}>
-          {entry.children.map((child) =>
-            child.href ? (
-              <NavigationMenu.Link
-                key={child.label}
-                asChild
-                active={isCurrentPage(pathname, child.href)}
+          {entry.children.map((child) => (
+            <NavigationMenu.Link
+              key={child.label}
+              asChild
+              active={isActive(pathname, child.href)}
+            >
+              <Link
+                href={child.href}
+                className={cn(
+                  MENU_ITEM,
+                  FOCUS_RING,
+                  chipHover(onDark),
+                  isActive(pathname, child.href) && chipActive(onDark),
+                )}
               >
-                <Link
-                  href={child.href}
-                  className={cn(
-                    MENU_ITEM,
-                    FOCUS_RING,
-                    chipHover(onDark),
-                    isCurrentPage(pathname, child.href) && chipActive(onDark),
-                  )}
-                >
-                  {child.label}
-                </Link>
-              </NavigationMenu.Link>
-            ) : (
-              <span key={child.label} className={MENU_ITEM} aria-disabled>
                 {child.label}
-              </span>
-            ),
-          )}
+              </Link>
+            </NavigationMenu.Link>
+          ))}
         </div>
       </NavigationMenu.Content>
     </NavigationMenu.Item>
@@ -393,31 +374,21 @@ function MobilePanel({ onDark }: { onDark: boolean }) {
             <p className="px-2.5 text-v5-caption font-medium uppercase text-v5-text-tertiary">
               {entry.label}
             </p>
-            {entry.children.map((child) =>
-              child.href ? (
-                <Link
-                  key={child.label}
-                  href={child.href}
-                  className={cn(
-                    MENU_ITEM,
-                    FOCUS_RING,
-                    "justify-start",
-                    chipHover(onDark),
-                    isCurrentPage(pathname, child.href) && chipActive(onDark),
-                  )}
-                >
-                  {child.label}
-                </Link>
-              ) : (
-                <span
-                  key={child.label}
-                  className={cn(MENU_ITEM, "justify-start")}
-                  aria-disabled
-                >
-                  {child.label}
-                </span>
-              ),
-            )}
+            {entry.children.map((child) => (
+              <Link
+                key={child.label}
+                href={child.href}
+                className={cn(
+                  MENU_ITEM,
+                  FOCUS_RING,
+                  "justify-start",
+                  chipHover(onDark),
+                  isActive(pathname, child.href) && chipActive(onDark),
+                )}
+              >
+                {child.label}
+              </Link>
+            ))}
           </div>
         )
       })}
