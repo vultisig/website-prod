@@ -4,6 +4,7 @@ import { supportedChainCountLabel } from "@/content/chain-count"
 export type ProductFaqId =
   | "what"
   | "whyMpc"
+  | "seedless"
   | "lostDevice"
   | "sendSwap"
   | "cost"
@@ -30,6 +31,11 @@ export const productFaqItems: ProductFaqItem[] = [
     id: "whyMpc",
     question: "Why use an MPC wallet instead of a standard wallet?",
     text: `Vultisig offers enhanced security with multi-device authentication, support for ${supportedChainCountLabel} blockchains, easy recovery options, and no seed phrases or user tracking.`,
+  },
+  {
+    id: "seedless",
+    question: "Is Vultisig a seedless wallet?",
+    text: "Yes. Vultisig is a seedless wallet: there is no seed phrase to write down. Your key is split into key shares, so there is no single secret to steal, and each device exports its own backup file.",
   },
   {
     id: "lostDevice",

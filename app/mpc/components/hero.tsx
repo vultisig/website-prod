@@ -3,22 +3,31 @@ import Link from "next/link"
 
 import { LandingButton } from "@/components/ui/landing-button"
 
+const TITLE = "The Free Open-Source MPC Wallet For Everyone"
+
+const BODY =
+  "Split signing power across your devices. No seed phrases, no single point of failure, no company holding your keys. Vultisig uses threshold signatures so your crypto stays yours."
+
+/** Hero copy; defaults are the /mpc page's. */
+export type HeroProps = {
+  title?: string
+  body?: string
+}
+
 const ILLUSTRATION_ALT =
   "Three isometric blue vaults in a row, the nearest one open with a green key inside, beside floating coins and key-share tiles"
 
-export default function Hero() {
+export default function Hero({ title = TITLE, body = BODY }: HeroProps) {
   return (
     <section className="bg-v5-page px-4 pt-[74px] md:px-[30px] md:pt-[134px]">
       <div className="mx-auto max-w-v5-content">
         <div className="relative flex flex-col overflow-hidden rounded-[20px] bg-v5-sky px-4 pb-8 pt-[60px] md:flex-row md:items-center md:rounded-v5-panel md:px-[60px] md:py-[120px]">
           <div className="relative z-10 flex flex-col justify-center gap-6 md:w-[582px]">
             <h1 className="text-v5-hero-sm font-semibold text-v5-text-primary md:w-[546px] md:text-v5-hero">
-              The Free Open-Source MPC Wallet For Everyone
+              {title}
             </h1>
             <p className="text-v5-label font-normal text-v5-text-primary md:w-[546px] md:text-v5-subtitle">
-              Split signing power across your devices. No seed phrases, no
-              single point of failure, no company holding your keys. Vultisig
-              uses threshold signatures so your crypto stays yours.
+              {body}
             </p>
             <div className="flex flex-col gap-3 md:flex-row md:gap-5">
               <LandingButton

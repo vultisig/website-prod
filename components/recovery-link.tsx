@@ -9,7 +9,7 @@ function isAppRoute(href: string) {
 
 type RecoveryLinkProps = { href: string; children: React.ReactNode }
 
-/** Underlined text link for the 404 and About pages: client routing for app routes, a plain anchor otherwise. */
+/** Underlined inline text link: client routing for app routes, a plain anchor otherwise. */
 export function RecoveryLink({ href, children }: RecoveryLinkProps) {
   const className = "underline underline-offset-4"
   if (isAppRoute(href)) {

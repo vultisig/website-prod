@@ -2,7 +2,7 @@ const AUTO_LINK_LIMIT = 4
 
 const glossary = [
   { terms: ["MPC wallet", "multi-party computation wallet"], href: "/mpc" },
-  { terms: ["seedless wallet", "seedless wallets"], href: "/mpc" },
+  { terms: ["seedless wallet", "seedless wallets"], href: "/seedless-wallet" },
 ]
 
 type MarkdownNode = {

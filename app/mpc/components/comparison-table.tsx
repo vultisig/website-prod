@@ -2,7 +2,8 @@ import { Check, X } from "lucide-react"
 
 import { supportedChainCountLabel } from "@/content/chain-count"
 
-type ComparisonRow = {
+/** One feature row; exported so other pages can supply their own. */
+export type ComparisonRow = {
   feature: string
   others: string
   vultisig: string
@@ -67,22 +68,34 @@ function Marker({ verdict }: { verdict: "yes" | "no" }) {
   )
 }
 
-export default function ComparisonTable() {
+/** Comparison copy; defaults are the /mpc page's. */
+export type ComparisonTableProps = {
+  title?: string
+  othersLabel?: string
+  rows?: ComparisonRow[]
+  caption?: string
+  footnote?: string
+}
+
+export default function ComparisonTable({
+  title = "Not All MPC Wallets Are Equal",
+  othersLabel = "Other MPC Wallets",
+  rows = ROWS,
+  caption = "Vultisig compared with other MPC wallets across share location, custody, privacy, cost, chains, recovery and source code",
+  footnote = "* Comparison based on typical competitor offerings as of January 2026",
+}: ComparisonTableProps) {
   return (
     <section className="bg-v5-page px-4 py-12 md:px-[30px] md:py-[60px]">
       <div className="mx-auto flex max-w-v5-content flex-col items-center gap-8 md:gap-[30px]">
         <h2 className="text-center text-v5-display-sm font-medium text-v5-text-inverse md:text-v5-headline">
-          Not All MPC Wallets Are Equal
+          {title}
         </h2>
 
         <div className="flex w-full flex-col items-center gap-6">
           {/* overflow-x-auto also clips the rows to the panel radius */}
           <div className="w-full max-w-[1024px] overflow-x-auto rounded-[20px] border border-v5-text-secondary/30 p-px md:rounded-v5-panel">
             <table className="w-full min-w-[760px] table-fixed border-collapse text-left text-v5-text-inverse">
-              <caption className="sr-only">
-                Vultisig compared with other MPC wallets across share location,
-                custody, privacy, cost, chains, recovery and source code
-              </caption>
+              <caption className="sr-only">{caption}</caption>
               <thead>
                 <tr className="border-b border-v5-text-secondary bg-v5-white">
                   <th scope="col" className="h-[70px] px-6 align-middle">
@@ -90,7 +103,7 @@ export default function ComparisonTable() {
                   </th>
                   <th scope="col" className="h-[70px] px-6 align-middle">
                     <span className="text-v5-title3 font-medium">
-                      Other MPC Wallets
+                      {othersLabel}
                     </span>
                   </th>
                   <th scope="col" className="h-[70px] px-6 align-middle">
@@ -101,11 +114,11 @@ export default function ComparisonTable() {
                 </tr>
               </thead>
               <tbody>
-                {ROWS.map((row, index) => (
+                {rows.map((row, index) => (
                   <tr
                     key={row.feature}
                     className={`bg-v5-white/[0.54] ${
-                      index < ROWS.length - 1
+                      index < rows.length - 1
                         ? "border-b border-v5-text-secondary"
                         : ""
                     }`}
@@ -132,8 +145,7 @@ export default function ComparisonTable() {
           </div>
 
           <p className="text-center text-v5-footnote font-medium text-v5-text-tertiary">
-            * Comparison based on typical competitor offerings as of January
-            2026
+            {footnote}
           </p>
         </div>
       </div>

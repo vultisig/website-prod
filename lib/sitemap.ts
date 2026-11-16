@@ -16,6 +16,7 @@ export const STATIC_PAGES: StaticPage[] = [
   { path: "/articles", changefreq: "daily", priority: 0.9 },
   { path: "/downloads", changefreq: "monthly", priority: 0.9 },
   { path: "/mpc", changefreq: "monthly", priority: 0.8 },
+  { path: "/seedless-wallet", changefreq: "monthly", priority: 0.8 },
   { path: "/how-it-works", changefreq: "monthly", priority: 0.8 },
   { path: "/fast-vault", changefreq: "monthly", priority: 0.8 },
   { path: "/chains", changefreq: "monthly", priority: 0.8 },

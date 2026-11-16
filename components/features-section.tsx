@@ -1,13 +1,15 @@
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import type { ReactNode } from "react"
 
 import { supportedChainCountLabel } from "@/content/chain-count"
+import { RecoveryLink } from "@/components/recovery-link"
 import SectionHeading from "@/components/ui/section-heading"
 
 type Feature = {
   title: string
-  body: string
+  body: ReactNode
   image: { src: string; alt: string; width: number; height: number }
   /** Artwork width as a share of the card, desktop then mobile. */
   imageClass: string
@@ -27,7 +29,14 @@ const FEATURES: Feature[] = [
   },
   {
     title: "No seed phrase, ever",
-    body: "Vultisig provides simple-to-use vault shares that can be stored anywhere without compromising security.",
+    body: (
+      <>
+        Vultisig is a{" "}
+        <RecoveryLink href="/seedless-wallet">seedless wallet</RecoveryLink>{" "}
+        with simple-to-use vault shares that can be stored anywhere without
+        compromising security.
+      </>
+    ),
     image: {
       src: "/v5/feature-seedless.webp",
       alt: "Two vault doors standing open side by side",
