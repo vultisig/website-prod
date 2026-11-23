@@ -7,7 +7,7 @@ import { resolveTab } from "./tabs"
 const hashes = [
   {
     os: "ios",
-    hash: "sha256:89391e9d132a75cec88b276a63f68cac57d1099d7035d63eb9f1ecaaac907938",
+    hash: "sha256:243a4f90247b2006f45ef06779408ee12a7d5b14812d04e2a29d3fd2c743e600",
   },
   {
     os: "linux",
